@@ -4,6 +4,7 @@ const App = () => {
   return (
     <div>
       branch test
+      setting2
     </div>
   );
 }
