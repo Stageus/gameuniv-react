@@ -5,6 +5,7 @@ const App = () => {
     <div>
       branch test
       setting2
+      setting3
     </div>
   );
 }
