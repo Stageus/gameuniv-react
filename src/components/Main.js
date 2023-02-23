@@ -44,11 +44,11 @@ const Main = () =>{
                     {/* 아마 따로 분리해야할 듯 */}
                     <Div flex_direction = "column" width = "50%" height="100vh">
                         {whichPage === "logIn" && <Login></Login> }
-                        {whichPage === "idFind" && <Find></Find>}
-                        {whichPage === "pwFind" && <Find></Find>}
+                        {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>}
                         {whichPage === "signUp" && <SignUp></SignUp>}
                     </Div>
                 </Div>
+                <Bg></Bg>
         </main>
     )
 }
