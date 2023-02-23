@@ -1,12 +1,18 @@
+// ===== import base =====
 import React from "react"
+
+// ===== import component =====
+import Header from "./components/Header";
+import Main from "./components/Main";
+import Login from "./pages/loginPage/Login"
+
 
 const App = () => {
   return (
-    <div>
-      branch test
-      setting2
-      setting3
-    </div>
+    <React.Fragment>
+        <Header/>
+        <Main/>
+    </React.Fragment>
   );
 }
 
