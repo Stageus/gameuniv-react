@@ -11,8 +11,8 @@ export const H1 = styled.h1`
     padding: ${(props) => props.padding || "0"};
 
     // h1 초기 설정
-    // font-size xxxl font weight bold
-    color: ${ (props) => props.color || color("blue3")};
-    font-size: ${ (props) => props.font_size || fontSize("xxxl")};
-    ${ (props)=> props.font_weight || fontWeight("bold")};
+    // font-size xxxl font-weight bold
+    color: ${ (props) => color(props.color) || color("blue3")};
+    font-size: ${ (props) => fontSize(props.font_size) || fontSize("xxxl")};
+    ${(props)=> fontWeight(props.font_weight)|| fontWeight("bold")};
 `

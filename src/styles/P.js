@@ -12,8 +12,8 @@ export const P = styled.p`
     border-right: ${(props) => props.border_right || "none"};
     
     // p 초기 설정
-    // font-size xs font weight light
-    font-size: ${ (props) => props.font_size || fontSize("xs")};
-    ${ (props)=> props.font_weight || fontWeight("light")};
+    // font-size xs font-weight light
+    font-size: ${ (props) => fontSize(props.font_size) || fontSize("xs")};
+    ${ (props)=> fontWeight(props.font_weight)|| fontWeight("light")};
 
 `

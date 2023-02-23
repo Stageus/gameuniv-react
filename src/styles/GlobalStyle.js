@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { fontSize, color, backgroundColor, fontWeight } from "./style"
+import { fontSize, color, fontWeight } from "./style"
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: ${fontSize("m")};
         ${fontWeight("regular")};
         color : ${color("grayscale7")};
-        background-color: ${backgroundColor("grayscale1")};
+        background-color: ${color("grayscale1")};
         
     }
     a{
@@ -18,11 +18,11 @@ const GlobalStyle = createGlobalStyle`
         width: 8px;
     }
     ::-webkit-scrollbar-thumb{
-        background-color: ${backgroundColor("blue3")};
+        background-color: ${color("blue3")};
         border-radius: 25px;
     }
     ::-webkit-scrollbar-track{
-        background-color: ${backgroundColor("grayscale4")};
+        background-color: ${color("grayscale4")};
     }
 
 `

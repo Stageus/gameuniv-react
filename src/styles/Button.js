@@ -22,10 +22,10 @@ export const Button = styled.button`
     
     // 버튼 초기설정 
     //배경 blue3 글씨 grayscale1 font-size m font-weight bold
-    background-color: ${(props) => props.color || color("blue3")};
-    color: ${(props) => props.background_color || color("grayscale1")};
-    font-size: ${ (props) => props.font_size || fontSize("m")};
-    ${ (props)=> props.font_weight || fontWeight("regular")};
+    background-color: ${(props) => color(props.color) || color("blue3")};
+    color: ${(props) => color(props.background_color) || color("grayscale1")};
+    font-size: ${ (props) => fontSize(props.font_size) || fontSize("m")};
+    ${ (props)=> fontWeight(props.font_weight)|| fontWeight("regular")};
 
     &:hover{
         background-color: ${color("blue4")};

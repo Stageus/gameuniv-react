@@ -37,16 +37,16 @@ const Main = () =>{
         <main>
                 <Div>
                     {/* 아마 랭킹 컴포넌트 자리 */}
-                    <Div width="50%">
+                    {/* <Div width="50%">
                         Ranking
                         <BackIcon src={`${process.env.PUBLIC_URL}/imgsrc/icons/backBlueIcon.png`} />
-                    </Div>
+                    </Div> */}
                     {/* 아마 따로 분리해야할 듯 */}
-                    <Div flex_direction = "column" width = "50%" height="100vh">
+                    {/* <Div flex_direction = "column" width = "50%" height="100vh">
                         {whichPage === "logIn" && <Login></Login> }
                         {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>}
                         {whichPage === "signUp" && <SignUp></SignUp>}
-                    </Div>
+                    </Div> */}
                 </Div>
                 <Bg></Bg>
         </main>
