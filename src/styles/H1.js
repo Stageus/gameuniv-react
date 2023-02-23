@@ -12,6 +12,7 @@ export const H1 = styled.h1`
 
     // h1 초기 설정
     // font-size xxxl font weight bold
+    color: ${ (props) => props.color || color("blue3")};
     font-size: ${ (props) => props.font_size || fontSize("xxxl")};
-    font-weight: ${ (props)=> props.font_weight || fontWeight("bold")};
+    ${ (props)=> props.font_weight || fontWeight("bold")};
 `

@@ -10,8 +10,9 @@ export const Button = styled.button`
     align-items:center;
     justify-content: center;
     cursor: pointer;
-
+    border: none;
     width: ${(props)=> props.width || "auto"};
+    max-width: ${(props)=> props.max_width || "auto"};
     height: ${(props)=> props.height || "auto"};
     margin: ${(props)=> props.margin || "0"};
     padding: ${(props)=> props.padding || "0"};
@@ -24,7 +25,9 @@ export const Button = styled.button`
     background-color: ${(props) => props.color || color("blue3")};
     color: ${(props) => props.background_color || color("grayscale1")};
     font-size: ${ (props) => props.font_size || fontSize("m")};
-    font-weight: ${ (props)=> props.font_weight || fontWeight("bold")};
-    
-    
+    ${ (props)=> props.font_weight || fontWeight("regular")};
+
+    &:hover{
+        background-color: ${color("blue4")};
+    }
 `

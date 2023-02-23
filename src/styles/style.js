@@ -59,17 +59,20 @@ export const fontWeight = (font_weight) =>{
             font-family: "NotoSansKR-Regular";
             src: url("/fonts/NotoSansKR-Regular.otf");
         }
+        font-family: "NotoSansKR-Regular";
     `
     else if( font_weight === "regular") return css`
         @font-face {
             font-family: "NotoSansKR-Bold";
             src: url("/fonts/NotoSansKR-Bold.otf");
         }
+        font-family: "NotoSansKR-Bold";
     `
     else if( font_weight === "bold") return css`
         @font-face {
             font-family: "NotoSansKR-Black";
             src: url("/fonts/NotoSansKR-Black.otf");
         } 
+        font-family: "NotoSansKR-Black";
     `
 }
