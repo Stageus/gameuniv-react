@@ -1,4 +1,8 @@
+// ===== import base =====
 import styled from "styled-components"
+
+// ===== import style fun =====
+import {color, fontSize, fontWeight} from "./style"
 
 export const Img = styled.img`
     width: ${(props)=> props.width || "auto"};

@@ -1,4 +1,8 @@
+// ===== import base =====
 import styled from "styled-components"
+
+// ===== import style fun =====
+import {color, fontSize, fontWeight} from "./style"
 
 export const Div = styled.div`
     display: flex;
