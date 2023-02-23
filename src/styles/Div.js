@@ -2,7 +2,7 @@
 import styled, {css} from "styled-components"
 
 // ===== import style fun =====
-import {color, fontSize, fontWeight} from "./style"
+import {color} from "./style"
 
 export const Div = styled.div`
     display: flex;
@@ -18,7 +18,9 @@ export const Div = styled.div`
     padding: ${(props) => props.padding || "0"};
     border: ${(props) => props.border || "none"};
     border-radius: ${(props) => props.border_radius || "none"};
-    background-color: ${(props) => props.background_color || "none"};
+    background-color: ${(props) => color(props.background_color) || "none"}; 
     
 `
+
+
 
