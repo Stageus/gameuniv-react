@@ -12,6 +12,7 @@ export const fontSize = (font_size)=>{
     if(font_size === "xxxl") return "64px"
 }
 
+//color와 모든 부분이 같기 때문에 지워도 된다고 생각해요
 export const backgroundColor = (background_color) =>{
     if(background_color  === "grayscale1") return "#FFFFFF"
     if(background_color  === "grayscale2") return "#FAFAFA"
