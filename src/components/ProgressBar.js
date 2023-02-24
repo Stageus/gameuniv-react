@@ -1,6 +1,6 @@
 // ===== import base =====
 import React from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 
 // ===== import style =====
 import {H1} from "../styles/H1"
@@ -14,56 +14,84 @@ import { Img } from "../styles/Img"
 import {color, fontWeight, fontSize} from "../styles/style"
 
 
-const Stepper = styled(Div)`
+const Container = styled(Div)`
+    display:flex;
+    height: 3px;
+    width: 100%;
     position: relative;
-    flex: 1;
-
-    &::before{
-        position: absolute;
-        content: "";
-        border-bottom: 2px solid #ccc;
-        width: 100%;
-        top: 20px;
-        left: -50%;
-        z-index: 2;
-    }
-
-    &::after{
-        position: absolute;
-        content: "";
-        border-bottom: 2px solid #ccc;
-        width: 100%;
-        top: 20px;
-        left: 50%;
-        z-index: 2;
-    }
-`
-const Li = styled.li`
-    
+    justify-content: flex-start;
 `
 
-const ProgressBar = () =>{
+const BaseBox = styled.div`
+    height: 100%;
+    position: absolute;
+    transition: width 0.5s ease-in-out;
+`
 
-    // ===== state =====
+const Background = styled(BaseBox)`
+    background: ${color("blue2")};
+    width: 100%;
+`
 
-    // ===== func =====
-    return(
-        <Div padding="10px 0 5px 0" 
-        justify_content="space-between">
-            <Stepper>
-                <Div>1</Div>
-            </Stepper>
-            <Stepper>
-                <Div>2</Div>
-            </Stepper>
-            <Stepper>
-                <Div>3</Div>
-            </Stepper>
-            <Stepper>
-                <Div>4</Div>
-            </Stepper>
+const Progress = styled(BaseBox)`
+    background: ${color("blue3")};
+    width: ${({step_state }) => (step_state-1)*33 }%;
+`
+
+const StepCounter = styled(Div)`
+    width: 24px;
+    height: 24px;
+    font-size: 13px;
+    background-color: ${color("blue2")};
+    border-radius:50%;
+    color: ${color("grayscale1")};
+    ${fontWeight("light")};
+    ${ props => {
+        const step = props.step
+        const count = props.count
+        if(count <= step){
+            return css`
+                background-color: ${color("blue3")};
+                transition-delay: 0.5s;
+                transition-property: background-color, width, height;
+                transition: 1s;
+            `
+        }
+    }}
+
+    ${ props => {
+        const step = props.step
+        const count = props.count
+        if(count === step){
+            return css`
+                width:28px;
+                height:28px;
+            `
+        }
+    }}
+`
+const StepCounterDiv = styled(Div)`
+    position:absolute;
+    z-index:3;
+`
+
+const ProgressBar = (props) =>{
+
+    const stepState = props.step_state
+    return (
+        <Div height="50px" justify_content="center" width="100%">
+            <Container>
+                <StepCounterDiv width="100%" justify_content="space-between">
+                    <StepCounter count={1} step={stepState}>1</StepCounter>
+                    <StepCounter count={2} step={stepState}>2</StepCounter>
+                    <StepCounter count={3} step={stepState}>3</StepCounter>
+                    <StepCounter count={4} step={stepState}>4</StepCounter>
+                </StepCounterDiv>
+                <Background />
+                <Progress step_state = {stepState}/>
+            </Container>
         </Div>
-    )
+    );
 }
 
 export default ProgressBar

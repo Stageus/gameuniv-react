@@ -23,6 +23,7 @@ const Header_style = styled.header`
 
 const SettingBeforeBtn = styled(ImgBtn)`
     position:absolute;
+    width:48px;
     &:hover{
         opacity: 0;
         transition: 0.5s;
@@ -39,9 +40,9 @@ const Header = () =>{
             <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/icons/headerLogoIcon.png`} height="64px" padding="10px"
             onClick={()=> window.location.reload()}/>
                 
-            <Div height="84px" align_items="flex-end" padding="0 10px 0 0">
-                <Div border={`3px solid ${color("grayscale6")}`} border_radius = "10px" height="44px" width="115px" justify_content = "space-around" margin="0 0 6px 0">
-                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="40px"/>
+            <Div height="84px" align_items="flex-end">
+                <Div border={`3px solid ${color("grayscale6")}`} border_radius = "10px" height="40px" width="115px" justify_content = "space-around" margin="0 0 6px 0">
+                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="36px"/>
                     <P font_weight="regular" font_size="m">25</P>
                 </Div>
                 {/* <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/${isMouseHover ? "settingAfterBtnImg.png": "settingBeforeBtnImg.png" } `} 
@@ -49,10 +50,9 @@ const Header = () =>{
                 width="60px" padding="0 10px"/> */}
                 <Div>
                     <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingAfterBtnImg.png`}
-                    width="59px" padding="0 10px"/>
+                    width="47px" padding="0 10px" margin="0 10px 6px 0"/>
                     <SettingBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`}
-                    width="60px" padding="0 10px"/>
-                    
+                    padding="0 10px" margin="0 10px 6px 0"/>
                 </Div>
             </Div>
         </Header_style>        
