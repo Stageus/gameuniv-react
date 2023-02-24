@@ -12,3 +12,7 @@ export const Img = styled.img`
     padding: ${(props)=> props.padding || "0"};
     border-radius: ${(props)=> props.border_radius || "none"};
 `
+
+export const ImgBtn = styled(Img)`
+    cursor:pointer;
+`

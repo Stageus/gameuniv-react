@@ -12,7 +12,7 @@ import {Img} from "../styles/Img"
 import {Div} from "../styles/Div"
 import {Input} from "../styles/Input"
 import {Button} from "../styles/Button"
-import {P} from "../styles/P"
+import {P, LinkP} from "../styles/P"
 
 //  ===== component =====
 
@@ -54,15 +54,17 @@ const Login = () =>{
                 </P>
                 <form>
                     <Div flex_direction="column" width="100%">
-                        <Input placeholder="아이디"  width="100%" max_width="311px" height="28px" margin="20px 0 5px 0" padding="8px 15px"/>
-                        <Input placeholder="비밀번호" width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px"/>
+                        <Input placeholder="아이디" minLength="6" maxLength="20" 
+                        width="100%" max_width="311px" height="28px" margin="20px 0 5px 0" padding="8px 15px"/>
+                        <Input type="password" placeholder="비밀번호" 
+                        width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px"/>
                     </Div>
 
                     <Div flex_direction="column" onClick={loginMenuBtnEvent}>
                         <Div margin="0 0 10px 0">
-                            <P font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</P>
-                            <P font_size ="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">비밀번호 찾기</P>
-                            <P font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</P>
+                            <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</LinkP>
+                            <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">비밀번호 찾기</LinkP>
+                            <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
                         </Div>
                         <Button type="button" width="100%" max_width="341px" height="56px" id="login_btn">로그인</Button>
                     </Div>

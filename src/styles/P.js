@@ -14,6 +14,10 @@ export const P = styled.p`
     // p 초기 설정
     // font-size xs font-weight light
     font-size: ${ (props) => fontSize(props.font_size) || fontSize("xs")};
+    color: ${ (props) => color(props.color) || color("grayscale7")};
     ${ (props)=> fontWeight(props.font_weight)|| fontWeight("light")};
+`
 
+export const LinkP = styled(P)`
+    cursor:pointer;
 `
