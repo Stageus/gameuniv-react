@@ -12,27 +12,6 @@ export const fontSize = (font_size)=>{
     if(font_size === "xxxl") return "64px"
 }
 
-//color와 모든 부분이 같기 때문에 지워도 된다고 생각해요
-export const backgroundColor = (background_color) =>{
-    if(background_color  === "grayscale1") return "#FFFFFF"
-    if(background_color  === "grayscale2") return "#FAFAFA"
-    if(background_color  === "grayscale3") return "#ECECEC"
-    if(background_color  === "grayscale4") return "#D9D9D9"
-    if(background_color  === "grayscale5") return "#AAAAAA"
-    if(background_color  === "grayscale6") return "#575757"
-    if(background_color  === "grayscale7") return "#000000"
-    if(background_color  === "blue1") return "#F7F7F9"
-    if(background_color  === "blue2") return "#B9D2FF"
-    if(background_color  === "blue3") return "#2D6EE4"
-    if(background_color  === "blue4") return "#030089"
-    if(background_color  === "yellow1") return "#FFF7DF"
-    if(background_color  === "yellow2") return "#FFD869"
-    if(background_color  === "yellow3") return "#E29E00"
-    if(background_color  === "red1") return "#FF553E"
-    if(background_color  === "red2") return "#D12008"
-    if(background_color  === "green") return "#23D455"
-}
-
 export const color = (color) =>{
     if(color === "grayscale1") return "#FFFFFF"
     if(color === "grayscale2") return "#FAFAFA"
