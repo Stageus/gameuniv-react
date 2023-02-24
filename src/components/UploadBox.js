@@ -14,6 +14,7 @@ import { Img } from "../styles/Img"
 import {color, fontWeight, fontSize} from "../styles/style"
 
 
+// ===== style =====
 const Label = styled.label`
     width: 142px; 
     height: 135px;
@@ -28,7 +29,8 @@ const FileInput = styled(Input)`
 const ProfileImg = styled(Img)`
     background-color: ${color("grayscale1")};
     border-radius: 50%;
-    
+    cursor:pointer;
+
     &:hover{
         background-color: ${color("blue3")};
         transition: 0.5s;

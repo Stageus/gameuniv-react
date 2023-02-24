@@ -5,7 +5,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
 import UploadBox from "../components/UploadBox"
-
+import ProgressBar from "../components/ProgressBar"
 
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
@@ -52,6 +52,11 @@ const ArrowDiv = styled(Div)`
     z-index: 0;
 `
 
+const InputBoxDiv = styled(Div)`
+    flex-direction:column;
+    align-items: flex-start;
+`
+
 //  ===== component =====
 const SignUp = () =>{
 
@@ -78,26 +83,35 @@ const SignUp = () =>{
                     <H1 font_size= "xl" padding="20px 0" color="grayscale7">계정 생성 완료!</H1>
                 }
                 {/* step progress bar 구현하기 */}
-
+                <ProgressBar/>
                 {/* step1 */}
                 {
                     stepState === 1
                     &&
                     <React.Fragment>
                         <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
-                        <P font_size = "xxs" padding="5px 0">이름</P>
-                        <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>                        
-                        <P font_size = "xxs" padding="5px 0">아이디</P>
-                        <Div width="97%" justify_content="space-between">
-                            <Input width="75%" max_width="289px" height="28px" placeholder="아이디" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
-                            <SignUpPageBtn width="81px" height="28px" >verification</SignUpPageBtn>
-                        </Div>
-                        <P font_size = "xxs" padding="5px 0">비밀번호</P>
-                        <Input type="password" placeholder="비밀번호" width="100%" max_width="289px" height="28px"
-                        font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
-                        <P font_size = "xxs" padding="5px 0">비밀번호 확인</P>
-                        <Input type="password" placeholder="비밀번호 확인" width="100%" max_width="289px" height="28px" 
-                        font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>    
+                        <InputBoxDiv>
+                            <P font_size = "xxs" padding="5px 0">이름</P>
+                            <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>                        
+                        </InputBoxDiv>
+                        
+                        <InputBoxDiv>
+                            <P font_size = "xxs" padding="5px 0">아이디</P>
+                            <Div width="97%" justify_content="space-between">
+                                <Input width="75%" max_width="289px" height="28px" placeholder="아이디" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
+                                <SignUpPageBtn width="81px" height="28px" >verification</SignUpPageBtn>
+                            </Div>
+                        </InputBoxDiv>
+                        <InputBoxDiv>
+                            <P font_size = "xxs" padding="5px 0">비밀번호</P>
+                            <Input type="password" placeholder="비밀번호" width="100%" max_width="289px" height="28px"
+                            font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
+                        </InputBoxDiv>
+                        <InputBoxDiv>
+                            <P font_size = "xxs" padding="5px 0">비밀번호 확인</P>
+                            <Input type="password" placeholder="비밀번호 확인" width="100%" max_width="289px" height="28px" 
+                            font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>    
+                        </InputBoxDiv>
                     </React.Fragment>
                 }
                 {/* step2 */}
@@ -118,11 +132,17 @@ const SignUp = () =>{
                     stepState === 3
                     &&
                     <React.Fragment>
+                        
+                        
                         <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
-                        <P font_size = "xxs" padding="5px 0">학교 이메일</P>
-                        <Input width="100%" max_width="289px" height="28px" placeholder="학교 이메일" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>                        
-                        <P font_size = "xxs" padding="5px 0">대학교</P>
-                        <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
+                        <InputBoxDiv>
+                            <P font_size = "xxs" padding="5px 0">학교 이메일</P>
+                            <Input width="100%" max_width="289px" height="28px" placeholder="학교 이메일" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>                        
+                        </InputBoxDiv>
+                        <InputBoxDiv>
+                            <P font_size = "xxs" padding="5px 0">대학교</P>
+                            <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
+                        </InputBoxDiv>
                     </React.Fragment>
                 }
                 {/* step4 */}

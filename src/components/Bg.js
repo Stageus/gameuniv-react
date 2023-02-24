@@ -33,7 +33,7 @@ const Bg = () =>{
             whichPage ==="logIn" 
             &&
             <React.Fragment>
-                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="60%" right="50%" deg="-30deg"/>
+                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="70%" right="30%" deg="-10deg"/>
                 <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="0%" right="0%"/>
             </React.Fragment>
         }
@@ -41,7 +41,7 @@ const Bg = () =>{
             ( whichPage === "idFind" || whichPage === "pwFind" || whichPage==="signUp")
             &&
             <React.Fragment>
-                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="0%" right="50%" deg="-30deg"/>
+                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="0%" right="50%" deg="-10deg"/>
                 <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="60%" right="75%"/>
             </React.Fragment>
         }
