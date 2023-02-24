@@ -3,38 +3,32 @@ import React from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
+// ===== import component =====
+import Profile from "../components/home_components/Profile"
+import IndividualTetrisRanking from "../components/home_components/IndividualTetrisRanking"
+import Individual2048Ranking from "../components/home_components/Individual2048Ranking"
+
 //  ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
 
 // ===== import style =====
 import {H1} from "../styles/H1"
-import {Img} from "../styles/Img"
-import {Div, AbsoluteDiv} from "../styles/Div"
-import {Input} from "../styles/Input"
-import {Button} from "../styles/Button"
-import {P} from "../styles/P"
-
-// ===== import style fun =====
-import {color} from "../styles/style"
-import { fontWeight } from "../styles/style"
-import { fontSize } from "../styles/style"
+import {Img, ImgBtn} from "../styles/Img"
+import {Div, ShadowDiv} from "../styles/Div"
 
 // ===== style =====
-const SignUpPageBtn = styled(Button)`
-    font-size: ${fontSize("xxxs")}; 
-    ${fontWeight("light")};
-    color: ${color("blue3")};
-    background-color: ${color("grayscale1")};
-    border: 1px solid ${color("blue3")};
 
-    &:hover{
-        background-color: ${color("blue3")};
-        color: ${color("grayscale1")};
-    }
+const RelativeDiv = styled(ShadowDiv)`
+    position:relative;
+    z-index: -1;
+`
+const AbsoluteImg = styled(Img)`
+    position:absolute;
+    right :0px;
+    z-index: -1;
 `
 
 //  ===== component =====
-
 const Home = () =>{
     const setPageState = useSetRecoilState(whichPageState)
 
@@ -56,34 +50,26 @@ const Home = () =>{
     // }
     return(
         <React.Fragment>
-            <Div width = "50%" max_width="693px" height="301px" flex_direction="column">
-            <Div  width = "100%">
-                <Div width="45%" height="204px">
+            <Div width = "100%" max_width="800px" height="730px" flex_direction="column">
+                <Div width="100%"  max_width="693px" height="301px" justify_content="space-between">
+                    <IndividualTetrisRanking/>
+                    <Individual2048Ranking/>
+                </Div>
+                
+                <Profile/>
 
-                </Div>
-                <Div width="45%" height="204px">
+                <Div width="100%"  max_width="693px" height="301px" justify_content="space-between">
                     
-                </Div>
-            </Div>
-            <Div  width = "100%" max_width="693px" height="301px">
-                <H1 font_size="m" color="blue4" font_weight="regular">
-                    나의 프로필
-                </H1>
-                <Div width="30%" height="30%" border="50%" background_color="grayscale3">
-
-                </Div>
-                <Div width="100%" height="254px" border_radius="3px" background_color="grayscale2">
+                    <RelativeDiv width="49%" height="204px"  ShadowDiv="none" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between">
+                        <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
+                        <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/itemDarkYellowIcon.png`}/>
+                    </RelativeDiv>
                     
+                    <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between">
+                        <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
+                        <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/achivementDarkYellowIcon.png`}/>
+                    </RelativeDiv>
                 </Div>
-            </Div>
-            <Div width = "100%"  max_width="693px" height="301px">
-                <Button width="45%" height="204px">
-
-                </Button>
-                <Button width="45%" height="204px">
-                    
-                </Button>
-            </Div>
             </Div>
         </React.Fragment>
     )
