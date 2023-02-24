@@ -1,7 +1,7 @@
 // ===== import base =====
 import styled, {css} from "styled-components"
 
-// ===== import style fun =====
+// ===== import style func =====
 import {color} from "./style"
 
 export const Div = styled.div`

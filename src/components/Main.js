@@ -4,9 +4,9 @@ import styled from "styled-components"
 import { useRecoilValue } from "recoil"
 
 // ===== import component =====
-import Login from "../pages/loginPage/Login"
-import Find from "../pages/findPage/Find"
-import SignUp from "../pages/signUpPage/SignUp"
+import Login from "../pages/Login"
+import Find from "../pages/Find"
+import SignUp from "../pages/SignUp"
 import Home from "../pages/Home"
 import Bg from "./Bg"
 
@@ -33,21 +33,20 @@ const Main = () =>{
     // ===== recoil state =====
     const whichPage = useRecoilValue(whichPageState)
 
-    console.log(whichPage)
     return(
         <main>
                 <Div>
                     {/* 아마 랭킹 컴포넌트 자리 */}
-                    {/* <Div width="50%">
+                    <Div width="50%">
                         Ranking
-                        <BackIcon src={`${process.env.PUBLIC_URL}/imgsrc/icons/backBlueIcon.png`} />
-                    </Div> */}
+                        <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/icons/backBlueIcon.png`} />
+                    </Div>
                     {/* 아마 따로 분리해야할 듯 */}
                     <Div flex_direction = "column" width = "50%" height="100vh">
-                        <Home/>
-                        {/* {whichPage === "logIn" && <Login></Login> }
+                        {whichPage ==="home" && <Home/>}
+                        {whichPage === "logIn" && <Login></Login> }
                         {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>}
-                        {whichPage === "signUp" && <SignUp></SignUp>} */}
+                        {whichPage === "signUp" && <SignUp></SignUp>}
                     </Div>
                 </Div>
                 <Bg></Bg>

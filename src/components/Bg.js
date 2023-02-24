@@ -11,13 +11,7 @@ import { whichPageState } from "../recoil/PageState"
 // ===== import style =====
 import { Img } from "../styles/Img"
 
-// ===== import style fun =====
-const BackIcon = styled(Img)`
-    position: fixed;
-    top: 90%;
-    left: 2%;
-    width: 64px;
-`
+// ===== style =====
 const BgImg = styled(Img)`
     position: absolute;
     top: ${props => props.top || "100%"};
@@ -39,16 +33,16 @@ const Bg = () =>{
             whichPage ==="logIn" 
             &&
             <React.Fragment>
-                <BgImg src={`${process.env.PUBLIC_URL}/imgsrc/imgs/2048Img.png`} top="60%" right="50%" deg="-30deg"/>
-                <BgImg src={`${process.env.PUBLIC_URL}/imgsrc/imgs/TetrisImg.png`} top="0%" right="0%"/>
+                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="60%" right="50%" deg="-30deg"/>
+                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="0%" right="0%"/>
             </React.Fragment>
         }
         {
             ( whichPage === "idFind" || whichPage === "pwFind" || whichPage==="signUp")
             &&
             <React.Fragment>
-                <BgImg src={`${process.env.PUBLIC_URL}/imgsrc/imgs/2048Img.png`} top="0%" right="50%" deg="-30deg"/>
-                <BgImg src={`${process.env.PUBLIC_URL}/imgsrc/imgs/TetrisImg.png`} top="60%" right="75%"/>
+                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="0%" right="50%" deg="-30deg"/>
+                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="60%" right="75%"/>
             </React.Fragment>
         }
             

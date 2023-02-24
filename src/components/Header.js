@@ -24,14 +24,14 @@ const Header_style = styled.header`
 const Header = () =>{
     return(
         <Header_style>
-            <Img src={`${process.env.PUBLIC_URL}/imgsrc/icons/headerLogoIcon.png`} height="64px" padding="10px"/>
+            <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/headerLogoIcon.png`} height="64px" padding="10px"/>
                 
             <Div height="84px" align_items="flex-end" padding="0 10px 0 0">
-                <Div border={`3px solid ${color("grayscale6")}`} border_radius = "10px" height="44px" width="115px" flex_style="flexSpaceAround" margin="0 0 6px 0">
-                    <Img src={`${process.env.PUBLIC_URL}/imgsrc/icons/severalCoinIcon.png`} width="40px"/>
-                    <P font_weight ={fontWeight("regular")} font_size={fontSize("m")}>25</P>
+                <Div border={`3px solid ${color("grayscale6")}`} border_radius = "10px" height="44px" width="115px" justify_content = "space-around" margin="0 0 6px 0">
+                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="40px"/>
+                    <P font_weight="regular" font_size={fontSize("m")}>25</P>
                 </Div>
-                <Img src={`${process.env.PUBLIC_URL}/imgsrc/btns/settingBeforeBtnImg.png`} width="60px" padding="0 10px"/>
+                <Img src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`} width="60px" padding="0 10px"/>
             </Div>
         </Header_style>        
     )
