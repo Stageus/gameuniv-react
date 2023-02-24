@@ -15,15 +15,39 @@ import { whichPageState } from "../../src/recoil/PageState"
 
 // ===== import style =====
 import { Div } from "../styles/Div"
-import { Img } from "../styles/Img"
+import { Img, ImgBtn } from "../styles/Img"
 
 
 // ===== style =====
-const BackIcon = styled(Img)`
+const BackIcon = styled(ImgBtn)`
     position: fixed;
     top: 90%;
     left: 2%;
-    width: 64px;
+    width: 48px;
+
+    &:hover{
+        opacity: 1;
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        opacity: 0;
+        transition: 0.5s;
+    }
+
+`
+
+const BackIconBeforeBtn = styled(ImgBtn)`
+    position:fixed;
+    top: 90%;
+    left: 2%;
+    width: 48px;
+    &:hover{
+        opacity: 0;
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        transition: 0.5s;
+    }
 `
 
 //  ===== component =====
@@ -39,7 +63,11 @@ const Main = () =>{
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     <Div width="50%">
                         Ranking
-                        <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/icons/backBlueIcon.png`} />
+                        <Div>
+                            <BackIconBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`} />
+                            <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`} />
+                        </Div>
+                        
                     </Div>
                     {/* 아마 따로 분리해야할 듯 */}
                     <Div flex_direction = "column" width = "50%" height="100vh">
