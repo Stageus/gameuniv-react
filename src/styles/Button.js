@@ -1,7 +1,7 @@
 // ===== import base =====
 import styled from "styled-components"
 
-// ===== import style fun =====
+// ===== import style func =====
 import {color, fontSize, fontWeight} from "./style"
 
 // 로그인버튼 비밀번호 찾기 버튼 등 이미지로 들어가지 않는 버튼들
@@ -16,8 +16,6 @@ export const Button = styled.button`
     height: ${(props)=> props.height || "auto"};
     margin: ${(props)=> props.margin || "0"};
     padding: ${(props)=> props.padding || "0"};
-
-    //논의 필요 모든 버튼 5px로 할지
     border-radius: ${(props)=> props.border_radius || "5px"};
     
     // 버튼 초기설정 

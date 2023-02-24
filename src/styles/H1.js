@@ -1,7 +1,7 @@
 // ===== import base =====
 import styled from "styled-components"
 
-// ===== import style fun =====
+// ===== import style func =====
 import {color, fontSize, fontWeight} from "./style"
 
 export const H1 = styled.h1`
