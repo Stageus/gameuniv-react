@@ -24,6 +24,7 @@ export const color = (color) =>{
     if(color === "blue2") return "#B9D2FF"
     if(color === "blue3") return "#2D6EE4"
     if(color === "blue4") return "#030089"
+    if(color === "blue5") return "#E2EBFF"
     if(color === "yellow1") return "#FFF7DF"
     if(color === "yellow2") return "#FFD869"
     if(color === "yellow3") return "#E29E00"

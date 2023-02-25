@@ -3,13 +3,16 @@ import React from "react"
 import styled from "styled-components"
 import { useRecoilValue } from "recoil"
 
-// ===== import component =====
+// ===== import page =====
 import Login from "../pages/Login"
 import Find from "../pages/Find"
 import SignUp from "../pages/SignUp"
 import Home from "../pages/Home"
 import Achivement from "../pages/Achivement"
 import Item from "../pages/Item"
+import Game2048 from "../pages/Game2048"
+
+// ===== import component =====
 import Bg from "./Bg"
 import Ranking from "./Ranking"
 
@@ -63,7 +66,10 @@ const Main = () =>{
 
     return(
         <main>
-                <Div>
+            {
+                (whichPage !=="2048")
+                ?
+                <Div width="100%">
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     <Div width="50%">
                         {
@@ -89,8 +95,19 @@ const Main = () =>{
                         {whichPage ==="home" && <Home/>}
                         {whichPage ==="item" && <Item/>}
                         {whichPage ==="achivement" && <Achivement/>}
+                        
                     </Div>
+                    
                 </Div>
+                :
+                <Div height="100vh" width="100%">
+                    <Game2048/>
+                </Div>
+                
+            }
+                
+                
+
                 <Bg></Bg>
         </main>
     )

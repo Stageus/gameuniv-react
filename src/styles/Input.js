@@ -12,7 +12,7 @@ export const Input = styled.input`
     padding: ${(props) => props.padding || "0"};
     border: ${(props) => props.border || `1px solid ${color("blue2")}`};
     border-radius: ${(props) => props.border_radius || "5px"};
-    background-color: ${color("grayscale2")};
+    background-color: ${color("blue1")};
 
     // input 초기 설정
     // font-size xs font-weight light

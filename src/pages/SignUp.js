@@ -147,7 +147,7 @@ const SignUp = () =>{
                         &&
                         <Div width="100%" flex_direction="column" align_items="flex-start">
                             <P font_size = "xxs" padding="10px 0">프로필 사진을 올리거나 기본 프로필을 선택해주세요</P>
-                            <Div  background_color="blue2" border_radius="3px" width="312px" height="188px">
+                            <Div  background_color="blue5" border_radius="3px" width="312px" height="188px">
                                 <UploadBox></UploadBox>
                                 
                             </Div>
@@ -168,7 +168,7 @@ const SignUp = () =>{
                                 <P font_size = "xxs" padding="5px 0">대학교</P>
                                 <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
                             </InputBoxDiv>
-                        </Div>
+                        </Div> 
                     }
                     {/* step4 */}
                     {
