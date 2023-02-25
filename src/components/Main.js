@@ -11,6 +11,8 @@ import Home from "../pages/Home"
 import Achivement from "../pages/Achivement"
 import Item from "../pages/Item"
 import Bg from "./Bg"
+import Ranking from "./Ranking"
+
 
 // ===== import recoil =====
 import { whichPageState } from "../../src/recoil/PageState"
@@ -64,7 +66,15 @@ const Main = () =>{
                 <Div>
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     <Div width="50%">
-                        Ranking
+                        {
+                            (whichPage === "logIn" || whichPage==="home")
+                            &&
+                            <Div width="100%"flex_direction="column" height="100vh" >
+                                <Ranking game="tetris"/>
+                                <Ranking game="2048"/>
+                            </Div>
+                        }
+                        
                         <Div>
                             <BackIconBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`} />
                             <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`} />

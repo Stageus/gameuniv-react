@@ -13,6 +13,16 @@ import {Div} from "../styles/Div"
 import {Input} from "../styles/Input"
 import {Button} from "../styles/Button"
 import {P, LinkP} from "../styles/P"
+import { H1 } from "../styles/H1"
+
+// ===== style =====
+const Logo = styled(Img)`
+    position:relative;
+    width: 100%;
+    max-width: 379px;
+    margin: 0 0 20px 0;
+    left: -20px;
+`
 
 //  ===== component =====
 
@@ -41,9 +51,7 @@ const Login = () =>{
     return(
         <React.Fragment>
             {/* 로고 */}
-            <h1>
-                <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`} width="100%" max_width="379px"/>
-            </h1>
+            <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
 
             {/* 로그인 폼 */}
             <Div width = "50%" max_width="341px" flex_direction="column">
