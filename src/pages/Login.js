@@ -24,6 +24,7 @@ const Logo = styled(Img)`
     left: -20px;
 `
 
+
 //  ===== component =====
 
 const Login = () =>{
@@ -45,11 +46,15 @@ const Login = () =>{
             case "login_btn":
                 setPageState("home")
                 break
+            case "2048_btn":
+                setPageState("2048")
+                break
         }
 
     }
     return(
         <React.Fragment>
+                
             {/* 로고 */}
             <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
 
@@ -75,6 +80,8 @@ const Login = () =>{
                             <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
                         </Div>
                         <Button type="button" width="100%" max_width="341px" height="56px" id="login_btn">로그인</Button>
+                        {/* 임시 게임 구현 확인용 */}
+                        <Button type="button" width="100%" margin="5px" id="2048_btn">2048 구현 확인용</Button>
                     </Div>
                     
                 </form>

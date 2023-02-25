@@ -90,8 +90,12 @@ const ShowMore = styled(Div)`
 const Ranking = (props) =>{
     // ===== recoil state =====
     const game = props.game
+
+    // ===== variable =====
+    const rank = [1,2,3,4,5]
+
     return(
-        <Div flex_direction="column" width="90%" background_color="grayscale2" padding="0 10px" margin="5px 0">
+        <Div flex_direction="column" width="90%" background_color="blue1" padding="0 10px" margin="5px 0">
             <RankHeader width="100%" justify_content="flex-start">
                 {
                     game === "tetris"
@@ -116,96 +120,29 @@ const Ranking = (props) =>{
                 <RankList>대학</RankList>
             </Div>
             {/* rank list */}
-            <RankDiv width="100%" height="37px" justify_content="space-between" rank={1}>
-                <Div width= "33%" justify_content="flex_start">
-                    <RankP>1</RankP>
-                </Div>
-                
-                <Div width="33%" justify_content="flex_start" >
-                    <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                        width="20px"/>
-                    </Div>
-                    <P>tmdgns32</P>
-                </Div>
-                <Div width="33%" justify_content="flex_start">
-                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}
-                    width="28px" margin="0 5px 0 0"/>
-                    <P>아주대학교</P>
-                </Div>
-            </RankDiv>
-            <RankDiv width="100%" height="37px" justify_content="space-between" rank={2}>
-                <Div width= "33%" justify_content="flex_start">
-                    <RankP>2</RankP>
-                </Div>
-                
-                <Div width="33%" justify_content="flex_start" >
-                    <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                        width="20px"/>
-                    </Div>
-                    <P>tmdgns32</P>
-                </Div>
-                <Div width="33%" justify_content="flex_start">
-                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}
-                    width="28px" margin="0 5px 0 0"/>
-                    <P>아주대학교</P>
-                </Div>
-            </RankDiv>
-            <RankDiv width="100%" height="37px" justify_content="space-between" rank={3}>
-                <Div width= "33%" justify_content="flex_start">
-                    <RankP>3</RankP>
-                </Div>
-                
-                <Div width="33%" justify_content="flex_start" >
-                    <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                        width="20px"/>
-                    </Div>
-                    <P>tmdgns32</P>
-                </Div>
-                <Div width="33%" justify_content="flex_start">
-                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}
-                    width="28px" margin="0 5px 0 0"/>
-                    <P>아주대학교</P>
-                </Div>
-            </RankDiv>
-            <RankDiv width="100%" height="37px" justify_content="space-between" rank={4}>
-                <Div width= "33%" justify_content="flex_start">
-                    <RankP>4</RankP>
-                </Div>
-                
-                <Div width="33%" justify_content="flex_start" >
-                    <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                        width="20px"/>
-                    </Div>
-                    <P>tmdgns32</P>
-                </Div>
-                <Div width="33%" justify_content="flex_start">
-                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}
-                    width="28px" margin="0 5px 0 0"/>
-                    <P>아주대학교</P>
-                </Div>
-            </RankDiv>
-            <RankDiv width="100%" height="37px" justify_content="space-between" rank={5}>
-                <Div width= "33%" justify_content="flex_start">
-                    <RankP>5</RankP>
-                </Div>
-                
-                <Div width="33%" justify_content="flex_start" >
-                    <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                        width="20px"/>
-                    </Div>
-                    <P>tmdgns32</P>
-                </Div>
-                <Div width="33%" justify_content="flex_start">
-                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}
-                    width="28px" margin="0 5px 0 0"/>
-                    <P>아주대학교</P>
-                </Div>
-            </RankDiv>
+            {
+                rank.map( r => (
+                    <RankDiv width="100%" height="37px" justify_content="space-between" rank={r}>
+                        <Div width= "33%" justify_content="flex_start">
+                            <RankP>{r}</RankP>
+                        </Div>
+                        
+                        <Div width="33%" justify_content="flex_start" >
+                            <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
+                                width="20px"/>
+                            </Div>
+                            <P>tmdgns32</P>
+                        </Div>
+                        <Div width="33%" justify_content="flex_start">
+                            <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}
+                            width="28px" margin="0 5px 0 0"/>
+                            <P>아주대학교</P>
+                        </Div>
+                    </RankDiv>
+                ))
+            }
+
             <ShowMore margin="5px 0" align_items="flex-end">
                 <P font_size="xxxs" font_weight="regular" color="grayscale6" margin="0 3px 0 0">더보기</P>
                 <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
