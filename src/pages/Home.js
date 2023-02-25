@@ -13,41 +13,65 @@ import { whichPageState } from "../recoil/PageState"
 
 // ===== import style =====
 import {H1} from "../styles/H1"
-import {Img, ImgBtn} from "../styles/Img"
 import {Div, ShadowDiv} from "../styles/Div"
+
+// ===== import style func =====
+import {color} from "../styles/style"
+
 
 // ===== style =====
 
-const RelativeDiv = styled(ShadowDiv)`
+const ItemBtnDiv = styled(ShadowDiv)`
     position:relative;
-    z-index: -1;
+    background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemDarkYellowIcon.png);
+    background-repeat : no-repeat;
+    background-position : right bottom;
+    z-index: 0;
+    &:hover{
+        background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemLightYellowIcon.png);
+        background-color : ${color("yellow2")};
+        box-shadow : none;
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        transition: 0.5s;
+    }
 `
-const AbsoluteImg = styled(Img)`
-    position:absolute;
-    right :0px;
-    z-index: -1;
+const AchivementBtnDiv = styled(ShadowDiv)`
+    position:relative;
+    background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achivementDarkYellowIcon.png);
+    background-repeat : no-repeat;
+    background-position : right bottom;
+    z-index: 0;
+    &:hover{
+        background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achivementLightYellowIcon.png);
+        background-color : ${color("yellow2")};
+        box-shadow : none;
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        transition: 0.5s;
+    }
 `
 
 //  ===== component =====
 const Home = () =>{
     const setPageState = useSetRecoilState(whichPageState)
 
-    // const loginMenuBtnEvent = (e)=>{
-    //     const target = e.target.id
+    const utilityBtnEvent = (e)=>{
+        const target = e.target.id
 
-    //     switch(target){
-    //         case "idfind_btn":
-    //             setPageState("idFind")
-    //             break
-    //         case "pwfind_btn":
-    //             setPageState("pwFind")
-    //             break
-    //         case "signup_btn":
-    //             setPageState("signUp")
-    //             break
-    //     }
+        switch(target){
+            case "item_btn":
+                setPageState("item")
+                break
+            case "achivement_btn":
+                setPageState("achivement")
+                break
+        }
 
-    // }
+    }
+
     return(
         <React.Fragment>
             <Div width = "100%" max_width="800px" height="730px" flex_direction="column">
@@ -58,17 +82,14 @@ const Home = () =>{
                 
                 <Profile/>
 
-                <Div width="100%"  max_width="693px" height="301px" justify_content="space-between">
-                    
-                    <RelativeDiv width="49%" height="204px"  ShadowDiv="none" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between">
-                        <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
-                        <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/itemDarkYellowIcon.png`}/>
-                    </RelativeDiv>
-                    
-                    <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between">
+                <Div width="100%"  max_width="693px" height="301px" justify_content="space-between" onClick={utilityBtnEvent}>
+                    <ItemBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between" id="item_btn">
                         <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
-                        <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/achivementDarkYellowIcon.png`}/>
-                    </RelativeDiv>
+                    </ItemBtnDiv>
+
+                    <AchivementBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between" id="achivement_btn">
+                        <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
+                    </AchivementBtnDiv>
                 </Div>
             </Div>
         </React.Fragment>

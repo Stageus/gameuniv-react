@@ -8,6 +8,8 @@ import Login from "../pages/Login"
 import Find from "../pages/Find"
 import SignUp from "../pages/SignUp"
 import Home from "../pages/Home"
+import Achivement from "../pages/Achivement"
+import Item from "../pages/Item"
 import Bg from "./Bg"
 
 // ===== import recoil =====
@@ -71,10 +73,12 @@ const Main = () =>{
                     </Div>
                     {/* 아마 따로 분리해야할 듯 */}
                     <Div flex_direction = "column" width = "50%" height="100vh">
-                        {whichPage ==="home" && <Home/>}
                         {whichPage === "logIn" && <Login></Login> }
                         {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>}
                         {whichPage === "signUp" && <SignUp></SignUp>}
+                        {whichPage ==="home" && <Home/>}
+                        {whichPage ==="item" && <Item/>}
+                        {whichPage ==="achivement" && <Achivement/>}
                     </Div>
                 </Div>
                 <Bg></Bg>
