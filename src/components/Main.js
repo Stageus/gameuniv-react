@@ -15,7 +15,7 @@ import Game2048 from "../pages/Game2048"
 // ===== import component =====
 import Bg from "./Bg"
 import Ranking from "./Ranking"
-
+import Modal from "./Modal"
 
 // ===== import recoil =====
 import { whichPageState } from "../../src/recoil/PageState"
@@ -66,6 +66,7 @@ const Main = () =>{
 
     return(
         <main>
+            <Modal></Modal>
             {
                 (whichPage !=="2048")
                 ?
