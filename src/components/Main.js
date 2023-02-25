@@ -24,7 +24,6 @@ import { whichPageState } from "../../src/recoil/PageState"
 import { Div } from "../styles/Div"
 import { Img, ImgBtn } from "../styles/Img"
 
-
 // ===== style =====
 const BackIcon = styled(ImgBtn)`
     position: fixed;
@@ -42,7 +41,6 @@ const BackIcon = styled(ImgBtn)`
     }
 
 `
-
 const BackIconBeforeBtn = styled(ImgBtn)`
     position:fixed;
     top: 90%;
@@ -66,7 +64,7 @@ const Main = () =>{
 
     return(
         <main>
-            <Modal></Modal>
+            {/* <Modal></Modal> */}
             {
                 (whichPage !=="2048")
                 ?
