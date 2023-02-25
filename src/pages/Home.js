@@ -20,7 +20,6 @@ import {color} from "../styles/style"
 
 
 // ===== style =====
-
 const ItemBtnDiv = styled(ShadowDiv)`
     position:relative;
     background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemDarkYellowIcon.png);
@@ -56,8 +55,9 @@ const AchivementBtnDiv = styled(ShadowDiv)`
 
 //  ===== component =====
 const Home = () =>{
+    // ===== recoil state =====
     const setPageState = useSetRecoilState(whichPageState)
-
+    // ===== event =====
     const utilityBtnEvent = (e)=>{
         const target = e.target.id
 
