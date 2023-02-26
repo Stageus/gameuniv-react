@@ -16,5 +16,5 @@ export const isModalOpenState = atom({
 // 사용하는 컴포넌트 : Modal.js
 export const whichModalState = atom({
     "key" : "whichModalState",
-    "default": "settingModal",
+    "default": "",
 })
