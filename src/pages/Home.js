@@ -67,7 +67,7 @@ const Home = () =>{
                 setPageState("item")
                 break
             case "achivement_btn":
-                setPageState("achivement")
+                setPageState("achievement")
                 break
         }
 

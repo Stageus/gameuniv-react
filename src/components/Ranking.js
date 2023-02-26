@@ -8,7 +8,7 @@ import Login from "../pages/Login"
 import Find from "../pages/Find"
 import SignUp from "../pages/SignUp"
 import Home from "../pages/Home"
-import Achivement from "../pages/Achivement"
+import Achievement from "../pages/Achievement"
 import Item from "../pages/Item"
 import Bg from "./Bg"
 
