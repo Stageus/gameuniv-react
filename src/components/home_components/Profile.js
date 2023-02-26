@@ -43,12 +43,10 @@ const ProfileChangeBeforeBtn = styled(ImgBtn)`
 //  ===== component =====
 const Profile = () =>{ 
     // ===== recoil state =====
-    // 수정한 부분
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
     // ===== event =====
-    // 수정한 부분
     const changeBtnEvent = (e) =>{
         setModalState("editProfileModal")
         setModalOpen(true)

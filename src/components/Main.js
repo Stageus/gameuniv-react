@@ -57,11 +57,20 @@ const BackIconBeforeBtn = styled(ImgBtn)`
         transition: 0.5s;
     }
 `
-
 const MainStyle = styled.main`
     display: flex;
     justify-content: center;
     width:100%;
+`
+const GameStartBeforeBtn = styled(ImgBtn)`
+    position:absolute;
+    &:hover{
+        opacity: 0;
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        transition: 0.5s;
+    }
 `
 
 //  ===== component =====
@@ -78,6 +87,12 @@ const Main = () =>{
         setModalState("quitGameModal")
         setModalOpen(true)
     }
+    //수정한 부분
+    const gameStartBtnEvent = (e) =>{
+        setModalState("gameSelectModal")
+        setModalOpen(true)
+    }
+
     return(
         <MainStyle>
             <Modal></Modal>
@@ -90,7 +105,14 @@ const Main = () =>{
                         {
                             (whichPage === "logIn" || whichPage==="home")
                             &&
-                            <Div width="100%"flex_direction="column" height="100vh" >
+                            <Div width="100%" flex_direction="column" align_items="flex-start" height="100vh">
+                                { //수정한 부분
+                                    whichPage==="home" && 
+                                    <Div margin="0 0 20px 0" onClick={gameStartBtnEvent}>
+                                        <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
+                                        <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
+                                    </Div>
+                                }
                                 <Ranking game="tetris"/>
                                 <Ranking game="2048"/>
                             </Div>
