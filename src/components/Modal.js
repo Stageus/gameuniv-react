@@ -48,7 +48,7 @@ const Modal = () =>{
     return(
         <Overlay>
             <Div width="400px" height="260px" background_color="grayscale1" 
-            flex_direction="column" justify_content="flex-start">
+            flex_direction="column" justify_content="flex-start" border_radius="3px">
                 
                 <Div width="100%" justify_content="flex-end">
                     <CancelBtn src= {`${process.env.PUBLIC_URL}/img_srcs/icons/crossGrayIcon.png`}/>
