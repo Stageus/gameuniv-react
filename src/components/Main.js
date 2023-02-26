@@ -8,7 +8,7 @@ import Login from "../pages/Login"
 import Find from "../pages/Find"
 import SignUp from "../pages/SignUp"
 import Home from "../pages/Home"
-import Achivement from "../pages/Achivement"
+import Achievement from "../pages/Achievement"
 import Item from "../pages/Item"
 import Game2048 from "../pages/Game2048"
 
@@ -106,7 +106,7 @@ const Main = () =>{
                         {whichPage === "signUp" && <SignUp></SignUp>}
                         {whichPage ==="home" && <Home/>}
                         {whichPage ==="item" && <Item/>}
-                        {whichPage ==="achivement" && <Achivement/>}
+                        {whichPage ==="achievement" && <Achievement/>}
                         
                     </Div>
                     

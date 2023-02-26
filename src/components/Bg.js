@@ -12,11 +12,18 @@ import { whichPageState } from "../recoil/PageState"
 import { Img } from "../styles/Img"
 
 // ===== style =====
-const BgImg = styled(Img)`
+const ClaerImg = styled(Img)`
     position: absolute;
     top: ${props => props.top || "100%"};
     right: ${props => props.right || "100%"};
     opacity:0.2;
+    transform:rotate(${props => props.deg || "30deg"});
+    z-index:-1;
+`
+const SolidImg = styled(Img)`
+    position: absolute;
+    top: ${props => props.top || "100%"};
+    right: ${props => props.right || "100%"};
     transform:rotate(${props => props.deg || "30deg"});
     z-index:-1;
 `
@@ -33,19 +40,28 @@ const Bg = () =>{
             whichPage ==="logIn" 
             &&
             <React.Fragment>
-                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="70%" right="30%" deg="-10deg"/>
-                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="0%" right="0%"/>
+                <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="70%" right="30%" deg="-10deg"/>
+                <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="0%" right="0%"/>
             </React.Fragment>
         }
         {
             ( whichPage === "idFind" || whichPage === "pwFind" || whichPage==="signUp")
             &&
             <React.Fragment>
-                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="0%" right="50%" deg="-10deg"/>
-                <BgImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="60%" right="75%"/>
+                <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="0%" right="50%" deg="-10deg"/>
+                <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="60%" right="75%"/>
             </React.Fragment>
         }
-            
+        {
+            whichPage==="item"
+            &&
+            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="480px" top="10%" right="72%" deg="20deg"/>
+        }
+        {
+            whichPage==="achievement"
+            &&
+            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="700px" top="20%" right="68%" deg="-10deg"/>
+        } 
         </React.Fragment>
     )
 }
