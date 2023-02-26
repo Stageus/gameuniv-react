@@ -66,7 +66,7 @@ const Main = () =>{
 
     return(
         <main>
-            <Modal></Modal>
+            {/* <Modal></Modal> */}
             {
                 (whichPage !=="2048")
                 ?
