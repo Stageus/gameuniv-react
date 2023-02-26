@@ -4,7 +4,8 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
 //  ===== import recoil =====
-
+// 수정한 부분
+import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
 
 // ===== import style =====
 import {H1} from "../../styles/H1"
@@ -41,6 +42,17 @@ const ProfileChangeBeforeBtn = styled(ImgBtn)`
 
 //  ===== component =====
 const Profile = () =>{ 
+    // ===== recoil state =====
+    // 수정한 부분
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
+
+    // ===== event =====
+    // 수정한 부분
+    const changeBtnEvent = (e) =>{
+        setModalState("editProfileModal")
+        setModalOpen(true)
+    }
 
     return(
         <ProfileInfoDiv  width = "100%" max_width="693px" height="301px" flex_direction="column" align_items="flex-end">
@@ -51,7 +63,7 @@ const Profile = () =>{
                 {/* 백엔드 데이터 */}
                 <Img width="150px" src={`${process.env.PUBLIC_URL}/img_srcs/Profiles/defaultProfileImg0.png`}/>
             </ProfileInfoImgDiv>
-            <ProfileChangeBtn>
+            <ProfileChangeBtn onClick={changeBtnEvent}>
                 <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeAfterBtnImg.png`}
                 width="55px" padding="0 10px"/>
                 <ProfileChangeBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeBeforeBtnImg.png`}

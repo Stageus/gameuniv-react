@@ -58,42 +58,44 @@ const UploadBox = () =>{
     console.log(imgFile)
     return(
         <React.Fragment>
+            <Div  background_color="blue5" border_radius="3px" width="312px" height="188px">
             {/* 드래그 앤 드롭 박스 */}
             
-            <label htmlFor="profileImg">
-                <FileInput type="file" accept=".jpg, .png" id="profileImg" onChange={saveImgFile} ref={imgRef}/>
-                {
-                    imgFile === ""
-                    ?
-                    // {/* 이미지 업로드 전 */}
-                    <Div width="142px" height="135px" border={`3px dashed ${color("blue3")}`} border_radius="10px">
-                        <Div flex_direction="column" height="100%">
-                            <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/upLoadIcon.png`} width="26px"/>
-                            <P color="blue3" font_size="xxxs" font_weight="regular" padding="15px 0 0 0">Upload File (jpg,png)</P>
-                            <P color="blue3" font_size="xxxs" font_weight="regular" padding="3px 0 0 0">용량 5MB이하</P>
-                            <P color="blue3" font_size="xxxs" font_weight="regular" padding="3px 0 0 0">이미지 크기 5000px이하</P>
+                <label htmlFor="profileImg">
+                    <FileInput type="file" accept=".jpg, .png" id="profileImg" onChange={saveImgFile} ref={imgRef}/>
+                    {
+                        imgFile === ""
+                        ?
+                        // {/* 이미지 업로드 전 */}
+                        <Div width="142px" height="135px" border={`3px dashed ${color("blue3")}`} border_radius="10px">
+                            <Div flex_direction="column" height="100%">
+                                <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/upLoadIcon.png`} width="26px"/>
+                                <P color="blue3" font_size="xxxs" font_weight="regular" padding="15px 0 0 0">Upload File (jpg,png)</P>
+                                <P color="blue3" font_size="xxxs" font_weight="regular" padding="3px 0 0 0">용량 5MB이하</P>
+                                <P color="blue3" font_size="xxxs" font_weight="regular" padding="3px 0 0 0">이미지 크기 5000px이하</P>
+                            </Div>
+                            
                         </Div>
-                        
-                    </Div>
-                    :
-                    // {/* 이미지 업로드 후 */}
-                    <Div width="142px" height="135px">
-                        <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
-                            <Img src={imgFile ? imgFile :`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                            width="100px" height="100px" border_radius="50%"/>    
+                        :
+                        // {/* 이미지 업로드 후 */}
+                        <Div width="142px" height="135px">
+                            <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
+                                <Img src={imgFile ? imgFile :`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
+                                width="100px" height="100px" border_radius="50%"/>    
+                            </Div>
                         </Div>
+                    }
+                </label>
+                {/* 프로필 이미지 */}
+                <Div flex_direction="column" >
+                    <Div>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"/>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"/>
                     </Div>
-                }
-            </label>
-            {/* 프로필 이미지 */}
-            <Div flex_direction="column" >
-                <Div>
-                    <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"/>
-                    <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"/>
-                </Div>
-                <Div>
-                    <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"/>
-                    <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"/>
+                    <Div>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"/>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"/>
+                    </Div>
                 </Div>
             </Div>
         </React.Fragment>
