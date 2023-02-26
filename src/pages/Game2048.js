@@ -5,7 +5,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
-
+import { isModalOpenState, whichModalState } from "../recoil/ModalState"
 // ===== import style =====
 import {H1} from "../styles/H1"
 import {Img} from "../styles/Img"
@@ -34,7 +34,15 @@ const GameBox = styled(Div)`
 
 //  ===== component =====
 const Game2048 = () =>{
+    // ===== recoil state =====
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
 
+    // ===== event =====
+    const retryBtnEvent = (e) =>{
+        setModalState("retryGameModal")
+        setModalOpen(true)
+    }
     
     return(
         <BoxWrap>
@@ -46,7 +54,7 @@ const Game2048 = () =>{
                         <Div width="100%" background_color="blue3" border_radius="5px" height="71px" margin="0 0 10px 0">
                             <H1 color="grayscale1" font_size="xl" font_weight="regular" >2048</H1>
                         </Div>
-                        <Button font_size="xs" width="70%" height="38px">다시하기</Button>
+                        <Button font_size="xs" width="70%" height="38px" onClick={retryBtnEvent}>다시하기</Button>
                     </Div>
                     <Div width="45%" background_color="blue3" height="100%" border_radius="5px">
                         랭킹 판

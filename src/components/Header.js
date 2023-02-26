@@ -1,6 +1,10 @@
 // ===== import base =====
 import React from "react"
 import styled from "styled-components"
+import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
+
+// ===== import recoil =====
+import { isModalOpenState, whichModalState } from "../recoil/ModalState"
 
 // ===== import style =====
 import {Img, ImgBtn} from "../styles/Img"
@@ -10,6 +14,8 @@ import { P } from "../styles/P"
 // ===== import style fun =====
 import { color, fontWeight, fontSize } from "../styles/style"
 
+// ===== import hooks =====
+import { useSetModalState } from "../hooks/useSetModalState"
 
 //  ===== component =====
 
@@ -34,9 +40,17 @@ const SettingBeforeBtn = styled(ImgBtn)`
 `
 // 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
 const Header = () =>{
+    // ===== recoil state =====
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
 
+    // ===== event =====
+    const settingBtnEvent = (e) =>{
+        setModalState("settingModal")
+        setModalOpen(true)
+    }
     return(
-        <Header_style>
+        <Header_style onClick={settingBtnEvent}>
             <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/icons/headerLogoIcon.png`} height="64px" padding="10px"
             onClick={()=> window.location.reload()}/>
                 
@@ -48,7 +62,7 @@ const Header = () =>{
                 {/* <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/${isMouseHover ? "settingAfterBtnImg.png": "settingBeforeBtnImg.png" } `} 
                 onMouseOver={()=> setMouseHover(true)} onMouseOut={()=> setMouseHover(false)}
                 width="60px" padding="0 10px"/> */}
-                <Div>
+                <Div onClick={useSetModalState("settingModal")}>
                     <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingAfterBtnImg.png`}
                     width="47px" padding="0 10px" margin="0 10px 6px 0"/>
                     <SettingBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`}

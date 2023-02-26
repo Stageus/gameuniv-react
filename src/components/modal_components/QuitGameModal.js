@@ -6,11 +6,12 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 // ===== import component =====
 
 // ===== import recoil =====
-import { whichModalState } from "../../recoil/ModalState"
+import { whichPageState } from "../../recoil/PageState"
 
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
 import { Div } from "../../styles/Div"
+import { P } from "../../styles/P"
 import { Button } from "../../styles/Button"
 
 // ===== import style func =====
@@ -21,16 +22,13 @@ import { color } from "../../styles/style"
 
 //  ===== component =====
 
-const SettingModal = () =>{
-    const setModalState = useSetRecoilState(whichModalState)
+const QuitGameModal = () =>{
     return(
-        <Div width="600px" height="260px">
-            환경설정
-            <Button onClick={()=>setModalState("deleteAccountModal")}>계정 삭제</Button>
-            <Button onClick={()=>setModalState("developInfoModal")}>개발자 정보</Button>
-            <Button>로그아웃</Button>
+        <Div width="400px" height="260px" flex_direction="column" justify_content="space-evenly">
+            <P font_size="m" margin="0 0 10px 0">정말 나가시겠습니까?</P>
+            <Button width="110px" height="37px">네</Button>
         </Div>
     )
 }
 
-export default SettingModal
+export default QuitGameModal
