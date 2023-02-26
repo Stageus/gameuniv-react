@@ -12,7 +12,7 @@ import PurchaseItemModal from "./modal_components/PurchaseItemModal"
 import QuitGameModal from "./modal_components/QuitGameModal"
 import Ranking from "./Ranking"
 import RetryGameModal from "./modal_components/RetryGameModal"
-import SelectGameModal from "./modal_components/SelectGameModal"
+import GameSelectModal from "./modal_components/GameSelectModal"
 import SettingModal from "./modal_components/SettingModal"
 
 // ===== import recoil =====
@@ -80,10 +80,13 @@ const Modal = (props) =>{
             <Overlay onClick={modalEvent} id="overlay">
                 <Div background_color="grayscale1" 
                 flex_direction="column" justify_content="flex-start" border_radius="3px">
-                    
-                    <Div width="100%" justify_content="flex-end">
-                        <CancelBtn src= {`${process.env.PUBLIC_URL}/img_srcs/icons/crossGrayIcon.png`} id="cancel_btn"/>
-                    </Div>
+                    {/* 수정된 부분 - 게임오버 모달은 끄기 비활성화*/}
+                    { 
+                        whichModal != "gameOverModal" && 
+                            <Div width="100%" justify_content="flex-end">
+                                <CancelBtn src= {`${process.env.PUBLIC_URL}/img_srcs/icons/crossGrayIcon.png`} id="cancel_btn"/>
+                            </Div>
+                    }
                     <main>
                         {/* 여기에 조건에 따라 모달 넣으면 될듯 합니다 */}
                         {/* width height는 각 모달에서 지정해주시면 됩니다. */}
@@ -95,7 +98,7 @@ const Modal = (props) =>{
                         { whichModal === "quitGameModal" && <QuitGameModal/>}
                         { whichModal === "rankingModal" && <RankingModal/>}
                         { whichModal === "retryGameModal" && <RetryGameModal/>}
-                        { whichModal === "selectGameModal" && <SelectGameModal/>}
+                        { whichModal === "gameSelectModal" && <GameSelectModal/>}
                         { whichModal === "settingModal" && <SettingModal/>}
                     </main>
                 </Div>
