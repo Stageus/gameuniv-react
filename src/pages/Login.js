@@ -28,8 +28,10 @@ const Logo = styled(Img)`
 //  ===== component =====
 
 const Login = () =>{
+    // ===== recoil state =====
     const setPageState = useSetRecoilState(whichPageState)
 
+    // ===== event =====
     const loginMenuBtnEvent = (e)=>{
         const target = e.target.id
 

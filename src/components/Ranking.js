@@ -1,7 +1,7 @@
 // ===== import base =====
 import React from "react"
 import styled, {css} from "styled-components"
-import { useRecoilValue } from "recoil"
+import { useRecoilValue, useSetRecoilState } from "recoil"
 
 // ===== import component =====
 import Login from "../pages/Login"
@@ -14,6 +14,7 @@ import Bg from "./Bg"
 
 // ===== import recoil =====
 import { whichPageState } from "../../src/recoil/PageState"
+import { isModalOpenState, whichModalState } from "../recoil/ModalState"
 
 // ===== import style =====
 import { Div } from "../styles/Div"
@@ -90,7 +91,14 @@ const ShowMore = styled(Div)`
 const Ranking = (props) =>{
     // ===== recoil state =====
     const game = props.game
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
 
+    // ===== event =====
+    const showMoreBtnEvent = (e) =>{
+        setModalState("rankingModal")
+        setModalOpen(true)
+    }
     // ===== variable =====
     const rank = [1,2,3,4,5]
 
@@ -143,7 +151,7 @@ const Ranking = (props) =>{
                 ))
             }
 
-            <ShowMore margin="5px 0" align_items="flex-end">
+            <ShowMore margin="5px 0" align_items="flex-end" onClick={showMoreBtnEvent}>
                 <P font_size="xxxs" font_weight="regular" color="grayscale6" margin="0 3px 0 0">더보기</P>
                 <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
                 width="14px" margin="0 5px 0 0"/>

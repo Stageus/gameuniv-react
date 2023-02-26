@@ -20,13 +20,13 @@ export const Button = styled.button`
     
     // 버튼 초기설정 
     //배경 blue3 글씨 grayscale1 font-size m font-weight bold
-    background-color: ${(props) => color(props.color) || color("blue3")};
+    background-color: ${(props) => color(props.color) || props.btn_type ==="red" ? color("red1") :color("blue3")};
     color: ${(props) => color(props.background_color) || color("grayscale1")};
     font-size: ${ (props) => fontSize(props.font_size) || fontSize("m")};
     ${ (props)=> fontWeight(props.font_weight)|| fontWeight("regular")};
 
     &:hover{
-        background-color: ${color("blue4")};
+        background-color: ${(props) => props.btn_type ==="red" ? color("red2") :color("blue4")};
         transition: 0.5s;
     }
     &:not(:hover){

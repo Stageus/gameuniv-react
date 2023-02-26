@@ -1,7 +1,7 @@
 // ===== import base =====
 import React from "react"
 import styled from "styled-components"
-import { useRecoilValue } from "recoil"
+import { useRecoilValue, useSetRecoilState } from "recoil"
 
 // ===== import page =====
 import Login from "../pages/Login"
@@ -17,9 +17,12 @@ import Bg from "./Bg"
 import Ranking from "./Ranking"
 import Modal from "./Modal"
 
+// ===== import hook =====
+import { useSetModalState } from "../hooks/useSetModalState"
+
 // ===== import recoil =====
 import { whichPageState } from "../../src/recoil/PageState"
-
+import { isModalOpenState ,whichModalState } from "../recoil/ModalState"
 // ===== import style =====
 import { Div } from "../styles/Div"
 import { Img, ImgBtn } from "../styles/Img"
@@ -55,20 +58,33 @@ const BackIconBeforeBtn = styled(ImgBtn)`
     }
 `
 
+const MainStyle = styled.main`
+    display: flex;
+    justify-content: center;
+    width:100%;
+`
+
 //  ===== component =====
 
 // 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
 const Main = () =>{
     // ===== recoil state =====
     const whichPage = useRecoilValue(whichPageState)
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
 
+    // ===== event =====
+    const backBtnEvent = (e) =>{
+        setModalState("quitGameModal")
+        setModalOpen(true)
+    }
     return(
-        <main>
-            {/* <Modal></Modal> */}
+        <MainStyle>
+            <Modal></Modal>
             {
                 (whichPage !=="2048")
                 ?
-                <Div width="100%">
+                <Div width="90%">
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     <Div width="50%">
                         {
@@ -80,10 +96,7 @@ const Main = () =>{
                             </Div>
                         }
                         
-                        <Div>
-                            <BackIconBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`} />
-                            <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`} />
-                        </Div>
+                        
                         
                     </Div>
                     {/* 아마 따로 분리해야할 듯 */}
@@ -104,11 +117,13 @@ const Main = () =>{
                 </Div>
                 
             }
-                
-                
-
-                <Bg></Bg>
-        </main>
+            
+            <Div onClick={backBtnEvent}>
+                <BackIconBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`} />
+                <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`} />
+            </Div>
+            <Bg></Bg>
+        </MainStyle>
     )
 }
 

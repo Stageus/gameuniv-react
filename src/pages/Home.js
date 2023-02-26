@@ -11,6 +11,7 @@ import Individual2048Ranking from "../components/home_components/Individual2048R
 //  ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
 
+
 // ===== import style =====
 import {H1} from "../styles/H1"
 import {Div, ShadowDiv} from "../styles/Div"
