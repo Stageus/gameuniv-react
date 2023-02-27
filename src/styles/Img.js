@@ -16,3 +16,6 @@ export const Img = styled.img`
 export const ImgBtn = styled(Img)`
     cursor:pointer;
 `
+export const NoneEventImg = styled(Img)`
+    pointer-events: none;
+`

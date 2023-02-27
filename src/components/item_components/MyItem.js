@@ -65,7 +65,6 @@ const MyItem = () =>{
                 return <ItemUnit key={data} index={index}/>
                 })
             } 
-            <ItemUnit/>
         </React.Fragment>
     )
 }

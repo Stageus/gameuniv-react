@@ -65,7 +65,6 @@ const DibsOn = () =>{
                 return <ItemUnit key={data} index={index}/>
                 })
             } 
-            <ItemUnit/>
         </React.Fragment>
     )
 }

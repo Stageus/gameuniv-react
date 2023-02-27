@@ -5,7 +5,7 @@ import {atom, selector} from "recoil"
 // 사용하는 컴포넌트 : ItemContainer.js /Store.js
 export const storeDataState = atom({
     "key" : "storeDataState",
-    "default": null,
+    "default": null
 })
 
 // 스테이트 역할 : 찜목록 동적 데이터 저장
@@ -13,7 +13,7 @@ export const storeDataState = atom({
 // 사용하는 컴포넌트 : ItemContainer.js /DibsOn.js
 export const dibsOnDataState = atom({
     "key" : "dibsOnDataState",
-    "default": null,
+    "default": null
 })
 
 // 스테이트 역할 : 내아이템 동적 데이터 저장
@@ -21,7 +21,7 @@ export const dibsOnDataState = atom({
 // 사용하는 컴포넌트 : ItemContainer.js /MyItem.js
 export const myItemDataState = atom({
     "key" : "myItemDataState",
-    "default": null,
+    "default": null
 })
 
 // 스테이트 역할 : 테트리스 업적 동적 데이터 저장
@@ -29,7 +29,7 @@ export const myItemDataState = atom({
 // 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
 export const achievementTetrisDataState = atom({
     "key" : "achievementTetrisDataState",
-    "default": null,
+    "default": null
 })
 
 // 스테이트 역할 : 2048 업적 동적 데이터 저장
@@ -37,6 +37,6 @@ export const achievementTetrisDataState = atom({
 // 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
 export const achievement2048DataState = atom({
     "key" : "achievement2048DataState",
-    "default": null,
+    "default": null
 })
 
