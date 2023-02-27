@@ -21,3 +21,6 @@ export const P = styled.p`
 export const LinkP = styled(P)`
     cursor:pointer;
 `
+export const NoneEventP = styled(P)`
+    pointer-events: none;
+`

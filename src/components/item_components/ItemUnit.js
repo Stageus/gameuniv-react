@@ -28,7 +28,7 @@ const ItemUnit = (props) =>{
         item_data = storeData
     }else if(whichItemComponent==="dibsOn"){
         item_data = dibsOnData
-    }else{
+    }else if(whichItemComponent==="myItem"){
         item_data = myItemData
     }
 

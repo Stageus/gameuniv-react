@@ -36,7 +36,7 @@ const GameSelectModal = () =>{
     //삭제할 스테이트
     const setModalState = useSetRecoilState(whichModalState)
 
-    //수정한 부분
+    // ===== event =====
     const gameSelctBtnEvent = (e)=>{
         const target = e.target.id
 
