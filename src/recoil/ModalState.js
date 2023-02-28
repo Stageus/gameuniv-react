@@ -12,7 +12,7 @@ export const isModalOpenState = atom({
 
 // 스테이트 역할 : 모달 내부 내용 변경
 // default : deleteAccountModal, developInfoModal, editProfileModal, gameOverModal,
-// purchaseItemModal, quitGameModal, rankingModal, retryGameModal, selectGameModal, settingModal ,gameSelectModal, gameOverModal
+// purchaseItemModal, quitGameModal, rankingModal, retryGameModal, selectGameModal, settingModal ,gameSelectModal, gameOverModal, itemPurchaseModal
 // 사용하는 컴포넌트 : Modal.js
 export const whichModalState = atom({
     "key" : "whichModalState",

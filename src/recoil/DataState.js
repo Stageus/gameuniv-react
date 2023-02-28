@@ -40,3 +40,11 @@ export const achievement2048DataState = atom({
     "default": null
 })
 
+// 스테이트 역할 : 아이템 인덱스 저장 -> 아이템 자세히보기를 위해
+// default : item index
+// 사용하는 컴포넌트 : ItemUnit.js
+export const itemIndexDataState = atom({
+    "key" : "itemIndexDataState",
+    "default": null
+})
+
