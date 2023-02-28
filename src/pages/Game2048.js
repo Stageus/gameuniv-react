@@ -6,6 +6,8 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
 import { isModalOpenState, whichModalState } from "../recoil/ModalState"
+import { useSetModalState } from "../hooks/useSetModalState"
+
 // ===== import style =====
 import {H1} from "../styles/H1"
 import {Img} from "../styles/Img"
@@ -14,22 +16,6 @@ import {Input} from "../styles/Input"
 import {Button} from "../styles/Button"
 import {P} from "../styles/P"
 
-// ===== style =====
-const BoxWrap = styled(Div)`
-    position:absolute;
-    width: 60%;
-    height: 0;
-    padding-bottom:70%;
-`
-
-const GameBox = styled(Div)`
-    position: absolute;
-    width:100%;
-    height:100%;
-    max-width:579px;
-    max-height:767px;
-    top:20%;
-`
 
 //  ===== component =====
 const Game2048 = () =>{
@@ -37,15 +23,9 @@ const Game2048 = () =>{
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
-    // ===== event =====
-    const retryBtnEvent = (e) =>{
-        setModalState("retryGameModal")
-        setModalOpen(true)
-    }
-    
     return(
-        <BoxWrap>
-            <GameBox background_color="blue5" justify_content="flex-start" border_radius="10px" flex_direction="column">
+            <Div background_color="blue5" justify_content="flex-start" width="580px" height="767px"
+            border_radius="10px" flex_direction="column">
                 {/* 게임 헤더 부분 */}
                 <Div width="95%" justify_content="space-between" margin="20px 0px" height="135px">
                     <Div flex_direction="column" width="35%" height="100%" 
@@ -53,7 +33,7 @@ const Game2048 = () =>{
                         <Div width="100%" background_color="blue3" border_radius="5px" height="71px" margin="0 0 10px 0">
                             <H1 color="grayscale1" font_size="xl" font_weight="regular" >2048</H1>
                         </Div>
-                        <Button font_size="xs" width="70%" height="38px" onClick={retryBtnEvent}>다시하기</Button>
+                        <Button font_size="xs" width="70%" height="38px" onClick={useSetModalState("retryGameModal")}>다시하기</Button>
                     </Div>
                     <Div width="45%" background_color="blue3" height="100%" border_radius="5px">
                         랭킹 판
@@ -63,9 +43,7 @@ const Game2048 = () =>{
                 <Div width="95%" height="80%" margin="0 0 20px 0" background_color="blue2" border_radius="5px">
                         sdsd
                 </Div>
-
-            </GameBox>
-        </BoxWrap>
+            </Div>
     )
 }
 export default Game2048

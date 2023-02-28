@@ -15,7 +15,7 @@ import Bg from "./Bg"
 // ===== import recoil =====
 import { whichPageState } from "../../src/recoil/PageState"
 import { isModalOpenState, whichModalState } from "../recoil/ModalState"
-
+import { useSetModalState } from "../hooks/useSetModalState"
 // ===== import style =====
 import { Div } from "../styles/Div"
 import { Img, ImgBtn } from "../styles/Img"
@@ -151,7 +151,7 @@ const Ranking = (props) =>{
                 ))
             }
 
-            <ShowMore margin="5px 0" align_items="flex-end" onClick={showMoreBtnEvent}>
+            <ShowMore margin="5px 0" align_items="flex-end" onClick={useSetModalState("rankingModal")}>
                 <P font_size="xxxs" font_weight="regular" color="grayscale6" margin="0 3px 0 0">더보기</P>
                 <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
                 width="14px" margin="0 5px 0 0"/>
