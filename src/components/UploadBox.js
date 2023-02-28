@@ -55,14 +55,29 @@ const UploadBox = () =>{
             setImgFile(reader.result)
         }
     }
-    console.log(imgFile)
+
+    const imgDrop = (e) =>{
+        e. preventDefault()
+        const file = [...e.dataTransfer?.files][0]
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onloadend = () =>{
+            setImgFile(reader.result)
+        }
+    }
+
+    const imgDragover = (e) =>{
+        e.preventDefault()
+    }
+
     return(
         <React.Fragment>
             <Div  background_color="blue5" border_radius="3px" width="312px" height="188px">
             {/* 드래그 앤 드롭 박스 */}
             
-                <label htmlFor="profileImg">
-                    <FileInput type="file" accept=".jpg, .png" id="profileImg" onChange={saveImgFile} ref={imgRef}/>
+                <label htmlFor="profileImg" onDrop={imgDrop} onDragOver={imgDragover}>
+                    <FileInput type="file" accept=".jpg, .png" id="profileImg" 
+                    onChange={saveImgFile} ref={imgRef}/>
                     {
                         imgFile === ""
                         ?
@@ -81,7 +96,7 @@ const UploadBox = () =>{
                         <Div width="142px" height="135px">
                             <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
                                 <Img src={imgFile ? imgFile :`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                                width="100px" height="100px" border_radius="50%"/>    
+                                width="100px" border_radius="50%"/>    
                             </Div>
                         </Div>
                     }
