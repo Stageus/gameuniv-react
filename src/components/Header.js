@@ -50,7 +50,7 @@ const Header = () =>{
         setModalOpen(true)
     }
     return(
-        <Header_style onClick={settingBtnEvent}>
+        <Header_style>
             <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/icons/headerLogoIcon.png`} height="64px" padding="10px"
             onClick={()=> window.location.reload()}/>
                 

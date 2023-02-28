@@ -52,8 +52,9 @@ const CancelBtn = styled(ImgBtn)`
 `
 
 //  ===== component =====
-const Modal = (props) =>{
+const Modal = () =>{
     // ===== recoil state =====
+    // const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
     const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
     const whichModal = useRecoilValue(whichModalState)
 
