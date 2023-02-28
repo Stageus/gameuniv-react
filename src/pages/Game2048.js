@@ -16,11 +16,10 @@ import {P} from "../styles/P"
 
 // ===== style =====
 const BoxWrap = styled(Div)`
-    position:relative;
+    position:absolute;
     width: 60%;
     height: 0;
     padding-bottom:70%;
-    
 `
 
 const GameBox = styled(Div)`
@@ -29,7 +28,7 @@ const GameBox = styled(Div)`
     height:100%;
     max-width:579px;
     max-height:767px;
-    top: 3%;
+    top:20%;
 `
 
 //  ===== component =====
