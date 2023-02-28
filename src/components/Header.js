@@ -44,11 +44,6 @@ const Header = () =>{
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
-    // ===== event =====
-    const settingBtnEvent = (e) =>{
-        setModalState("settingModal")
-        setModalOpen(true)
-    }
     return(
         <Header_style>
             <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/icons/headerLogoIcon.png`} height="64px" padding="10px"

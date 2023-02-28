@@ -83,10 +83,6 @@ const Main = () =>{
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
     // ===== event =====
-    const backBtnEvent = (e) =>{
-        setModalState("quitGameModal")
-        setModalOpen(true)
-    }
     //수정한 부분
     const gameStartBtnEvent = (e) =>{
         setModalState("gameSelectModal")
@@ -140,7 +136,7 @@ const Main = () =>{
                 
             }
             
-            <Div onClick={backBtnEvent}>
+            <Div onClick={useSetModalState("quitGameModal")}>
                 <BackIconBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`} />
                 <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`} />
             </Div>
