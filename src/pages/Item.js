@@ -9,13 +9,16 @@ import TabBtn from "../components/TabBtn"
 
 
 //  ===== import recoil =====
-import { whichItemComponentState } from "../recoil/ComponentState"
+import { whichItemComponentState, isItemShowDetailOpenComponentState } from "../recoil/ComponentState"
 
 // ===== import style =====
 import {H1} from "../styles/H1"
 import {Div} from "../styles/Div"
 
 // ===== style =====
+const ItemDiv = styled(Div)`
+    position :relative;
+`
 const ItemContainerDiv = styled(Div)`
     grid-gap: 20px;
     flex-wrap: wrap;
@@ -26,6 +29,7 @@ const ItemContainerDiv = styled(Div)`
 const Item = () =>{
     // ===== recoil state =====
     const setItemComponentState=useSetRecoilState(whichItemComponentState)
+    const setItemShowDetailOpenComponentState = useSetRecoilState(isItemShowDetailOpenComponentState)
     // ===== event =====
     const itemTabBtnEvent = (e)=>{
         const target = e.target.id
@@ -33,12 +37,15 @@ const Item = () =>{
         switch(target){
             case "tab1":
                 setItemComponentState("store")
+                setItemShowDetailOpenComponentState(false)
                 break
             case "tab2":
                 setItemComponentState("dibsOn")
+                setItemShowDetailOpenComponentState(false)
                 break
             case "tab3":
                 setItemComponentState("myItem")
+                setItemShowDetailOpenComponentState(false)
                 break
         }
 

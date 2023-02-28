@@ -14,6 +14,7 @@ import Ranking from "./Ranking"
 import RetryGameModal from "./modal_components/RetryGameModal"
 import GameSelectModal from "./modal_components/GameSelectModal"
 import SettingModal from "./modal_components/SettingModal"
+import ItemPurchaseModal from "./modal_components/ItemPurchaseModal"
 
 // ===== import recoil =====
 import { isModalOpenState, whichModalState } from "../recoil/ModalState"
@@ -100,6 +101,7 @@ const Modal = (props) =>{
                         { whichModal === "retryGameModal" && <RetryGameModal/>}
                         { whichModal === "gameSelectModal" && <GameSelectModal/>}
                         { whichModal === "settingModal" && <SettingModal/>}
+                        { whichModal === "itemPurchaseModal" && <ItemPurchaseModal/>}
                     </main>
                 </Div>
             </Overlay>
