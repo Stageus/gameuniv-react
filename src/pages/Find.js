@@ -15,16 +15,17 @@ import {Button} from "../styles/Button"
 import {P} from "../styles/P"
 
 //  ===== component =====
-const Find = () =>{
+const Find = (props) =>{
 
     const whichPage = useRecoilValue(whichPageState)
-
+    const which_find = props.which_find
+    console.log(which_find)
     return(
         <React.Fragment>
             {/* 아이디 찾기 페이지 */}
             {
-                whichPage === "idFind"
-                &&
+                which_find === "idfind"
+                ?
                 <React.Fragment>
                     <Div flex_direction="column" align_items="felx-start" padding="0 20px">
                         <H1 font_size= "xxl" padding="20px 0" color="grayscale7">아이디 찾기</H1>
@@ -34,12 +35,8 @@ const Find = () =>{
                     </Div>
                     <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px">아이디 찾기</Button>
                 </React.Fragment>
-            }
-            
-            {/* 비밀번호 찾기 페이지 */}
-            {
-                whichPage === "pwFind"
-                &&
+                :
+                // 비밀번호 찾기
                 <React.Fragment>
                     <Div flex_direction="column" align_items="felx-start" padding="0 20px">
                         <H1 font_size= "xxl" padding="20px 0" color="grayscale7">비밀번호 찾기</H1>
@@ -52,6 +49,7 @@ const Find = () =>{
                     <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px">비밀번호 찾기</Button>
                 </React.Fragment>
             }
+            
         </React.Fragment>
     )
 }

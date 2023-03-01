@@ -32,12 +32,13 @@ const SolidImg = styled(Img)`
 //  ===== component =====
 
 // 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
-const Bg = () =>{
-    const whichPage = useRecoilValue(whichPageState)
+const Bg = (props) =>{
+    // ===== props =====
+    const location = props.location
     return(
         <React.Fragment>
         {
-            whichPage ==="logIn" 
+            location ==="/" 
             &&
             <React.Fragment>
                 <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="70%" right="30%" deg="-10deg"/>
@@ -45,14 +46,14 @@ const Bg = () =>{
             </React.Fragment>
         }
         {
-            ( whichPage === "idFind" || whichPage === "pwFind" || whichPage==="signUp")
+            ( location ==="/idfind"  || location ==="/pwfind"  || location ==="/signup" )
             &&
             <React.Fragment>
                 <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="0%" right="50%" deg="-10deg"/>
                 <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="60%" right="75%"/>
             </React.Fragment>
         }
-        {
+        {/* {
             whichPage==="item"
             &&
             <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="480px" top="10%" right="72%" deg="20deg"/>
@@ -61,7 +62,7 @@ const Bg = () =>{
             whichPage==="achievement"
             &&
             <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="700px" top="20%" right="68%" deg="-10deg"/>
-        } 
+        }  */}
         </React.Fragment>
     )
 }

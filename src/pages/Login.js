@@ -6,6 +6,9 @@ import styled from "styled-components"
 //  ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
 
+// ===== import react router =====
+import {Route, Link} from "react-router-dom"
+
 // ===== import style =====
 import {Img} from "../styles/Img"
 
@@ -36,18 +39,6 @@ const Login = () =>{
         const target = e.target.id
 
         switch(target){
-            case "idfind_btn":
-                setPageState("idFind")
-                break
-            case "pwfind_btn":
-                setPageState("pwFind")
-                break
-            case "signup_btn":
-                setPageState("signUp")
-                break
-            case "login_btn":
-                setPageState("home")
-                break
             case "2048_btn":
                 setPageState("2048")
                 break
@@ -77,13 +68,22 @@ const Login = () =>{
 
                     <Div flex_direction="column" onClick={loginMenuBtnEvent}>
                         <Div margin="0 0 10px 0">
-                            <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</LinkP>
-                            <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">비밀번호 찾기</LinkP>
-                            <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
+                            <Link to={"/idfind"} which_find="idfind">
+                                <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</LinkP>
+                            </Link>
+                            
+                            <Link to={"/pwfind"}>
+                                <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">비밀번호 찾기</LinkP>
+                            </Link>
+                            
+                            <Link to={"/signup"}>
+                                <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
+                            </Link>
                         </Div>
-                        <Button type="button" width="100%" max_width="341px" height="56px" id="login_btn">로그인</Button>
-                        {/* 임시 게임 구현 확인용 */}
-                        <Button type="button" width="100%" margin="5px" id="2048_btn">2048 구현 확인용</Button>
+                        <Link to={"/home"}>
+                            <Button type="button" width="341px" height="56px" id="login_btn">로그인</Button>
+                        </Link>
+                        
                     </Div>
                     
                 </form>
