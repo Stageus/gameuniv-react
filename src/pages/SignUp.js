@@ -11,6 +11,9 @@ import BtnAnimation from "../components/BtnAnimation"
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
 
+// ===== import react router =====
+import {Route, Link} from "react-router-dom"
+
 // ===== import style =====
 import {H1} from "../styles/H1"
 import {Div} from "../styles/Div"
@@ -94,7 +97,6 @@ const SignUp = () =>{
 
     // ===== state =====
     const [stepState, setStep] = React.useState(1)
-    const [isMouseHover, setMouseHover] = React.useState(false)
 
     // ===== recoil state =====
     const setPageState = useSetRecoilState(whichPageState)
@@ -190,7 +192,10 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">GameUniv에 가입해주셔서 감사합니다</P>
                             <P font_size = "xxs" padding="10px 0">지금 바로 GameUniv에 접속해 전국 대학교 친구들과 즐기세요<br/></P>
                             <Div width="100%">
-                                <Button margin="10px 0" font_size = "s" width="100%" max_width="273px" height="50px" onClick={()=>setPageState("logIn")}>로그인 페이지로 이동</Button>
+                                <Link to="/">
+                                    <Button margin="10px 0" font_size = "s" width="273px" height="50px" onClick={()=>setPageState("logIn")}>로그인 페이지로 이동</Button>
+                                </Link>
+                                
                             </Div>
                         </Div>
                     }

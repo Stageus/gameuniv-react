@@ -18,6 +18,8 @@ import Ranking from "./Ranking"
 import Modal from "./Modal"
 import BtnAnimation from "./BtnAnimation"
 
+// ===== import react router =====
+import {Routes, Route, useParams, useLocation} from "react-router-dom"
 
 // ===== import hook =====
 import { useSetModalState } from "../hooks/useSetModalState"
@@ -65,6 +67,7 @@ const Main = () =>{
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
+    const location = useLocation().pathname;
     // ===== event =====
     //수정한 부분
     const gameStartBtnEvent = (e) =>{
@@ -75,41 +78,53 @@ const Main = () =>{
     return(
         <MainStyle>
             <Modal></Modal>
+            
             {
                 (whichPage !=="2048")
                 ?
                 <Div width="90%">
                     {/* 아마 랭킹 컴포넌트 자리 */}
+                    
                     <Div width="50%">
-                        {
-                            (whichPage === "logIn" || whichPage==="home")
-                            &&
-                            <Div width="100%" flex_direction="column" align_items="flex-start" height="100vh">
-                                { //수정한 부분
-                                    whichPage==="home" && 
-                                    <Div margin="0 0 20px 0" onClick={gameStartBtnEvent}>
-                                        <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
-                                        <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
-                                    </Div>
-                                }
-                                <Ranking game="tetris"/>
-                                <Ranking game="2048"/>
-                            </Div>
-                        }
-                        
-                        
-                        
+                        <Div width="100%" flex_direction="column" align_items="flex-start" height="100vh">
+                            {/* 게임시작 버튼 */}
+                            { //수정한 부분
+                                location==="/home" && 
+                                <Div margin="0 0 20px 0" onClick={gameStartBtnEvent}>
+                                    <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
+                                    <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
+                                </Div>
+                            }
+                            {/* 랭킹 판 */}
+                            {
+                                (location === "/" || location === "/home")
+                                &&
+                                <React.Fragment>
+                                    <Ranking game="tetris"/>
+                                    <Ranking game="2048"/>
+                                </React.Fragment>
+                                
+                            }
+                        </Div>                                                
                     </Div>
-                    {/* 아마 따로 분리해야할 듯 */}
                     <Div flex_direction = "column" width = "50%" height="100vh">
-                        {whichPage === "logIn" && <Login></Login> }
-                        {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>}
-                        {whichPage === "signUp" && <SignUp></SignUp>}
-                        {whichPage ==="home" && <Home/>}
-                        {whichPage ==="item" && <Item/>}
-                        {whichPage ==="achievement" && <Achievement/>}
-                        
+                        <Routes>
+                            <Route path="/" element = {<Login/>}/>
+                            <Route path="/home" element = {<Home/>}/>
+                            <Route path="/signup" element = {<SignUp/>}/>
+                            <Route path="/idfind" element = {<Find which_find="idfind"/>} />
+                            <Route path="/pwfind" element = {<Find/>}/>
+                            {/* 나머지 부분 추가해주시면 될듯 합니다 */}
+                        </Routes>
                     </Div>
+
+                    {/* 아마 따로 분리해야할 듯 */}
+                        {/* {whichPage === "logIn" && <Login></Login> } */}
+                        {/* {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>} */}
+                        {/* {whichPage === "signUp" && <SignUp></SignUp>} */}
+                        {/* {whichPage ==="home" && <Home/>} */}
+                        {/* {whichPage ==="item" && <Item/>} */}
+                        {/* {whichPage ==="achievement" && <Achievement/>} */}
                     
                 </Div>
                 :
@@ -126,9 +141,10 @@ const Main = () =>{
                 after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
                 />
             </BackDiv>
-            <Bg></Bg>
+            <Bg location={location}></Bg>
         </MainStyle>
     )
 }
 
 export default Main
+
