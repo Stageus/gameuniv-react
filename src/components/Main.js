@@ -16,6 +16,8 @@ import Game2048 from "../pages/Game2048"
 import Bg from "./Bg"
 import Ranking from "./Ranking"
 import Modal from "./Modal"
+import BtnAnimation from "./BtnAnimation"
+
 
 // ===== import hook =====
 import { useSetModalState } from "../hooks/useSetModalState"
@@ -28,35 +30,12 @@ import { Div } from "../styles/Div"
 import { Img, ImgBtn } from "../styles/Img"
 
 // ===== style =====
-const BackIcon = styled(ImgBtn)`
-    position: fixed;
+const BackDiv = styled(Div)`
+    position:absolute;
     top: 90%;
-    left: 2%;
-    width: 48px;
-
-    &:hover{
-        opacity: 1;
-        transition: 0.5s;
-    }
-    &:not(:hover){
-        opacity: 0;
-        transition: 0.5s;
-    }
-
+    left:2%;
 `
-const BackIconBeforeBtn = styled(ImgBtn)`
-    position:fixed;
-    top: 90%;
-    left: 2%;
-    width: 48px;
-    &:hover{
-        opacity: 0;
-        transition: 0.5s;
-    }
-    &:not(:hover){
-        transition: 0.5s;
-    }
-`
+
 const MainStyle = styled.main`
     display: flex;
     justify-content: center;
@@ -77,6 +56,10 @@ const GameStartBeforeBtn = styled(ImgBtn)`
 
 // 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
 const Main = () =>{
+
+    // ===== state =====
+    const [isMouseHover, setMouseHover] = React.useState(false)
+
     // ===== recoil state =====
     const whichPage = useRecoilValue(whichPageState)
     const setModalState = useSetRecoilState(whichModalState)
@@ -136,10 +119,13 @@ const Main = () =>{
                 
             }
             
-            <Div onClick={useSetModalState("quitGameModal")}>
-                <BackIconBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`} />
-                <BackIcon src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`} />
-            </Div>
+            {/* footer로 빼야할 듯 */}
+            <BackDiv>
+                <BtnAnimation event={useSetModalState("quitGameModal")}
+                before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
+                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
+                />
+            </BackDiv>
             <Bg></Bg>
         </MainStyle>
     )
