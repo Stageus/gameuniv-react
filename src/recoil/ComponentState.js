@@ -1,5 +1,6 @@
 import {atom, selector} from "recoil"
 
+// 컴포넌트
 
 // 스테이트 역할 : 아이템 목록 변경
 // default : store / dibsOn = 찜하다 / myItem
@@ -15,12 +16,4 @@ export const whichItemComponentState = atom({
 export const whichAchievementComponentState = atom({
     "key" : "whichAchievementComponentState",
     "default": "tetris",
-})
-
-// 스테이트 역할 : 아이템 자세히보기
-// default : boolean
-// 사용하는 컴포넌트 : Item.js / ItemUnit.js
-export const isItemShowDetailOpenComponentState = atom({
-    "key" : "isItemShowDetailOpenComponentState",
-    "default": false,
 })
