@@ -1,11 +1,12 @@
 // ===== import base =====
 import React from "react"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
 import UploadBox from "../components/UploadBox"
 import ProgressBar from "../components/ProgressBar"
+import BtnAnimation from "../components/BtnAnimation"
 
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
@@ -36,35 +37,41 @@ const SignUpPageBtn = styled(Button)`
     }
 `
 
+const fadeIn = keyframes`
+    0% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 1;
+    }
+`
+
+const fadeOut = keyframes`
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+`
+
 const Arrow = styled(ImgBtn)`
     position: relative;
     width: 48px;
     top : ${props=> props.top || "auto"};
     right : ${props=> props.right || "auto"};
     transform:rotate(${props => props.deg || "0deg"});
-
-    &:hover{
-        opacity: 1;
-        transition: 0.5s;
-    }
-    &:not(:hover){
-        opacity: 0;
-        transition: 0.5s;
-    }
+    animation: ${ props => props.isMouseHover && fadeIn} 0.5s;
+    
 `
-
-const ArrowBeforeBtn = styled(ImgBtn)`
-    position:absolute;
+const ArrowBefore = styled(ImgBtn)`
+    position: relative;
     width: 48px;
+    top : ${props=> props.top || "auto"};
+    right : ${props=> props.right || "auto"};
     transform:rotate(${props => props.deg || "0deg"});
-    &:hover{
-        opacity: 0;
-        transition: 0.5s;
-    }
-    &:not(:hover){
-        transition: 0.5s;
-    }
 `
+
 
 
 const StepDiv = styled(Div)`
@@ -87,6 +94,7 @@ const SignUp = () =>{
 
     // ===== state =====
     const [stepState, setStep] = React.useState(1)
+    const [isMouseHover, setMouseHover] = React.useState(false)
 
     // ===== recoil state =====
     const setPageState = useSetRecoilState(whichPageState)
@@ -94,10 +102,17 @@ const SignUp = () =>{
     return(
         <React.Fragment>
             <Div width="100%">
-                <Div padding="0 30px 0 0">
-                    <ArrowBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowBeforeBtnImg.png`} onClick={()=>setStep(stepState-1)} margin="0 0 0 10px"/>
-                    <Arrow src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowAfterBtnImg.png`} onClick={()=>setStep(stepState-1)} margin="0 0 0 10px"/>
-                </Div>
+                    
+                    <Div onClick={()=>setStep(stepState-1)} width="48px">
+                        {
+                            (stepState === 2 || stepState === 3)
+                            &&
+                            <BtnAnimation padding="0 30px 0 0"
+                            before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowBeforeBtnImg.png`}
+                            after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowAfterBtnImg.png`}/>
+                        }
+                    </Div>
+                
                 
                 <StepDiv flex_direction="column" width="80%" max_width="320px" height="440px" 
                 align_items={ stepState !== 4 ? "felx-start" : "center"} 
@@ -180,9 +195,16 @@ const SignUp = () =>{
                         </Div>
                     }
                 </StepDiv>
-                <Div padding="0 0 0 30px">
-                    <ArrowBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowBeforeBtnImg.png`} deg="180deg" onClick={()=>setStep(stepState+1)} margin="0 10px 0 0"/>
-                    <Arrow src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowAfterBtnImg.png`} deg="180deg" onClick={()=>setStep(stepState+1)} margin="0 10px 0 0"/>
+
+                <Div onClick={()=>setStep(stepState+1)} width="48px">
+                    {
+                        stepState === 4
+                        ||
+                        <BtnAnimation padding="0 0 0 30px"
+                        before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowBeforeBtnImg.png`}
+                        after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowAfterBtnImg.png`}
+                        deg={"180deg"}/>
+                    }
                 </Div>
             </Div>
         </React.Fragment>

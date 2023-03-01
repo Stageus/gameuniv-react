@@ -71,7 +71,6 @@ const Modal = () =>{
                 setModalOpen(!isModalOpen)
                 break
         }
-
     }
 
     return(
