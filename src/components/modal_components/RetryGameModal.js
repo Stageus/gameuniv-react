@@ -29,7 +29,7 @@ const RetryGameModal = () =>{
                 <P font_size="m" margin="0 0 10px 0">정말 다시 하시겠습니까?</P>
                 <P font_size="xxs">지금까지 진행한 게임내용은 저장되지 않습니다</P>
             </Div>
-            <Button width="110px" height="37px">네</Button>
+            <Button width="110px" height="37px" onClick={()=>window.location.reload()}>네</Button>
             
         </Div>
     )

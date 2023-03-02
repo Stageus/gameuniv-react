@@ -63,7 +63,7 @@ const Main = () =>{
     const [isMouseHover, setMouseHover] = React.useState(false)
 
     // ===== recoil state =====
-    const whichPage = useRecoilValue(whichPageState)
+    // const whichPage = useRecoilValue(whichPageState)
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
@@ -76,9 +76,17 @@ const Main = () =>{
         setModalState("gameSelectModal")
         setModalOpen(true)
     }
-    // event={useSetModalState("quitGameModal")}
+
+    // 뒤로가기 버튼
     const backBtnEvent = ()=>{
-        navigate(-1)
+        
+        if(location === "/2048"){
+            setModalState("quitGameModal")
+            setModalOpen(true)
+        }
+        else{
+            navigate(-1)
+        }
     }
     return(
         <MainStyle>
@@ -144,12 +152,17 @@ const Main = () =>{
                 </Div>
             
             {/* footer로 빼야할 듯 */}
-            <BackDiv onClick={backBtnEvent}>
-                <BtnAnimation 
-                before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
-                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
-                />
-            </BackDiv>
+            {
+                (location === "/" || location === "/home")
+                ||
+                <BackDiv onClick={backBtnEvent}>
+                    <BtnAnimation 
+                    before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
+                    after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
+                    />
+                </BackDiv>
+            }
+            
             <Bg location={location}></Bg>
         </MainStyle>
     )

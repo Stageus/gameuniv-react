@@ -98,9 +98,6 @@ const SignUp = () =>{
     // ===== state =====
     const [stepState, setStep] = React.useState(1)
 
-    // ===== recoil state =====
-    const setPageState = useSetRecoilState(whichPageState)
-
     // ===== var =====
     let id_double = false
     // ===== event =====
@@ -279,7 +276,7 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">지금 바로 GameUniv에 접속해 전국 대학교 친구들과 즐기세요<br/></P>
                             <Div width="100%">
                                 <Link to="/">
-                                    <Button margin="10px 0" font_size = "s" width="273px" height="50px" onClick={()=>setPageState("logIn")}>로그인 페이지로 이동</Button>
+                                    <Button margin="10px 0" font_size = "s" width="273px" height="50px">로그인 페이지로 이동</Button>
                                 </Link>
                                 
                             </Div>

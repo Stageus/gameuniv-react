@@ -32,19 +32,8 @@ const Logo = styled(Img)`
 
 const Login = () =>{
     // ===== recoil state =====
-    const setPageState = useSetRecoilState(whichPageState)
 
     // ===== event =====
-    const loginMenuBtnEvent = (e)=>{
-        const target = e.target.id
-
-        switch(target){
-            case "2048_btn":
-                setPageState("2048")
-                break
-        }
-
-    }
     return(
         <React.Fragment>
                 
@@ -66,7 +55,7 @@ const Login = () =>{
                         width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px"/>
                     </Div>
 
-                    <Div flex_direction="column" onClick={loginMenuBtnEvent}>
+                    <Div flex_direction="column">
                         <Div margin="0 0 10px 0">
                             <Link to={"/idfind"} which_find="idfind">
                                 <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</LinkP>
