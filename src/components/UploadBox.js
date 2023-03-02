@@ -40,6 +40,12 @@ const ProfileImg = styled(Img)`
     }
 `
 
+const PreviewImg = styled(Img)`
+    width:100px;
+    border-radius:50%;
+    max-height:100px;
+`
+
 const UploadBox = () =>{
 
     // ===== state =====
@@ -47,27 +53,56 @@ const UploadBox = () =>{
     const imgRef = React.useRef()
 
     // ===== func =====
+    const fileCheck = (file) =>{
+        const reader = new FileReader()
+        const max_size = 5*1024*1024
+        const file_size = file.size
+        const file_regex = /(\.png|\.jpg|\.jpeg)$/i
+        const file_check = file_regex.test(file.name)
+        
+        if( file_size > max_size){
+            alert("첨부파일 사이즈는 5MB 이내로 등록 가능합니다")
+        }
+        else if( !file_check){
+            alert("올바른 확장자가 아닙니다. jpg 또는 png파일만 올려주십시오")
+        }
+        else{
+            reader.readAsDataURL(file)
+            reader.onloadend = () =>{
+                setImgFile(reader.result)
+            }
+        }
+    }
+
     const saveImgFile = () =>{
         const file = imgRef.current.files[0]
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onloadend = () =>{
-            setImgFile(reader.result)
-        }
+        fileCheck(file)
     }
 
     const imgDrop = (e) =>{
         e. preventDefault()
         const file = [...e.dataTransfer?.files][0]
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onloadend = () =>{
-            setImgFile(reader.result)
-        }
+        fileCheck(file)
+        
     }
 
     const imgDragover = (e) =>{
         e.preventDefault()
+    }
+
+    const defaultProfileClickEvent = (e)=>{
+        const preview = document.getElementById("preview")
+        const target = e.target.id
+        switch(target){
+            case "default1":
+            case "default2":
+            case "default3":
+            case "default4":
+                setImgFile(e.target.src)
+                console.log(imgFile)
+                break
+        }
+        // console.log( document.getElementById("profileImg").value )
     }
 
     return(
@@ -95,21 +130,25 @@ const UploadBox = () =>{
                         // {/* 이미지 업로드 후 */}
                         <Div width="142px" height="135px">
                             <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
-                                <Img src={imgFile ? imgFile :`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                                width="100px" border_radius="50%"/>    
+                                <PreviewImg src={imgFile ? imgFile :`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
+                                width="100px" border_radius="50%" id="preview"/>    
                             </Div>
                         </Div>
                     }
                 </label>
                 {/* 프로필 이미지 */}
-                <Div flex_direction="column" >
+                <Div flex_direction="column" onClick={defaultProfileClickEvent}>
                     <Div>
-                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"/>
-                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"/>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"
+                        id="default1"/>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"
+                        id="default2"/>
                     </Div>
                     <Div>
-                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"/>
-                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"/>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg2.png`} width="47px" padding= "8px" margin= "5px"
+                        id="default3"/>
+                        <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg3.png`} width="47px" padding= "8px" margin= "5px"
+                        id="default4"/>
                     </Div>
                 </Div>
             </Div>
