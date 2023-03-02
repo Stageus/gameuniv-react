@@ -5,30 +5,29 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
-import { isItemShowDetailOpenComponentState,whichItemComponentState } from "../../recoil/ComponentState"
+import { whichItemComponentState } from "../../recoil/ComponentState"
 import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
 
 // ===== import style =====
 import { Img, NoneEventImg } from "../../styles/Img"
-import { Div } from "../../styles/Div"
+import { Div , ShadowDiv} from "../../styles/Div"
 import { Button } from "../../styles/Button"
 import { H1 } from "../../styles/H1"
 
 // ===== style =====
-
-const ItemShowDetailDiv = styled(Div)`
+const ItemShowDetailDiv = styled(ShadowDiv)`
     position :absolute;
-    right : 59%;
-    top : 20%;
+    left : 200px;
+    top : 200px;
 `
 
 //  ===== component =====
-const ItemShowDetail = () =>{
-
+const ItemShowDetail = (props) =>{
+    //===== props =====
+    const {isItemShowDetailOpenComponent, setItemShowDetailOpenComponentState}=props
     // ===== var =====
     let item_data
     // ===== recoil state =====
-    const setItemShowDetailOpenComponentState = useSetRecoilState(isItemShowDetailOpenComponentState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setModalState = useSetRecoilState(whichModalState)
     const whichItemComponent= useRecoilValue(whichItemComponentState)
@@ -64,7 +63,7 @@ const ItemShowDetail = () =>{
 
     return(
         <React.Fragment>
-                <ItemShowDetailDiv width="30%" height="65%" background_color="grayscale2" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
+                <ItemShowDetailDiv width="600px" height="800px" background_color="grayscale1" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
                     <H1 color="grayscale7" font_size="xxl" font_weight="regular">{item_data[itemIndexData].item_id}</H1>
                     <Div width="80%" height="70%" background_color="grayscale4" justify_content="space-evenly">
                         <Img width="60%" src={item_data[itemIndexData].item_img}/>
