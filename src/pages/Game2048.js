@@ -25,7 +25,7 @@ const Game2048 = () =>{
 
     return(
             <Div background_color="blue5" justify_content="flex-start" width="580px" height="767px"
-            border_radius="10px" flex_direction="column">
+            border_radius="10px" flex_direction="column" margin="200px 0 0 0">
                 {/* 게임 헤더 부분 */}
                 <Div width="95%" justify_content="space-between" margin="20px 0px" height="135px">
                     <Div flex_direction="column" width="35%" height="100%" 
