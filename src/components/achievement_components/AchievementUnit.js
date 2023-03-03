@@ -36,11 +36,21 @@ const AchievementUnit = (props) =>{
                 <P font_size="xs" color="grayscale7" font_weight="regular">{11111111}</P>
             </Div>
             <Div width = "88%" flex_direction="column">
-                    <P font_size="xxs" font_weight="regular">게임 플레이 횟수</P>
-                    <Div width="80px" height="23px" border="3px solid gray" border_radius="20px" align_items="center" justify_content="center">
-                        <P font_size="xxs" font_weight="regular">{achievement_data[index].achievement_figure}/</P>
-                        <P font_size="xxs" font_weight="regular">{11}</P>
+                { 
+                    Number(achievement_data[index].achievement_value) < Number(achievement_data[index].achievement_target_value)
+                    ?
+                    <React.Fragment>
+                        <P font_size="xxs" font_weight="regular">게임 플레이 횟수</P>
+                        <Div width="80px" height="23px" border="3px solid gray" border_radius="20px" align_items="center" justify_content="center">
+                            <P font_size="xxs" font_weight="regular">{achievement_data[index].achievement_value}/</P>
+                            <P font_size="xxs" font_weight="regular">{achievement_data[index].achievement_target_value}</P>
+                        </Div>
+                    </React.Fragment>
+                    :
+                    <Div width="85px" height="30px" border_radius="20px" align_items="center" justify_content="center" background_color="green" >
+                        <P color="grayscale1" font_size="xs" font_weight="regular">달성!</P>
                     </Div>
+                }
             </Div>
         </ShadowDiv>
     )

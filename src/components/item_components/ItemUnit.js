@@ -6,7 +6,7 @@ import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
 import ItemShowDetail from "./ItemShowDetail"
 
 //  ===== import recoil =====
-import { whichItemComponentState} from "../../recoil/ComponentState"
+import { whichItemComponentState, isClickUnitState, isItemDetailOpenState} from "../../recoil/ComponentState"
 import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
 
 // ===== import style =====
@@ -20,16 +20,18 @@ const ItemUnit = (props) =>{
     //===== var =====
     let item_data
     //===== props =====
-    const {index, isItemShowDetailOpenComponent, setItemShowDetailOpenComponentState}=props
+    const {index}=props
     //===== state =====
     const [isHeartFiled, setHeartFiledState] = React.useState(false)
-    const [isClickUnit, setClickUnitState] = React.useState(false)
     //===== recoil state =====
     const whichItemComponent= useRecoilValue(whichItemComponentState)
     const storeData=useRecoilValue(storeDataState)
     const dibsOnData=useRecoilValue(dibsOnDataState)
     const myItemData=useRecoilValue(myItemDataState)
     const setItemIndexData=useSetRecoilState(itemIndexDataState)
+    const [isClickUnit, setClickUnitState] = useRecoilState(isClickUnitState)
+    const [isItemDetailOpen, setItemDetailOpenStateState] = useRecoilState(isItemDetailOpenState)
+
     // 조건에 맞는 데이터 세팅
     if(whichItemComponent==="store"){
         item_data = storeData
@@ -41,8 +43,8 @@ const ItemUnit = (props) =>{
     //===== event =====
     const itemShowDetailEvent=()=>{
         setItemIndexData(index)
-        setItemShowDetailOpenComponentState(true)
-        setClickUnitState(!isClickUnit)
+        setItemDetailOpenStateState(true)
+        setClickUnitState(index)
     }
     const heartFiledEvent=(e)=>{
         setHeartFiledState(!isHeartFiled)
@@ -52,14 +54,14 @@ const ItemUnit = (props) =>{
     return(
         <React.Fragment>
             {
-                isItemShowDetailOpenComponent === true
+                isItemDetailOpen === true
                 &&
-                <ItemShowDetail data={item_data} isItemShowDetailOpenComponent={isItemShowDetailOpenComponent} setItemShowDetailOpenComponentState={setItemShowDetailOpenComponentState}/>
+                <ItemShowDetail item_data={item_data}/>
             }
-        <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit ? "blue5" : "grayscale1" }
+        <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==index ? "blue3" : "grayscale1" }
         border_radius="10px" onClick={itemShowDetailEvent}>
             <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
-                <H1 font_size="l" color="grayscale7" font_weight="regular">{item_data[index].item_id}</H1>
+                <H1 font_size="l" color={isClickUnit===index ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[index].item_id}</H1>
                 {
                 whichItemComponent !="myItem" &&
                     (
@@ -71,10 +73,18 @@ const ItemUnit = (props) =>{
             </Div>
             <Div width = "88%"  align_items="flex-end" justify_content="space-between">
                 <Img width="100px" margin="0 0 10px 15px" src={item_data[index].item_img}/>
-                <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
-                    <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
-                    <P font_weight="regular">{item_data[index].item_price}</P>
-                </Div>
+                {
+                    whichItemComponent ==="myItem" 
+                    ?
+                    <Div width="90px" height="40px" border_radius="10px" align_items="center" justify_content="center" background_color="green">
+                        <P color="grayscale1" font_weight="regular">Holding</P>
+                    </Div>
+                    :
+                    <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
+                        <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
+                        <P color={isClickUnit===index ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[index].item_price}</P>
+                    </Div>
+                }   
             </Div>
         </ShadowDiv>
         </React.Fragment>

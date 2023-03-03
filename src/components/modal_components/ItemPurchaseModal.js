@@ -5,6 +5,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { whichItemComponentState } from "../../recoil/ComponentState"
+import { isModalOpenState} from "../../recoil/ModalState"
 import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
 
 // ===== import style =====
@@ -26,6 +27,7 @@ const ItemPurchaseModal = () =>{
     const dibsOnData=useRecoilValue(dibsOnDataState)
     const myItemData=useRecoilValue(myItemDataState)
     const itemIndexData= useRecoilValue(itemIndexDataState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
 
     if(whichItemComponent==="store"){
         item_data = storeData
@@ -33,6 +35,10 @@ const ItemPurchaseModal = () =>{
         item_data = dibsOnData
     }else if(whichItemComponent==="myItem"){
         item_data = myItemData
+    }
+
+    const purchaseEvent=()=>{
+        setModalOpen(false)
     }
 
     return(
@@ -45,7 +51,7 @@ const ItemPurchaseModal = () =>{
                     <Img width="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
                     <P font_size="s"  font_weight="regular">{item_data[itemIndexData].item_price}</P>
                 </Div>
-                <Button id="purchase_btn" width="120px" height="50px" font_size="m" font_weight="regular">
+                <Button id="purchase_btn" width="120px" height="50px" font_size="m" font_weight="regular" onClick={purchaseEvent}>
                     구매
                 </Button>
         </Div>

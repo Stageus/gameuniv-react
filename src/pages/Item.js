@@ -9,13 +9,17 @@ import TabBtn from "../components/TabBtn"
 
 
 //  ===== import recoil =====
-import { whichItemComponentState } from "../recoil/ComponentState"
+import { whichItemComponentState , isItemDetailOpenState} from "../recoil/ComponentState"
+import { isTabOpenState ,isClickUnitState} from "../recoil/ComponentState"
 
 // ===== import style =====
 import {H1} from "../styles/H1"
 import {Div} from "../styles/Div"
 
 // ===== style =====
+// const ItemDiv = styled(Div)`
+//     position :relative;
+// `
 const ItemContainerDiv = styled(Div)`
     grid-gap: 30px;
     flex-wrap: wrap;
@@ -25,10 +29,11 @@ const ItemContainerDiv = styled(Div)`
 //  ===== component =====
 const Item = () =>{
     //===== state =====
-    const [isItemShowDetailOpenComponent, setItemShowDetailOpenComponentState] = React.useState(false)
-    const [isTabOpen, setTabOpenState] = React.useState("tab1")
+    const setItemDetailOpenState=useSetRecoilState(isItemDetailOpenState)
     // ===== recoil state =====
     const setItemComponentState=useSetRecoilState(whichItemComponentState)
+    const setTabOpenState=useSetRecoilState(isTabOpenState)
+    const setClickUnitState=useSetRecoilState(isClickUnitState)
     // ===== event =====
     const itemTabBtnEvent = (e)=>{
         const target = e.target.id
@@ -36,36 +41,39 @@ const Item = () =>{
         switch(target){
             case "tab1":
                 setItemComponentState("store")
-                setItemShowDetailOpenComponentState(false)
+                setItemDetailOpenState(false)
                 setTabOpenState("tab1")
+                setClickUnitState(null)
                 break
             case "tab2":
                 setItemComponentState("dibsOn")
-                setItemShowDetailOpenComponentState(false)
+                setItemDetailOpenState(false)
                 setTabOpenState("tab2")
+                setClickUnitState(null)
                 break
             case "tab3":
                 setItemComponentState("myItem")
-                setItemShowDetailOpenComponentState(false)
+                setItemDetailOpenState(false)
                 setTabOpenState("tab3")
+                setClickUnitState(null)
                 break
         }
 
     }
     return(
         <React.Fragment>
-            <Div width = "100%" max_width="100%" height="85%" justify_content="center" >
-                <Div width="75%" height="100%" align_items="flex-start"  flex_direction="column">
+            <Div width = "1000px" height="85%" justify_content="center" >
+                <Div width="800px" height="100%" align_items="flex-start"  flex_direction="column">
                     <H1 font_size="xl" color="grayscale7">
                         아이템
                     </H1>
-                    <Div width="100%"  height="62px" justify_content="space-between" margin="25px 0 0 0" onChange={itemTabBtnEvent}>
-                        <TabBtn id="tab1" after_img="/img_srcs/icons/storeBlueIcon.png" before_img="/img_srcs/icons/storeGrayIcon.png" txt="상점" width="240px" isTabOpen={isTabOpen}/>
-                        <TabBtn id="tab2" after_img="/img_srcs/icons/heartBlueIcon.png" before_img="/img_srcs/icons/heartGrayIcon.png" txt="찜목록" width="240px" isTabOpen={isTabOpen}/>
-                        <TabBtn id="tab3" after_img="/img_srcs/icons/myItemBlueIcon.png" before_img="/img_srcs/icons/myItemGrayIcon.png" txt="내 아이템" width="240px" isTabOpen={isTabOpen}/>
+                    <Div width="800px"  height="62px" justify_content="space-between" margin="25px 0 0 0" onChange={itemTabBtnEvent}>
+                        <TabBtn id="tab1" after_img="/img_srcs/icons/storeBlueIcon.png" before_img="/img_srcs/icons/storeGrayIcon.png" txt="상점" width="33%"/>
+                        <TabBtn id="tab2" after_img="/img_srcs/icons/heartBlueIcon.png" before_img="/img_srcs/icons/heartGrayIcon.png" txt="찜목록" width="33%"/>
+                        <TabBtn id="tab3" after_img="/img_srcs/icons/myItemBlueIcon.png" before_img="/img_srcs/icons/myItemGrayIcon.png" txt="내 아이템" width="33%"/>
                     </Div>
-                    <ItemContainerDiv width="100%" height="100%" border_radius="0 0 3px 3px" background_color="blue2" padding="20px 0 20px 0">
-                        <ItemContainer isItemShowDetailOpenComponent={isItemShowDetailOpenComponent} setItemShowDetailOpenComponentState={setItemShowDetailOpenComponentState}/>
+                    <ItemContainerDiv width="800px" height="100%" border_radius="0 0 3px 3px" background_color="blue2" padding="20px 0 20px 0">
+                        <ItemContainer/>
                     </ItemContainerDiv>
                 </Div>
             </Div>

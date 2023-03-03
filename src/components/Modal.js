@@ -15,12 +15,13 @@ import RetryGameModal from "./modal_components/RetryGameModal"
 import GameSelectModal from "./modal_components/GameSelectModal"
 import SettingModal from "./modal_components/SettingModal"
 import ItemPurchaseModal from "./modal_components/ItemPurchaseModal"
+import ItemEquipModal from "./modal_components/ItemEquipModal"
 
 // ===== import recoil =====
 import { isModalOpenState, whichModalState } from "../recoil/ModalState"
 
 // ===== import style =====
-import { Img, ImgBtn } from "../styles/Img"
+import { ImgBtn } from "../styles/Img"
 import { Div } from "../styles/Div"
 
 // ===== import style func =====
@@ -83,7 +84,7 @@ const Modal = () =>{
                 flex_direction="column" justify_content="flex-start" border_radius="3px">
                     {/* 수정된 부분 - 게임오버 모달은 끄기 비활성화*/}
                     { 
-                        whichModal != "gameOverModal" && 
+                        whichModal != ("gameOverModal" && "itemEquipModal") && 
                             <Div width="100%" justify_content="flex-end">
                                 <CancelBtn src= {`${process.env.PUBLIC_URL}/img_srcs/icons/crossGrayIcon.png`} id="cancel_btn"/>
                             </Div>
@@ -102,6 +103,7 @@ const Modal = () =>{
                         { whichModal === "gameSelectModal" && <GameSelectModal/>}
                         { whichModal === "settingModal" && <SettingModal/>}
                         { whichModal === "itemPurchaseModal" && <ItemPurchaseModal/>}
+                        { whichModal === "itemEquipModal" && <ItemEquipModal/>}
                     </main>
                 </Div>
             </Overlay>

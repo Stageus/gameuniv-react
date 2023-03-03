@@ -114,6 +114,8 @@ const Main = () =>{
                             <Route path="/signup" element = {<SignUp/>}/>
                             <Route path="/idfind" element = {<Find which_find="idfind"/>} />
                             <Route path="/pwfind" element = {<Find/>}/>
+                            <Route path="/item" element = {<Item/>}/>
+                            <Route path="/achievement" element = {<Achievement/>}/>
                             {/* 나머지 부분 추가해주시면 될듯 합니다 */}
                         </Routes>
                     </Div>
