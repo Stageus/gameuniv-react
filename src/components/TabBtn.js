@@ -8,25 +8,35 @@ import {Img} from "../styles/Img"
 import {Div} from "../styles/Div"
 import {P} from "../styles/P"
 
+//  ===== import recoil =====
+import { isTabOpenState } from "../recoil/ComponentState"
+
 // ===== style =====
+const Label = styled.label`
+    display : flex;
+    align-items :center;
+    justify-content :center;
+    width: 100%;
+    height: 100%;
+`
+
 const InputRadio = styled.input`
     display : none;
 `
 //  ===== component =====
 const TabBtn = (props) =>{
+    const isTabOpen=useRecoilValue(isTabOpenState)
     // ===== props =====
-    const {id, before_img, after_img, txt , width, isTabOpen} = props
+    const {id, before_img, after_img, txt , width} = props
     
     return(
-        <React.Fragment>
+        <Div width={width}  height="62px" border_radius="3px 3px 0 0"  background_color={isTabOpen===id ? "blue2": "grayscale3"}>
             <InputRadio id={id} type="radio" name="tab"/>
-            <label for={id}> 
-                <Div width={width} height="62px" align_items="center" border_radius="3px 3px 0 0" justify_content="center" background_color={isTabOpen===id ? "blue2": "grayscale3"}>
-                        <Img  width="30px" margin="0 10px" src={isTabOpen===id ? `${process.env.PUBLIC_URL}${after_img} `:` ${process.env.PUBLIC_URL}${before_img}`}/>
-                        <P font_size="m" font_weight="regular" color={isTabOpen===id ? "blue4" : "grayscale6"}>{txt}</P>
-                </Div>
-            </label>     
-        </React.Fragment>
+            <Label for={id}>
+                <Img height="25px" margin="0 10px" src={isTabOpen===id ? `${process.env.PUBLIC_URL}${after_img} `:` ${process.env.PUBLIC_URL}${before_img}`}/>
+                <P font_size="m" font_weight="regular" color={isTabOpen===id ? "blue4" : "grayscale6"}>{txt}</P>
+            </Label> 
+        </Div>
     )
 }
 

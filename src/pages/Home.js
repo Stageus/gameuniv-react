@@ -11,6 +11,8 @@ import Individual2048Ranking from "../components/home_components/Individual2048R
 //  ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
 
+// ===== import react router =====
+import {Route, Link} from "react-router-dom"
 
 // ===== import style =====
 import {H1} from "../styles/H1"
@@ -84,13 +86,16 @@ const Home = () =>{
                 <Profile/>
 
                 <Div width="100%"  max_width="693px" height="301px" justify_content="space-between" onClick={utilityBtnEvent}>
+                    <Link  to={"/item"}>
                     <ItemBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between" id="item_btn">
                         <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
                     </ItemBtnDiv>
-
+                    </Link>
+                    <Link  to={"/achievement"}>
                     <AchivementBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between" id="achivement_btn">
                         <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
                     </AchivementBtnDiv>
+                    </Link>
                 </Div>
             </Div>
         </React.Fragment>

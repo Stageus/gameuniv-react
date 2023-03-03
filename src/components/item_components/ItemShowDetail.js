@@ -5,8 +5,8 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
-import { whichItemComponentState } from "../../recoil/ComponentState"
-import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
+import { whichItemComponentState, isClickUnitState, isItemDetailOpenState} from "../../recoil/ComponentState"
+import { itemIndexDataState} from "../../recoil/DataState"
 
 // ===== import style =====
 import { Img, NoneEventImg } from "../../styles/Img"
@@ -17,33 +17,22 @@ import { H1 } from "../../styles/H1"
 // ===== style =====
 const ItemShowDetailDiv = styled(ShadowDiv)`
     position :absolute;
-    left : 200px;
-    top : 200px;
+    right : 58%;
+    top : 20%;
 `
 
 //  ===== component =====
 const ItemShowDetail = (props) =>{
     //===== props =====
-    const {isItemShowDetailOpenComponent, setItemShowDetailOpenComponentState}=props
-    // ===== var =====
-    let item_data
+    const {item_data}=props
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setModalState = useSetRecoilState(whichModalState)
-    const whichItemComponent= useRecoilValue(whichItemComponentState)
-    const storeData=useRecoilValue(storeDataState)
-    const dibsOnData=useRecoilValue(dibsOnDataState)
-    const myItemData=useRecoilValue(myItemDataState)
+    const setItemDetailOpenStateState = useSetRecoilState(isItemDetailOpenState)
+    const setClickUnitState=useSetRecoilState(isClickUnitState)
     const itemIndexData= useRecoilValue(itemIndexDataState)
-     
-    if(whichItemComponent==="store"){
-        item_data = storeData
-    }else if(whichItemComponent==="dibsOn"){
-        item_data = dibsOnData
-    }else if(whichItemComponent==="myItem"){
-        item_data = myItemData
-    }
-
+    const whichItemComponent= useRecoilValue(whichItemComponentState)
+    
     // ===== event =====
     const itemShowDetailBtnEvent = (e)=>{
 
@@ -55,7 +44,12 @@ const ItemShowDetail = (props) =>{
                 setModalState("itemPurchaseModal")
                 break
             case "close_btn":
-                setItemShowDetailOpenComponentState(false)
+                setItemDetailOpenStateState(false)
+                setClickUnitState(null)
+                break
+            case "equip_btn":
+                setModalOpen(true)
+                setModalState("itemEquipModal")
                 break
         }
 
@@ -69,12 +63,22 @@ const ItemShowDetail = (props) =>{
                         <Img width="60%" src={item_data[itemIndexData].item_img}/>
                     </Div>
                     <Div width="40%" height="100px" justify_content="space-evenly" onClick={itemShowDetailBtnEvent}>
-                        <Button id="purchase_btn" width="140px" height="60px" font_size="l" font_weight="regular">
-                            구매
+                        {
+                        whichItemComponent === "myItem"
+                        ?
+                        <Button id="equip_btn" width="140px" height="60px" font_size="l" font_weight="regular">
+                            착용
                         </Button>
-                        <Button id="close_btn" width="60px" height="60px" font_size="xs" font_weight="light" btn_type="red">
-                            <NoneEventImg width="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/crossWhiteIcon.png`}/>
-                        </Button>
+                        :
+                        <React.Fragment>
+                            <Button id="purchase_btn" width="140px" height="60px" font_size="l" font_weight="regular">
+                                구매
+                            </Button>
+                            <Button id="close_btn" width="60px" height="60px" font_size="xs" font_weight="light" btn_type="red">
+                                <NoneEventImg width="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/crossWhiteIcon.png`}/>
+                            </Button>
+                        </React.Fragment>
+                        }
                     </Div>
                 </ItemShowDetailDiv>
         </React.Fragment>

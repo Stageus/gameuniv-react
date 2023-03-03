@@ -98,7 +98,15 @@ const Main = () =>{
                         location === "/2048"
                         ?
                         <Routes>
+                            <Route path="/" element = {<Login/>}/>
+                            <Route path="/home" element = {<Home/>}/>
+                            <Route path="/signup" element = {<SignUp/>}/>
+                            <Route path="/idfind" element = {<Find which_find="idfind"/>} />
+                            <Route path="/pwfind" element = {<Find/>}/>
+                            <Route path="/item" element = {<Item/>}/>
+                            <Route path="/achievement" element = {<Achievement/>}/>
                             <Route path="/2048" element = {<Game2048/>}/>
+                            {/* 나머지 부분 추가해주시면 될듯 합니다 */}
                         </Routes>
                         :
                         <React.Fragment>

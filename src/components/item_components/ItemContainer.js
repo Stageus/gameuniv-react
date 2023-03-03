@@ -6,13 +6,11 @@ import {useRecoilValue, useRecoilState} from "recoil"
 import ItemUnit from "./ItemUnit"
 
 //  ===== import recoil =====
-import { whichItemComponentState } from "../../recoil/ComponentState"
+import { whichItemComponentState} from "../../recoil/ComponentState"
 import { myItemDataState, storeDataState, dibsOnDataState } from "../../recoil/DataState"
 
 //  ===== component =====
-const ItemContainer = (props) =>{
-    //===== props =====
-    const {isItemShowDetailOpenComponent, setItemShowDetailOpenComponentState} = props
+const ItemContainer = () =>{
     //===== dynamic data =====
     const storeItemData=[
         {   "item_id":"0",
@@ -144,24 +142,21 @@ const ItemContainer = (props) =>{
             {whichItemComponent === "store" && 
                 (
                     storeData && storeData.map((data, index)=>{
-                    return <ItemUnit key={data} index={index}
-                    isItemShowDetailOpenComponent={isItemShowDetailOpenComponent} setItemShowDetailOpenComponentState={setItemShowDetailOpenComponentState}/>
+                    return <ItemUnit key={data} index={index}/>
                     })
                 ) 
             }
             {whichItemComponent ==="dibsOn" && 
                 (
                     dibsOnData && dibsOnData.map((data, index)=>{
-                    return <ItemUnit key={data} index={index} 
-                    isItemShowDetailOpenComponent={isItemShowDetailOpenComponent} setItemShowDetailOpenComponentState={setItemShowDetailOpenComponentState}/>
+                    return <ItemUnit key={data} index={index}/>
                     })
                 )
             }
             {whichItemComponent ==="myItem" && 
                 (
                     myItemData && myItemData.map((data, index)=>{
-                    return <ItemUnit key={data} index={index} isItemShowDetailOpenComponent={isItemShowDetailOpenComponent} 
-                    setItemShowDetailOpenComponentState={setItemShowDetailOpenComponentState}/>
+                    return <ItemUnit key={data} index={index}/>
                     })
                 )
             }
