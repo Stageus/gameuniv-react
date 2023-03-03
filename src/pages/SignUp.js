@@ -98,8 +98,87 @@ const SignUp = () =>{
     // ===== state =====
     const [stepState, setStep] = React.useState(1)
 
-    // ===== recoil state =====
-    const setPageState = useSetRecoilState(whichPageState)
+    // ===== var =====
+    let id_double = false
+    // ===== event =====
+    const checkEvent = (e) =>{
+        e.preventDefault()
+        // ===== var =====
+        const target = e.target.id
+
+        if(stepState === 1){
+            const name_regex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}$/g
+            const name = document.getElementById("name_input").value
+            const name_check = name_regex.test(name)
+    
+            const id_regex = /^[a-z0-9]{5,20}$/g
+            const id = document.getElementById("id_input").value
+            const id_check = id_regex.test(id)
+            
+            const pw_regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/g
+            const pw = document.getElementById("pw_input").value
+            const pw_check = pw_regex.test(pw)
+    
+            const pw_same = document.getElementById("pw_same").value
+
+            if(id === "" || name === "" || pw === "" || pw_same === ""){
+                alert("빈 칸을 입력해 주십시오")
+            }
+            else if(!name_check){
+                alert("이름 형식이 올바르지 않습니다(한글 2~4자 또는 영문 2~10자)")
+            }
+            else if(!id_check){
+                alert("아이디 형식이 올바르지 않습니다(6~20자 영문, 숫자)")
+            }
+            else if(!pw_check){
+                alert("비밀번호 형식이 올바르지 않습니다(8~20자, 하나 이상의 문자와 하나의 숫자 정규식)")
+            }
+            else if( pw !== pw_same){
+                alert("비밀번호를 확인해주십시오")
+            }
+            else if( !id_double ){
+                alert("아이디 중복확인을 해주십시오")
+            }
+            else{
+                setStep(stepState+1)
+            }
+        }
+
+        if(stepState === 2){
+            const img = document.getElementById("profileImg").value
+            if(img === ""){
+                alert("프로필을 선택해 주십시오")
+            }
+            else{
+                setStep(stepState+1)
+            }
+        }
+
+        if(stepState === 3){
+            const email_regex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.ac.kr$/g
+            const email = document.getElementById("email_input").value
+            const email_check = email_regex.test(email)
+
+            const univ = document.getElementById("univ_input").value
+
+            if(email === "" || univ === ""){
+                alert("빈 칸을 채워주십시오")
+            }
+            else if(!email_check){
+                alert("email 형식이 올바르지 않습니다")
+            }
+            else{
+                setStep(stepState+1)
+            }
+        }
+    }
+
+    const idDoubleCheckEvent = (e) =>{
+        const id = document.getElementById("id_input").value
+        id_double = true
+        
+    }
+
 
     return(
         <React.Fragment>
@@ -136,25 +215,27 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">이름</P>
-                                <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>                        
+                                <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                id="name_input" maxLength={10}/>                        
                             </InputBoxDiv>
                             
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">아이디</P>
                                 <Div width="105%" justify_content="space-between">
-                                    <Input width="80%" max_width="289px" height="28px" placeholder="아이디" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
-                                    <SignUpPageBtn width="81px" height="28px" >verification</SignUpPageBtn>
+                                    <Input width="80%" max_width="289px" height="28px" placeholder=" 6~20자 이하 영문 또는 숫자" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                    id="id_input"/>
+                                    <SignUpPageBtn width="81px" height="28px" onClick={idDoubleCheckEvent}>verification</SignUpPageBtn>
                                 </Div>
                             </InputBoxDiv>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">비밀번호</P>
-                                <Input type="password" placeholder="비밀번호" width="100%" max_width="289px" height="28px"
-                                font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
+                                <Input type="password" placeholder="8~20자, 하나 이상의 문자와 하나의 숫자" width="100%" max_width="289px" height="28px"
+                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pw_input"/>
                             </InputBoxDiv>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">비밀번호 확인</P>
                                 <Input type="password" placeholder="비밀번호 확인" width="100%" max_width="289px" height="28px" 
-                                font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>    
+                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pw_same"/>    
                             </InputBoxDiv>
                         </Div>
                     }
@@ -164,7 +245,7 @@ const SignUp = () =>{
                         &&
                         <Div width="100%" flex_direction="column" align_items="flex-start">
                             <P font_size = "xxs" padding="10px 0">프로필 사진을 올리거나 기본 프로필을 선택해주세요</P>
-                            <UploadBox></UploadBox>
+                            <UploadBox id="upload_box"></UploadBox>
                             
                         </Div>
                     }
@@ -176,11 +257,13 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">학교 이메일</P>
-                                <Input width="100%" max_width="289px" height="28px" placeholder="학교 이메일" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>                        
+                                <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                id="email_input"/>
                             </InputBoxDiv>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">대학교</P>
-                                <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"/>
+                                <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                id="univ_input"/>
                             </InputBoxDiv>
                         </Div> 
                     }
@@ -193,7 +276,7 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">지금 바로 GameUniv에 접속해 전국 대학교 친구들과 즐기세요<br/></P>
                             <Div width="100%">
                                 <Link to="/">
-                                    <Button margin="10px 0" font_size = "s" width="273px" height="50px" onClick={()=>setPageState("logIn")}>로그인 페이지로 이동</Button>
+                                    <Button margin="10px 0" font_size = "s" width="273px" height="50px">로그인 페이지로 이동</Button>
                                 </Link>
                                 
                             </Div>
@@ -201,7 +284,7 @@ const SignUp = () =>{
                     }
                 </StepDiv>
 
-                <Div onClick={()=>setStep(stepState+1)} width="48px">
+                <Div onClick={checkEvent} width="48px">
                     {
                         stepState === 4
                         ||

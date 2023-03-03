@@ -6,6 +6,9 @@ import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
 // ===== import recoil =====
 import { isModalOpenState, whichModalState } from "../recoil/ModalState"
 
+// ===== import react router =====
+import {Routes, Route, Link, useParams, useLocation, useNavigate} from "react-router-dom"
+
 // ===== import style =====
 import {Img, ImgBtn} from "../styles/Img"
 import {Div} from "../styles/Div"
@@ -29,15 +32,28 @@ const Header_style = styled.header`
     position: fixed;
 `
 
-// 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
 const Header = () =>{
-    // ===== state =====
-    const [isMouseHover, setMouseHover] = React.useState(false)
+    
+    // ===== router =====
+    const navigate = useNavigate()
+    const location = useLocation()
+    const path = location.pathname
+    const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
+
+    // ===== event =====
+    const logoEvent = () =>{
+        if( which_page){
+            navigate("/")
+        }
+        else{
+            navigate("/home")
+        }
+    }
 
     return(
         <Header_style>
             <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/icons/headerLogoIcon.png`} height="64px" padding="10px"
-            onClick={()=> window.location.reload()}/>
+            onClick={logoEvent}/>
             
             <Div height="84px" align_items="flex-end">
                 <Div border={`3px solid ${color("grayscale6")}`} border_radius = "10px" height="40px" width="115px" justify_content = "space-around" margin="0 0 6px 0">

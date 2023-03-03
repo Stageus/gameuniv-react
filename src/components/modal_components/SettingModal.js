@@ -6,8 +6,12 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 // ===== import component =====
 
 // ===== import recoil =====
-import { whichModalState } from "../../recoil/ModalState"
+import { whichModalState, isModalOpenState } from "../../recoil/ModalState"
 import { whichPageState } from "../../recoil/PageState"
+
+// ===== import react router =====
+import {Routes, Route, Link, useParams, useLocation, useNavigate} from "react-router-dom"
+
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
 import { Div } from "../../styles/Div"
@@ -91,10 +95,24 @@ const Range = styled.input`
 `
 
 const SettingModal = () =>{
+
+    // ===== router =====
+    const navigate = useNavigate()
+    const location = useLocation()
+    const path = location.pathname
+
+    // ===== recoil state =====
     const setModalState = useSetRecoilState(whichModalState)
-    const whichPage = useRecoilValue(whichPageState)
+    // const whichPage = useRecoilValue(whichPageState)
+    const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
+    const setModalOpen = useSetRecoilState(isModalOpenState)
+    // ===== event =====
+    const logoutBtnEvent = () => {
+        navigate("/")
+        setModalOpen(false)
+    }
     return(
-        <Div width="330px" height={whichPage ==="logIn"? "220px" : "325px"}>
+        <Div width="330px" height={which_page ? "220px" : "325px"}>
             <Div width="80%" height="100%">
                 <Div flex_direction="column" align_items="flex-start" justify_content="space-evenly"
                 width="100%" height="100%">
@@ -117,17 +135,21 @@ const SettingModal = () =>{
                     </Div>
                     {/* 버튼 */}
                     <Div flex_direction="column" width="100%">
-                        <Div justify_content={whichPage ==="logIn" ? "center" : "space-around"} 
+                        <Div justify_content={which_page ? "center" : "space-around"} 
                         align_items="center" width="100%" margin="0 0 5px 0">
-                            { whichPage==="logIn" || <GrayButton onClick={()=>setModalState("deleteAccountModal")}>계정 삭제</GrayButton>}
+                            { 
+                                which_page
+                                || 
+                                <GrayButton onClick={()=>setModalState("deleteAccountModal")}>계정 삭제</GrayButton>
+                            }
                             <GrayButton onClick={()=>setModalState("developInfoModal")} background_>
                                 개발자 정보
                             </GrayButton>
                             
                         </Div>
-                        {   whichPage === "logIn" 
+                        {   which_page
                             ||  
-                            <Button width="258px" height="61px">
+                            <Button width="258px" height="61px" onClick={logoutBtnEvent}>
                                 <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/logOutIcon.png`} height="29px"/>
                                 <P font_size="m" font_weight="regular" color="grayscale1" padding="0 0 0 10px">로그아웃</P>
                             </Button> }

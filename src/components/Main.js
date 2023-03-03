@@ -19,7 +19,7 @@ import Modal from "./Modal"
 import BtnAnimation from "./BtnAnimation"
 
 // ===== import react router =====
-import {Routes, Route, useParams, useLocation} from "react-router-dom"
+import {Routes, Route, Link, useParams, useLocation, useNavigate} from "react-router-dom"
 
 // ===== import hook =====
 import { useSetModalState } from "../hooks/useSetModalState"
@@ -63,11 +63,13 @@ const Main = () =>{
     const [isMouseHover, setMouseHover] = React.useState(false)
 
     // ===== recoil state =====
-    const whichPage = useRecoilValue(whichPageState)
+    // const whichPage = useRecoilValue(whichPageState)
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
+    //  ===== router =====
     const location = useLocation().pathname;
+    const navigate = useNavigate()
     // ===== event =====
     //수정한 부분
     const gameStartBtnEvent = (e) =>{
@@ -75,39 +77,26 @@ const Main = () =>{
         setModalOpen(true)
     }
 
+    // 뒤로가기 버튼
+    const backBtnEvent = ()=>{
+        
+        if(location === "/2048"){
+            setModalState("quitGameModal")
+            setModalOpen(true)
+        }
+        else{
+            navigate(-1)
+        }
+    }
     return(
         <MainStyle>
             <Modal></Modal>
-            
-            {
-                (whichPage !=="2048")
-                ?
                 <Div width="90%">
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     
-                    <Div width="50%">
-                        <Div width="100%" flex_direction="column" align_items="flex-start" height="100vh">
-                            {/* 게임시작 버튼 */}
-                            { //수정한 부분
-                                location==="/home" && 
-                                <Div margin="0 0 20px 0" onClick={gameStartBtnEvent}>
-                                    <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
-                                    <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
-                                </Div>
-                            }
-                            {/* 랭킹 판 */}
-                            {
-                                (location === "/" || location === "/home")
-                                &&
-                                <React.Fragment>
-                                    <Ranking game="tetris"/>
-                                    <Ranking game="2048"/>
-                                </React.Fragment>
-                                
-                            }
-                        </Div>                                                
-                    </Div>
-                    <Div flex_direction = "column" width = "50%" height="100vh">
+                    {
+                        location === "/2048"
+                        ?
                         <Routes>
                             <Route path="/" element = {<Login/>}/>
                             <Route path="/home" element = {<Home/>}/>
@@ -116,10 +105,50 @@ const Main = () =>{
                             <Route path="/pwfind" element = {<Find/>}/>
                             <Route path="/item" element = {<Item/>}/>
                             <Route path="/achievement" element = {<Achievement/>}/>
+                            <Route path="/2048" element = {<Game2048/>}/>
                             {/* 나머지 부분 추가해주시면 될듯 합니다 */}
                         </Routes>
-                    </Div>
-
+                        :
+                        <React.Fragment>
+                            <Div width="50%">
+                                <Div width="100%" flex_direction="column" align_items="flex-start" height="100vh">
+                                    {/* 게임시작 버튼 */}
+                                    { //수정한 부분
+                                        location==="/home" && 
+                                        <Div margin="0 0 20px 0" onClick={gameStartBtnEvent}>
+                                            <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
+                                            <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
+                                        </Div>
+                                    }
+                                    {/* 랭킹 판 */}
+                                    {
+                                        (location === "/" || location === "/home")
+                                        &&
+                                        <React.Fragment>
+                                            <Ranking game="tetris"/>
+                                            <Ranking game="2048"/>
+                                        </React.Fragment>
+                                        
+                                    }
+                                </Div>                                                
+                            </Div>
+                            <Div flex_direction = "column" width = "50%" height="100vh">
+                                <Routes>
+                                    <Route path="/" element = {<Login/>}/>
+                                    <Route path="/home" element = {<Home/>}/>
+                                    <Route path="/signup" element = {<SignUp/>}/>
+                                    <Route path="/idfind" element = {<Find which_find="idfind"/>} />
+                                    <Route path="/pwfind" element = {<Find/>}/>
+                                    
+                                    {/* 나머지 부분 추가해주시면 될듯 합니다 */}
+                                </Routes>
+                                <Link to={"/2048"}>
+                                    2048
+                                </Link>
+                            </Div>
+                        </React.Fragment>
+                    }
+                    
                     {/* 아마 따로 분리해야할 듯 */}
                         {/* {whichPage === "logIn" && <Login></Login> } */}
                         {/* {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>} */}
@@ -129,20 +158,19 @@ const Main = () =>{
                         {/* {whichPage ==="achievement" && <Achievement/>} */}
                     
                 </Div>
-                :
-                <Div height="100vh" width="100%">
-                    <Game2048/>
-                </Div>
-                
-            }
             
             {/* footer로 빼야할 듯 */}
-            <BackDiv>
-                <BtnAnimation event={useSetModalState("quitGameModal")}
-                before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
-                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
-                />
-            </BackDiv>
+            {
+                (location === "/" || location === "/home")
+                ||
+                <BackDiv onClick={backBtnEvent}>
+                    <BtnAnimation 
+                    before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
+                    after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
+                    />
+                </BackDiv>
+            }
+            
             <Bg location={location}></Bg>
         </MainStyle>
     )
