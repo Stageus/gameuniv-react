@@ -11,6 +11,9 @@ import BtnAnimation from "../components/BtnAnimation"
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
 
+// ===== import hooks =====
+import {PC, Mobile} from "../hooks/useMediaComponent"
+
 // ===== import react router =====
 import {Route, Link} from "react-router-dom"
 
@@ -49,41 +52,8 @@ const fadeIn = keyframes`
     }
 `
 
-const fadeOut = keyframes`
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-`
-
-const Arrow = styled(ImgBtn)`
-    position: relative;
-    width: 48px;
-    top : ${props=> props.top || "auto"};
-    right : ${props=> props.right || "auto"};
-    transform:rotate(${props => props.deg || "0deg"});
-    animation: ${ props => props.isMouseHover && fadeIn} 0.5s;
-    
-`
-const ArrowBefore = styled(ImgBtn)`
-    position: relative;
-    width: 48px;
-    top : ${props=> props.top || "auto"};
-    right : ${props=> props.right || "auto"};
-    transform:rotate(${props => props.deg || "0deg"});
-`
-
-
-
 const StepDiv = styled(Div)`
     z-index:1;
-`
-
-const ArrowDiv = styled(Div)`
-    position : absolute;
-    z-index: 0;
 `
 
 const InputBoxDiv = styled(Div)`
@@ -183,7 +153,7 @@ const SignUp = () =>{
     return(
         <React.Fragment>
             <Div width="100%">
-                    
+                <PC>
                     <Div onClick={()=>setStep(stepState-1)} width="48px">
                         {
                             (stepState === 2 || stepState === 3)
@@ -193,7 +163,7 @@ const SignUp = () =>{
                             after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowAfterBtnImg.png`}/>
                         }
                     </Div>
-                
+                </PC>
                 
                 <StepDiv flex_direction="column" width="80%" max_width="320px" height="440px" 
                 align_items={ stepState !== 4 ? "felx-start" : "center"} 
@@ -282,18 +252,37 @@ const SignUp = () =>{
                             </Div>
                         </Div>
                     }
+                    <Mobile>
+                        <Div width="100%" height = "42px" margin ="10px 0" justify_content="space-evenly">
+                            {
+                                (stepState === 2 || stepState === 3)
+                                &&
+                                <SignUpPageBtn width="133px" height="32px" onClick={()=>setStep(stepState-1)}>
+                                    이전 단계
+                                </SignUpPageBtn>
+                            }
+                            {
+                                stepState === 4
+                                ||
+                                <SignUpPageBtn width="133px" height="32px" onClick={checkEvent}>
+                                    다음 단계
+                                </SignUpPageBtn>
+                            }
+                        </Div>
+                    </Mobile>
                 </StepDiv>
-
-                <Div onClick={checkEvent} width="48px">
-                    {
-                        stepState === 4
-                        ||
-                        <BtnAnimation padding="0 0 0 30px"
-                        before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowBeforeBtnImg.png`}
-                        after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowAfterBtnImg.png`}
-                        deg={"180deg"}/>
-                    }
-                </Div>
+                <PC>
+                    <Div onClick={checkEvent} width="48px">
+                        {
+                            stepState === 4
+                            ||
+                            <BtnAnimation padding="0 0 0 30px"
+                            before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowBeforeBtnImg.png`}
+                            after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/arrowAfterBtnImg.png`}
+                            deg={"180deg"}/>
+                        }
+                    </Div>
+                </PC>
             </Div>
         </React.Fragment>
     )

@@ -17,19 +17,28 @@ import Bg from "./Bg"
 import Ranking from "./Ranking"
 import Modal from "./Modal"
 import BtnAnimation from "./BtnAnimation"
+import MobileRangking from "./MobileRanking"
 
 // ===== import react router =====
 import {Routes, Route, Link, useParams, useLocation, useNavigate} from "react-router-dom"
 
 // ===== import hook =====
 import { useSetModalState } from "../hooks/useSetModalState"
+import {PC, Mobile} from "../hooks/useMediaComponent"
 
 // ===== import recoil =====
 import { whichPageState } from "../../src/recoil/PageState"
 import { isModalOpenState ,whichModalState } from "../recoil/ModalState"
+
 // ===== import style =====
 import { Div } from "../styles/Div"
 import { Img, ImgBtn } from "../styles/Img"
+import { Button } from "../styles/Button"
+import { P } from "../styles/P"
+
+
+// ===== import style func =====
+import { color } from "../styles/style"
 
 // ===== style =====
 const BackDiv = styled(Div)`
@@ -42,6 +51,7 @@ const MainStyle = styled.main`
     display: flex;
     justify-content: center;
     width:100%;
+    height:100%
 `
 const GameStartBeforeBtn = styled(ImgBtn)`
     position:absolute;
@@ -53,6 +63,35 @@ const GameStartBeforeBtn = styled(ImgBtn)`
         transition: 0.5s;
     }
 `
+const MobileRankingBtn = styled.button`
+    display: flex;
+    width: 196px;
+    height: 46px;
+    background-color: ${color("grayscale2")};
+    box-shadow:0 0 3px 3px ${color("grayscale4")};
+    border-radius:50px;
+    justify-content:center;
+    align-items: center;
+    border: none;
+    position:relative;
+    bottom: -15%;
+    cursor:pointer;
+`
+
+const Triangle = styled(Img)`
+    transform:rotate(180deg);
+`
+
+const MobileRankingDiv = styled(Div)`
+    animation: fadeInDownBig;
+    animation-duration: 0.5s;
+`
+
+const LoginDiv = styled(Div)`
+    animation: fadeInUpBig;
+    animation-duration: 0.5s;
+`
+
 
 //  ===== component =====
 
@@ -63,6 +102,7 @@ const Main = () =>{
     
     // ===== state =====
     const [isMouseHover, setMouseHover] = React.useState(false)
+    const [isMobileRankingClick, setMobileRanking] = React.useState(false)
 
     // ===== recoil state =====
     // const whichPage = useRecoilValue(whichPageState)
@@ -93,27 +133,30 @@ const Main = () =>{
     return(
         <MainStyle>
             <Modal></Modal>
-                <Div width="90%">
+            {/* PC */}
+            <PC>
+                <Div width="90%" min_width="1533px">
+                    
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     
                     {
                         location === "/2048"
                         ?
                         <Routes>
-                            <Route path="/" element = {<Login/>}/>
+                            {/* <Route path="/" element = {<Login/>}/>
                             <Route path="/home" element = {<Home/>}/>
                             <Route path="/signup" element = {<SignUp/>}/>
                             <Route path="/idfind" element = {<Find which_find="idfind"/>} />
                             <Route path="/pwfind" element = {<Find/>}/>
                             <Route path="/item" element = {<Item/>}/>
-                            <Route path="/achievement" element = {<Achievement/>}/>
+                            <Route path="/achievement" element = {<Achievement/>}/> */}
                             <Route path="/2048" element = {<Game2048/>}/>
                             {/* 나머지 부분 추가해주시면 될듯 합니다 */}
                         </Routes>
                         :
                         <React.Fragment>
                             <Div width="50%">
-                                <Div width="100%" flex_direction="column" align_items="flex-start" height="100vh">
+                                <Div width="100%" flex_direction="column" align_items="flex-start" height="100%">
                                     {/* 게임시작 버튼 */}
                                     { //수정한 부분
                                         location==="/home" && 
@@ -142,9 +185,8 @@ const Main = () =>{
                                     <Route path="/idfind" element = {<Find which_find="idfind"/>} />
                                     <Route path="/pwfind" element = {<Find/>}/>
                                     <Route path="/item" element = {<Item/>}/>
-                                <Route path="/achievement" element = {<Achievement/>}/>
+                                    <Route path="/achievement" element = {<Achievement/>}/>
                                     
-                                    {/* 나머지 부분 추가해주시면 될듯 합니다 */}
                                 </Routes>
                                 <Link to={"/2048"}>
                                     2048
@@ -152,17 +194,56 @@ const Main = () =>{
                             </Div>
                         </React.Fragment>
                     }
-                    
-                    {/* 아마 따로 분리해야할 듯 */}
-                        {/* {whichPage === "logIn" && <Login></Login> } */}
-                        {/* {(whichPage === "idFind" || whichPage === "pwFind") && <Find></Find>} */}
-                        {/* {whichPage === "signUp" && <SignUp></SignUp>} */}
-                        {/* {whichPage ==="home" && <Home/>} */}
-                        {/* {whichPage ==="item" && <Item/>} */}
-                        {/* {whichPage ==="achievement" && <Achievement/>} */}
-                    
                 </Div>
-            
+            </PC>
+            {/* 모바일 */}
+            <Mobile>
+                
+                <Div width="100%" flex_direction="column" height="940px">
+                {
+                    isMobileRankingClick
+                    ?
+                    <MobileRankingDiv width="95%" flex_direction="column" height="80%" justify_content="space-evenly">
+                        <MobileRangking/>
+                        <MobileRangking/>
+                        <MobileRankingBtn onClick={()=>setMobileRanking(false)}>
+                            <P color="grayscale6" font_weight="regular">
+                            로그인 페이지로 이동
+                            </P>
+                            <Triangle src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
+                            width="20px" margin="5px 0 0 10px"/>
+                        </MobileRankingBtn>
+                    </MobileRankingDiv>
+                    :
+                    <React.Fragment>
+                        <LoginDiv>
+                            <Routes>
+                                
+                                <Route path="/" element = {<Login/>}/>
+                                <Route path="/home" element = {<Home/>}/>
+                                <Route path="/signup" element = {<SignUp/>}/>
+                                <Route path="/idfind" element = {<Find which_find="idfind"/>} />
+                                <Route path="/pwfind" element = {<Find/>}/>
+                                <Route path="/item" element = {<Item/>}/>
+                                <Route path="/achievement" element = {<Achievement/>}/>
+                                <Route path="/2048" element = {<Game2048/>}/>
+                                {/* 나머지 부분 추가해주시면 될듯 합니다 */}
+                            </Routes>
+                        </LoginDiv>
+                        <Link to={"/2048"}>
+                            2048
+                        </Link>
+                        <MobileRankingBtn onClick={()=>setMobileRanking(true)}>
+                            <P color="grayscale6" font_weight="regular">
+                            현재 랭킹 확인
+                            </P>
+                            <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
+                            width="20px" margin="5px 0 0 10px"/>
+                        </MobileRankingBtn>
+                    </React.Fragment>
+                }
+                </Div>
+            </Mobile>
             {/* footer로 빼야할 듯 */}
             {
                 (location === "/" || location === "/home")
@@ -174,8 +255,9 @@ const Main = () =>{
                     />
                 </BackDiv>
             }
-            
-            <Bg location={location}></Bg>
+            <PC>
+                <Bg location={location}></Bg>
+            </PC>
         </MainStyle>
     )
 }
