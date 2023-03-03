@@ -36,7 +36,7 @@ const Login = () =>{
     // ===== router =====
     const navigate = useNavigate()
     const audio = document.getElementById("audio")
-    console.log(audio)
+    
     // ===== event =====
     const loginEvent = () =>{
         const id_regex = /^[a-z0-9]{5,20}$/g
@@ -69,44 +69,44 @@ const Login = () =>{
         <React.Fragment>
                 
             {/* 로고 */}
-            <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
-
-
-            {/* 로그인 폼 */}
-            <Div width = "50%" max_width="341px" flex_direction="column">
-                <P>Game Univ에 오신걸 환영합니다.
-                    <br/><br/>
-                    저희 GameUniv는 간단한 게임을 통한 대학생 경쟁 어플리케이션 입니다.
-                    게임에 참여해 전국에 있는 대학생들과 경쟁해보세요!
-                </P>
-                <form>
-                    <Div flex_direction="column" width="100%">
-                        <Input placeholder="아이디" minLength="6" maxLength="20" 
-                        width="100%" max_width="311px" height="28px" margin="20px 0 5px 0" padding="8px 15px" id="id_input"/>
-                        <Input type="password" placeholder="비밀번호" 
-                        width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px" id="pw_input"/>
-                    </Div>
-
-                    <Div flex_direction="column">
-                        <Div margin="0 0 10px 0">
-                            <Link to={"/idfind"} which_find="idfind">
-                                <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</LinkP>
-                            </Link>
-                            
-                            <Link to={"/pwfind"}>
-                                <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">비밀번호 찾기</LinkP>
-                            </Link>
-                            
-                            <Link to={"/signup"}>
-                                <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
-                            </Link>
+            <Div flex_direction="column" width="100%">
+                <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
+                {/* 로그인 폼 */}
+                <Div width = "50%" max_width="341px" flex_direction="column">
+                    <P>Game Univ에 오신걸 환영합니다.
+                        <br/><br/>
+                        저희 GameUniv는 간단한 게임을 통한 대학생 경쟁 어플리케이션 입니다.
+                        게임에 참여해 전국에 있는 대학생들과 경쟁해보세요!
+                    </P>
+                    <form>
+                        <Div flex_direction="column" width="100%">
+                            <Input placeholder="아이디" minLength="6" maxLength="20" 
+                            width="100%" max_width="311px" height="28px" margin="20px 0 5px 0" padding="8px 15px" id="id_input"/>
+                            <Input type="password" placeholder="비밀번호" 
+                            width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px" id="pw_input"/>
                         </Div>
-                        <Button type="button" width="341px" height="56px" id="login_btn" onClick={loginEvent}>로그인</Button>
+
+                        <Div flex_direction="column">
+                            <Div margin="0 0 10px 0">
+                                <Link to={"/idfind"} which_find="idfind">
+                                    <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</LinkP>
+                                </Link>
+                                
+                                <Link to={"/pwfind"}>
+                                    <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">비밀번호 찾기</LinkP>
+                                </Link>
+                                
+                                <Link to={"/signup"}>
+                                    <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
+                                </Link>
+                            </Div>
+                            <Button type="button" width="341px" height="56px" id="login_btn" onClick={loginEvent}>로그인</Button>
+                            
+                        </Div>
                         
-                    </Div>
+                    </form>
                     
-                </form>
-                
+                </Div>
             </Div>
         </React.Fragment>
     )

@@ -29,7 +29,6 @@ const Header_style = styled.header`
     justify-content: space-between;
     align-items:center;
     width: 100vw;
-    position: fixed;
 `
 
 const Header = () =>{
@@ -56,10 +55,14 @@ const Header = () =>{
             onClick={logoEvent}/>
             
             <Div height="84px" align_items="flex-end">
-                <Div border={`3px solid ${color("grayscale6")}`} border_radius = "10px" height="40px" width="115px" justify_content = "space-around" margin="0 0 6px 0">
-                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="36px"/>
-                    <P font_weight="regular" font_size="m">25</P>
-                </Div>
+                {
+                    which_page
+                    ||
+                    <Div border={`3px solid ${color("grayscale6")}`} border_radius = "10px" height="40px" width="115px" justify_content = "space-around" margin="0 0 6px 0">
+                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="36px"/>
+                        <P font_weight="regular" font_size="m">25</P>
+                    </Div>
+                }
                 <BtnAnimation event={useSetModalState("settingModal")}
                 before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`}
                 after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingAfterBtnImg.png`}

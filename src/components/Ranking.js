@@ -103,7 +103,7 @@ const Ranking = (props) =>{
     const rank = [1,2,3,4,5]
 
     return(
-        <Div flex_direction="column" width="90%" background_color="blue1" padding="0 10px" margin="5px 0">
+        <Div flex_direction="column" max_width="596px" width="90%" background_color="blue1" padding="0 10px" margin="5px 0">
             <RankHeader width="100%" justify_content="flex-start">
                 {
                     game === "tetris"

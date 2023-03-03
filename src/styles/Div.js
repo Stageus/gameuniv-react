@@ -12,7 +12,7 @@ export const Div = styled.div`
 
     width: ${(props) => props.width || "auto"};
     max-width: ${(props) => props.max_width || "auto"};
-
+    min-width: ${(props) => props.min_width || "auto"};
     height: ${(props) => props.height || "auto"};
     margin: ${(props) => props.margin || "0"};
     padding: ${(props) => props.padding || "0"};
