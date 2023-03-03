@@ -96,6 +96,10 @@ const Range = styled.input`
 
 const SettingModal = () =>{
 
+    // ===== var =====
+    const back_volume_control = document.getElementById("back_volume_control")
+    const audio = document.getElementById("audio")
+    
     // ===== router =====
     const navigate = useNavigate()
     const location = useLocation()
@@ -107,10 +111,27 @@ const SettingModal = () =>{
     const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
     const setModalOpen = useSetRecoilState(isModalOpenState)
     // ===== event =====
+
     const logoutBtnEvent = () => {
         navigate("/")
         setModalOpen(false)
     }
+
+    // sound 관련
+    const backControlEvent = (e) =>{
+        audio.volume = e.target.value/100
+    }
+
+    const backMuteEvent = (e) =>{
+        const check = e.target.checked
+        if(check){
+            audio.muted = true
+        }
+        else{
+            audio.muted = false
+        }
+    }
+
     return(
         <Div width="330px" height={which_page ? "220px" : "325px"}>
             <Div width="80%" height="100%">
@@ -119,12 +140,16 @@ const SettingModal = () =>{
                     <H1 font_size="m" color="grayscale7">설정</H1>
                     {/* 사운드 관련 */}
                     <Div width="100%" flex_direction="column" align_items="flex-start">
+                        <Div width="100%" justify_content="space-between">
                         <P font_weight="regular" font_size="xs" margin="0 0 5px 0">사운드</P>
+                        <P font_weight="regular" font_size="xs" margin="0 0 5px 0">음소거</P>
+                        </Div>
+                        
                         <VolumeBox>
                             <Div margin="0 0 5px 0" width="100%" justify_content="space-around">
                                 <P font_size="xxs" font_weight="regular" color="grayscale6">배경음</P>
-                                <Range type="range"></Range>
-                                <CheckBox type="checkbox" id="check_btn"></CheckBox>    
+                                <Range type="range" id="back_volume_control" onChange={backControlEvent}></Range>
+                                <CheckBox type="checkbox" id="check_btn" onClick={backMuteEvent}></CheckBox>    
                             </Div>
                             <Div margin="0 0 5px 0" width="100%" justify_content="space-around">
                                 <P font_size="xxs" font_weight="regular" color="grayscale6">효과음</P>
