@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { whichPageState } from "../recoil/PageState"
 
 // ===== import react router =====
-import {Route, Link} from "react-router-dom"
+import {Route, Link, useNavigate} from "react-router-dom"
 
 // ===== import style =====
 import {Img} from "../styles/Img"
@@ -33,12 +33,44 @@ const Logo = styled(Img)`
 const Login = () =>{
     // ===== recoil state =====
 
+    // ===== router =====
+    const navigate = useNavigate()
+    const audio = document.getElementById("audio")
+    console.log(audio)
     // ===== event =====
+    const loginEvent = () =>{
+        const id_regex = /^[a-z0-9]{5,20}$/g
+        const id = document.getElementById("id_input").value
+        const id_check = id_regex.test(id)
+        
+        const pw_regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/g
+        const pw = document.getElementById("pw_input").value
+        const pw_check = pw_regex.test(pw)
+        if(id === "" || pw === ""){
+            alert("빈 칸을 입력해 주십시오")
+        }
+        else if(!id_check){
+            alert("아이디 형식이 올바르지 않습니다(6~20자 영문, 숫자)")
+        }
+        else if(!pw_check){
+            alert("비밀번호 형식이 올바르지 않습니다(8~20자, 하나 이상의 문자와 하나의 숫자 정규식)")
+        }
+        else{
+            navigate("/home")
+            audio.play()
+        }
+    }
+
+
+
+    
+
     return(
         <React.Fragment>
                 
             {/* 로고 */}
             <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
+
 
             {/* 로그인 폼 */}
             <Div width = "50%" max_width="341px" flex_direction="column">
@@ -50,9 +82,9 @@ const Login = () =>{
                 <form>
                     <Div flex_direction="column" width="100%">
                         <Input placeholder="아이디" minLength="6" maxLength="20" 
-                        width="100%" max_width="311px" height="28px" margin="20px 0 5px 0" padding="8px 15px"/>
+                        width="100%" max_width="311px" height="28px" margin="20px 0 5px 0" padding="8px 15px" id="id_input"/>
                         <Input type="password" placeholder="비밀번호" 
-                        width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px"/>
+                        width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px" id="pw_input"/>
                     </Div>
 
                     <Div flex_direction="column">
@@ -69,9 +101,7 @@ const Login = () =>{
                                 <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
                             </Link>
                         </Div>
-                        <Link to={"/home"}>
-                            <Button type="button" width="341px" height="56px" id="login_btn">로그인</Button>
-                        </Link>
+                        <Button type="button" width="341px" height="56px" id="login_btn" onClick={loginEvent}>로그인</Button>
                         
                     </Div>
                     
