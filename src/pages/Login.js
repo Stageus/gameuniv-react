@@ -57,7 +57,6 @@ const Login = () =>{
         }
         else{
             navigate("/home")
-            audio.play()
         }
     }
 
