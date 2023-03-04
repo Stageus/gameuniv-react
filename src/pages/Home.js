@@ -12,7 +12,10 @@ import Individual2048Ranking from "../components/home_components/Individual2048R
 import { whichPageState } from "../recoil/PageState"
 
 // ===== import react router =====
-import {Route, Link} from "react-router-dom"
+import {Route, Link, useNavigate} from "react-router-dom"
+
+// ===== import hook =====
+import {PC, Mobile} from "../hooks/useMediaComponent"
 
 // ===== import style =====
 import {H1} from "../styles/H1"
@@ -28,6 +31,7 @@ const ItemBtnDiv = styled(ShadowDiv)`
     background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemDarkYellowIcon.png);
     background-repeat : no-repeat;
     background-position : right bottom;
+    background-size : ${(props) => props.background_size || "none"};
     z-index: 0;
     &:hover{
         background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemLightYellowIcon.png);
@@ -44,6 +48,7 @@ const AchivementBtnDiv = styled(ShadowDiv)`
     background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achivementDarkYellowIcon.png);
     background-repeat : no-repeat;
     background-position : right bottom;
+    background-size : ${(props) => props.background_size || "none"};
     z-index: 0;
     &:hover{
         background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achivementLightYellowIcon.png);
@@ -60,6 +65,8 @@ const AchivementBtnDiv = styled(ShadowDiv)`
 const Home = () =>{
     // ===== recoil state =====
     const setPageState = useSetRecoilState(whichPageState)
+    // ===== router =====
+    const navigate = useNavigate()
     // ===== event =====
     const utilityBtnEvent = (e)=>{
         const target = e.target.id
@@ -77,26 +84,49 @@ const Home = () =>{
 
     return(
         <React.Fragment>
-            <Div width = "100%" max_width="800px" height="730px" flex_direction="column">
-                <Div width="100%"  max_width="693px" height="301px" justify_content="space-between">
-                    <IndividualTetrisRanking/>
-                    <Individual2048Ranking/>
-                </Div>
-                
+            <Div width = "700px" height="730px" flex_direction="column">
+                <PC>
+                    <Div width="100%"   height="301px" justify_content="space-between">
+                        <IndividualTetrisRanking/>
+                        <Individual2048Ranking/>
+                    </Div>
+                </PC>
+                <Mobile>
+                    <Div width="440px"   height="301px" justify_content="space-between">
+                        <IndividualTetrisRanking/>
+                        <Individual2048Ranking/>
+                    </Div>
+                </Mobile>
                 <Profile/>
 
-                <Div width="100%"  max_width="693px" height="301px" justify_content="space-between" onClick={utilityBtnEvent}>
-                    <Link  to={"/item"}>
-                    <ItemBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between" id="item_btn">
-                        <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
-                    </ItemBtnDiv>
-                    </Link>
-                    <Link  to={"/achievement"}>
-                    <AchivementBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" align_items="flex-end" justify_content="space-between" id="achivement_btn">
-                        <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
-                    </AchivementBtnDiv>
-                    </Link>
-                </Div>
+                <PC>
+                    <Div width="100%"   height="301px" justify_content="space-between" onClick={utilityBtnEvent}>
+    
+                        <ItemBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" background_size="auto" align_items="flex-end" justify_content="space-between" id="item_btn"
+                        onClick={()=>navigate("/item")}>
+                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
+                        </ItemBtnDiv>
+
+                        <AchivementBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" background_size="auto" align_items="flex-end" justify_content="space-between" id="achivement_btn"
+                        onClick={()=>navigate("/achievement")}>
+                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
+                        </AchivementBtnDiv>
+                    </Div>
+                </PC>
+                <Mobile>
+                    <Div width="440px"  max_width="693px" height="301px" flex_direction="column" justify_content="space-evenly" onClick={utilityBtnEvent}>
+  
+                        <ItemBtnDiv width="100%" height="100px" border_radius="3px" background_color="yellow1" background_size="185px" align_items="flex-end" justify_content="space-between" id="item_btn"
+                        onClick={()=>navigate("/item")}>
+                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
+                        </ItemBtnDiv>
+
+                        <AchivementBtnDiv width="100%" height="100px" border_radius="3px" background_color="yellow1" background_size="185px" align_items="flex-end" justify_content="space-between" id="achivement_btn"
+                        onClick={()=>navigate("/achievement")}>
+                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
+                        </AchivementBtnDiv>
+                    </Div>
+                </Mobile>
             </Div>
         </React.Fragment>
     )
