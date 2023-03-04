@@ -92,6 +92,10 @@ const LoginDiv = styled(Div)`
     animation-duration: 0.5s;
 `
 
+const GameStartDiv = styled(Div)`
+    position: relative;
+    right: 160px;
+`
 
 //  ===== component =====
 
@@ -156,14 +160,14 @@ const Main = () =>{
                         :
                         <React.Fragment>
                             <Div width="50%">
-                                <Div width="100%" flex_direction="column" align_items="flex-start" height="100%">
+                                <Div width="100%" flex_direction="column" height="100%" margin="0 0 0 20px">
                                     {/* 게임시작 버튼 */}
                                     { //수정한 부분
                                         location==="/home" && 
-                                        <Div margin="0 0 20px 0" onClick={gameStartBtnEvent}>
+                                        <GameStartDiv margin="0 0 20px 0" onClick={gameStartBtnEvent}>
                                             <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
                                             <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
-                                        </Div>
+                                        </GameStartDiv>
                                     }
                                     {/* 랭킹 판 */}
                                     {

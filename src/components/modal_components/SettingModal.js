@@ -125,10 +125,10 @@ const SettingModal = () =>{
     const backMuteEvent = (e) =>{
         const check = e.target.checked
         if(check){
-            audio.muted = true
+            audio.play()
         }
         else{
-            audio.muted = false
+            audio.pause()
         }
     }
 
@@ -140,9 +140,9 @@ const SettingModal = () =>{
                     <H1 font_size="m" color="grayscale7">설정</H1>
                     {/* 사운드 관련 */}
                     <Div width="100%" flex_direction="column" align_items="flex-start">
-                        <Div width="100%" justify_content="space-between">
+                        <Div width="103%" justify_content="space-between">
                         <P font_weight="regular" font_size="xs" margin="0 0 5px 0">사운드</P>
-                        <P font_weight="regular" font_size="xs" margin="0 0 5px 0">음소거</P>
+                        <P font_weight="regular" font_size="xxs" margin="0 0 5px 0">켜기 / 끄기</P>
                         </Div>
                         
                         <VolumeBox>
