@@ -3,14 +3,15 @@ import React from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
-//  ===== import recoil =====
-
-
 // ===== import style =====
 import {H1} from "../../styles/H1"
 import {Img} from "../../styles/Img"
 import {Div, ShadowDiv} from "../../styles/Div"
 import {P} from "../../styles/P"
+
+// ===== import hook =====
+import {useMobile} from "../../hooks/useMediaComponent"
+
 
 // ===== style =====
 
@@ -22,10 +23,13 @@ const AbsoluteImg = styled(Img)`
     position:absolute;
     right :0px;
     z-index: -1;
+    opacity : ${props=> props.opacity || "100%"};
 `
 
 //  ===== component =====
 const Individual2048Ranking = () =>{
+    // ===== media query =====
+    let isMobile=useMobile()
 
     return(
         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
@@ -35,7 +39,7 @@ const Individual2048Ranking = () =>{
                 <H1 font_size="m" color="grayscale7">Your Score</H1>
                 <P font_size="xxs" font_weight="light" color="grayscale7">{11111}</P>
             </Div>
-            <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048CropImg.png`}/>
+            <AbsoluteImg opacity={isMobile && "40%"} src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048CropImg.png`}/>
         </RelativeDiv>
     )        
 }

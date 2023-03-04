@@ -15,6 +15,9 @@ import {Div, ShadowDiv} from "../../styles/Div"
 import {Img} from "../../styles/Img"
 import {P} from "../../styles/P"
 
+// ===== import hook =====
+import {PC, Mobile} from "../../hooks/useMediaComponent"
+
 //  ===== component =====
 const ItemUnit = (props) =>{
     //===== var =====
@@ -58,35 +61,68 @@ const ItemUnit = (props) =>{
                 &&
                 <ItemShowDetail item_data={item_data}/>
             }
-        <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==index ? "blue3" : "grayscale1" }
-        border_radius="10px" onClick={itemShowDetailEvent}>
-            <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
-                <H1 font_size="l" color={isClickUnit===index ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[index].item_id}</H1>
-                {
-                whichItemComponent !="myItem" &&
-                    (
-                        isHeartFiled
-                        ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={heartFiledEvent}/>
-                        : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={heartFiledEvent}/>
-                    )  
-                }
-            </Div>
-            <Div width = "88%"  align_items="flex-end" justify_content="space-between">
-                <Img width="100px" margin="0 0 10px 15px" src={item_data[index].item_img}/>
-                {
-                    whichItemComponent ==="myItem" 
-                    ?
-                    <Div width="90px" height="40px" border_radius="10px" align_items="center" justify_content="center" background_color="green">
-                        <P color="grayscale1" font_weight="regular">Holding</P>
+            <PC>
+                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==index ? "blue3" : "grayscale1" }
+                border_radius="10px" onClick={itemShowDetailEvent}>
+                    <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
+                        <H1 font_size="l" color={isClickUnit===index ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[index].item_id}</H1>
+                        {
+                        whichItemComponent !="myItem" &&
+                            (
+                                isHeartFiled
+                                ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={heartFiledEvent}/>
+                                : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={heartFiledEvent}/>
+                            )  
+                        }
                     </Div>
-                    :
-                    <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
-                        <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
-                        <P color={isClickUnit===index ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[index].item_price}</P>
+                    <Div width = "88%"  align_items="flex-end" justify_content="space-between">
+                        <Img width="100px" margin="0 0 10px 15px" src={item_data[index].item_img}/>
+                        {
+                            whichItemComponent ==="myItem" 
+                            ?
+                            <Div width="90px" height="40px" border_radius="10px" align_items="center" justify_content="center" background_color="green">
+                                <P color="grayscale1" font_weight="regular">Holding</P>
+                            </Div>
+                            :
+                            <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
+                                <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
+                                <P color={isClickUnit===index ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[index].item_price}</P>
+                            </Div>
+                        }   
                     </Div>
-                }   
-            </Div>
-        </ShadowDiv>
+                </ShadowDiv>
+            </PC>
+            <Mobile>
+                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==index ? "blue3" : "grayscale1" }
+                border_radius="10px" onClick={itemShowDetailEvent}>
+                    <Div width = "90%" justify_content="space-between" >
+                        <Img width="100px" margin="0 0 0 15px" src={item_data[index].item_img}/>
+                        <Div align_items="flex-end" flex_direction="column" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
+                            {
+                                whichItemComponent !="myItem" &&
+                                    (
+                                        isHeartFiled
+                                        ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={heartFiledEvent}/>
+                                        : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={heartFiledEvent}/>
+                                    )  
+                            }
+                            <H1 font_size="l" color={isClickUnit===index ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[index].item_id}</H1>
+                            {
+                                whichItemComponent ==="myItem" 
+                                ?
+                                <Div width="90px" height="40px" border_radius="10px" align_items="center" justify_content="center" background_color="green">
+                                    <P color="grayscale1" font_weight="regular">Holding</P>
+                                </Div>
+                                :
+                                <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
+                                    <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
+                                    <P color={isClickUnit===index ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[index].item_price}</P>
+                                </Div>
+                            }   
+                            </Div>
+                    </Div>
+                </ShadowDiv>
+            </Mobile>
         </React.Fragment>
     )
 }
