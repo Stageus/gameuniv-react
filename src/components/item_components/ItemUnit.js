@@ -62,7 +62,7 @@ const ItemUnit = (props) =>{
                 <ItemShowDetail item_data={item_data}/>
             }
             <PC>
-                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==index ? "blue3" : "grayscale1" }
+                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==index ? "blue6" : "grayscale1" }
                 border_radius="10px" onClick={itemShowDetailEvent}>
                     <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
                         <H1 font_size="l" color={isClickUnit===index ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[index].item_id}</H1>
@@ -93,7 +93,7 @@ const ItemUnit = (props) =>{
                 </ShadowDiv>
             </PC>
             <Mobile>
-                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==index ? "blue3" : "grayscale1" }
+                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==index ? "blue6" : "grayscale1" }
                 border_radius="10px" onClick={itemShowDetailEvent}>
                     <Div width = "90%" justify_content="space-between" >
                         <Img width="100px" margin="0 0 0 15px" src={item_data[index].item_img}/>
