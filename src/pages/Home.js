@@ -26,12 +26,12 @@ import {color} from "../styles/style"
 
 
 // ===== style =====
-const ItemBtnDiv = styled(ShadowDiv)`
+const ItemBtnPcDiv = styled(ShadowDiv)`
     position:relative;
     background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemDarkYellowIcon.png);
     background-repeat : no-repeat;
     background-position : right bottom;
-    background-size : ${(props) => props.background_size || "none"};
+    background-size :  none;
     z-index: 0;
     &:hover{
         background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemLightYellowIcon.png);
@@ -43,15 +43,49 @@ const ItemBtnDiv = styled(ShadowDiv)`
         transition: 0.5s;
     }
 `
-const AchivementBtnDiv = styled(ShadowDiv)`
+const AchivementBtnPcDiv = styled(ShadowDiv)`
     position:relative;
     background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achivementDarkYellowIcon.png);
     background-repeat : no-repeat;
     background-position : right bottom;
-    background-size : ${(props) => props.background_size || "none"};
+    background-size : none;
     z-index: 0;
     &:hover{
         background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achivementLightYellowIcon.png);
+        background-color : ${color("yellow2")};
+        box-shadow : none;
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        transition: 0.5s;
+    }
+`
+const ItemBtnMobileDiv = styled(ShadowDiv)`
+    position:relative;
+    background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemDarkYellowMobileIcon.png);
+    background-repeat : no-repeat;
+    background-position : 90%;
+    background-size : 120px;
+    z-index: 0;
+    &:hover{
+        background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/itemLightYellowMobileIcon.png);
+        background-color : ${color("yellow2")};
+        box-shadow : none;
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        transition: 0.5s;
+    }
+`
+const AchivementBtnMobileDiv = styled(ShadowDiv)`
+    position:relative;
+    background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achievementDarkYellowMobileIcon.png);
+    background-repeat : no-repeat;
+    background-position : 90%;
+    background-size :  120px;
+    z-index: 0;
+    &:hover{
+        background-image: url(${process.env.PUBLIC_URL}/img_srcs/icons/achievementLightYellowMobileIcon.png);
         background-color : ${color("yellow2")};
         box-shadow : none;
         transition: 0.5s;
@@ -90,41 +124,37 @@ const Home = () =>{
                         <IndividualTetrisRanking/>
                         <Individual2048Ranking/>
                     </Div>
+                    <Profile/>
+                    <Div width="100%"   height="301px" justify_content="space-between" onClick={utilityBtnEvent}>
+    
+                        <ItemBtnPcDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" background_size="auto" align_items="flex-end" justify_content="space-between" id="item_btn"
+                        onClick={()=>navigate("/item")}>
+                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
+                        </ItemBtnPcDiv>
+
+                        <AchivementBtnPcDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" background_size="auto" align_items="flex-end" justify_content="space-between" id="achivement_btn"
+                        onClick={()=>navigate("/achievement")}>
+                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
+                        </AchivementBtnPcDiv>
+                    </Div>
                 </PC>
                 <Mobile>
                     <Div width="440px"   height="301px" justify_content="space-between">
                         <IndividualTetrisRanking/>
                         <Individual2048Ranking/>
                     </Div>
-                </Mobile>
-                <Profile/>
-
-                <PC>
-                    <Div width="100%"   height="301px" justify_content="space-between" onClick={utilityBtnEvent}>
-    
-                        <ItemBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" background_size="auto" align_items="flex-end" justify_content="space-between" id="item_btn"
-                        onClick={()=>navigate("/item")}>
-                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
-                        </ItemBtnDiv>
-
-                        <AchivementBtnDiv width="49%" height="204px" border_radius="3px" background_color="yellow1" background_size="auto" align_items="flex-end" justify_content="space-between" id="achivement_btn"
-                        onClick={()=>navigate("/achievement")}>
-                            <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
-                        </AchivementBtnDiv>
-                    </Div>
-                </PC>
-                <Mobile>
+                    <Profile/>
                     <Div width="440px"  max_width="693px" height="301px" flex_direction="column" justify_content="space-evenly" onClick={utilityBtnEvent}>
   
-                        <ItemBtnDiv width="100%" height="100px" border_radius="3px" background_color="yellow1" background_size="185px" align_items="flex-end" justify_content="space-between" id="item_btn"
+                        <ItemBtnMobileDiv width="100%" height="100px" border_radius="3px" background_color="yellow1" background_size="185px" align_items="center" justify_content="start" id="item_btn"
                         onClick={()=>navigate("/item")}>
                             <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">아이템</H1>
-                        </ItemBtnDiv>
+                        </ItemBtnMobileDiv>
 
-                        <AchivementBtnDiv width="100%" height="100px" border_radius="3px" background_color="yellow1" background_size="185px" align_items="flex-end" justify_content="space-between" id="achivement_btn"
+                        <AchivementBtnMobileDiv width="100%" height="100px" border_radius="3px" background_color="yellow1" background_size="185px" align_items="center" justify_content="start" id="achivement_btn"
                         onClick={()=>navigate("/achievement")}>
                             <H1 font_size="xl" font_weight="regular" color="grayscale5" margin="0px 0px 0px 20px">업적</H1>
-                        </AchivementBtnDiv>
+                        </AchivementBtnMobileDiv>
                     </Div>
                 </Mobile>
             </Div>

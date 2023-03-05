@@ -4,7 +4,7 @@ import { useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { isModalOpenState} from "../../recoil/ModalState"
-
+import { isItemDetailOpenState, isClickUnitState} from "../../recoil/ComponentState"
 // ===== import style =====
 import { Div } from "../../styles/Div"
 import { P } from "../../styles/P"
@@ -12,11 +12,15 @@ import { Button } from "../../styles/Button"
 
 //  ===== component =====
 const ItemEquipModal = () =>{
-
+    // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
-
+    const setItemDetailOpenStateState = useSetRecoilState(isItemDetailOpenState)
+    const setClickUnitState = useSetRecoilState(isClickUnitState)
+    // ===== event =====
     const confirmEvent=()=>{
         setModalOpen(false)
+        setItemDetailOpenStateState(false)
+        setClickUnitState(null)
     }
 
     return(

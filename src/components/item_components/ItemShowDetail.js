@@ -14,8 +14,25 @@ import { Div , ShadowDiv} from "../../styles/Div"
 import { Button } from "../../styles/Button"
 import { H1 } from "../../styles/H1"
 
+// ===== import hook =====
+import {PC, Mobile} from "../../hooks/useMediaComponent"
+
 // ===== style =====
-const ItemShowDetailDiv = styled(ShadowDiv)`
+const Overlay = styled(Div)`
+    position:fixed;
+    z-index:98;
+    background-color: rgba(0,0,0,0.1);
+    top:0;
+    right:0;
+    bottom: 0;
+    left:0;
+`
+const ItemShowDetailPcDiv = styled(ShadowDiv)`
+    position :absolute;
+    right : 58%;
+    top : 20%;
+`
+const ItemShowDetailMobileDiv = styled(ShadowDiv)`
     position :absolute;
     right : 58%;
     top : 20%;
@@ -57,7 +74,8 @@ const ItemShowDetail = (props) =>{
 
     return(
         <React.Fragment>
-                <ItemShowDetailDiv width="600px" height="800px" background_color="grayscale1" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
+            <PC>
+                <ItemShowDetailPcDiv width="600px" height="800px" background_color="grayscale1" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
                     <H1 color="grayscale7" font_size="xxl" font_weight="regular">{item_data[itemIndexData].item_id}</H1>
                     <Div width="80%" height="70%" background_color="grayscale4" justify_content="space-evenly">
                         <Img width="60%" src={item_data[itemIndexData].item_img}/>
@@ -80,7 +98,36 @@ const ItemShowDetail = (props) =>{
                         </React.Fragment>
                         }
                     </Div>
-                </ItemShowDetailDiv>
+                </ItemShowDetailPcDiv>
+            </PC>
+            <Mobile>
+                <Overlay id="overlay">
+                    <ShadowDiv width="420px" height="600px" background_color="grayscale1" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
+                        <H1 color="grayscale7" font_size="xxl" font_weight="regular">{item_data[itemIndexData].item_id}</H1>
+                        <Div width="80%" height="70%" background_color="grayscale4" justify_content="space-evenly">
+                            <Img width="60%" src={item_data[itemIndexData].item_img}/>
+                        </Div>
+                        <Div width="60%" height="100px" justify_content="space-evenly" onClick={itemShowDetailBtnEvent}>
+                            {
+                            whichItemComponent === "myItem"
+                            ?
+                            <Button id="equip_btn" width="140px" height="60px" font_size="l" font_weight="regular">
+                                착용
+                            </Button>
+                            :
+                            <React.Fragment>
+                                <Button id="purchase_btn" width="140px" height="60px" font_size="l" font_weight="regular">
+                                    구매
+                                </Button>
+                                <Button id="close_btn" width="60px" height="60px" font_size="xs" font_weight="light" btn_type="red">
+                                    <NoneEventImg width="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/crossWhiteIcon.png`}/>
+                                </Button>
+                            </React.Fragment>
+                            }
+                        </Div>
+                    </ShadowDiv>
+                </Overlay>
+            </Mobile>
         </React.Fragment>
     )
 }

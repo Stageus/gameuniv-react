@@ -53,16 +53,16 @@ const Bg = (props) =>{
                 <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="60%" right="75%"/>
             </React.Fragment>
         }
-        {/* {
-            whichPage==="item"
+        {
+            ( location ==="/item")
             &&
-            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="480px" top="10%" right="72%" deg="20deg"/>
+            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="600px" top="10%" right="72%" deg="20deg"/>
         }
         {
-            whichPage==="achievement"
+            ( location ==="/achievement")
             &&
-            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="700px" top="20%" right="68%" deg="-10deg"/>
-        }  */}
+            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="800px" top="20%" right="68%" deg="-10deg"/>
+        } 
         </React.Fragment>
     )
 }

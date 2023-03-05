@@ -38,7 +38,6 @@ const Overlay = styled(Div)`
     right:0;
     bottom: 0;
     left:0;
-
 `
 
 const CancelBtn = styled(ImgBtn)`
