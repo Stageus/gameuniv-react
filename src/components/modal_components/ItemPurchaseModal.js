@@ -4,7 +4,7 @@ import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
-import { whichItemComponentState } from "../../recoil/ComponentState"
+import { whichItemComponentState ,isItemDetailOpenState, isClickUnitState} from "../../recoil/ComponentState"
 import { isModalOpenState} from "../../recoil/ModalState"
 import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
 
@@ -28,6 +28,8 @@ const ItemPurchaseModal = () =>{
     const myItemData=useRecoilValue(myItemDataState)
     const itemIndexData= useRecoilValue(itemIndexDataState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
+    const setItemDetailOpenStateState = useSetRecoilState(isItemDetailOpenState)
+    const setClickUnitState = useSetRecoilState(isClickUnitState)
 
     if(whichItemComponent==="store"){
         item_data = storeData
@@ -36,9 +38,11 @@ const ItemPurchaseModal = () =>{
     }else if(whichItemComponent==="myItem"){
         item_data = myItemData
     }
-
+    // ===== event =====
     const purchaseEvent=()=>{
+        setItemDetailOpenStateState(false)
         setModalOpen(false)
+        setClickUnitState(null)
     }
 
     return(
