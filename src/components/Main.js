@@ -49,9 +49,10 @@ const BackDiv = styled(Div)`
 
 const MainStyle = styled.main`
     display: flex;
-    justify-content: center;
     width:100%;
-    height:100%
+    margin-left:auto;
+    margin-right:auto;
+    
 `
 const GameStartBeforeBtn = styled(ImgBtn)`
     position:absolute;
@@ -139,7 +140,7 @@ const Main = () =>{
             <Modal></Modal>
             {/* PC */}
             <PC>
-                <Div width="90%" min_width="1533px">
+                <Div width="90%" min_width="1533px" height="calc(100vh - 101px);">
                     
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     
@@ -181,7 +182,7 @@ const Main = () =>{
                                     }
                                 </Div>                                                
                             </Div>
-                            <Div flex_direction = "column" width = "50%" height="100vh">
+                            <Div flex_direction = "column" width = "50%" height="100%">
                                 <Routes>
                                     <Route path="/" element = {<Login/>}/>
                                     <Route path="/home" element = {<Home/>}/>

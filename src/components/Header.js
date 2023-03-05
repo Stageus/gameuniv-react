@@ -28,7 +28,7 @@ const Header_style = styled.header`
     display:flex;
     justify-content: space-between;
     align-items:center;
-    width: 100vw;
+    width: 100%;
 `
 
 const Header = () =>{

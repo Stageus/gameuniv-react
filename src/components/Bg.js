@@ -10,6 +10,7 @@ import { whichPageState } from "../recoil/PageState"
 
 // ===== import style =====
 import { Img } from "../styles/Img"
+import { Div } from "../styles/Div"
 
 // ===== style =====
 const ClaerImg = styled(Img)`
@@ -19,6 +20,7 @@ const ClaerImg = styled(Img)`
     opacity:0.2;
     transform:rotate(${props => props.deg || "30deg"});
     z-index:-1;
+    width: 250px;
 `
 const SolidImg = styled(Img)`
     position: absolute;
@@ -40,10 +42,10 @@ const Bg = (props) =>{
         {
             location ==="/" 
             &&
-            <React.Fragment>
+            <Div>
                 <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} top="70%" right="30%" deg="-10deg"/>
                 <ClaerImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} top="0%" right="0%"/>
-            </React.Fragment>
+            </Div>
         }
         {
             ( location ==="/idfind"  || location ==="/pwfind"  || location ==="/signup" )
