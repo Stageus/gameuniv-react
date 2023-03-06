@@ -59,7 +59,8 @@ const OtherScoreMobile = styled(Div)`
 `
 
 //  ===== component =====
-const ScoreBoard = () =>{
+const ScoreBoard = (props) =>{
+    const score = props.score
     // ===== recoil state =====
 
     return(
@@ -93,7 +94,7 @@ const ScoreBoard = () =>{
                             </Div>
                         </Div>
                         <P font_weight="bold" font_size="m">
-                            29000
+                            {score}
                         </P>
                     </MyScore>
                     <OtherScore>

@@ -48,11 +48,9 @@ const BackDiv = styled(Div)`
 `
 
 const MainStyle = styled.main`
-    display: flex;
     width:100%;
     margin-left:auto;
     margin-right:auto;
-    
 `
 const GameStartBeforeBtn = styled(ImgBtn)`
     position:absolute;
