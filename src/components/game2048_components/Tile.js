@@ -1,7 +1,8 @@
-  
+// ===== import base =====
 import React from 'react';
 import styled, {css, keyframes} from 'styled-components';
 
+// ===== import style =====
 const TileInner = styled.div`
   width: 107px;
   height: 107px;
@@ -168,7 +169,7 @@ const pop = (x,y) => keyframes`
   }
 `
 
-export default function Tile({ x, y, value, isMerged, isNew }) {
+const Tile = ({ x, y, value, isMerged, isNew }) =>{
   return (
     <TileOuter x = {x} y = {y} isMerged={isMerged} isNew={isNew}>
         <TileInner value={value}>{value}</TileInner>
@@ -185,3 +186,5 @@ export default function Tile({ x, y, value, isMerged, isNew }) {
     // {/* </div> */}
   );
 }
+
+export default Tile

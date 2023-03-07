@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useLocalStorageNumber(key, initialValue) {
+const useLocalStorageNumber = (key, initialValue) =>{
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
@@ -20,3 +20,5 @@ export default function useLocalStorageNumber(key, initialValue) {
 
   return [value, setValue];
 }
+
+export default useLocalStorageNumber

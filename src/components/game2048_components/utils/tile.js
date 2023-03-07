@@ -2,7 +2,7 @@ import { MAX_POS } from "./constant";
 import { assert } from "./assert";
 import { getRandomInteger } from "./number";
 
-export function getInitialTileList() {
+export const getInitialTileList = () =>{
     const tileList = [];
     // 타일 2개를 만들어서 넣는다.
     const tile1 = makeTile(tileList);
@@ -17,24 +17,25 @@ export function checkCollision(tileList, tile){
 }
 
 let currentId = 0;
-export function makeTile(tileList) { // 타일 만들기
+export const makeTile = (tileList, isFull) =>{ // 타일 만들기
     let tile;
     // 생성될 타일이 이전 타일과 충돌하지 않도록 검사
-    while(!tile || (tileList && checkCollision(tileList, tile))) {
-        tile = {
-            id: currentId++,
-            x: getRandomInteger(1, MAX_POS),
-            y: getRandomInteger(1, MAX_POS),
-            value: 2,
-            isNew: undefined,
-            isMerged: undefined,
-        };
+    if(!isFull){
+      while(!tile || (tileList && checkCollision(tileList, tile))) {
+          tile = {
+              id: currentId++,
+              x: getRandomInteger(1, MAX_POS),
+              y: getRandomInteger(1, MAX_POS),
+              value: 2,
+              isNew: undefined,
+              isMerged: undefined,
+          };
+      }
     }
-    
     return tile;
 }
 
-export function moveTile({ tileList, x, y }) {
+export const moveTile = ({ tileList, x, y, isFull }) =>{
     // 움직이는 방향 정보를 받아 newTile로 전달
     assert(x === 0 || y === 0, '');
     const isMoveY = y !== 0;
@@ -101,10 +102,10 @@ export function moveTile({ tileList, x, y }) {
           : sorted[i].y === sorted[i + 1]?.y) &&
         sorted[i].value === sorted[i + 1]?.value
       ) {
-        const tile = makeTile();
+        const tile = makeTile(isFull);
         tile.x = sorted[i].x;
         tile.y = sorted[i].y;
-        tile.isMerged = true; // "checkJs": true를 통해 타입 에러를 주고 있음
+        tile.isMerged = true;
         tile.value = sorted[i].value * 2;
         newTileList.push(tile);
         sorted[i].isDisabled = true;
@@ -119,4 +120,60 @@ export function moveTile({ tileList, x, y }) {
       }
     }
     return newTileList;
+  }
+
+  export const checkGameOver = ({tileList}) =>{
+    const tileCheckObject = tileList
+    const tiles = [ [0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]]
+    
+    for(let i=0; i<tileCheckObject.length; i++){
+      const tile = tileCheckObject[i]
+        tiles[tile.y-1][tile.x-1] = tile.value
+    }
+    
+    let check = 0
+
+    if((tiles[0][0] !== 0 && tiles[1][0] !== 0 && tiles[0][1])&&
+      (tiles[0][0] !== tiles[1][0] && tiles[0][0] !== tiles[0][1])
+    ) check += 1
+
+    if((tiles[0][3] !== 0 && tiles[0][2] !== 0 && tiles[1][3])&&
+      (tiles[0][3] !== tiles[0][2] && tiles[0][0] !== tiles[1][3])
+    ) check += 1
+
+    if((tiles[3][0] !== 0 && tiles[2][0] !== 0 && tiles[3][1])&&
+      (tiles[3][0] !== tiles[2][0] && tiles[3][0] !== tiles[3][1])
+    ) check += 1
+
+    if((tiles[3][3] !== 0 && tiles[2][3] !== 0 && tiles[3][2])&&
+      (tiles[3][3] !== tiles[2][3] && tiles[3][3] !== tiles[3][2])
+    ) check += 1
+
+    for(let y=1; y<tiles.length-1; y++){
+      for(let x=1; x<tiles.length-1; x++){
+        if(
+          (tiles[y][x] !== 0 && tiles[y+1][x] !== 0 && 
+            tiles[y-1][x] !== 0 && tiles[y][x+1] !== 0 && tiles[y][x-1] !== 0)
+          &&
+          (tiles[y][x] !== tiles[y+1][x] &&
+            tiles[y][x] !== tiles[y-1][x] &&
+            tiles[y][x] !== tiles[y][x+1] &&
+            tiles[y][x] !== tiles[y][x-1])
+          ) check +=1
+      }
+    }
+
+    let blank_check = 0
+    for(let y=0; y<tiles.length; y++){
+      for(let x=0; x<tiles.length; x++){
+        if(tiles[y][x] !== 0) blank_check += 1
+      }
+    }
+
+    let isGameOver = false
+    let isFull = false
+    if(check === 8) isGameOver = true
+    if(blank_check === 16) isFull = true
+
+    return {isGameOver, isFull}
   }

@@ -1,44 +1,92 @@
+// ===== import base =====
 import { useEffect } from "react";
-import { addKeyObserver, removeKeyObserver } from "../utils/keyboard"
-import { makeTile, moveTile } from "../utils/tile";
 
-export default function useMoveTile({ tileList, setTileList, setScore }) {
+// ===== import recoil =====
+import { useSetRecoilState } from "recoil";
+
+// ===== import recoil state =====
+import { whichModalState, isModalOpenState } from "../../../recoil/ModalState";
+
+
+// ===== import utils =====
+import { makeTile, moveTile, checkGameOver } from "../utils/tile";
+
+const useMoveTile = ({ tileList, setTileList, setScore }) => {
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
+    const {isGameOver, isFull} = {...checkGameOver({tileList})}
+    {
+        (isGameOver || isFull)
+        && 
+        setModalOpen(true)
+        setModalState("gameOverModal")
+    }
     useEffect(() => {
-
-        function moveAndAdd({ x, y }) { // 움직이고 추가까지
-            const newTileList = moveTile({ tileList, x, y }) // 타일을 움직여서 새로운 타일을 주는 .
-            // 움직인 다음에 추가
-            const score = newTileList.reduce(
-                (acc, item) => (item.isMerged ? acc + item.value : acc),
-                0,
-            );
-            setScore(v => v + score);
-            const newTile = makeTile(newTileList);
-            newTile.isNew = true;
-            newTileList.push(newTile);
-            setTileList(newTileList);
+        
+        const moveAndAdd = ({ x, y }) => { // 움직이고 추가까지
+            const {isGameOver, isFull} = {...checkGameOver({tileList})}
+            if( !isGameOver ){
+                // if(!isFull){
+                    const newTileList = moveTile({ tileList, x, y, isFull }) // 타일을 움직여서 새로운 타일을 주는 .
+                    // 움직인 다음에 추가
+                    const score = newTileList.reduce(
+                        (acc, item) => (item.isMerged ? acc + item.value : acc),
+                        0,
+                    );
+                    setScore(v => v + score);
+                
+                    const newTile = makeTile(newTileList);
+                    newTile.isNew = true;
+                    newTileList.push(newTile);
+                    setTileList(newTileList);
+                // }
+                
+            }
+            else{
+                
+            }
+            
         }
-        function moveUp() {
+        const moveUp = () =>{
             moveAndAdd({ x: 0, y: -1 });
+            
         }
-        function moveDown() {
+        const moveDown = () =>{
             moveAndAdd({ x: 0, y: 1 });
         }
-        function moveLeft() {
+        const moveLeft = () => {
             moveAndAdd({ x: -1, y: 0 });
         }
-        function moveRight() {
+        const moveRight = () => {
             moveAndAdd({ x: 1, y: 0 });
         }
-        addKeyObserver('up', moveUp);
-        addKeyObserver('down', moveDown);
-        addKeyObserver('left', moveLeft);
-        addKeyObserver('right', moveRight);
+
+        const keyDownEvent = (e)=>{
+            switch (e.key){
+                case "Down":
+                case "ArrowDown":
+                    moveDown()
+                    break
+                case "Up":
+                case "ArrowUp":
+                    moveUp()
+                    break
+                case "Left":
+                case "ArrowLeft":
+                    moveLeft()
+                    break
+                case "Right":
+                case "ArrowRight":
+                    moveRight()
+                    break
+            }
+        }
+        document.body.addEventListener("keydown", keyDownEvent)
+        
         return () => {
-            removeKeyObserver('up', moveUp);
-            removeKeyObserver('down', moveDown);
-            removeKeyObserver('left', moveLeft);
-            removeKeyObserver('right', moveRight);
+            document.body.removeEventListener("keydown", keyDownEvent)
         };
     }, [tileList, setTileList, setScore]);
 }
+
+export default useMoveTile

@@ -52,7 +52,7 @@ const TileContainer = styled.div`
   z-index: 2;
 `
 
-export default function Game({ setScore }) {
+const Game = ({ setScore }) =>{
   const [tileList, setTileList] = useState(getInitialTileList);
   // up, down, left, right 타일 움직이기
   // hook을 이용해 로직을 분리
@@ -77,3 +77,5 @@ export default function Game({ setScore }) {
     </GameContainer>
   );
 }
+
+export default Game
