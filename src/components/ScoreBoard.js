@@ -59,7 +59,8 @@ const OtherScoreMobile = styled(Div)`
 `
 
 //  ===== component =====
-const ScoreBoard = () =>{
+const ScoreBoard = (props) =>{
+    const score = props.score
     // ===== recoil state =====
 
     return(
@@ -93,7 +94,7 @@ const ScoreBoard = () =>{
                             </Div>
                         </Div>
                         <P font_weight="bold" font_size="m">
-                            29000
+                            {score}
                         </P>
                     </MyScore>
                     <OtherScore>
@@ -112,49 +113,47 @@ const ScoreBoard = () =>{
                         </P>
                     </OtherScore>
                 </PC>
+
                 <Mobile>
                     <OtherScoreMobile>
                         <Div border_radius="50%" width="15px" height="15px" background_color="blue3">
-                            <P color="grayscale1" font_weight="bold" font_size="xxxs">34</P>
+                            <P color="grayscale1" font_weight="regular" font_size="xxxs">34</P>
                         </Div>
                         <Div flex_direction="column">
-                            <P font_weight="bold" font_size="xxxs">tmdgns97</P>
+                            <P font_weight="regular" font_size="xxxs">tmdgns97</P>
                             <Div> 
-                                <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`} width="13px"/>
-                                <P font_weight="regular" font_size="xxxs">아주대학교</P>
+                                <P font_weight="light" font_size="xxxs">아주대학교</P>
                             </Div>
                         </Div>
-                        <P font_weight="bold">
+                        <P font_weight="regular" font_size="xxxs">
                             29000
                         </P>
                     </OtherScoreMobile>
                     <MyScoreMobile>
-                        <Div border_radius="50%" width="25px" height="25px" background_color="blue3">
-                            <P color="grayscale1" font_weight="bold" font_size="xs">34</P>
+                        <Div border_radius="50%" width="15px" height="15px" background_color="blue3">
+                            <P color="grayscale1" font_weight="regular" font_size="xxxs">34</P>
                         </Div>
                         <Div flex_direction="column">
-                            <P font_weight="bold" font_size="xs">tmdgns97</P>
+                            <P font_weight="regular" font_size="xxs">tmdgns97</P>
                             <Div> 
-                                <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`} width="13px"/>
-                                <P font_weight="regular" font_size="xxxs">아주대학교</P>
+                                <P font_weight="light" font_size="xxxs">아주대학교</P>
                             </Div>
                         </Div>
-                        <P font_weight="bold" font_size="s">
-                            29000
+                        <P font_weight="bold" font_size="xxs">
+                            {score}
                         </P>
                     </MyScoreMobile>
                     <OtherScoreMobile>
                         <Div border_radius="50%" width="15px" height="15px" background_color="blue3">
-                            <P color="grayscale1" font_weight="bold" font_size="xxxs">34</P>
+                            <P color="grayscale1" font_weight="regular" font_size="xxxs">34</P>
                         </Div>
                         <Div flex_direction="column">
-                            <P font_weight="bold" font_size="xxxs">tmdgns97</P>
+                            <P font_weight="regular" font_size="xxxs">tmdgns97</P>
                             <Div> 
-                                <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`} width="13px"/>
-                                <P font_weight="regular" font_size="xxxs">아주대학교</P>
+                                <P font_weight="light" font_size="xxxs">아주대학교</P>
                             </Div>
                         </Div>
-                        <P font_weight="bold">
+                        <P font_weight="regular" font_size="xxxs">
                             29000
                         </P>
                     </OtherScoreMobile>
