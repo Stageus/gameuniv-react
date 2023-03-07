@@ -4,6 +4,7 @@ import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
+import { Effect } from "../game2048_components/utils/effect"
 
 // ===== import recoil =====
 import { whichModalState, isModalOpenState } from "../../recoil/ModalState"
@@ -99,7 +100,8 @@ const SettingModal = () =>{
     // ===== var =====
     const back_volume_control = document.getElementById("back_volume_control")
     const audio = document.getElementById("audio")
-    
+    const effect = Effect
+
     // ===== router =====
     const navigate = useNavigate()
     const location = useLocation()
@@ -132,6 +134,20 @@ const SettingModal = () =>{
         }
     }
 
+    const effectControlEvent = (e) =>{
+        effect.volume = e.target.value/100
+    }
+
+    const effectMuteEvent = (e) =>{
+        const check = e.target.checked
+        if(check){
+            effect.volume = 0
+        }
+        else{
+            effect.volume = 0.5
+        }
+    }
+
     return(
         <Div width="330px" height={which_page ? "220px" : "325px"}>
             <Div width="80%" height="100%">
@@ -153,8 +169,8 @@ const SettingModal = () =>{
                             </Div>
                             <Div margin="0 0 5px 0" width="100%" justify_content="space-around">
                                 <P font_size="xxs" font_weight="regular" color="grayscale6">효과음</P>
-                                <Range type="range"></Range>
-                                <CheckBox type="checkbox" id="check_btn"></CheckBox>    
+                                <Range type="range" onChange={effectControlEvent}></Range>
+                                <CheckBox type="checkbox" id="check_btn" onChange={effectMuteEvent}></CheckBox>    
                             </Div>
                         </VolumeBox>
                     </Div>

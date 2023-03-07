@@ -2,17 +2,21 @@
 import React from 'react';
 import styled, {css, keyframes} from 'styled-components';
 
+import { useMobile } from '../../hooks/useMediaComponent';
+
+import { fontSize } from '../../styles/style';
 // ===== import style =====
 const TileInner = styled.div`
-  width: 107px;
-  height: 107px;
-  line-height: 107px;
+
+  width: ${props => props.isMobile ? "58px": "107px"};
+  height: ${props => props.isMobile ? "58px": "107px"};
+  line-height: ${props => props.isMobile ? "58px": "107px"};
   border-radius: 3px;
   background: #eee4da;
   text-align: center;
   font-weight: bold;
   z-index: 10;
-  font-size: 55px;
+  font-size: ${props => props.isMobile ? fontSize("s") : fontSize("xl") };
 
   ${props => {
     const v = props.value
@@ -66,30 +70,37 @@ const TileInner = styled.div`
 `
 
 const TileOuter = styled.div`
-  width: 107px;
-  height: 107px;
-  line-height: 107px;
+  width: ${props => props.isMobile ? "58px": "107px"};
+  height: ${props => props.isMobile ? "58px": "107px"};
+  line-height: ${props => props.isMobile ? "58px": "107px"};
   border-radius: 3px;
   background: #eee4da;
   text-align: center;
   font-weight: bold;
   z-index: 10;
-  font-size: 55px;
+  font-size: ${props => props.isMobile ? fontSize("xxs") : fontSize("xl") };
 
   position:absolute;
   transition: 100ms ease-in-out;
   transition-property: transform;
-  margin-bottom: 15px;
+  margin-bottom: ${props => props.isMobile ? "10px": "15px"};
   ${props=> {
     const x = props.x
     const y = props.y
-    
+    const isMobile = props.isMobile
 
     const location = (value) =>{
-      if(value === 1) return "0px"
-      else if(value === 2) return "121px"
-      else if(value === 3) return "242px"
-      else if(value === 4) return "363px"
+      if(!isMobile){
+        if(value === 1) return "0px"
+        else if(value === 2) return "121px"
+        else if(value === 3) return "242px"
+        else if(value === 4) return "363px"
+      }else{
+        if(value === 1) return "0px"
+        else if(value === 2) return "67px"
+        else if(value === 3) return "135px"
+        else if(value === 4) return "202px"
+      }
     }
     return css`
       transform: translate(${location(x)}, ${location(y)});
@@ -101,11 +112,20 @@ const TileOuter = styled.div`
 
     const x = props.x
     const y = props.y
+    const isMobile = props.isMobile
+
     const location = (value) =>{
-      if(value === 1) return "0px"
-      else if(value === 2) return "121px"
-      else if(value === 3) return "242px"
-      else if(value === 4) return "363px"
+      if(!isMobile){
+        if(value === 1) return "0px"
+        else if(value === 2) return "121px"
+        else if(value === 3) return "242px"
+        else if(value === 4) return "363px"
+      }else{
+        if(value === 1) return "0px"
+        else if(value === 2) return "67px"
+        else if(value === 3) return "135px"
+        else if(value === 4) return "202px"
+      }
     }
 
     const isMerged = props.isMerged
@@ -169,21 +189,12 @@ const pop = (x,y) => keyframes`
   }
 `
 
-const Tile = ({ x, y, value, isMerged, isNew }) =>{
+const Tile = ({ x, y, value, isMerged, isNew, mobile }) =>{
+  const isMobile = useMobile()
   return (
-    <TileOuter x = {x} y = {y} isMerged={isMerged} isNew={isNew}>
-        <TileInner value={value}>{value}</TileInner>
+    <TileOuter x = {x} y = {y} isMerged={isMerged} isNew={isNew} isMobile={isMobile}>
+      <TileInner value={value} isMobile={isMobile}>{value}</TileInner>
     </TileOuter>
-    // // <div
-    // //   className={cn(`tile tile-${value} tile-position-${x}-${y}`, {
-    // //     'tile-merged': isMerged,
-    // //     'tile-new': isNew,
-    // //   })}
-    // // >
-      
-    //   {/* <div className="tile-inner">{value}</div> */}
-      
-    // {/* </div> */}
   );
 }
 

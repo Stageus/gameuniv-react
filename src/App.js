@@ -10,7 +10,7 @@ const App = () => {
   return (
     <React.Fragment>
         {/* <BackSound/> */}
-        <audio src={`${process.env.PUBLIC_URL}/sound/background_sound.mp3`} id="audio" autoPlay loop 
+        <audio src={`${process.env.PUBLIC_URL}/sound/background_sound.mp3`} id="audio" loop 
         ></audio>
         <Header/>
         <Main/>

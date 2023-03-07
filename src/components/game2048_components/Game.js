@@ -3,14 +3,24 @@ import React, { useState } from 'react';
 import times from 'lodash/times';
 import styled from 'styled-components';
 
+// ===== import recoil =====
+import { useSetRecoilState } from 'recoil';
+import { whichModalState } from '../../recoil/ModalState';
+import { isModalOpenState } from '../../recoil/ModalState';
+
 // ===== import hooks =====
 import useMoveTile from './hooks/useMoveTile';
 import { getInitialTileList } from './utils/tile';
 import { MAX_POS } from './utils/constant';
+import { useMobile } from '../../hooks/useMediaComponent';
+// ===== import component =====
 import Tile from './Tile';
 
 // ===== import style func =====
 import { color } from '../../styles/style';
+
+// ===== import utils =====
+import { checkGameOver } from './utils/tile';
 
 const GameContainer = styled.div`
   margin-top: 40px;
@@ -20,8 +30,8 @@ const GameContainer = styled.div`
   touch-action: none;
   background: ${color("blue2")};
   border-radius: 6px;
-  width: 500px;
-  height: 500px;
+  width: ${props => props.isMobile ? "300px": "500px"};
+  height: ${props => props.isMobile ? "300px": "500px"};
   box-sizing: border-box;
 `
 const GridContainer = styled.div`
@@ -30,7 +40,7 @@ const GridContainer = styled.div`
 `
 
 const GridRow = styled.div`
-  margin-bottom:15px;
+  margin-bottom:${props => props.isMobile ? "10px": "15px"};
 
   &:after{
     content:"";
@@ -39,9 +49,9 @@ const GridRow = styled.div`
   }
 `
 const GridCell = styled.div`
-  width: 106.25px;
-  height: 106.25px;
-  margin-right: 15px;
+  width: ${props => props.isMobile ? "57.5px": "106.25px"};
+  height: ${props => props.isMobile ? "57.5px": "106.25px"};
+  margin-right: ${props => props.isMobile ? "10px": "15px"};
   float: left;
   border-radius: 3px;
   background: ${color("blue5")};
@@ -53,17 +63,28 @@ const TileContainer = styled.div`
 `
 
 const Game = ({ setScore }) =>{
-  const [tileList, setTileList] = useState(getInitialTileList);
+  const [tileList, setTileList] = useState(getInitialTileList)
+  
+  const setModalState = useSetRecoilState(whichModalState)
+  const setModalOpen = useSetRecoilState(isModalOpenState)
+  const {isGameOver, isFull} = {...checkGameOver({tileList})}
+
+  const isMobile = useMobile()
+
+  if(isGameOver || isFull){
+    setModalOpen(true)
+    setModalState("gameOverModal")
+  }
   // up, down, left, right 타일 움직이기
   // hook을 이용해 로직을 분리
-  useMoveTile({tileList, setTileList,setScore }); // 훅을 만들어 관리
+  useMoveTile({tileList, setTileList,setScore }) // 훅을 만들어 관리
   return (
-    <GameContainer>
+    <GameContainer isMobile={isMobile}>
       <GridContainer>
         {times(MAX_POS, y => (
-          <GridRow key={y}>
+          <GridRow key={y} isMobile={isMobile}>
             {times(MAX_POS, x => (
-              <GridCell key={y * MAX_POS + x}></GridCell>
+              <GridCell key={y * MAX_POS + x} isMobile={isMobile}></GridCell>
             ))}
           </GridRow>
         ))}
