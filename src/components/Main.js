@@ -1,6 +1,6 @@
 // ===== import base =====
 import React from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 import { useRecoilValue, useSetRecoilState } from "recoil"
 
 // ===== import page =====
@@ -24,7 +24,8 @@ import {Routes, Route, Link, useParams, useLocation, useNavigate} from "react-ro
 
 // ===== import hook =====
 import { useSetModalState } from "../hooks/useSetModalState"
-import {PC, Mobile} from "../hooks/useMediaComponent"
+import {PC, Mobile, useMobile} from "../hooks/useMediaComponent"
+
 
 // ===== import recoil =====
 import { whichPageState } from "../../src/recoil/PageState"
@@ -45,12 +46,19 @@ const BackDiv = styled(Div)`
     position:absolute;
     top: 90%;
     left:2%;
+
+    ${props => props.isMobile &&css`
+        position: relative;
+        top: 90%;
+        left: -40%;
+    `}
 `
 
 const MainStyle = styled.main`
     width:100%;
     margin-left:auto;
     margin-right:auto;
+
 `
 const GameStartBeforeBtn = styled(ImgBtn)`
     position:absolute;
@@ -100,9 +108,8 @@ const GameStartDiv = styled(Div)`
 
 // 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
 const Main = () =>{
-    // ===== audio =====
-
-    
+    // ===== hooks =====
+    const isMobile = useMobile()
     // ===== state =====
     const [isMouseHover, setMouseHover] = React.useState(false)
     const [isMobileRankingClick, setMobileRanking] = React.useState(false)
@@ -251,7 +258,7 @@ const Main = () =>{
             {
                 (location === "/" || location === "/home")
                 ||
-                <BackDiv onClick={backBtnEvent}>
+                <BackDiv onClick={backBtnEvent} isMobile={isMobile}>
                     <BtnAnimation 
                     before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
                     after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}

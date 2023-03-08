@@ -9,6 +9,9 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import { whichPageState } from "../../recoil/PageState"
 import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
 
+// ===== import hooks =====
+import { useNavigate } from "react-router"
+
 // ===== import style =====
 import { ImgBtn } from "../../styles/Img"
 import { Div } from "../../styles/Div"
@@ -36,6 +39,9 @@ const GameSelectModal = () =>{
     //삭제할 스테이트
     const setModalState = useSetRecoilState(whichModalState)
 
+    // ===== hooks =====
+    const navigate = useNavigate()
+
     // ===== event =====
     const gameSelctBtnEvent = (e)=>{
         const target = e.target.id
@@ -46,7 +52,7 @@ const GameSelectModal = () =>{
                 setModalState("gameOverModal")
                 break
             case "2048_btn":
-                setPageState("2048")
+                navigate("/2048")
                 setModalOpen(false)
                 break
         }

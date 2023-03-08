@@ -144,7 +144,7 @@ const SettingModal = () =>{
             effect.volume = 0
         }
         else{
-            effect.volume = 0.5
+            effect.volume = 1
         }
     }
 
