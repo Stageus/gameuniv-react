@@ -1,35 +1,45 @@
 // ===== import base =====
 import React from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
+
+// ===== import hooks =====
+import { useMobile } from "../../../../hooks/useMediaComponent"
+
+// ===== import style =====
+import { Div } from "../../../../styles/Div"
+import { color, fontSize, fontWeight } from "../../../../styles/style"
 
 // ===== style =====
 const ScoreBoxDiv = styled.div`
     display: flex;
-    width: fit-content;
     flex-direction: column;
-    background: #bbada0;
-    padding: 10px 15px;
-    border-radius: 3px;
-    margin-top: 8px;
-    text-align: center;
 `
 
 const Title = styled.span`
-font-size: 13px;
+    font-size: 13px;
     color: #eee4da;
 `
 
-const Score = styled.span`
-    font-size: 25px;
-    font-weight: bold;
-    color: white;
+const Score = styled(Div)`
+    font-size: ${fontSize("xs")};
+    width: 50px;
+    ${fontWeight("bold")};
+    margin-left: 10px;
+
+    ${props => props.isMobile && css`
+        width: 25px;
+        margin-left:5px;
+        font-size: 5px;
+    `}
 `
 // ===== component =====
 const ScoreBox = (props) =>{
+    const isMobile = useMobile()
+
     return(
         <ScoreBoxDiv>
             <Title>{props.title}</Title>
-            <Score>{props.score}</Score>
+            <Score isMobile={isMobile}>{props.score ? props.score : 0}</Score>
         </ScoreBoxDiv>
     )
 }

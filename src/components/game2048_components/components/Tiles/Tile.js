@@ -1,13 +1,12 @@
 // ===== import base =====
 import React, { memo } from "react"
 import styled, { css, keyframes } from "styled-components"
-// import
-// interface TileProps {
-//     value: Value;
-//     type: TileType
-//     x: number;
-//     y: number;
-//   }
+
+// ===== import hooks =====
+import { useMobile } from "../../../../hooks/useMediaComponent"
+
+// ===== import style =====
+import { fontSize } from "../../../../styles/style"
 
 // ===== style =====
 const appear = (x,y) => keyframes`
@@ -47,7 +46,7 @@ const TileOuter = styled.div`
     height: 106px;
     line-height: 106px;
     float: left;
-    border-radius: 3px;
+    border-radius: 10px;
     background: rgba(238, 228, 218, 0.35);
     box-shadow: 0 0 30px 10px rgb(243 215 116 / 0%),
         inset 0 0 0 1px rgb(255 255 255 / 0%);
@@ -55,6 +54,13 @@ const TileOuter = styled.div`
     transition-property: transform;
 
     transform: translate( ${ props => props.x}px, ${ props => props.y}px );
+
+    // media query
+    ${props => props.isMobile && css`
+        width: 64px;
+        height: 64px;
+        line-height: 64px;
+    `}
 
     // type에 따라 애니메이션 다르게
     ${props => {
@@ -75,11 +81,15 @@ const TileOuter = styled.div`
 `
 
 const TileInner = styled.div`
-    border-radius: 3px;
+    border-radius: 10px;
     text-align: center;
     font-weight: bold;
     z-index: 10;
     font-size: 45px;
+
+    ${props => props.isMobile && css`
+        font-size: ${fontSize("m")};
+    `}
 
     ${props =>{
         const value = props.value
@@ -143,18 +153,16 @@ const TileInner = styled.div`
 `
 
 const Tile = memo( (props) =>{
+    const isMobile = useMobile()
     // ===== props =====
     const value = props.value
     const type = props.type
     const x= props.x
     const y = props.y
     return(
-        <TileOuter x={x} y={y} type={type}>
-            <TileInner value={value}>{value}</TileInner>
+        <TileOuter x={x} y={y} type={type} isMobile={isMobile}>
+            <TileInner value={value} isMobile={isMobile}>{value}</TileInner>
         </TileOuter>
-        // <TileOuter x={x} y={y}>
-        //     <TileInner>2</TileInner>
-        // </TileOuter>
     )
 })
 

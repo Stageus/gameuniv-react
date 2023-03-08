@@ -1,10 +1,14 @@
 // ===== import base =====
 import React, {useContext, useEffect } from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 
-import Board from "../Board/Board"
+
+// ===== import components =====
 import GameHeader from "../GameHeader/GameHeader";
 import BoardContainer from "../Board/BoardContainer";
+import RetryGameModal from "../../../modal_components/RetryGameModal";
+import Modal from "../../../Modal"
+import { Effect } from "../../utils/effect";
 // ===== import utils =====
 import {
     areEqual,
@@ -16,38 +20,41 @@ import {
     MOVES_MAP,
 } from "../../utils/boardUtils";
 
-// ===== import components =====
-// import GameHeader from "../GameHeader";
-// import GameFooter from "../GameFooter";
-
-// ===== import interfaces =====
-// import {
-//     GameContextActionType,
-//     GameState,
-//     IGameContext,
-//     Direction,
-//     Tile,
-//     GameStatus
-// } from "../interfaces";
-
 // ===== import hooks =====
 import useGameLocalStorage from "../../hooks/useLocalStorage";
+import { useMobile } from "../../../../hooks/useMediaComponent";
+
 // ===== import constants
 import { KEYBOARD_ARROW_TO_DIRECTION_MAP } from "../../constants/constants"
 
+// ===== import style =====
+import { Div } from "../../../../styles/Div";
+
+// ===== import style func =====
+import { color } from "../../../../styles/style";
+
+
 // ===== style =====
 const Container = styled.div`
-    width: 500px;
+    width: ${props=> props.isMobile? "300px":"500px"};
     margin: 30px auto;
 `
 
-const GameContainer = styled.div`
-    
+const GameContainer = styled(Div)`
+    flex-direction:column;
+    width: 540px;
+    height: 720px;
+    border-radius: 10px;
+    background-color: ${color("blue5")};
+
+    ${props=> props.isMobile && css`
+        width: 320px;
+        height:500px;
+    `}
 `
 
 const GameContext = React.createContext()
 
-// 아직 잘 모르겠음
 const getGameStatus = (tiles) =>{
     if( isGameOver(tiles)){
         return "GAME_OVER"
@@ -60,7 +67,7 @@ const getGameStatus = (tiles) =>{
     return "IN_PROGRESS"
 }
 
-const initState = (tilesCount = 2) =>{
+export const initState = (tilesCount = 2) =>{
     return{
         tiles: generateBoard(tilesCount),
         lastMove: null,
@@ -106,15 +113,11 @@ const GameProvider = (props) =>{
     useEffect( ()=>{
         const handleKeyPress = (e) =>{
             e.preventDefault()
+            const effect = Effect
             let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
-            console.log(direction)
-            // if(e.key === "ArrowLeft") direction = "left"
-            // else if( e.key === "ArrowUp") direction = "up"
-            // else if( e.key === "ArrowRight") direction = "right"
-            // else if( e.key === "ArrowDown") direction = "down"
-            // console.log(state)
             if(direction){
                 dispatch({type : "move", payload: direction})
+                effect.play()
             }
         }
 
@@ -133,11 +136,12 @@ const GameProvider = (props) =>{
 }
 
 const Game = () =>{
+    const isMobile = useMobile()
     // const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
     return(
         <GameProvider>
-            <Container>
-                <GameContainer>
+            <Container isMobile={isMobile}>
+                <GameContainer isMobile={isMobile}>
                     <GameHeader/>
                     <BoardContainer/>
                 </GameContainer>
@@ -154,4 +158,4 @@ const useGameContext = () =>{
     return context
 }
 
-export { Game, useGameContext }
+export { Game, useGameContext}

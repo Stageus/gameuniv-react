@@ -3,8 +3,9 @@ import React from "react"
 import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
-// ===== import component =====
-
+// ===== import hooks =====
+import { useGameContext } from "../game2048_components/components/Game/Game"
+import { GameProvider } from "../game2048_components/components/Game/Game"
 // ===== import recoil =====
 import { whichPageState } from "../../recoil/PageState"
 

@@ -19,28 +19,30 @@ import { P, NoneEventP } from "../../styles/P"
 // ===== import style func =====
 import { color } from "../../styles/style"
 
+// ===== import hooks =====
+import { useNavigate } from "react-router"
+
 
 // ===== style =====
 
 //  ===== component =====
 
-const GameOverModal = () =>{
-
+const GameOverModal = (props) =>{
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
-    const setPageState= useSetRecoilState(whichPageState)
     const setModalState = useSetRecoilState(whichModalState)
-
+    const navigate = useNavigate()
     // ===== event =====
     const gameOverBtnEvent = (e)=>{
         const target = e.target.id
 
         switch(target){
             case "replay_btn":
-                console.log("replay")
+                props.onRestart()
                 break
             case "home_btn":
-                setPageState("home")
+                props.onRestart()
+                navigate("/home")
                 setModalOpen(false)
                 break
             case "share_btn":

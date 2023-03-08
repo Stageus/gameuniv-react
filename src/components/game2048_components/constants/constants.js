@@ -1,5 +1,5 @@
 export const ScreenSizeBreakpoint = {
-    XS: 420,
+    XS: 479,
     S: 520,
 }
 

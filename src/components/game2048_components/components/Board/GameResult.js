@@ -1,7 +1,18 @@
 // ===== import base =====
 import React from "react"
 import styled, {keyframes} from "styled-components"
+
+import { useSetRecoilState } from "recoil"
+
+// ===== import hooks =====
+import { whichModalState, isModalOpenState } from "../../../../recoil/ModalState"
+
 import { useGameContext } from "../Game/Game"
+import { useSetModalState } from "../../../../hooks/useSetModalState"
+
+// ===== import components =====
+import Modal from "../../../Modal"
+import GameOverModal from "../../../modal_components/GameOverModal"
 
 // ===== style =====
 const fadeIn = keyframes`
@@ -13,7 +24,12 @@ const fadeIn = keyframes`
         opacity: 1;
     }
 `
-
+const Overlay = styled.div`
+    position:absolute;
+    z-index:99;
+    width:100%;
+    
+`
 const GameResult = styled.div`
     display: flex;
     position: absolute;
@@ -29,8 +45,7 @@ const GameResult = styled.div`
     animation: ${fadeIn} 1200ms ease 500ms;
     animation-fill-mode: both;
 
-    background: ${props => props.containerClass === "gameResultWin" ? 
-    "rgba(237,194,46,0.5)" : "rgba(238,228,218,0.75)"};
+    background: white;
 `
 
 const DATA = {
@@ -50,16 +65,20 @@ const Result = (props) =>{
     const { isWin, onContinue, onRestart, playAfterWin} = props
     const {message, buttonText, containerClass} = 
         isWin || playAfterWin ? DATA.WIN : DATA.GAME_OVER
-
+    const width = document.body.scrollWidth
+    const height = document.body.scrollHeight
+    console.log(width)
     return(
-        <GameResult containerClass = {containerClass}>
-            <p>{message}</p>
+        <GameResult containerClass = {containerClass} width={width} height={height}>
+            <GameOverModal onRestart={onRestart}/>
+            {/* <p>{message}</p>
             <div>
+                
                 {isWin &&(
                     <button onClick = {() => onContinue() }>continue</button>
                 )}
                 <button onClick={()=> onRestart() }>{buttonText}</button>
-            </div>
+            </div> */}
         </GameResult>
     )
 }

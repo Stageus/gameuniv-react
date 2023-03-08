@@ -4,7 +4,7 @@ import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
-// import { Effect } from "../game2048_components/utils/effect"
+import { Effect } from "../game2048_components/utils/effect"
 
 // ===== import recoil =====
 import { whichModalState, isModalOpenState } from "../../recoil/ModalState"
@@ -100,7 +100,7 @@ const SettingModal = () =>{
     // ===== var =====
     const back_volume_control = document.getElementById("back_volume_control")
     const audio = document.getElementById("audio")
-    const effect = null
+    const effect = Effect
 
     // ===== router =====
     const navigate = useNavigate()
@@ -144,7 +144,7 @@ const SettingModal = () =>{
             effect.volume = 0
         }
         else{
-            effect.volume = 0.5
+            effect.volume = 1
         }
     }
 
