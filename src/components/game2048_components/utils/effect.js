@@ -1,1 +1,0 @@
-export const Effect = new Audio(`${process.env.PUBLIC_URL}/sound/effect2048.wav`)
