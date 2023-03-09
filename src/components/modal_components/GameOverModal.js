@@ -4,6 +4,7 @@ import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
+// import GameResultContainer from "../game2048_components/components/Board/GameResult"
 
 // ===== import recoil =====
 import { whichPageState } from "../../recoil/PageState"
@@ -28,6 +29,9 @@ import { useNavigate } from "react-router"
 //  ===== component =====
 
 const GameOverModal = (props) =>{
+    // ===== 2048 state =====
+
+
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setModalState = useSetRecoilState(whichModalState)

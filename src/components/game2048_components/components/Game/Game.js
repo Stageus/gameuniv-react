@@ -1,7 +1,12 @@
 // ===== import base =====
 import React, {useContext, useEffect } from "react"
-import styled, {css} from "styled-components"
+import styled, {css, ThemeProvider} from "styled-components"
 
+// ===== import recoil =====
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { isModalOpenState, whichModalState } from "../../../../recoil/ModalState";
+
+import { basicTheme, pastelTheme, doodleTheme } from "../../styles/theme";
 
 // ===== import components =====
 import GameHeader from "../GameHeader/GameHeader";
@@ -45,13 +50,18 @@ const GameContainer = styled(Div)`
     width: 540px;
     height: 720px;
     border-radius: 10px;
-    background-color: ${color("blue5")};
+    background-color: ${props=> props.theme.totalBoxColor};
 
     ${props=> props.isMobile && css`
         width: 320px;
         height:500px;
     `}
+
+    ${props => props.theme === doodleTheme && css`
+        border: 5px solid black;
+    `}
 `
+
 
 const GameContext = React.createContext()
 
@@ -108,8 +118,18 @@ const gameReducer = (state, action) =>{
     }
 }
 
+
 const GameProvider = (props) =>{
     const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
+    const isModalOpen = useRecoilValue(isModalOpenState)
+    // if(state.status === "GAME_OVER"){
+    //     setModalState("gameOverModal")
+    //     setModalOpen(true)
+    // }
+
+    // ===== event =====
     useEffect( ()=>{
         const handleKeyPress = (e) =>{
             e.preventDefault()
@@ -120,13 +140,15 @@ const GameProvider = (props) =>{
                 effect.play()
             }
         }
-
+    
         document.addEventListener("keydown", handleKeyPress)
-
         return () =>{
             document.removeEventListener("keydown", handleKeyPress)
         }
+        
+        
     }, [dispatch] )
+
 
     return(
         <GameContext.Provider value={ { gameState: state, dispatch } }>
@@ -138,14 +160,17 @@ const GameProvider = (props) =>{
 const Game = () =>{
     const isMobile = useMobile()
     // const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
+
     return(
         <GameProvider>
-            <Container isMobile={isMobile}>
-                <GameContainer isMobile={isMobile}>
-                    <GameHeader/>
-                    <BoardContainer/>
-                </GameContainer>
-            </Container>
+            <ThemeProvider theme = {pastelTheme}>
+                <Container isMobile={isMobile}>
+                    <GameContainer isMobile={isMobile}>
+                        <GameHeader/>
+                        <BoardContainer/>
+                    </GameContainer>
+                </Container>
+            </ThemeProvider>
         </GameProvider>
     )
 }

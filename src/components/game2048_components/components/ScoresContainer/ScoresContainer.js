@@ -15,6 +15,7 @@ import { useMobile } from "../../../../hooks/useMediaComponent";
 import { Div } from "../../../../styles/Div";
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../../../styles/style";
+import { doodleTheme } from "../../styles/theme";
 
 // ===== style =====
 const moveUp = keyframes`
@@ -35,13 +36,17 @@ const ScoresContainerDiv = styled.div`
     align-items: center;
     width: 248px;
     height: 135px;
-    background-color: ${color("blue3")};
+    background-color: ${props => props.theme.scoreBoxColor};
     border-radius: 5px;
     border: 2px solid white;
 
     ${props => props.isMobile && css`
         width: 150px;
         height: 120px;
+    `}
+
+    ${props => props.theme === doodleTheme && css`
+        border: 3px solid black;
     `}
 `
 
@@ -54,6 +59,7 @@ const AddScore = styled.div`
     z-index: 100;
     animation: ${moveUp} 600ms ease-in;
     animation-fill-mode: both;
+    color: ${props=> props.theme.fontColor};
 `
 
 const MyScore = styled(Div)`
@@ -61,10 +67,10 @@ const MyScore = styled(Div)`
     right:0;
     width: 230px;
     height: 49px;
-    background-color: ${color("grayscale1")};
+    background-color: ${props=> props.theme.scoreColor};
     border-radius: 10px;
-    border: 2px solid ${color("green")};
-
+    border: 2px solid ${props=>props.theme.borderColor};
+    color: ${props=> props.theme.fontColor};
     ${props => props.isMobile && css`
         width: 90%;
         height: 27px;
@@ -84,13 +90,13 @@ const UserUniv = styled.div`
 `
 
 const MyRank = styled(Div)`
-    background-color: ${color("blue3")};
+    background-color: ${props => props.theme.rankColor};
     font-size:${fontSize("s")};
     width:34px;
     height:34px;
     border-radius:50%;
     ${fontWeight("bold")};
-    color: ${color("grayscale1")};
+    color: ${props => props.theme.rankTextColor};
     margin-right: 20px;
 
     ${props => props.isMobile && css`
@@ -100,6 +106,11 @@ const MyRank = styled(Div)`
         height:17px;
         font-size: 10px;
         margin-right: 5px;
+    `}
+
+    ${props => props.theme === doodleTheme && css`
+        border: 2px solid black;
+        -webkit-text-stroke: 1px black;
     `}
 `
 
@@ -116,13 +127,14 @@ const OtherScore = styled(MyScore)`
 `
 
 const OtherRank = styled(MyRank)`
+    position:relative;
     width: 20px;
     height: 20px;
     font-size:${fontSize("xxs")};
     margin-right: 0px;
-
+    
     ${props => props.isMobile && css`
-        position:relative;
+        
         right: 3px;
         width: 15px;
         height:15px;
@@ -132,10 +144,14 @@ const OtherRank = styled(MyRank)`
 
 const OtherId = styled(UserId)`
     font-size: ${props => props.isMobile? "5px": fontSize("xxxs")};
+    position:relative;
+    left: 5px;
 `
 
 const OtherUniv = styled(UserUniv)`
     font-size: ${props => props.isMobile ? "5px": fontSize("xxxs")};
+    position:relative;
+    left: 5px;
 `
 const ScoresContainer = () =>{
     // ===== state =====
