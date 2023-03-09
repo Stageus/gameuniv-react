@@ -73,7 +73,6 @@ const GameHeader = () =>{
     return(
         <Div justify_content="space-between" height={isMobile ? "130px" :"180px"} width={isMobile ? "300px": "500px"}>
             <Div flex_direction="column" height ={isMobile ? "100px":"135px"} align_items="flex-start" 
-
             justify_content="space-between"> 
                 <GameTitle isMobile={isMobile}>2048</GameTitle>
                 <RetryBtn isMobile={isMobile} 
@@ -81,7 +80,6 @@ const GameHeader = () =>{
             </Div>
             <div>
                 <ScoresContainer/>
-                
             </div>
         </Div>
 

@@ -14,6 +14,9 @@ import { useSetModalState } from "../../../../hooks/useSetModalState"
 import Modal from "../../../Modal"
 import GameOverModal from "../../../modal_components/GameOverModal"
 
+// ===== import style =====
+import { Button } from "../../../../styles/Button"
+
 // ===== style =====
 const fadeIn = keyframes`
     0% {
@@ -25,14 +28,22 @@ const fadeIn = keyframes`
     }
 `
 const Overlay = styled.div`
-    position:absolute;
+    position:fixed;
     z-index:99;
-    width:100%;
-    
+    background-color: rgba(0,0,0,0.3);
+    top:0;
+    right:0;
+    bottom: 0;
+    left:0;
+    animation: ${fadeIn} 1200ms ease 500ms;
+    animation-fill-mode: both;
 `
+
 const GameResult = styled.div`
     display: flex;
     position: absolute;
+    width:560px;
+    height:500px;
     top: 0;
     right: 0;
     bottom: 0;
@@ -65,11 +76,8 @@ const Result = (props) =>{
     const { isWin, onContinue, onRestart, playAfterWin} = props
     const {message, buttonText, containerClass} = 
         isWin || playAfterWin ? DATA.WIN : DATA.GAME_OVER
-    const width = document.body.scrollWidth
-    const height = document.body.scrollHeight
-    console.log(width)
     return(
-        <GameResult containerClass = {containerClass} width={width} height={height}>
+        <GameResult containerClass = {containerClass}>
             <GameOverModal onRestart={onRestart}/>
             {/* <p>{message}</p>
             <div>
@@ -101,16 +109,34 @@ const GameResultContainer = (props) =>{
 
     return(
         <React.Fragment>
+            
             {status !== "IN_PROGRESS" && status !== "PLAY_AFTER_WIN" &&(
-                <Result
-                    isWin = {status === "WIN"}
-                    // playAfterWin = {playAfterWin}
-                    onRestart = {handleRestart}
-                    onContinue = {handleContinue}
-                    status = {status}
-                />
+                <React.Fragment>
+                    <Result
+                        isWin = {status === "WIN"}
+                        // playAfterWin = {playAfterWin}
+                        onRestart = {handleRestart}
+                        onContinue = {handleContinue}
+                        status = {status}
+                    />
+                    <Overlay></Overlay>
+                </React.Fragment>
             )}
         </React.Fragment>
+
+        // <React.Fragment>
+        // {status !== "IN_PROGRESS" && status !== "PLAY_AFTER_WIN" &&(
+        //     <Button
+        //         isWin = {status === "WIN"}
+        //         // playAfterWin = {playAfterWin}
+        //         onRestart = {handleRestart}
+        //         onContinue = {handleContinue}
+        //         status = {status}
+        //     >다시하기</Button>
+        // )}
+        // </React.Fragment>
+
+        
     )
     
 }
