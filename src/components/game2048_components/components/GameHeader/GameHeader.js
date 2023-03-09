@@ -16,10 +16,11 @@ import { P } from "../../../../styles/P";
 
 // ===== import style func =====
 import { fontSize, color, fontWeight } from "../../../../styles/style";
+import { doodleTheme } from "../../styles/theme";
 
 const GameTitle = styled(Div)`
-    background-color: ${color("blue3")};
-    color: ${color("grayscale1")};
+    background-color: ${props => props.theme.mainColor};
+    color: ${props => props.theme.titleColor};
     border-radius : 5px;
     width: 210px;
     height: 70px;
@@ -31,18 +32,37 @@ const GameTitle = styled(Div)`
         height: 33px;
         font-size: ${fontSize("s")};
     `}
+    ${props => props.theme === doodleTheme && css`
+        -webkit-text-stroke: 2px black;
+        border: 3px solid black;
+    `}
 `
 
 const RetryBtn = styled(Button)`
     width: 160px;
     height: 39px;
     font-size: ${fontSize("xs")};
+    background-color: ${props => props.theme.mainColor};
+    color: ${props => props.theme.titleColor};
 
     ${props => props.isMobile && css`
         width: 70px;
         height: 25px;
         font-size: ${fontSize("xxs")};
     `}
+
+    ${props => props.theme === doodleTheme && css`
+        -webkit-text-stroke: 1px black;
+        border: 3px solid black;
+    `}
+
+    &:hover{
+        background-color: ${props=> props.theme.hoverColor};
+        transition: 0.5s;
+    }
+    &:not(:hover){
+        transition: 0.5s;
+    }
 `
 // const GameTitle = () => <P>2048</P>
 

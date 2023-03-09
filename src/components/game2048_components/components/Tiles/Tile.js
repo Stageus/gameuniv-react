@@ -7,7 +7,7 @@ import { useMobile } from "../../../../hooks/useMediaComponent"
 
 // ===== import style =====
 import { fontSize } from "../../../../styles/style"
-
+import { doodleTheme } from "../../styles/theme"
 // ===== style =====
 const appear = (x,y) => keyframes`
     0% {
@@ -47,20 +47,32 @@ const TileOuter = styled.div`
     line-height: 106px;
     float: left;
     border-radius: 10px;
-    background: rgba(238, 228, 218, 0.35);
-    box-shadow: 0 0 30px 10px rgb(243 215 116 / 0%),
-        inset 0 0 0 1px rgb(255 255 255 / 0%);
     transition: 100ms ease-in-out;
     transition-property: transform;
 
     transform: translate( ${ props => props.x}px, ${ props => props.y}px );
 
     // media query
-    ${props => props.isMobile && css`
-        width: 64px;
-        height: 64px;
-        line-height: 64px;
-    `}
+    ${props => {
+        if(props.isMobile){
+            if(props.theme === doodleTheme){
+                return css`
+                    width: 60px;
+                    height: 60px;
+                    line-height: 60px;
+                `
+                
+            }
+            else{
+                return css`
+                    width: 64px;
+                    height: 64px;
+                    line-height: 64px;
+                `
+            }
+        }
+    }
+    }
 
     // type에 따라 애니메이션 다르게
     ${props => {
@@ -78,6 +90,12 @@ const TileOuter = styled.div`
                 `
         }
     }}
+
+    ${props => props.theme === doodleTheme && css`
+        border: 2px solid black;
+        -webkit-text-stroke: 1px black;
+    `}
+
 `
 
 const TileInner = styled.div`
@@ -96,57 +114,59 @@ const TileInner = styled.div`
         switch(value){
             case 2:
                 return css`
-                    background: #eee4da;
+                    color: ${props.theme.cell24fontColor};
+                    background: ${props.theme.n2};
                 `
             case 4:
                 return css`
-                    background: #eee1c9;
+                    color: ${props.theme.cell24fontColor};
+                    background: ${props.theme.n4};
                 `
             case 8:
                 return css`
-                    color: #f9f6f2;
-                    background: #f3b27a;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n8};
                 `
             case 16:
                 return css`
-                    color: #f9f6f2;
-                    background: #f69664;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n16};
                 `
             case 32:
                 return css`
-                    color: #f9f6f2;
-                    background: #f77c5f;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n32};
                 `
             case 64:
                 return css`
-                    color: #f9f6f2;
-                    background: #f75f3b;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n64};
                 `
             case 128:
                 return css`
-                    color: #f9f6f2;
-                    background: #edd073;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n128};
                 `
             case 256:
                 return css`
-                    color: #f9f6f2;
-                    background: #edcc62;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n256};
                 `
             case 512:
                 return css`
-                    color: #f9f6f2;
-                    background: #edc950;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n512};
                 `
             case 1024:
                 return css`
-                    color: #f9f6f2;
-                    background: #edc53f;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n1024};
                 `
             // 2048 이후
             default:
                 return css`
-                    color: #f9f6f2;
-                    background: #edc22e;
+                    color: ${props.theme.cellfontColor};
+                    background: ${props.theme.n2048};
                 `
         }
     }}

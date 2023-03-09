@@ -1,7 +1,7 @@
 // ===== import base =====
 import React, {useContext, useEffect } from "react"
-import styled, {css} from "styled-components"
-
+import styled, {css, ThemeProvider} from "styled-components"
+import { basicTheme, pastelTheme, doodleTheme } from "../../styles/theme";
 
 // ===== import components =====
 import GameHeader from "../GameHeader/GameHeader";
@@ -45,11 +45,15 @@ const GameContainer = styled(Div)`
     width: 540px;
     height: 720px;
     border-radius: 10px;
-    background-color: ${color("blue5")};
+    background-color: ${props=> props.theme.totalBoxColor};
 
     ${props=> props.isMobile && css`
         width: 320px;
         height:500px;
+    `}
+
+    ${props => props.theme === doodleTheme && css`
+        border: 5px solid black;
     `}
 `
 
@@ -140,12 +144,14 @@ const Game = () =>{
     // const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
     return(
         <GameProvider>
-            <Container isMobile={isMobile}>
-                <GameContainer isMobile={isMobile}>
-                    <GameHeader/>
-                    <BoardContainer/>
-                </GameContainer>
-            </Container>
+            <ThemeProvider theme = {doodleTheme}>
+                <Container isMobile={isMobile}>
+                    <GameContainer isMobile={isMobile}>
+                        <GameHeader/>
+                        <BoardContainer/>
+                    </GameContainer>
+                </Container>
+            </ThemeProvider>
         </GameProvider>
     )
 }

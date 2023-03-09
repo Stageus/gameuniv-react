@@ -13,13 +13,14 @@ import { useMobile } from "../../../../hooks/useMediaComponent"
 
 // ===== import style func =====
 import { color } from "../../../../styles/style";
+import { doodleTheme } from "../../styles/theme";
 // ===== style =====
 const BoardContainerDiv = styled.div`
     position: relative;
     padding-top: 15px;
     padding-left: 15px;
     cursor: default;
-    background: ${color("blue2")};
+    background: ${props => props.theme.boardColor};
     border-radius: 6px;
     width: 500px;
     height: 500px;
@@ -31,6 +32,10 @@ const BoardContainerDiv = styled.div`
             height:300px;
             padding-top:9px;
             padding-left:9px;
+    `}
+    
+    ${props => props.theme === doodleTheme && css`
+        border: 4px solid black;
     `}
 `
 
@@ -50,7 +55,7 @@ const Cell = styled.div`
     margin-right: 15px;
     float: left;
     border-radius: 10px;
-    background: ${color("blue5")};
+    background: ${props => props.theme.cellColor};
     opacity: 0.5;
 
     ${props => props.isMobile && 
@@ -59,6 +64,9 @@ const Cell = styled.div`
             height:64px;
             margin-right: 9px;
     `}
+
+
+
 `
 
 const BoardGrid = () =>{
