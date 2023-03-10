@@ -6,6 +6,10 @@ import styled, {css} from "styled-components";
 import { useGameContext } from "../Game/Game";
 import { useMobile } from "../../../../hooks/useMediaComponent";
 import { useSetModalState } from "../../../../hooks/useSetModalState";
+import { useSetRecoilState } from "recoil";
+
+// ===== import recoil =====
+import { whichModalState } from "../../../../recoil/ModalState";
 // ===== import component =====
 import ScoresContainer from "../ScoresContainer/ScoresContainer"
 
@@ -69,7 +73,7 @@ const RetryBtn = styled(Button)`
 const GameHeader = () =>{
     const { dispatch } = useGameContext()
     const isMobile = useMobile()
-
+    const setModalState = useSetRecoilState(whichModalState)
     return(
         <Div justify_content="space-between" height={isMobile ? "130px" :"180px"} width={isMobile ? "300px": "500px"}>
             <Div flex_direction="column" height ={isMobile ? "100px":"135px"} align_items="flex-start" 

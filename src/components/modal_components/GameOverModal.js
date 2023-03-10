@@ -22,13 +22,15 @@ import { color } from "../../styles/style"
 
 // ===== import hooks =====
 import { useNavigate } from "react-router"
-
+import { useMobile } from "../../hooks/useMediaComponent"
 
 // ===== style =====
 
 //  ===== component =====
 
 const GameOverModal = (props) =>{
+    // ===== hooks =====
+    const isMobile = useMobile()
     // ===== 2048 state =====
 
 
@@ -57,13 +59,13 @@ const GameOverModal = (props) =>{
     }
 
     return(
-        <Div width="560px" height="500px" flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
+        <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"500px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
             <H1 color="grayscale7" font_size="l" font_weight="regular">
                 게임 오버
             </H1>
 
             <Div width="50%" justify_content="space-between">
-                <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" >
+                <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" margin="0 10px" >
                     <P color="blue3" font_size="m" font_weight="regular">점수</P>
                     <P color="grayscale1" font_size="s" font_weight="regular">{1111}</P>
                 </Div>
@@ -94,16 +96,16 @@ const GameOverModal = (props) =>{
             </Div>
 
             <Div width="88%" justify_content="space-evenly" onClick={gameOverBtnEvent}>
-                <Button id="replay_btn" width="32%" height="50px" font_size="s" font_weight="regular">
+                <Button id="replay_btn" width="32%" height="50px" font_size={isMobile ? "xs":"s"} font_weight="regular">
                     다시하기
                 </Button>
                 <Button id="home_btn" width="32%" height="50px">
-                    <NoneEventImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/homeIcon.png`} height="25px"/>
-                    <NoneEventP font_size="s" font_weight="regular" color="grayscale1" padding="0 0 0 10px">홈으로 이동</NoneEventP>
+                    <NoneEventImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/homeIcon.png`} height={isMobile ? "20px":"25px"}/>
+                    <NoneEventP font_size={isMobile ? "xs":"s"} font_weight="regular" color="grayscale1" padding="0 0 0 10px">홈으로 이동</NoneEventP>
                 </Button>
                 <Button id="share_btn" width="32%"  height="50px">
-                    <NoneEventImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/shareIcon.png`} height="25px"/>
-                    <NoneEventP font_size="s" font_weight="regular" color="grayscale1" padding="0 0 0 10px">공유</NoneEventP>
+                    <NoneEventImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/shareIcon.png`} height={isMobile ? "20px":"25px"}/>
+                    <NoneEventP font_size={isMobile ? "xs":"s"} font_weight="regular" color="grayscale1" padding="0 0 0 10px">공유</NoneEventP>
                 </Button>
             </Div>
         </Div>

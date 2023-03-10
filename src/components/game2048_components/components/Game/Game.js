@@ -3,7 +3,7 @@ import React, {useContext, useEffect } from "react"
 import styled, {css, ThemeProvider} from "styled-components"
 
 // ===== import recoil =====
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import { isModalOpenState, whichModalState } from "../../../../recoil/ModalState";
 
 import { basicTheme, pastelTheme, doodleTheme } from "../../styles/theme";
@@ -13,7 +13,9 @@ import GameHeader from "../GameHeader/GameHeader";
 import BoardContainer from "../Board/BoardContainer";
 import RetryGameModal from "../../../modal_components/RetryGameModal";
 import Modal from "../../../Modal"
+import BtnAnimation from "../../../BtnAnimation"
 import { Effect } from "../../utils/effect";
+
 // ===== import utils =====
 import {
     areEqual,
@@ -28,7 +30,7 @@ import {
 // ===== import hooks =====
 import useGameLocalStorage from "../../hooks/useLocalStorage";
 import { useMobile } from "../../../../hooks/useMediaComponent";
-
+import { useLocation, useNavigate } from "react-router";
 // ===== import constants
 import { KEYBOARD_ARROW_TO_DIRECTION_MAP } from "../../constants/constants"
 
@@ -37,6 +39,7 @@ import { Div } from "../../../../styles/Div";
 
 // ===== import style func =====
 import { color } from "../../../../styles/style";
+
 
 
 // ===== style =====
@@ -62,6 +65,19 @@ const GameContainer = styled(Div)`
     `}
 `
 
+// ===== style =====
+const BackDiv = styled(Div)`
+    position:absolute;
+    top: 90%;
+    left:2%;
+
+    ${props => props.isMobile &&css`
+        position: relative;
+        top: 90%;
+        left: -40%;
+    `}
+`
+
 
 const GameContext = React.createContext()
 
@@ -70,9 +86,9 @@ const getGameStatus = (tiles) =>{
         return "GAME_OVER"
     }
 
-    if(isGameWon(tiles)){
-        return "WIN"
-    }
+    // if(isGameWon(tiles)){
+    //     return "WIN"
+    // }
 
     return "IN_PROGRESS"
 }
@@ -90,9 +106,7 @@ const gameReducer = (state, action) =>{
         case "restart":{
             return initState()
         }
-        case "continue": {
-            return {...state, status: "PLAY_AFTER_WIN"}
-        }
+        
         case "move":{
             const move = MOVES_MAP[action.payload]
             let tiles = move(state.tiles)
@@ -121,17 +135,13 @@ const gameReducer = (state, action) =>{
 
 const GameProvider = (props) =>{
     const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
-    const setModalState = useSetRecoilState(whichModalState)
-    const setModalOpen = useSetRecoilState(isModalOpenState)
     const isModalOpen = useRecoilValue(isModalOpenState)
-    // if(state.status === "GAME_OVER"){
-    //     setModalState("gameOverModal")
-    //     setModalOpen(true)
-    // }
 
-    // ===== event =====
-    useEffect( ()=>{
-        const handleKeyPress = (e) =>{
+    const handleKeyPress = (e) =>{
+        if(isModalOpen){
+            e.preventDefault()
+        }
+        else{
             e.preventDefault()
             const effect = Effect
             let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
@@ -140,14 +150,25 @@ const GameProvider = (props) =>{
                 effect.play()
             }
         }
-    
+    }
+    // ===== event =====
+    useEffect( ()=>{
+        // const handleKeyPress = (e) =>{
+        //     e.preventDefault()
+        //     const effect = Effect
+        //     let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
+        //     if(direction){
+        //         dispatch({type : "move", payload: direction})
+        //         effect.play()
+        //     }
+        // }
         document.addEventListener("keydown", handleKeyPress)
         return () =>{
             document.removeEventListener("keydown", handleKeyPress)
         }
         
         
-    }, [dispatch] )
+    }, [isModalOpen] )
 
 
     return(
@@ -159,7 +180,22 @@ const GameProvider = (props) =>{
 
 const Game = () =>{
     const isMobile = useMobile()
-    // const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
+    const whichModal = useRecoilValue(whichModalState)
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
+
+    const navigate = useNavigate()
+    const location = useLocation().pathname;
+    const backBtnEvent = ()=>{
+        
+        if(location === "/2048"){
+            setModalState("quitGameModal")
+            setModalOpen(true)
+        }
+        else{
+            navigate(-1)
+        }
+    }
 
     return(
         <GameProvider>
@@ -171,6 +207,12 @@ const Game = () =>{
                     </GameContainer>
                 </Container>
             </ThemeProvider>
+            {/* <BackDiv onClick={backBtnEvent} isMobile={isMobile}>
+                <BtnAnimation 
+                before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
+                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
+                />adasdas
+            </BackDiv> */}
         </GameProvider>
     )
 }

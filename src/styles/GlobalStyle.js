@@ -8,7 +8,6 @@ const GlobalStyle = createGlobalStyle`
         ${fontWeight("regular")};
         color : ${color("grayscale7")};
         background-color: ${color("grayscale1")};
-        min-width:473px;
         max-width:2560px;
         overflow-x:hidden;
     }
