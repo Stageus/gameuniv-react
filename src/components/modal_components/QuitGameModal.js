@@ -27,7 +27,7 @@ import { color } from "../../styles/style"
 
 //  ===== component =====
 
-const QuitGameModal = () =>{
+const QuitGameModal = (props) =>{
 
     // ===== router =====
     const navigate = useNavigate()
@@ -35,6 +35,7 @@ const QuitGameModal = () =>{
     
     // ===== event =====
     const yesBtnEvent = ()=>{
+        props.onRestart()
         navigate("/home")    
         setModalOpen(false)
     }

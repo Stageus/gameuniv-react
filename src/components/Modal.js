@@ -53,7 +53,7 @@ const CancelBtn = styled(ImgBtn)`
 `
 
 //  ===== component =====
-const Modal = () =>{
+const Modal = (props) =>{
     // ===== recoil state =====
     // const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
     const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
@@ -98,9 +98,9 @@ const Modal = () =>{
                         { whichModal === "editProfileModal" && <EditProfileModal/>}
                         { whichModal === "gameOverModal" && <GameOverModal/>}
                         { whichModal === "purchaseItemModal" && <PurchaseItemModal/>}
-                        { whichModal === "quitGameModal" && <QuitGameModal/>}
+                        { whichModal === "quitGameModal" && <QuitGameModal onRestart={props.onRestart}/>}
                         { whichModal === "rankingModal" && <RankingModal/>}
-                        { whichModal === "retryGameModal" && <RetryGameModal/>}
+                        { whichModal === "retryGameModal" && <RetryGameModal onRestart={props.onRestart}/>}
                         { whichModal === "gameSelectModal" && <GameSelectModal/>}
                         { whichModal === "settingModal" && <SettingModal/>}
                         { whichModal === "itemPurchaseModal" && <ItemPurchaseModal/>}
