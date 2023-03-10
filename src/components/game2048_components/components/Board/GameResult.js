@@ -1,6 +1,6 @@
 // ===== import base =====
 import React from "react"
-import styled, {keyframes} from "styled-components"
+import styled, {keyframes, css} from "styled-components"
 
 import { useSetRecoilState } from "recoil"
 
@@ -9,7 +9,7 @@ import { whichModalState, isModalOpenState } from "../../../../recoil/ModalState
 
 import { useGameContext } from "../Game/Game"
 import { useSetModalState } from "../../../../hooks/useSetModalState"
-
+import { useMobile } from "../../../../hooks/useMediaComponent"
 // ===== import components =====
 import Modal from "../../../Modal"
 import GameOverModal from "../../../modal_components/GameOverModal"
@@ -42,14 +42,19 @@ const Overlay = styled.div`
 const GameResult = styled.div`
     display: flex;
     position: absolute;
-    width:560px;
-    height:500px;
+    width:fit-content;
+    height:fit-content;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+
+    ${props => props.isMobile && css`
+        top: -100px;
+        left: -75px;
+    `}
+
     z-index: 100;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -76,17 +81,10 @@ const Result = (props) =>{
     const { isWin, onContinue, onRestart, playAfterWin} = props
     const {message, buttonText, containerClass} = 
         isWin || playAfterWin ? DATA.WIN : DATA.GAME_OVER
+    const isMobile = useMobile()
     return(
-        <GameResult containerClass = {containerClass}>
+        <GameResult isMobile={isMobile}>
             <GameOverModal onRestart={onRestart}/>
-            {/* <p>{message}</p>
-            <div>
-                
-                {isWin &&(
-                    <button onClick = {() => onContinue() }>continue</button>
-                )}
-                <button onClick={()=> onRestart() }>{buttonText}</button>
-            </div> */}
         </GameResult>
     )
 }
@@ -104,16 +102,19 @@ const GameResultContainer = (props) =>{
     const handleRestart = () => {
         dispatch( {type: "restart"})
     }
+    console.log(status)
 
     // const playAfterWin = tiles.some( (x) => x.value === 2048)
 
     return(
         <React.Fragment>
             
-            {status !== "IN_PROGRESS" && status !== "PLAY_AFTER_WIN" &&(
+            {status === "IN_PROGRESS" ||
+            //  && status !== "PLAY_AFTER_WIN" &&
+            (
                 <React.Fragment>
                     <Result
-                        isWin = {status === "WIN"}
+                        // isWin = {status === "WIN"}
                         // playAfterWin = {playAfterWin}
                         onRestart = {handleRestart}
                         onContinue = {handleContinue}

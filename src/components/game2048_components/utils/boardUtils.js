@@ -12,9 +12,6 @@ export const areTilesEqual = (t1, t2) =>{
     )
 }
 
-export const isGameWon = (tiles) =>{
-    return tiles.some( (tile) => tile.value === 2048)
-}
 
 export const isGameOver = (tiles) =>{
 

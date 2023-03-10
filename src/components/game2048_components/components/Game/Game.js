@@ -39,6 +39,7 @@ import { Div } from "../../../../styles/Div";
 import { color } from "../../../../styles/style";
 
 
+
 // ===== style =====
 const Container = styled.div`
     width: ${props=> props.isMobile? "300px":"500px"};
@@ -70,9 +71,9 @@ const getGameStatus = (tiles) =>{
         return "GAME_OVER"
     }
 
-    if(isGameWon(tiles)){
-        return "WIN"
-    }
+    // if(isGameWon(tiles)){
+    //     return "WIN"
+    // }
 
     return "IN_PROGRESS"
 }
@@ -89,9 +90,6 @@ const gameReducer = (state, action) =>{
     switch (action.type){
         case "restart":{
             return initState()
-        }
-        case "continue": {
-            return {...state, status: "PLAY_AFTER_WIN"}
         }
         case "move":{
             const move = MOVES_MAP[action.payload]
