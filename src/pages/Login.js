@@ -39,11 +39,11 @@ const Login = () =>{
     
     // ===== event =====
     const loginEvent = () =>{
-        const id_regex = /^[a-z0-9]{5,20}$/g
+        const id_regex = /^[a-z0-9]{5,20}$/
         const id = document.getElementById("id_input").value
         const id_check = id_regex.test(id)
         
-        const pw_regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/g
+        const pw_regex = /^(?=.?[0-9])(?=.?[#?!@$ %^&*-]).{8,20}$/
         const pw = document.getElementById("pw_input").value
         const pw_check = pw_regex.test(pw)
         if(id === "" || pw === ""){
