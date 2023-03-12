@@ -59,8 +59,8 @@ export const pastelTheme = {
 export const doodleTheme = {
     totalBoxColor: color("grayscale1"),
     mainColor: color("grayscale1"),
-    boardColor: color("grayscale1"),
-    cellColor: color("grayscale1"),
+    boardColor: "#737373",
+    cellColor: "#737373",
     scoreBoxColor: color("grayscale1"),
     rankColor: color("grayscale1"),
     rankTextColor: color("grayscale1"),

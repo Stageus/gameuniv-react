@@ -18,51 +18,12 @@ import {Input} from "../styles/Input"
 import {Button} from "../styles/Button"
 import {P} from "../styles/P"
 
+// ===== import comonent =====
+import Timer from "../components/signup_components/Timer"
 //  ===== component =====
-const Timer = () =>{
-    const [min,setMin] = React.useState(3)
-    const [sec, setSec] = React.useState(0)
-    const time = React.useRef(179)
-    const timerId = React.useRef(null)
-
-    React.useEffect( () => {
-        timerId.current = setInterval( ()=>{
-            setMin( Math.floor(parseInt(time.current)/ 60) )
-            setSec( time.current % 60)
-            time.current -= 1
-        }, 1000)
-
-        return () => clearInterval(timerId.current)
-    }, [])
-
-    // 시간 초과시
-    React.useEffect( ()=>{
-        if(time.current <=0){
-            console.log("시간초과")
-            clearInterval(timerId.current)
-        }
-    }, [sec])
-
-    return(
-        <React.Fragment>
-        {
-            sec < 10 
-            ?
-            <P>{min}:0{sec}</P>   
-            :
-            <P>{min}:{sec}</P>   
-        }
-        </React.Fragment>
-        
-        
-    )
-}
-
-
 
 const Find = (props) =>{
     // ===== recoil state =====
-    const whichPage = useRecoilValue(whichPageState)
 
     // ===== state =====
     const which_find = props.which_find
@@ -104,22 +65,7 @@ const Find = (props) =>{
             case "pw_certification_check":
                 setPwFindStep(pwFindStep+1)
                 break
-            // case "pw_find":
-                
-
-            //     if(email === "" || id === ""){
-            //         alert("빈 칸을 채워주십시오")
-            //     }
-            //     else if(!email_check){
-            //         alert("email 형식이 올바르지 않습니다")
-            //     }
-            //     else if(!id_check){
-            //         alert("아이디 형식이 올바르지 않습니다(6~20자 영문, 숫자)")
-            //     }
-            //     else{
-            //         setPwFindStep(pwFindStep+1)
-            //     }
-            //     break
+    
             case "change_pw":
                 const pw_regex = /^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/
                 const pw = document.getElementById("new_pw").value
