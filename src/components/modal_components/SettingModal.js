@@ -6,6 +6,9 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 // ===== import component =====
 import { Effect } from "../game2048_components/utils/effect"
 
+// ===== import hooks =====
+import useVolumeControl from "../../hooks/useVolumeControl"
+
 // ===== import recoil =====
 import { whichModalState, isModalOpenState } from "../../recoil/ModalState"
 import { whichPageState } from "../../recoil/PageState"
@@ -101,7 +104,6 @@ const SettingModal = () =>{
     const back_volume_control = document.getElementById("back_volume_control")
     const audio = document.getElementById("audio")
     const effect = Effect
-
     // ===== router =====
     const navigate = useNavigate()
     const location = useLocation()
@@ -109,9 +111,16 @@ const SettingModal = () =>{
 
     // ===== recoil state =====
     const setModalState = useSetRecoilState(whichModalState)
+
     // const whichPage = useRecoilValue(whichPageState)
     const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
     const setModalOpen = useSetRecoilState(isModalOpenState)
+
+    // ===== state =====
+    const [bgmOn, setBgm] = useVolumeControl("bgmOn", false)
+    const [effectOn, setEffect] = useVolumeControl("effectOn", false)
+    const [bgmRange, setBgmRange] = useVolumeControl("bgmRange", 50)
+    const [effectRange, setEffectRange] = useVolumeControl("effectRange", 50)
     // ===== event =====
 
     const logoutBtnEvent = () => {
@@ -121,11 +130,15 @@ const SettingModal = () =>{
 
     // sound 관련
     const backControlEvent = (e) =>{
-        audio.volume = e.target.value/100
+        let value = e.target.value
+        setBgmRange(value)
+        audio.volume = bgmRange/100
     }
 
     const backMuteEvent = (e) =>{
-        const check = e.target.checked
+        let check = e.target.checked
+        setBgm(!bgmOn)
+        check = bgmOn
         if(check){
             audio.play()
         }
@@ -135,11 +148,15 @@ const SettingModal = () =>{
     }
 
     const effectControlEvent = (e) =>{
-        effect.volume = e.target.value/100
+        let value = e.target.value
+        setEffectRange(value)
+        effect.volume = effectRange/100
     }
 
     const effectMuteEvent = (e) =>{
-        const check = e.target.checked
+        let check = e.target.checked
+        setEffect(!effectOn)
+        check = effectOn
         if(check){
             effect.volume = 0
         }
@@ -164,13 +181,13 @@ const SettingModal = () =>{
                         <VolumeBox>
                             <Div margin="0 0 5px 0" width="100%" justify_content="space-around">
                                 <P font_size="xxs" font_weight="regular" color="grayscale6">배경음</P>
-                                <Range type="range" id="back_volume_control" onChange={backControlEvent}></Range>
-                                <CheckBox type="checkbox" id="check_btn" onClick={backMuteEvent}></CheckBox>    
+                                <Range type="range" id="back_volume_control" value={bgmRange} onChange={backControlEvent}></Range>
+                                <CheckBox type="checkbox" checked={bgmOn} id="check_btn" onChange={backMuteEvent}></CheckBox>    
                             </Div>
                             <Div margin="0 0 5px 0" width="100%" justify_content="space-around">
                                 <P font_size="xxs" font_weight="regular" color="grayscale6">효과음</P>
-                                <Range type="range" onChange={effectControlEvent}></Range>
-                                <CheckBox type="checkbox" id="check_btn" onChange={effectMuteEvent}></CheckBox>    
+                                <Range type="range" value={effectRange} onChange={effectControlEvent}></Range>
+                                <CheckBox type="checkbox" checked={effectOn} id="check_btn" onChange={effectMuteEvent}></CheckBox>    
                             </Div>
                         </VolumeBox>
                     </Div>

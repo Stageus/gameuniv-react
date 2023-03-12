@@ -3,15 +3,13 @@ import React from "react"
 import styled from "styled-components"
 
 // ===== import style =====
-import {H1} from "../styles/H1"
-import {Div} from "../styles/Div"
-import {Input} from "../styles/Input"
-import {Button} from "../styles/Button"
-import {P} from "../styles/P"
-import { Img } from "../styles/Img"
+import {Div} from "../../styles/Div"
+import {Input} from "../../styles/Input"
+import {P} from "../../styles/P"
+import { Img } from "../../styles/Img"
 
 // ===== import style func =====
-import {color, fontWeight, fontSize} from "../styles/style"
+import {color, fontWeight, fontSize} from "../../styles/style"
 
 
 // ===== style =====
@@ -46,11 +44,17 @@ const PreviewImg = styled(Img)`
     max-height:100px;
 `
 
-const UploadBox = () =>{
+const UploadBox = (props) =>{
+    // ===== props =====
+    const defaultImg = props.postDataState.defaultImg
+    const profileImg = props.postDataState.profileImg
 
+    // ===== var =====
+    const isUpload = (defaultImg !== "" || profileImg.length === 1)
     // ===== state =====
     const [imgFile, setImgFile] = React.useState("")
     const imgRef = React.useRef()
+    const setPostData = props.setPostData
 
     // ===== func =====
     const fileCheck = (file) =>{
@@ -71,14 +75,24 @@ const UploadBox = () =>{
             reader.onloadend = () =>{
                 setImgFile(reader.result)
             }
+
+            setPostData( (prevState) => ({
+                ...prevState, profileImg: [file], defaultImg: ""
+            }))
         }
     }
 
+    // 이미지 미리보기
     const saveImgFile = () =>{
         const file = imgRef.current.files[0]
         fileCheck(file)
+
+        setPostData( (prevState) => ({
+            ...prevState, profileImg: [file], defaultImg: ""
+        }))
     }
 
+    // 이미지 드래그앤 드롭
     const imgDrop = (e) =>{
         e. preventDefault()
         const file = [...e.dataTransfer?.files][0]
@@ -99,12 +113,15 @@ const UploadBox = () =>{
             case "default3":
             case "default4":
                 setImgFile(e.target.src)
-                console.log(imgFile)
+                setPostData( (prevState) => ({
+                    ...prevState, defaultImg: e.target.src, profileImg: []
+                }))
+
                 break
         }
-        // console.log( document.getElementById("profileImg").value )
     }
 
+    
     return(
         <React.Fragment>
             <Div  background_color="blue5" border_radius="3px" width="312px" height="188px">
@@ -114,8 +131,17 @@ const UploadBox = () =>{
                     <FileInput type="file" accept=".jpg, .png" id="profileImg" 
                     onChange={saveImgFile} ref={imgRef}/>
                     {
-                        imgFile === ""
+                        isUpload
                         ?
+                        // {/* 이미지 업로드 후 */}
+                        <Div width="142px" height="135px">
+                            <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
+                                <PreviewImg src={defaultImg ? defaultImg : imgFile}
+                                width="100px" border_radius="50%" id="preview"/>    
+                            </Div>
+                        </Div>
+                        
+                        :
                         // {/* 이미지 업로드 전 */}
                         <Div width="142px" height="135px" border={`3px dashed ${color("blue3")}`} border_radius="10px">
                             <Div flex_direction="column" height="100%">
@@ -125,14 +151,6 @@ const UploadBox = () =>{
                                 <P color="blue3" font_size="xxxs" font_weight="regular" padding="3px 0 0 0">이미지 크기 5000px이하</P>
                             </Div>
                             
-                        </Div>
-                        :
-                        // {/* 이미지 업로드 후 */}
-                        <Div width="142px" height="135px">
-                            <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
-                                <PreviewImg src={imgFile ? imgFile :`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                                width="100px" border_radius="50%" id="preview"/>    
-                            </Div>
                         </Div>
                     }
                 </label>

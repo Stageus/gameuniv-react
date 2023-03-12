@@ -4,9 +4,11 @@ import styled, { keyframes } from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
-import UploadBox from "../components/UploadBox"
+import UploadBox from "../components/signup_components/UploadBox"
 import ProgressBar from "../components/ProgressBar"
 import BtnAnimation from "../components/BtnAnimation"
+import Timer from "../components/signup_components/Timer"
+import SignUpInput from "../components/signup_components/SignUpInput"
 
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
@@ -67,7 +69,18 @@ const SignUp = () =>{
 
     // ===== state =====
     const [stepState, setStep] = React.useState(1)
-
+    const [authState, setAuth] = React.useState(false)
+    const [postDataState, setPostData] = React.useState({
+        email: "",
+        id: "",
+        name: "",
+        pw: "",
+        pwCheck: "",
+        universityIdx: undefined,
+        defaultImg: "",
+        profileImg: [],
+    })
+    console.log(postDataState)
     // ===== var =====
     let id_double = false
     // ===== event =====
@@ -78,18 +91,16 @@ const SignUp = () =>{
 
         if(stepState === 1){
             const name_regex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}$/
-            const name = document.getElementById("name_input").value
+            const name = document.getElementById("name").value
             const name_check = name_regex.test(name)
-    
             const id_regex = /^[a-z0-9]{5,20}$/
-            const id = document.getElementById("id_input").value
+            const id = document.getElementById("id").value
             const id_check = id_regex.test(id)
-            
             const pw_regex = /^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/
-            const pw = document.getElementById("pw_input").value
+            const pw = document.getElementById("pw").value
             const pw_check = pw_regex.test(pw)
     
-            const pw_same = document.getElementById("pw_same").value
+            const pw_same = document.getElementById("pwCheck").value
 
             if(id === "" || name === "" || pw === "" || pw_same === ""){
                 alert("빈 칸을 입력해 주십시오")
@@ -111,25 +122,36 @@ const SignUp = () =>{
             }
             else{
                 setStep(stepState+1)
+                setPostData({
+                    email: "",
+                    id: id,
+                    name: name,
+                    pw: pw,
+                    pwCheck: pw_same,
+                    universityIdx: undefined,
+                    defaultImg: "",
+                    profileImg: [],
+                })
             }
         }
 
         if(stepState === 2){
-            const img = document.getElementById("profileImg").value
-            if(img === ""){
-                alert("프로필을 선택해 주십시오")
+            const isImgUpload =  postDataState.defaultImg !== "" || postDataState.profileImg.length !== 0
+            if(isImgUpload){
+                setStep(stepState+1)
+                
             }
             else{
-                setStep(stepState+1)
+                alert("프로필을 선택해 주십시오")
             }
         }
 
         if(stepState === 3){
             const email_regex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/g
-            const email = document.getElementById("email_input").value
+            const email = document.getElementById("email").value
             const email_check = email_regex.test(email)
 
-            const univ = document.getElementById("univ_input").value
+            const univ = document.getElementById("universityIdx").value
 
             if(email === "" || univ === ""){
                 alert("빈 칸을 채워주십시오")
@@ -139,12 +161,13 @@ const SignUp = () =>{
             }
             else{
                 setStep(stepState+1)
+                // universityIdx설정하기
             }
         }
     }
 
     const idDoubleCheckEvent = (e) =>{
-        const id = document.getElementById("id_input").value
+        const id = document.getElementById("id").value
         id_double = true
         
     }
@@ -185,27 +208,36 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">이름</P>
-                                <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                id="name_input" maxLength={10}/>                        
+                                {/* <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                id="name" maxLength={10} value={postDataState.name} onChange={inputChangeEvent}/> */}
+                                <SignUpInput placeholder="이름" id="name" value={postDataState.name} 
+                                postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
                             
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">아이디</P>
                                 <Div width="105%" justify_content="space-between">
-                                    <Input width="80%" max_width="289px" height="28px" placeholder=" 6~20자 이하 영문 또는 숫자" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                    id="id_input"/>
+                                    {/* <Input width="80%" max_width="289px" height="28px" placeholder=" 6~20자 이하 영문 또는 숫자" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                    id="id" value={postDataState.id} onChange={inputChangeEvent}/> */}
+                                    <SignUpInput placeholder="6~20자 이하 영문 또는 숫자" id="id" value={postDataState.id} 
+                                    postDataState={postDataState} setPostData={setPostData}/>
+
                                     <SignUpPageBtn width="81px" height="28px" onClick={idDoubleCheckEvent}>verification</SignUpPageBtn>
                                 </Div>
                             </InputBoxDiv>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">비밀번호</P>
-                                <Input type="password" placeholder="8~20자, 하나 이상의 문자와 하나의 숫자" width="100%" max_width="289px" height="28px"
-                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pw_input"/>
+                                {/* <Input type="password" placeholder="8~20자, 하나 이상의 문자와 하나의 숫자" width="100%" max_width="289px" height="28px"
+                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pw" onChange={inputChangeEvent}/> */}
+                                <SignUpInput placeholder="8~20자 하나 이상의 문자, 숫자, 특수문자" id="pw" value={postDataState.pw} 
+                                postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">비밀번호 확인</P>
-                                <Input type="password" placeholder="비밀번호 확인" width="100%" max_width="289px" height="28px" 
-                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pw_same"/>    
+                                {/* <Input type="password" placeholder="비밀번호 확인" width="100%" max_width="289px" height="28px" 
+                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pwCheck" onChange={inputChangeEvent}/>     */}
+                                <SignUpInput placeholder="비밀번호 확인" id="pwCheck" value={postDataState.pwCheck} 
+                                postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
                         </Div>
                     }
@@ -215,7 +247,7 @@ const SignUp = () =>{
                         &&
                         <Div width="100%" flex_direction="column" align_items="flex-start">
                             <P font_size = "xxs" padding="10px 0">프로필 사진을 올리거나 기본 프로필을 선택해주세요</P>
-                            <UploadBox id="upload_box"></UploadBox>
+                            <UploadBox id="upload_box" postDataState={postDataState} setPostData={setPostData}></UploadBox>
                             
                         </Div>
                     }
@@ -227,13 +259,41 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">학교 이메일</P>
-                                <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                id="email_input"/>
+                                {/* <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                id="email" value={postDataState.email} onChange={inputChangeEvent}/> */}
+                                <SignUpInput placeholder="예시 : 00000@inha.ac.kr" id="email" value={postDataState.email} 
+                                postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
+                            
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">대학교</P>
-                                <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                id="univ_input"/>
+                                {/* <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                id="univ_input"/> */}
+                                <SignUpInput placeholder="대학교" id="universityIdx" value={postDataState.universityIdx} 
+                                postDataState={postDataState} setPostData={setPostData}/>
+                            </InputBoxDiv>
+                            <InputBoxDiv >
+                                <P font_size = "xxs" padding="5px 0">인증번호</P>
+                                <Div width="100%">
+                                    <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                    id="email_input"/>
+                                    {authState && <Timer/>}
+                                </Div>
+                                <Div width="100%">
+                                    {
+                                        authState
+                                        ?
+                                        <Button margin="10px 0" font_size = "s" max_width="195px" height="46px" width="100%"
+                                        id="get_auth" onClick={()=> setAuth(false)}>
+                                        인증번호 확인
+                                        </Button>
+                                        :
+                                        <Button margin="10px 0" font_size = "s" max_width="195px" height="46px" width="100%"
+                                        id="get_auth" onClick={()=> setAuth(true)}>
+                                        인증번호 발송
+                                        </Button>
+                                    }
+                                </Div>
                             </InputBoxDiv>
                         </Div> 
                     }

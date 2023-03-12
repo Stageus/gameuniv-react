@@ -32,7 +32,35 @@ const Logo = styled(Img)`
 
 const Login = () =>{
     // ===== recoil state =====
+    // const loginRequest = async () =>{
+    //     const response = await fetch("http://gameuniv.site/auth",{
+    //         "method" : "POST",
+    //         "headers" : {
+    //             "Content-Type" : "application/json"
+    //         },
+    //         "body" : JSON.stringify({
+    //             "id": "stageus",
+    //             "pw": "1234",
+    //             "autoLogin": false
+    //         })
+    //     })
+        
+    //     const result = await response.json()
+    //     console.log(result.message)
+    // }
 
+    // const getData = async () =>{
+    //     const response = await fetch('https://jsonplaceholder.typicode.com/comments')
+
+    //     const result = await response.json()
+    //     console.log(result)
+        
+    // }
+
+    // React.useEffect( ()=>{
+    //     loginRequest()
+    //     getData()
+    // },[])
     // ===== router =====
     const navigate = useNavigate()
     const audio = document.getElementById("audio")
@@ -66,7 +94,6 @@ const Login = () =>{
 
     return(
         <React.Fragment>
-                
             {/* 로고 */}
             <Div flex_direction="column" width="100%">
                 <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>

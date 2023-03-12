@@ -4,7 +4,7 @@ import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
-import UploadBox from "../UploadBox"
+import UploadBox from "../modal_components/EditProfileModal"
 
 // ===== import recoil =====
 import { whichPageState } from "../../recoil/PageState"
