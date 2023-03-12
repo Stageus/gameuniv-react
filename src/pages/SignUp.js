@@ -77,15 +77,15 @@ const SignUp = () =>{
         const target = e.target.id
 
         if(stepState === 1){
-            const name_regex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}$/g
+            const name_regex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}$/
             const name = document.getElementById("name_input").value
             const name_check = name_regex.test(name)
     
-            const id_regex = /^[a-z0-9]{5,20}$/g
+            const id_regex = /^[a-z0-9]{5,20}$/
             const id = document.getElementById("id_input").value
             const id_check = id_regex.test(id)
             
-            const pw_regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/g
+            const pw_regex = /^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/
             const pw = document.getElementById("pw_input").value
             const pw_check = pw_regex.test(pw)
     
@@ -125,7 +125,7 @@ const SignUp = () =>{
         }
 
         if(stepState === 3){
-            const email_regex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.ac.kr$/g
+            const email_regex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/g
             const email = document.getElementById("email_input").value
             const email_check = email_regex.test(email)
 
