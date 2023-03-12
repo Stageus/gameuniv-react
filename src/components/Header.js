@@ -25,10 +25,15 @@ import BtnAnimation from "./BtnAnimation"
 
 
 const Header_style = styled.header`
+    position:relative;
     display:flex;
     justify-content: space-between;
     align-items:center;
     width: 100vw;
+    background-color: ${color("grayscale1")};
+    z-index: 20;
+    border-bottom: 3px solid ${color("grayscale3")};
+    
 `
 
 const Header = () =>{

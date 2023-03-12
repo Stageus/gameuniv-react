@@ -85,6 +85,36 @@ const ShowMore = styled(Div)`
     align-items: flex-end;
     cursor:pointer;
 `
+
+const RankTotalBox = styled(Div)`
+    z-index:10;
+`
+
+const ScoreP = styled(P)`
+    margin-left: 10px;
+    border-radius: 50px;
+    width: 60px;
+    text-align: center;
+    font-size: ${fontSize("xxxs")};
+    ${fontWeight("bold")};
+
+    ${
+        props =>{
+            const rank = props.rank
+            if(rank % 2 === 1){
+                return css`
+                    background-color: ${color("blue5")};
+                `
+            }
+            else{
+                return css`
+                    background-color: ${color("grayscale3")};
+                `
+            }
+        }
+
+    }
+`
 //  ===== component =====
 
 // 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
@@ -103,7 +133,7 @@ const Ranking = (props) =>{
     const rank = [1,2,3,4,5]
 
     return(
-        <Div flex_direction="column" max_width="596px" width="90%" background_color="blue1" padding="0 10px" margin="5px 0">
+        <RankTotalBox flex_direction="column" max_width="596px" width="90%" background_color="blue1" padding="0 10px" margin="5px 0">
             <RankHeader width="100%" justify_content="flex-start">
                 {
                     game === "tetris"
@@ -133,6 +163,7 @@ const Ranking = (props) =>{
                     <RankDiv width="100%" height="37px" justify_content="space-between" rank={r}>
                         <Div width= "33%" justify_content="flex_start">
                             <RankP>{r}</RankP>
+                            <ScoreP rank={r}>23032</ScoreP>
                         </Div>
                         
                         <Div width="33%" justify_content="flex_start" >
@@ -140,11 +171,9 @@ const Ranking = (props) =>{
                                 <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
                                 width="20px"/>
                             </Div>
-                            <P>tmdgns32</P>
+                            <P font_weight="bold">tmdgns32</P>
                         </Div>
                         <Div width="33%" justify_content="flex_start">
-                            <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}
-                            width="28px" margin="0 5px 0 0"/>
                             <P>아주대학교</P>
                         </Div>
                     </RankDiv>
@@ -156,7 +185,7 @@ const Ranking = (props) =>{
                 <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
                 width="14px" margin="0 5px 0 0"/>
             </ShowMore>
-        </Div>
+        </RankTotalBox>
     )
 }
 
