@@ -34,6 +34,24 @@ const Find = (props) =>{
     const navigate = useNavigate()
 
     // ===== event =====
+    // 아이디 찾기 이벤트 get
+    const idFindEvent = async(e) =>{
+        e.preventDefault()
+        const email = document.getElementById("email").value
+        
+        const response = await fetch(`http://gameuniv.site/user/id?email=${email}`)
+        
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            alert("아이디 찾기 완료")
+        }
+
+    }
+
     const checkEvent = (e) =>{
         e.preventDefault()
         // ===== var =====
@@ -44,7 +62,7 @@ const Find = (props) =>{
             case "id_find":
             case "pw_find":
                 const email_regex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-                const email = document.getElementById("email_input").value
+                const email = document.getElementById("email").value
                 const email_check = email_regex.test(email)
                 if(email === ""){
                     alert("빈 칸을 채워주십시오")
@@ -53,7 +71,9 @@ const Find = (props) =>{
                     alert("email 형식이 올바르지 않습니다")
                 }
                 else{
-                    if(target === "id_find") setIdFindStep(idFindStep+1)
+                    if(target === "id_find") {
+                        // setIdFindStep(idFindStep+1)
+                    }
                     else setPwFindStep(pwFindStep+1)
                 }
                 break
@@ -104,10 +124,12 @@ const Find = (props) =>{
                                     <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                                     <P font_size = "xxs" padding="5px 0">이메일</P>
                                     <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                    id="email_input"/>
+                                    id="email"/>
                                 </Div>
+                                {/* <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px"
+                                onClick={checkEvent} id="id_find">인증번호 받기</Button> */}
                                 <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px"
-                                onClick={checkEvent} id="id_find">인증번호 받기</Button>
+                                onClick={idFindEvent} id="id_find">아이디 찾기</Button>
                             </Div>
                         </form>
                     }

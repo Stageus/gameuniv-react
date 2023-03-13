@@ -68,6 +68,8 @@ const InputBoxDiv = styled(Div)`
 const SignUp = () =>{
 
     // ===== state =====
+    const [isConfirm, setConfirm] = React.useState(false)
+    const [isIdDouble, setIdDouble] = React.useState(false)
     const [stepState, setStep] = React.useState(1)
     const [authState, setAuth] = React.useState(false)
     const [postDataState, setPostData] = React.useState({
@@ -80,10 +82,11 @@ const SignUp = () =>{
         defaultImg: "",
         profileImg: [],
     })
-    console.log(postDataState)
+    // console.log(postDataState)
     // ===== var =====
-    let id_double = false
     // ===== event =====
+
+    // 정규식 빈칸 등 체크
     const checkEvent = (e) =>{
         e.preventDefault()
         // ===== var =====
@@ -117,7 +120,7 @@ const SignUp = () =>{
             else if( pw !== pw_same){
                 alert("비밀번호를 확인해주십시오")
             }
-            else if( !id_double ){
+            else if( !isIdDouble ){
                 alert("아이디 중복확인을 해주십시오")
             }
             else{
@@ -159,19 +162,121 @@ const SignUp = () =>{
             else if(!email_check){
                 alert("email 형식이 올바르지 않습니다")
             }
+            else if(!isConfirm){
+                alert("인증이 완료되지 않았습니다")
+            }
             else{
+                setPostData( (prevState) => ({
+                    ...prevState, universityIdx: 2, email: email
+                }))
+                console.log(postDataState)
+                postSignUpDataEvent(e)
                 setStep(stepState+1)
                 // universityIdx설정하기
             }
         }
     }
 
-    const idDoubleCheckEvent = (e) =>{
+    // id duplication check 아이디 중복 확인
+    const idDoubleCheckEvent = async(e) =>{
+        e.preventDefault()
         const id = document.getElementById("id").value
-        id_double = true
+
+        const response = await fetch(`http://gameuniv.site/user/id/duplication?id=${id}`)
         
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setIdDouble(true)
+            
+        }
     }
 
+    // 이메일 인증번호 발송
+    const sendAuthNumberEvent = async(e) =>{
+
+        e.preventDefault()
+        const email = document.getElementById("email").value
+        const university_name = document.getElementById("universityIdx").value
+
+        console.log(email, university_name)
+        const response = await fetch("http://gameuniv.site/auth/email/number",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                universityName : university_name,
+            })
+        })
+
+        const result = await response.json()
+        // console.log(result.message)
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setAuth(true)
+        }
+    }
+
+    // 인증번호 확인
+    const confirmAuthNumberEvent = async(e) =>{
+        e.preventDefault()
+        const email = document.getElementById("email").value
+        const auth_number = document.getElementById("auth_number").value
+        const response = await fetch(`http://gameuniv.site/auth/email/number?email=${email}&number=${auth_number}`)
+        
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setConfirm(true)
+            alert("인증이 완료되었습니다")
+        }
+    }
+
+    // 회원가입 정보 보내기
+    const postSignUpDataEvent = async(e) => {
+        e.preventDefault()
+        const {email, id, name, pw, pwCheck, universityIdx, defaultImg, profileImg} = {...postDataState}
+
+        console.log(postDataState)
+        const response = await fetch("http://gameuniv.site/user",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                id: id,
+                name: name,
+                pw: pw,
+                pwCheck: pwCheck,
+                universityIdx: universityIdx,
+                defaultImg: defaultImg,
+                profileImg: profileImg,
+            })
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else if(!result.message && result.id){
+            alert(`계정이 복구되었습니다. ${result.id}로 로그인해주시기 바랍니다`)
+        }
+        else{
+            alert("회원가입 완료")
+        }
+    }
 
     return(
         <React.Fragment>
@@ -275,21 +380,22 @@ const SignUp = () =>{
                             <InputBoxDiv >
                                 <P font_size = "xxs" padding="5px 0">인증번호</P>
                                 <Div width="100%">
-                                    <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                    id="email_input"/>
-                                    {authState && <Timer/>}
+                                    <Input width="100%" max_width="289px" height="28px" placeholder="인증번호" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                    id="auth_number"/>
+                                    {authState && (isConfirm || <Timer/>)}
                                 </Div>
                                 <Div width="100%">
+                                    {/* 인증 진행 관련 */}
                                     {
                                         authState
                                         ?
                                         <Button margin="10px 0" font_size = "s" max_width="195px" height="46px" width="100%"
-                                        id="get_auth" onClick={()=> setAuth(false)}>
+                                        id="get_auth" onClick={confirmAuthNumberEvent}>
                                         인증번호 확인
                                         </Button>
                                         :
                                         <Button margin="10px 0" font_size = "s" max_width="195px" height="46px" width="100%"
-                                        id="get_auth" onClick={()=> setAuth(true)}>
+                                        id="get_auth" onClick={sendAuthNumberEvent}>
                                         인증번호 발송
                                         </Button>
                                     }
