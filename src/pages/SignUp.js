@@ -9,9 +9,9 @@ import ProgressBar from "../components/ProgressBar"
 import BtnAnimation from "../components/BtnAnimation"
 import Timer from "../components/signup_components/Timer"
 import SignUpInput from "../components/signup_components/SignUpInput"
+import UnivList from "../components/signup_components/UnivList"
 
 // ===== import recoil =====
-import { whichPageState } from "../recoil/PageState"
 
 // ===== import hooks =====
 import {PC, Mobile} from "../hooks/useMediaComponent"
@@ -82,6 +82,7 @@ const SignUp = () =>{
         defaultImg: "",
         profileImg: [],
     })
+    const [univIdx, setUnivIdx] = React.useState(undefined)
     // console.log(postDataState)
     // ===== var =====
     // ===== event =====
@@ -154,7 +155,7 @@ const SignUp = () =>{
             const email = document.getElementById("email").value
             const email_check = email_regex.test(email)
 
-            const univ = document.getElementById("universityIdx").value
+            const univ = document.getElementById("univ").value
 
             if(email === "" || univ === ""){
                 alert("빈 칸을 채워주십시오")
@@ -167,11 +168,11 @@ const SignUp = () =>{
             }
             else{
                 setPostData( (prevState) => ({
-                    ...prevState, universityIdx: 2, email: email
+                    ...prevState, universityIdx: univIdx, email: email
                 }))
                 console.log(postDataState)
                 postSignUpDataEvent(e)
-                setStep(stepState+1)
+                
                 // universityIdx설정하기
             }
         }
@@ -190,6 +191,7 @@ const SignUp = () =>{
             alert(result.message)
         }
         else{
+            alert("사용가능한 아이디입니다")
             setIdDouble(true)
             
         }
@@ -200,7 +202,7 @@ const SignUp = () =>{
 
         e.preventDefault()
         const email = document.getElementById("email").value
-        const university_name = document.getElementById("universityIdx").value
+        const university_name = document.getElementById("univ").value
 
         console.log(email, university_name)
         const response = await fetch("http://gameuniv.site/auth/email/number",{
@@ -275,9 +277,11 @@ const SignUp = () =>{
         }
         else{
             alert("회원가입 완료")
+            setStep(stepState+1)
         }
     }
 
+    console.log(postDataState)
     return(
         <React.Fragment>
             <Div width="100%">
@@ -374,8 +378,9 @@ const SignUp = () =>{
                                 <P font_size = "xxs" padding="5px 0">대학교</P>
                                 {/* <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
                                 id="univ_input"/> */}
-                                <SignUpInput placeholder="대학교" id="universityIdx" value={postDataState.universityIdx} 
-                                postDataState={postDataState} setPostData={setPostData}/>
+                                {/* <SignUpInput placeholder="대학교" id="universityIdx" value={postDataState.universityIdx} 
+                                postDataState={postDataState} setPostData={setPostData}/> */}
+                                <UnivList univIdx={univIdx} setUnivIdx={setUnivIdx}/>
                             </InputBoxDiv>
                             <InputBoxDiv >
                                 <P font_size = "xxs" padding="5px 0">인증번호</P>
@@ -390,7 +395,7 @@ const SignUp = () =>{
                                         authState
                                         ?
                                         <Button margin="10px 0" font_size = "s" max_width="195px" height="46px" width="100%"
-                                        id="get_auth" onClick={confirmAuthNumberEvent}>
+                                        id="confirm_auth" onClick={confirmAuthNumberEvent}>
                                         인증번호 확인
                                         </Button>
                                         :
@@ -423,14 +428,14 @@ const SignUp = () =>{
                             {
                                 (stepState === 2 || stepState === 3)
                                 &&
-                                <SignUpPageBtn width="133px" height="32px" onClick={()=>setStep(stepState-1)}>
+                                <SignUpPageBtn width="100px" height="32px" onClick={()=>setStep(stepState-1)}>
                                     이전 단계
                                 </SignUpPageBtn>
                             }
                             {
                                 stepState === 4
                                 ||
-                                <SignUpPageBtn width="133px" height="32px" onClick={checkEvent}>
+                                <SignUpPageBtn width="100px" height="32px" onClick={checkEvent}>
                                     다음 단계
                                 </SignUpPageBtn>
                             }

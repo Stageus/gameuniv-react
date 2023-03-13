@@ -35,27 +35,6 @@ const Logo = styled(Img)`
 
 const Login = () =>{
     // ===== recoil state =====
-    // const loginRequest = async () =>{
-    //     const response = await fetch("http://gameuniv.site/auth",{
-    //         "method" : "POST",
-    //         "headers" : {
-    //             "Content-Type" : "application/json"
-    //         },
-    //         "body" : JSON.stringify({
-    //             "id": "asdf123",
-    //             "pw": "aa12341234**",
-    //             "autoLogin": false
-    //         })
-    //     })
-        
-    //     const result = await response.json()
-        
-    //     console.log(result)
-    // }
-
-    // React.useEffect(()=>{
-    //     loginRequest()
-    // }, [])
 
     // ===== router =====
     const navigate = useNavigate()
@@ -65,14 +44,14 @@ const Login = () =>{
     // ===== event =====
 
 
-    const login = async(e) =>{
-        e.preventDefault()
+    const postLoginData = async() =>{
         const id = document.getElementById("id").value
         const pw = document.getElementById("pw").value
 
         console.log(id, pw)
         const response = await fetch("http://gameuniv.site/auth",{
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -84,8 +63,14 @@ const Login = () =>{
         })
 
         const result = await response.json()
-        console.log(result.message)
-        return result.message
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            alert("로그인 성공")
+            // console.log(result.credentials)
+            setCookie('userData', result.data.token)
+        }
     }
 
     const loginEvent = (e) =>{
@@ -107,19 +92,25 @@ const Login = () =>{
             alert("비밀번호 형식이 올바르지 않습니다(8~20자, 하나 이상의 숫자, 문자, 특수문자")
         }
         else{
-            const result = login(e)
-            console.log(result.message)
+            postLoginData(e)
             // navigate("/home")
         }
     }
 
 
+    const testUserData = async(e) =>{
+        const response = await fetch("http://gameuniv.site/auth/user")
 
+        const result = await response.json()
+        
+        alert(result.message, result.data)
+    }
     
 
     return(
         <React.Fragment>
             {/* 로고 */}
+            <Button onClick={testUserData}>유저정보 확인</Button>
             <Div flex_direction="column" width="100%">
                 <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
                 {/* 로그인 폼 */}
@@ -151,7 +142,7 @@ const Login = () =>{
                                     <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
                                 </Link>
                             </Div>
-                            <Button width="341px" height="56px" id="login_btn" onClick={login}>로그인</Button>
+                            <Button width="341px" height="56px" id="login_btn" onClick={loginEvent}>로그인</Button>
                         </Div>
                     </form>
                     
