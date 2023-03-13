@@ -1,6 +1,7 @@
 // ===== import base =====
 import React from "react"
 import styled from "styled-components"
+import imageCompression from "browser-image-compression"
 
 // ===== import style =====
 import {Div} from "../../styles/Div"
@@ -57,8 +58,32 @@ const UploadBox = (props) =>{
     const setPostData = props.setPostData
 
     // ===== func =====
-    const fileCheck = (file) =>{
+    // 이미지 압축
+    const imgCompress = async(file) =>{
+        const options = {maxSizeMB: 1, maxWidhOrHeight : 128}
         const reader = new FileReader()
+        try{
+            const compressedFile = await imageCompression(file, options)
+            reader.readAsDataURL(compressedFile)
+            reader.onloadend = () =>{
+                setImgFile(reader.result)
+            }
+
+            setPostData( (prevState) => ({
+                ...prevState, profileImg: [compressedFile], defaultImg: ""
+            }))
+            // const resultFile = new File([compressedFile], compressedFile.name, {
+            //     type: compressedFile.type,
+            // })
+
+            return compressedFile
+        } catch(error){
+            console.log(error)
+        }
+    }
+
+    const fileCheck = async(file) =>{
+        // const reader = new FileReader()
         const max_size = 5*1024*1024
         const file_size = file.size
         const file_regex = /(\.png|\.jpg|\.jpeg)$/i
@@ -71,25 +96,30 @@ const UploadBox = (props) =>{
             alert("올바른 확장자가 아닙니다. jpg 또는 png파일만 올려주십시오")
         }
         else{
-            reader.readAsDataURL(file)
-            reader.onloadend = () =>{
-                setImgFile(reader.result)
-            }
+            imgCompress(file)
+            // const resultFile = imgCompress(file)
+            // const previewURL = URL.createObjectURL(resultFile)
+            // reader.readAsText(resultFile)
+            // console.log(resultFile)
 
-            setPostData( (prevState) => ({
-                ...prevState, profileImg: [file], defaultImg: ""
-            }))
+            // reader.readAsDataURL(file)
+            // reader.onloadend = () =>{
+            //     setImgFile(reader.result)
+            // }
+
+            // setPostData( (prevState) => ({
+            //     ...prevState, profileImg: [file], defaultImg: ""
+            // }))
         }
     }
 
-    // 이미지 미리보기
-    const saveImgFile = () =>{
+    // 이미지 미리보기 클릭 시 이미지 업로드 fileInput용
+    const saveImgFile = (e) =>{
         const file = imgRef.current.files[0]
         fileCheck(file)
-
-        setPostData( (prevState) => ({
-            ...prevState, profileImg: [file], defaultImg: ""
-        }))
+        // setPostData( (prevState) => ({
+        //     ...prevState, profileImg: [file], defaultImg: ""
+        // }))
     }
 
     // 이미지 드래그앤 드롭
