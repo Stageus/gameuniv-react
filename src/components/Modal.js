@@ -8,7 +8,6 @@ import DeleteAcoountModal from "./modal_components/DeleteAcoountModal"
 import DevelopInfoModal from "./modal_components/DevelopInfoModal"
 import EditProfileModal from "./modal_components/EditProfileModal"
 import GameOverModal from "./modal_components/GameOverModal"
-import PurchaseItemModal from "./modal_components/PurchaseItemModal"
 import QuitGameModal from "./modal_components/QuitGameModal"
 import Ranking from "./Ranking"
 import RetryGameModal from "./modal_components/RetryGameModal"
@@ -97,7 +96,6 @@ const Modal = (props) =>{
                         { whichModal === "developInfoModal" && <DevelopInfoModal/>}
                         { whichModal === "editProfileModal" && <EditProfileModal/>}
                         { whichModal === "gameOverModal" && <GameOverModal/>}
-                        { whichModal === "purchaseItemModal" && <PurchaseItemModal/>}
                         { whichModal === "quitGameModal" && <QuitGameModal onRestart={props.onRestart}/>}
                         { whichModal === "rankingModal" && <RankingModal/>}
                         { whichModal === "retryGameModal" && <RetryGameModal onRestart={props.onRestart}/>}

@@ -23,7 +23,7 @@ const ItemUnit = (props) =>{
     //===== var =====
     let item_data
     //===== props =====
-    const {index}=props
+    const {item_idx}=props
     //===== state =====
     const [isHeartFiled, setHeartFiledState] = React.useState(false)
     //===== recoil state =====
@@ -45,14 +45,63 @@ const ItemUnit = (props) =>{
     }
     //===== event =====
     const itemShowDetailEvent=()=>{
-        setItemIndexData(index)
+        setItemIndexData(item_idx)
         setItemDetailOpenStateState(true)
-        setClickUnitState(index)
+        setClickUnitState(item_idx)
     }
-    const heartFiledEvent=(e)=>{
-        setHeartFiledState(!isHeartFiled)
+    const dibsOnEvent=(e)=>{
+        sendDibsOnStateEvent(e)
         e.stopPropagation()
     }
+
+    //찜 스테이트 서버에 보내주기
+    const sendDibsOnStateEvent = async(e) =>{
+
+        e.preventDefault()
+
+        console.log(item_idx)
+
+        if(isHeartFiled){
+            const response = await fetch("http://gameuniv.site/item/pick",{
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    itemIdx: item_idx
+                })
+            })
+
+            const result = await response.json()
+
+            if(result.message){
+                alert(result.message)
+            }
+            else{
+                setHeartFiledState(false)
+            }
+        }else{
+            const response = await fetch("http://gameuniv.site/item/pick",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    itemIdx: item_idx
+                })
+            })
+
+            const result = await response.json()
+
+            if(result.message){
+                alert(result.message)
+            }
+            else{
+                setHeartFiledState(true)
+            }  
+        }
+    }
+
 
     return(
         <React.Fragment>
@@ -62,21 +111,21 @@ const ItemUnit = (props) =>{
                 <ItemShowDetail item_data={item_data}/>
             }
             <PC>
-                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==index ? "blue6" : "grayscale1" }
+                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==item_idx ? "blue6" : "grayscale1" }
                 border_radius="10px" onClick={itemShowDetailEvent}>
                     <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
-                        <H1 font_size="l" color={isClickUnit===index ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[index].item_id}</H1>
+                        <H1 font_size="s" color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[item_idx].item_name}</H1>
                         {
                         whichItemComponent !="myItem" &&
                             (
                                 isHeartFiled
-                                ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={heartFiledEvent}/>
-                                : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={heartFiledEvent}/>
+                                ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
+                                : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
                             )  
                         }
                     </Div>
                     <Div width = "88%"  align_items="flex-end" justify_content="space-between">
-                        <Img width="100px" margin="0 0 10px 15px" src={item_data[index].item_img}/>
+                        <Img width="70px" margin="0 0 10px 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[item_idx].preview_img}`}/>
                         {
                             whichItemComponent ==="myItem" 
                             ?
@@ -86,27 +135,28 @@ const ItemUnit = (props) =>{
                             :
                             <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
                                 <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
-                                <P color={isClickUnit===index ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[index].item_price}</P>
+                                <P color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[item_idx].item_price}</P>
                             </Div>
                         }   
                     </Div>
                 </ShadowDiv>
             </PC>
+
             <Mobile>
-                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==index ? "blue6" : "grayscale1" }
+                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==item_idx ? "blue6" : "grayscale1" }
                 border_radius="10px" onClick={itemShowDetailEvent}>
                     <Div width = "90%" justify_content="space-between" >
-                        <Img width="100px" margin="0 0 0 15px" src={item_data[index].item_img}/>
+                        <Img width="100px" margin="0 0 0 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[item_idx].preview_img}`}/>
                         <Div align_items="flex-end" flex_direction="column" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
                             {
                                 whichItemComponent !="myItem" &&
                                     (
                                         isHeartFiled
-                                        ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={heartFiledEvent}/>
-                                        : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={heartFiledEvent}/>
+                                        ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
+                                        : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
                                     )  
                             }
-                            <H1 font_size="l" color={isClickUnit===index ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[index].item_id}</H1>
+                            <H1 font_size="s" margin="0 0 10px 0" color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[item_idx].item_name}</H1>
                             {
                                 whichItemComponent ==="myItem" 
                                 ?
@@ -116,7 +166,7 @@ const ItemUnit = (props) =>{
                                 :
                                 <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
                                     <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
-                                    <P color={isClickUnit===index ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[index].item_price}</P>
+                                    <P color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[item_idx].item_price}</P>
                                 </Div>
                             }   
                             </Div>
