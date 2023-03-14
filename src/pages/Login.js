@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { useCookies } from "react-cookie"
 
 //  ===== import recoil =====
-import { whichPageState } from "../recoil/PageState"
+import { domainAddressState } from "../recoil/DomainState"
 
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
@@ -35,7 +35,7 @@ const Logo = styled(Img)`
 
 const Login = () =>{
     // ===== recoil state =====
-
+    const address = useRecoilValue(domainAddressState)
     // ===== router =====
     const navigate = useNavigate()
     const audio = document.getElementById("audio")
@@ -49,7 +49,7 @@ const Login = () =>{
         const pw = document.getElementById("pw").value
 
         console.log(id, pw)
-        const response = await fetch("http://gameuniv.site/auth",{
+        const response = await fetch(`${address}/auth`,{
             method: "POST",
             credentials: "include",
             headers: {
@@ -99,7 +99,7 @@ const Login = () =>{
 
 
     const testUserData = async(e) =>{
-        const response = await fetch("http://gameuniv.site/auth/user")
+        const response = await fetch(`${address}/auth/user`)
 
         const result = await response.json()
         

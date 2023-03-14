@@ -16,6 +16,8 @@ import { H1 } from "../styles/H1"
 import { P } from "../styles/P"
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../styles/style"
+import { domainAddressState } from "../recoil/DomainState"
+import { useInView } from "react-intersection-observer"
 
 // ===== style =====
 const RankList = styled(P)`
@@ -81,14 +83,85 @@ const RankingTotalBox = styled(Div)`
 
 //  ===== component =====
 
-const MobileRangking = () =>{
+const MobileRangking = (props) =>{
+    // ===== props =====
+    const game = props.game
 
+    // ===== recoil state =====
+    const address = useRecoilValue(domainAddressState)
     const rank = Array.from({length:100}, (v,i)=>i+1);
+
+    // ===== state =====
+    const[page2048, setPage2048] = React.useState(1)
+    const[pageTetris, setPageTetris] = React.useState(1)
+    const [loading2048, setLoading2048] = React.useState(false)
+    const [loadingTetris, setLoadingTetris] = React.useState(false)
+    const [ref2048, inView2048] = useInView()
+    const [refTetris, inViewTetris] = useInView()
+    const [rank2048, set2048] = React.useState([
+        // {},
+        {
+            id: "20481",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 300,
+            university_name: "인하대학교"
+        },
+        {
+            id: "20482",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 305,
+            university_name: "인하대학교"
+        }
+    ])
+
+    const [rankTetris, setTetris] = React.useState([
+        // {},
+        {
+            id: "test1",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 300,
+            university_name: "인하대학교"
+        },
+        {
+            id: "test2",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 305,
+            university_name: "인하대학교"
+        }
+    ])
+
+    // ===== func =====
+    // 랭킹 데이터 가져오기
+    // const getRankingData = React.useCallback( async() =>{
+    //     setLoading(true)
+    //     const response = await fetch(`${address}/2048/record/all?offset=${page}`)
+
+    //     const result = await response.json()
+
+    //     if(result.message){
+    //         alert(result.message)
+    //     }
+    //     else{
+    //         set2048( prevState => [...prevState, result.data])
+    //         setLoading(false)
+    //     }
+        
+    // },[page])
+
+    // React.useEffect( ()=>{
+    //     getRankingData()
+    // }, [getRankingData])
+
+    // React.useEffect( ()=>{
+    //     if(inView && !loading){
+    //         setPage(prevState => prevState+1)
+    //     }
+    // }, [inView, loading])
 
     return(
         <RankingTotalBox width="95%" height="300px" align_items="flex-start">
             <Div width="90%" flex_direction="column" justify_content="flex-start" align_items="flex-start"> 
-                <H1 font_size="xl" color="blue4" margin="0 0 10px 0">Tetris</H1>
+                <H1 font_size="xl" color="blue4" margin="0 0 10px 0">{game === "tetris" ? "Tetris" : 2048}</H1>
                 <Div flex_direction="column" width="100%" background_color="grayscale2">
                 {/* rank list name */}
                     <Div width="95%" justify_content="space-between" margin="10px 0 5px 0">
@@ -97,27 +170,58 @@ const MobileRangking = () =>{
                         <RankList>대학</RankList>
                     </Div>
                 {/* rank list */}
-                    <RankScroll flex_direction="column" width="100%" height="220px">
+                    <RankScroll ref={game==="tetris"? refTetris : ref2048} flex_direction="column" width="100%" height="220px">
                         {
-                            rank.map( r => (
-                                <RankDiv width="95%" height="37px" justify_content="space-between" rank={r}>
-                                    <Div width= "33%" justify_content="flex_start">
-                                        <RankP>{r}</RankP>
-                                        <ScoreP rank={r}>23032</ScoreP>
-                                    </Div>
-                                    
-                                    <Div width="33%" justify_content="flex_start" >
-                                        <Div width="20px" height="20px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                            <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                                            width="15px"/>
+                            game === "tetris"
+                            ?
+                            (
+                            rankTetris.map( (data,idx) =>{
+                                return(
+                                    <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
+                                        <Div width= "33%" justify_content="flex_start">
+                                            <RankP>{idx+1}</RankP>
+                                            <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
                                         </Div>
-                                        <P font_size="xxxs" font_weight="bold">tmdgns32</P>
-                                    </Div>
-                                    <Div width="33%"  justify_content="flex_start">
-                                        <P font_size="xxs">아주대학교</P>
-                                    </Div>
-                                </RankDiv>
-                            ))
+                                        
+                                        <Div width="33%" justify_content="flex_start" >
+                                            <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                                <Img src={data.profile_img}
+                                                width="20px"/>
+                                            </Div>
+                                            <P font_weight="bold">{data.id}</P>
+                                        </Div>
+                                        <Div width="33%" justify_content="flex_start">
+                                            <P>{data.university_name}</P>
+                                        </Div>
+                                    </RankDiv>
+                                )
+                                })
+                            )
+                            :
+                            (
+                            rank2048.map( (data,idx) =>{
+                                return(
+                                    <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
+                                        <Div width= "33%" justify_content="flex_start">
+                                            <RankP>{idx+1}</RankP>
+                                            <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
+                                        </Div>
+                                        
+                                        <Div width="33%" justify_content="flex_start" >
+                                            <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                                <Img src={data.profile_img}
+                                                width="20px"/>
+                                            </Div>
+                                            <P font_weight="bold">{data.id}</P>
+                                        </Div>
+                                        <Div width="33%" justify_content="flex_start">
+                                            <P>{data.university_name}</P>
+                                        </Div>
+                                    </RankDiv>
+                                )
+                            })
+                            )
+                            
                         }
                     </RankScroll>
                 </Div>

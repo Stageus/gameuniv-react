@@ -4,7 +4,7 @@ import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
-import { whichPageState } from "../recoil/PageState"
+import { domainAddressState } from "../recoil/DomainState"
 
 // ===== import router =====
 import { useNavigate } from "react-router"
@@ -26,8 +26,8 @@ import UnivList from "../components/signup_components/UnivList"
 
 const Find = (props) =>{
     // ===== recoil state =====
-
-    // ===== state =====
+    const address = useRecoilValue(domainAddressState)
+    // ===== state =====    
     const which_find = props.which_find
     // const [idFindStep, setIdFindStep] = React.useState(1)
     const [pwFindStep, setPwFindStep] = React.useState(1)
@@ -43,7 +43,7 @@ const Find = (props) =>{
         e.preventDefault()
         const email = document.getElementById("email").value
         
-        const response = await fetch(`http://gameuniv.site/user/id?email=${email}`)
+        const response = await fetch(`${address}/user/id?email=${email}`)
         
         const result = await response.json()
 
@@ -122,7 +122,7 @@ const Find = (props) =>{
         const university_name = document.getElementById("univ").value
 
         console.log(email, university_name)
-        const response = await fetch("http://gameuniv.site/auth/email/number",{
+        const response = await fetch(`${address}/auth/email/number`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -149,7 +149,7 @@ const Find = (props) =>{
         e.preventDefault()
         const email = emailState
         const auth_number = document.getElementById("auth_number").value
-        const response = await fetch(`http://gameuniv.site/auth/email/number?email=${email}&number=${auth_number}`)
+        const response = await fetch(`${address}/auth/email/number?email=${email}&number=${auth_number}`)
         
         const result = await response.json()
 
@@ -169,7 +169,7 @@ const Find = (props) =>{
         const pw = document.getElementById("new_pw").value
         const pwCheck = document.getElementById("pwCheck").value
 
-        const response = await fetch("http://gameuniv.site/user/pw",{
+        const response = await fetch(`${address}/user/pw`,{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

@@ -178,8 +178,8 @@ const Main = () =>{
                     isMobileRankingClick
                     ?
                     <MobileRankingDiv width="95%" flex_direction="column" height="80%" justify_content="space-evenly">
-                        <MobileRangking/>
-                        <MobileRangking/>
+                        <MobileRangking game="tetris"/>
+                        <MobileRangking game="2048"/>
                     </MobileRankingDiv>
                     :
                     <React.Fragment>

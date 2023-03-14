@@ -234,6 +234,12 @@ const SignUp = () =>{
         e.preventDefault()
         const email = document.getElementById("email").value
         const auth_number = document.getElementById("auth_number").value
+
+        setPostData( (prevState) => ({
+            ...prevState, universityIdx: univIdx, email: email
+        }))
+
+        console.log(postDataState)
         const response = await fetch(`${address}/auth/email/number?email=${email}&number=${auth_number}`)
         
         const result = await response.json()
