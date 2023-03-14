@@ -8,7 +8,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { whichRankingState } from "../../recoil/ModalState"
-
+import { domainAddressState } from "../../recoil/DomainState"
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
 import { Div } from "../../styles/Div"
@@ -80,23 +80,24 @@ const ScoreP = styled(P)`
 const RankingModal = () =>{
     // ===== recoil state =====
     const whichRanking = useRecoilValue(whichRankingState)
+    const address = useRecoilValue(domainAddressState)
     const rank = Array.from({length:100}, (v,i)=>i+1);
     console.log(whichRanking)
 
     // ===== state =====
-    const [rankingData, setRankingData ] = React.useState([
-        {
-            id: "test1",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 300,
-            university_name: "인하대학교"
-        },
-        {
-            id: "test2",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 305,
-            university_name: "인하대학교"
-        }
+    const [rankingData, setRankingData ] = React.useState([{},
+        // {
+        //     id: "test1",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 300,
+        //     university_name: "인하대학교"
+        // },
+        // {
+        //     id: "test2",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 305,
+        //     university_name: "인하대학교"
+        // }
 
     ])
     const [page, setPage] = React.useState(1)
@@ -106,26 +107,26 @@ const RankingModal = () =>{
 
     // ===== func =====
     // 랭킹 데이터 가져오기
-    // const getRankingData = useCallback( async() => {
-    //     setLoading(true)
-    //     const response = await fetch(`http://gameuniv.site/${whichRanking}/record/all?offset=${page}`)
+    const getRankingData = useCallback( async() => {
+        setLoading(true)
+        const response = await fetch(`${address}/${whichRanking}/record/all?offset=${page}`)
 
-    //     const result = await response.json()
-    //     console.log(result.message)
-    //     setRankingData(prevState => [...prevState, result])
+        const result = await response.json()
+        console.log(result.data)
+        setRankingData(prevState => [...prevState, result.data])
 
-    //     setLoading(false)
-    // }, [page])
+        setLoading(false)
+    }, [page])
 
-    // React.useEffect( ()=>{
-    //     getRankingData()
-    // }, [getRankingData])
+    React.useEffect( ()=>{
+        getRankingData()
+    }, [getRankingData])
 
-    // React.useEffect( ()=>{
-    //     if(inView && !loading){
-    //         setPage(prevState => prevState+1)
-    //     }
-    // }, [inView, loading])
+    React.useEffect( ()=>{
+        if(inView && !loading){
+            setPage(prevState => prevState+1)
+        }
+    }, [inView, loading])
 
     return(
         <Div width="611px" height="508px" align_items="flex-start">
@@ -139,7 +140,7 @@ const RankingModal = () =>{
                         <RankList>대학</RankList>
                     </Div>
                 {/* rank list */}
-                    <RankScroll flex_direction="column" width="100%" height="400px">
+                    <RankScroll ref={ref} flex_direction="column" width="100%" height="400px">
                         {
                             rankingData.map( (data, idx) =>{
                                 return(

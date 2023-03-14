@@ -15,6 +15,7 @@ import Bg from "./Bg"
 // ===== import recoil =====
 import { isModalOpenState, whichModalState, whichRankingState } from "../recoil/ModalState"
 import { useSetModalState } from "../hooks/useSetModalState"
+import { domainAddressState } from "../recoil/DomainState"
 
 // ===== import style =====
 import { Div } from "../styles/Div"
@@ -124,7 +125,68 @@ const Ranking = (props) =>{
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const [whichRanking, setRanking] = useRecoilState(whichRankingState)
+    const address = useRecoilValue(domainAddressState)
 
+    // ===== state =====
+    const [rank2048, set2048] = React.useState([
+        // {},
+        {
+            id: "20481",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 300,
+            university_name: "인하대학교"
+        },
+        {
+            id: "20482",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 305,
+            university_name: "인하대학교"
+        }
+    ])
+
+    const [rankTetris, setTetris] = React.useState([
+        // {},
+        {
+            id: "test1",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 300,
+            university_name: "인하대학교"
+        },
+        {
+            id: "test2",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 305,
+            university_name: "인하대학교"
+        }
+    ])
+
+    // ===== func =====
+    // 랭킹 데이터 가져오기
+    // const getRankingData = React.useCallback( async() =>{
+    //     const response2048 = await fetch(`${address}/2048/record/all?offset=${1}`)
+    //     const responseTetris = await fetch(`${address}/Tetris/record/all?offset=${1}`)
+
+    //     const result2048 = await response2048.json()
+    //     const resultTetris = await responseTetris.json()
+
+    //     if(result2048.message){
+    //         alert(result2048.message)
+    //     }
+    //     else{
+    //         set2048( prevState => [...prevState, result2048.data.slice(0,5)])
+    //     }
+    
+    //     if(resultTetris.message){
+    //         alert(resultTetris.message)
+    //     }
+    //     else{
+    //         setTetris( prevState => [...prevState, resultTetris.data.slice(0,5)])
+    //     }
+    // },[])
+
+    // React.useEffect( ()=>{
+    //     getRankingData()
+    // }, [getRankingData])
 
     // ===== event =====
     const showMoreBtnEvent = (e) =>{
@@ -166,25 +228,54 @@ const Ranking = (props) =>{
             </Div>
             {/* rank list */}
             {
-                rank.map( r => (
-                    <RankDiv width="100%" height="37px" justify_content="space-between" rank={r}>
-                        <Div width= "33%" justify_content="flex_start">
-                            <RankP>{r}</RankP>
-                            <ScoreP rank={r}>23032</ScoreP>
-                        </Div>
-                        
-                        <Div width="33%" justify_content="flex_start" >
-                            <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                                width="20px"/>
+
+                game === "tetris"
+                ?
+                (
+                rankTetris.map( (data,idx) =>{
+                    return(
+                        <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
+                            <Div width= "33%" justify_content="flex_start">
+                                <RankP>{idx+1}</RankP>
+                                <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
                             </Div>
-                            <P font_weight="bold">tmdgns32</P>
-                        </Div>
-                        <Div width="33%" justify_content="flex_start">
-                            <P>아주대학교</P>
-                        </Div>
-                    </RankDiv>
-                ))
+                            
+                            <Div width="33%" justify_content="flex_start" >
+                                <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
+                                    width="20px"/>
+                                </Div>
+                                <P font_weight="bold">{data.id}</P>
+                            </Div>
+                            <Div width="33%" justify_content="flex_start">
+                                <P>{data.university_name}</P>
+                            </Div>
+                        </RankDiv>
+                    )
+                    })
+                )
+                :
+                rank2048.map( (data,idx) =>{
+                    return(
+                        <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
+                            <Div width= "33%" justify_content="flex_start">
+                                <RankP>{idx+1}</RankP>
+                                <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
+                            </Div>
+                            
+                            <Div width="33%" justify_content="flex_start" >
+                                <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
+                                    width="20px"/>
+                                </Div>
+                                <P font_weight="bold">{data.id}</P>
+                            </Div>
+                            <Div width="33%" justify_content="flex_start">
+                                <P>{data.university_name}</P>
+                            </Div>
+                        </RankDiv>
+                    )
+                })
             }
                 <ShowMore margin="5px 0" align_items="flex-end" onClick={showMoreBtnEvent} id="tetris">
                     <P font_size="xxxs" font_weight="regular" color="grayscale6" margin="0 3px 0 0">더보기</P>
