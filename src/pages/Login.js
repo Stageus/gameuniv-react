@@ -93,7 +93,7 @@ const Login = () =>{
         }
         else{
             postLoginData(e)
-            // navigate("/home")
+            navigate("/home")
         }
     }
 
