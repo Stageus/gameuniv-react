@@ -18,3 +18,11 @@ export const whichModalState = atom({
     "key" : "whichModalState",
     "default": "",
 })
+
+// 스테이트 역할 : 랭킹 내용 출력
+// default : tetris, 2048
+// 사용하는 컴포넌트 : Ranking.js / RankingModal.js
+export const whichRankingState = atom({
+    "key" : "whichRankingState",
+    "default": "tetris",
+})

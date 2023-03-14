@@ -1,7 +1,7 @@
 // ===== import base =====
 import React from "react"
 import styled, {css} from "styled-components"
-import { useRecoilValue, useSetRecoilState } from "recoil"
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil"
 
 // ===== import component =====
 import Login from "../pages/Login"
@@ -13,9 +13,9 @@ import Item from "../pages/Item"
 import Bg from "./Bg"
 
 // ===== import recoil =====
-import { whichPageState } from "../../src/recoil/PageState"
-import { isModalOpenState, whichModalState } from "../recoil/ModalState"
+import { isModalOpenState, whichModalState, whichRankingState } from "../recoil/ModalState"
 import { useSetModalState } from "../hooks/useSetModalState"
+
 // ===== import style =====
 import { Div } from "../styles/Div"
 import { Img, ImgBtn } from "../styles/Img"
@@ -123,11 +123,18 @@ const Ranking = (props) =>{
     const game = props.game
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
+    const [whichRanking, setRanking] = useRecoilState(whichRankingState)
+
 
     // ===== event =====
     const showMoreBtnEvent = (e) =>{
+
         setModalState("rankingModal")
         setModalOpen(true)
+
+        setRanking(game)
+        
+        // console.log(game, whichRanking)
     }
     // ===== variable =====
     const rank = [1,2,3,4,5]
@@ -179,12 +186,12 @@ const Ranking = (props) =>{
                     </RankDiv>
                 ))
             }
+                <ShowMore margin="5px 0" align_items="flex-end" onClick={showMoreBtnEvent} id="tetris">
+                    <P font_size="xxxs" font_weight="regular" color="grayscale6" margin="0 3px 0 0">더보기</P>
+                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
+                    width="14px" margin="0 5px 0 0"/>
+                </ShowMore>
 
-            <ShowMore margin="5px 0" align_items="flex-end" onClick={useSetModalState("rankingModal")}>
-                <P font_size="xxxs" font_weight="regular" color="grayscale6" margin="0 3px 0 0">더보기</P>
-                <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
-                width="14px" margin="0 5px 0 0"/>
-            </ShowMore>
         </RankTotalBox>
     )
 }

@@ -1,6 +1,6 @@
 // ===== import base =====
 import React from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 import imageCompression from "browser-image-compression"
 
 // ===== import style =====
@@ -9,6 +9,8 @@ import {Input} from "../../styles/Input"
 import {P} from "../../styles/P"
 import { Img } from "../../styles/Img"
 
+// ===== import hooks =====
+import { useMobile } from "../../hooks/useMediaComponent"
 // ===== import style func =====
 import {color, fontWeight, fontSize} from "../../styles/style"
 
@@ -19,6 +21,14 @@ const Label = styled.label`
     height: 135px;
     border: 3px dashed ${color("blue3")};
     border-radius: 10px;
+`
+
+const UploadTotalDiv = styled(Div)`
+    ${props => props.isMobile && css`
+        position:relative;
+        right: 30px;
+    `}
+    
 `
 
 const FileInput = styled(Input)`
@@ -52,11 +62,12 @@ const UploadBox = (props) =>{
 
     // ===== var =====
     const isUpload = (defaultImg !== "" || profileImg.length === 1)
+
     // ===== state =====
     const [imgFile, setImgFile] = React.useState("")
     const imgRef = React.useRef()
     const setPostData = props.setPostData
-
+    const isMobile = useMobile()
     // ===== func =====
     // 이미지 압축
     const imgCompress = async(file) =>{
@@ -154,7 +165,7 @@ const UploadBox = (props) =>{
     
     return(
         <React.Fragment>
-            <Div  background_color="blue5" border_radius="3px" width="312px" height="188px">
+            <UploadTotalDiv isMobile={isMobile} background_color="blue5" border_radius="3px" width="312px" height="188px">
             {/* 드래그 앤 드롭 박스 */}
             
                 <label htmlFor="profileImg" onDrop={imgDrop} onDragOver={imgDragover}>
@@ -199,7 +210,7 @@ const UploadBox = (props) =>{
                         id="default4"/>
                     </Div>
                 </Div>
-            </Div>
+            </UploadTotalDiv>
         </React.Fragment>
     )
 }
