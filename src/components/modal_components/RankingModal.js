@@ -1,12 +1,13 @@
 // ===== import base =====
-import React from "react"
+import React, { useCallback } from "react"
+import { useInView } from "react-intersection-observer"
 import styled, {css} from "styled-components"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import component =====
 
 // ===== import recoil =====
-import { whichPageState } from "../../recoil/PageState"
+import { whichRankingState } from "../../recoil/ModalState"
 
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
@@ -77,13 +78,59 @@ const ScoreP = styled(P)`
 //  ===== component =====
 
 const RankingModal = () =>{
-
+    // ===== recoil state =====
+    const whichRanking = useRecoilValue(whichRankingState)
     const rank = Array.from({length:100}, (v,i)=>i+1);
+    console.log(whichRanking)
+
+    // ===== state =====
+    const [rankingData, setRankingData ] = React.useState([
+        {
+            id: "test1",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 300,
+            university_name: "인하대학교"
+        },
+        {
+            id: "test2",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 305,
+            university_name: "인하대학교"
+        }
+
+    ])
+    const [page, setPage] = React.useState(1)
+    const [loading, setLoading] = React.useState(false)
+
+    const [ref, inView] = useInView()
+
+    // ===== func =====
+    // 랭킹 데이터 가져오기
+    // const getRankingData = useCallback( async() => {
+    //     setLoading(true)
+    //     const response = await fetch(`http://gameuniv.site/${whichRanking}/record/all?offset=${page}`)
+
+    //     const result = await response.json()
+    //     console.log(result.message)
+    //     setRankingData(prevState => [...prevState, result])
+
+    //     setLoading(false)
+    // }, [page])
+
+    // React.useEffect( ()=>{
+    //     getRankingData()
+    // }, [getRankingData])
+
+    // React.useEffect( ()=>{
+    //     if(inView && !loading){
+    //         setPage(prevState => prevState+1)
+    //     }
+    // }, [inView, loading])
 
     return(
         <Div width="611px" height="508px" align_items="flex-start">
             <Div width="90%" flex_direction="column" justify_content="flex-start" align_items="flex-start">
-                <H1 font_size="xl" color="blue4" margin="0 0 10px 0">Tetris</H1>
+                <H1 font_size="xl" color="blue4" margin="0 0 10px 0">{whichRanking === "tetris" ? "Tetris" : 2048}</H1>
                 <Div flex_direction="column" width="100%">
                 {/* rank list name */}
                     <Div width="100%" justify_content="space-between" margin="0 0 5px 0">
@@ -94,25 +141,27 @@ const RankingModal = () =>{
                 {/* rank list */}
                     <RankScroll flex_direction="column" width="100%" height="400px">
                         {
-                            rank.map( r => (
-                                <RankDiv width="100%" height="37px" justify_content="space-between" rank={r}>
-                                    <Div width= "33%" justify_content="flex_start">
-                                        <RankP>{r}</RankP>
-                                        <ScoreP rank={r}>23032</ScoreP>
-                                    </Div>
-                                    
-                                    <Div width="33%" justify_content="flex_start" >
-                                        <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                            <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
-                                            width="20px"/>
+                            rankingData.map( (data, idx) =>{
+                                return(
+                                    <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
+                                        <Div width= "33%" justify_content="flex_start">
+                                            <RankP>{idx+1}</RankP>
+                                            <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
                                         </Div>
-                                        <P font_weight="bold">tmdgns32</P>
-                                    </Div>
-                                    <Div width="33%" justify_content="flex_start">
-                                        <P>아주대학교</P>
-                                    </Div>
-                                </RankDiv>
-                            ))
+                                        
+                                        <Div width="33%" justify_content="flex_start" >
+                                            <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                                <Img src={data.profile_img}
+                                                width="20px"/>
+                                            </Div>
+                                            <P font_weight="bold">{data.id}</P>
+                                        </Div>
+                                        <Div width="33%" justify_content="flex_start">
+                                            <P>{data.university_name}</P>
+                                        </Div>
+                                    </RankDiv>
+                                )
+                            })
                         }
                     </RankScroll>
                 </Div>

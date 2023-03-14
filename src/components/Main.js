@@ -28,7 +28,7 @@ import {PC, Mobile, useMobile} from "../hooks/useMediaComponent"
 
 
 // ===== import recoil =====
-import { isModalOpenState ,whichModalState } from "../recoil/ModalState"
+import { isModalOpenState ,whichModalState, whichRankingState } from "../recoil/ModalState"
 import { isMobileRankingClickState } from "../recoil/MobileRankingState"
 
 // ===== import style =====
@@ -87,6 +87,8 @@ const Main = () =>{
     const isMobileRankingClick = useRecoilValue(isMobileRankingClickState)
 
     // ===== recoil state =====
+    const setRanking = useSetRecoilState(whichRankingState)
+
     // const whichPage = useRecoilValue(whichPageState)
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)

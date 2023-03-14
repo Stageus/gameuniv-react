@@ -12,6 +12,7 @@ import SignUpInput from "../components/signup_components/SignUpInput"
 import UnivList from "../components/signup_components/UnivList"
 
 // ===== import recoil =====
+import { domainAddressState } from "../recoil/DomainState"
 
 // ===== import hooks =====
 import {PC, Mobile} from "../hooks/useMediaComponent"
@@ -66,6 +67,8 @@ const InputBoxDiv = styled(Div)`
 
 //  ===== component =====
 const SignUp = () =>{
+    // ===== domain =====
+    const address = useRecoilValue(domainAddressState)
 
     // ===== state =====
     const [isConfirm, setConfirm] = React.useState(false)
@@ -183,7 +186,7 @@ const SignUp = () =>{
         e.preventDefault()
         const id = document.getElementById("id").value
 
-        const response = await fetch(`http://gameuniv.site/user/id/duplication?id=${id}`)
+        const response = await fetch(`${address}/user/id/duplication?id=${id}`)
         
         const result = await response.json()
 
@@ -205,7 +208,7 @@ const SignUp = () =>{
         const university_name = document.getElementById("univ").value
 
         console.log(email, university_name)
-        const response = await fetch("http://gameuniv.site/auth/email/number",{
+        const response = await fetch(`${address}/auth/email/number`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -231,7 +234,7 @@ const SignUp = () =>{
         e.preventDefault()
         const email = document.getElementById("email").value
         const auth_number = document.getElementById("auth_number").value
-        const response = await fetch(`http://gameuniv.site/auth/email/number?email=${email}&number=${auth_number}`)
+        const response = await fetch(`${address}/auth/email/number?email=${email}&number=${auth_number}`)
         
         const result = await response.json()
 
@@ -250,7 +253,7 @@ const SignUp = () =>{
         const {email, id, name, pw, pwCheck, universityIdx, defaultImg, profileImg} = {...postDataState}
 
         console.log(postDataState)
-        const response = await fetch("http://gameuniv.site/user",{
+        const response = await fetch(`${address}/user`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
