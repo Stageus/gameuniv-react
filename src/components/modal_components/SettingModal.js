@@ -25,6 +25,7 @@ import { P } from "../../styles/P"
 
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../styles/style"
+import { domainAddressState } from "../../recoil/DomainState"
 
 
 // ===== style =====
@@ -111,7 +112,7 @@ const SettingModal = () =>{
 
     // ===== recoil state =====
     const setModalState = useSetRecoilState(whichModalState)
-
+    const address = useRecoilValue(domainAddressState)
     // const whichPage = useRecoilValue(whichPageState)
     const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
     const setModalOpen = useSetRecoilState(isModalOpenState)
@@ -123,9 +124,22 @@ const SettingModal = () =>{
     const [effectRange, setEffectRange] = useVolumeControl("effectRange", 50)
     // ===== event =====
 
-    const logoutBtnEvent = () => {
+    const logoutBtnEvent = async() => {
+
+        const response = await fetch(`${address}/auth`,
+            {
+                method: "DELETE"
+            })
+
+        const result = await response.json
         navigate("/")
         setModalOpen(false)
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            alert("로그아웃 성공")
+        }
     }
 
     // sound 관련
@@ -164,6 +178,8 @@ const SettingModal = () =>{
             effect.volume = 1
         }
     }
+
+
 
     return(
         <Div width="330px" height={which_page ? "220px" : "325px"}>

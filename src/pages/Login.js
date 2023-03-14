@@ -4,7 +4,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
 // ===== import cookies =====
-import { useCookies } from "react-cookie"
+import { useCookies, setCookie } from "react-cookie"
 
 //  ===== import recoil =====
 import { domainAddressState } from "../recoil/DomainState"
@@ -40,7 +40,7 @@ const Login = () =>{
     const navigate = useNavigate()
     const audio = document.getElementById("audio")
     const login_form = document.getElementById("login_form")
-    const [cookies, setCookie] = useCookies(['userData'])
+    const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
 
 
@@ -68,8 +68,9 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
-            // console.log(result.credentials)
-            setCookie('userData', result.data.token)
+            console.log(result.cookies)
+            // console.log(result.token)
+            setToken('token', result.token)
         }
     }
 
@@ -99,7 +100,12 @@ const Login = () =>{
 
 
     const testUserData = async(e) =>{
-        const response = await fetch(`${address}/auth/user`)
+        const response = await fetch(`${address}/auth/user`,
+        {
+            headers:{
+                "Authorization": token
+            }
+        })
 
         const result = await response.json()
         

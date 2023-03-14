@@ -6,10 +6,14 @@ import { useRecoilValue, useSetRecoilState } from "recoil"
 
 // ===== import hooks =====
 import { whichModalState, isModalOpenState } from "../../../../recoil/ModalState"
-
+import useGameLocalStorage from "../../hooks/useLocalStorage"
 import { useGameContext } from "../Game/Game"
 import { useSetModalState } from "../../../../hooks/useSetModalState"
 import { useMobile } from "../../../../hooks/useMediaComponent"
+
+// ===== import recoil =====
+import { scoreState } from "../../recoil/ScoreState"
+
 // ===== import components =====
 import Modal from "../../../Modal"
 import GameOverModal from "../../../modal_components/GameOverModal"
@@ -71,10 +75,12 @@ const GameResult = styled.div`
 `
 
 const Result = (props) =>{
+    // ===== state =====
+    // const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
     const onRestart = props.onRestart
     const isMobile = useMobile()
-
-    console.log(props.whichModal)
+    const score2048 = useRecoilValue(scoreState)
+    // console.log(props.whichModal)
     return(
 
         <GameResult isMobile={isMobile} whichModal={props.whichModal}>
@@ -83,7 +89,7 @@ const Result = (props) =>{
                 ?
                 <Modal onRestart={onRestart}/>
                 :
-                <GameOverModal onRestart={onRestart}/>
+                <GameOverModal onRestart={onRestart} score2048={score2048}/>
             }
         </GameResult>
     )

@@ -1,6 +1,7 @@
 // ===== import base =====
 import React, {useEffect} from "react";
 import styled, {keyframes, css} from "styled-components";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 
 import useGameLocalStorage from "../../hooks/useLocalStorage"
 import { getMaxId } from "../../utils/boardUtils"
@@ -11,6 +12,10 @@ import ScoreBox from "../ScoreBox/ScoreBox"
 
 // ===== import hooks =====
 import { useMobile } from "../../../../hooks/useMediaComponent";
+
+// ===== import recoil =====
+import { scoreState } from "../../recoil/ScoreState";
+
 // ===== import style =====
 import { Div } from "../../../../styles/Div";
 // ===== import style func =====
@@ -157,6 +162,10 @@ const ScoresContainer = () =>{
     // ===== state =====
     const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
 
+    // ===== recoil =====
+    const setScore = useSetRecoilState(scoreState)
+    // const score = useRecoilValue(scoreState)
+
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
@@ -172,6 +181,8 @@ const ScoresContainer = () =>{
             oldAddScore.innerText = `+${state.newPoints}`
             const newAddScore = oldAddScore.cloneNode(true)
             oldAddScore.parentNode.replaceChild( newAddScore, oldAddScore)
+
+            setScore(state.score)
         }
     }, [state])
 

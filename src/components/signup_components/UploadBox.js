@@ -59,7 +59,6 @@ const UploadBox = (props) =>{
     // ===== props =====
     const defaultImg = props.postDataState.defaultImg
     const profileImg = props.postDataState.profileImg
-
     // ===== var =====
     const isUpload = (defaultImg !== "" || profileImg.length === 1)
 
@@ -68,6 +67,8 @@ const UploadBox = (props) =>{
     const imgRef = React.useRef()
     const setPostData = props.setPostData
     const isMobile = useMobile()
+    const [defaultSrc, setDefaultSrc] = React.useState("")
+
     // ===== func =====
     // 이미지 압축
     const imgCompress = async(file) =>{
@@ -83,6 +84,7 @@ const UploadBox = (props) =>{
             setPostData( (prevState) => ({
                 ...prevState, profileImg: [compressedFile], defaultImg: ""
             }))
+            setDefaultSrc("")
             // const resultFile = new File([compressedFile], compressedFile.name, {
             //     type: compressedFile.type,
             // })
@@ -149,13 +151,14 @@ const UploadBox = (props) =>{
         const preview = document.getElementById("preview")
         const target = e.target.id
         switch(target){
-            case "default1":
-            case "default2":
-            case "default3":
-            case "default4":
-                setImgFile(e.target.src)
+            case "defaultProfileImg0":
+            case "defaultProfileImg1":
+            case "defaultProfileImg2":
+            case "defaultProfileImg3":
+                // setImgFile(e.target.src)
+                setDefaultSrc(e.target.src)
                 setPostData( (prevState) => ({
-                    ...prevState, defaultImg: e.target.src, profileImg: []
+                    ...prevState, defaultImg: `${e.target.id}.png`, profileImg: []
                 }))
 
                 break
@@ -177,7 +180,7 @@ const UploadBox = (props) =>{
                         // {/* 이미지 업로드 후 */}
                         <Div width="142px" height="135px">
                             <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
-                                <PreviewImg src={defaultImg ? defaultImg : imgFile}
+                                <PreviewImg src={defaultSrc ? defaultSrc : imgFile}
                                 width="100px" border_radius="50%" id="preview"/>    
                             </Div>
                         </Div>
@@ -199,15 +202,15 @@ const UploadBox = (props) =>{
                 <Div flex_direction="column" onClick={defaultProfileClickEvent}>
                     <Div>
                         <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`} width="47px" padding= "8px" margin= "5px"
-                        id="default1"/>
+                        id="defaultProfileImg0"/>
                         <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg1.png`} width="47px" padding= "8px" margin= "5px"
-                        id="default2"/>
+                        id="defaultProfileImg1"/>
                     </Div>
                     <Div>
                         <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg2.png`} width="47px" padding= "8px" margin= "5px"
-                        id="default3"/>
+                        id="defaultProfileImg2"/>
                         <ProfileImg src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg3.png`} width="47px" padding= "8px" margin= "5px"
-                        id="default4"/>
+                        id="defaultProfileImg3"/>
                     </Div>
                 </Div>
             </UploadTotalDiv>
