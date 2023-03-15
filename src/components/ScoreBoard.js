@@ -21,6 +21,7 @@ import {PC, Mobile} from "../hooks/useMediaComponent"
 
 // ===== import style func ====
 import { color } from "../styles/style"
+import { domainAddressState } from "../recoil/DomainState"
 
 // ===== style =====
 const MyScore = styled(Div)`
@@ -60,9 +61,9 @@ const OtherScoreMobile = styled(Div)`
 
 //  ===== component =====
 const ScoreBoard = (props) =>{
+    
     const score = props.score
-    // ===== recoil state =====
-
+    
     return(
         <React.Fragment>
             <Div flex_direction="column" width="100%" height="100%" justify_content="space-evenly">
@@ -72,10 +73,10 @@ const ScoreBoard = (props) =>{
                             <P color="grayscale1" font_weight="bold" font_size="xxs">34</P>
                         </Div>
                         <Div flex_direction="column">
-                            <P font_weight="bold" font_size="xxs">tmdgns97</P>
+                            <P font_weight="bold" font_size="xxs">sfsd</P>
                             <Div> 
                                 <Img src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`} width="13px"/>
-                                <P font_weight="regular" font_size="xxxs">아주대학교</P>
+                                <P font_weight="regular" font_size="xxxs">인하대학교</P>
                             </Div>
                         </Div>
                         <P font_weight="bold" font_size="xs">

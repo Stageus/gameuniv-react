@@ -21,11 +21,12 @@ export const signUpUserDataState = atom({
 // 스테이트 역할 : 로그인 유저 정보
 // default : email, id, name, pw, pwCheck, universityIdx, defaultImg, profileImg
 // 사용하는 컴포넌트 : ItemContainer.js /Store.js
-export const logInUserDataState = atom({
-    "key" : "logInUserDataState",
-    "default" : {
+export const userDataState = atom({
+    "key": "userDataState",
+    "default":{
         id: "",
-        pw: "",
-        autoLogin : false
+        email: "",
+        profileImg: "",
+        universityName: ""
     }
 })

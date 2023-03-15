@@ -4,10 +4,11 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
 // ===== import cookies =====
-import { useCookies } from "react-cookie"
+import { useCookies, setCookie } from "react-cookie"
 
 //  ===== import recoil =====
 import { domainAddressState } from "../recoil/DomainState"
+import { userDataState } from "../recoil/UserDataState"
 
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
@@ -20,6 +21,7 @@ import {Input} from "../styles/Input"
 import {Button} from "../styles/Button"
 import {P, LinkP} from "../styles/P"
 import { H1 } from "../styles/H1"
+
 
 // ===== style =====
 const Logo = styled(Img)`
@@ -36,11 +38,14 @@ const Logo = styled(Img)`
 const Login = () =>{
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
+    const userData = useRecoilValue(userDataState)
+    const setUserData = useSetRecoilState(userDataState)
+
     // ===== router =====
     const navigate = useNavigate()
     const audio = document.getElementById("audio")
     const login_form = document.getElementById("login_form")
-    const [cookies, setCookie] = useCookies(['userData'])
+    const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
 
 
@@ -68,8 +73,10 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
-            // console.log(result.credentials)
-            setCookie('userData', result.data.token)
+            // alert(document.cookie)
+            // console.log(result.cookies)
+            // console.log(result.token)
+            // setToken('token', result.data.token)
         }
     }
 
@@ -99,13 +106,22 @@ const Login = () =>{
 
 
     const testUserData = async(e) =>{
-        const response = await fetch(`${address}/auth/user`)
+        const response = await fetch(`${address}/auth/user`,
+        {
+            credentials: "include",
+        })
 
         const result = await response.json()
         
-        alert(result.message, result.data)
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setUserData(result.data)
+        }
     }
     
+    console.log(userData)
 
     return(
         <React.Fragment>

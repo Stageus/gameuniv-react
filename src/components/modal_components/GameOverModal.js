@@ -32,7 +32,7 @@ const GameOverModal = (props) =>{
     // ===== hooks =====
     const isMobile = useMobile()
     // ===== 2048 state =====
-
+    const score2048 = props.score2048
 
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
@@ -67,7 +67,7 @@ const GameOverModal = (props) =>{
             <Div width="50%" justify_content="space-between">
                 <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" margin="0 10px" >
                     <P color="blue3" font_size="m" font_weight="regular">점수</P>
-                    <P color="grayscale1" font_size="s" font_weight="regular">{1111}</P>
+                    <P color="grayscale1" font_size="s" font_weight="regular">{score2048}</P>
                 </Div>
                 <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" >
                     <P color="blue3" font_size="m" font_weight="regular">순위</P>

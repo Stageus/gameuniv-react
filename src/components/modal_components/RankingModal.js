@@ -86,18 +86,18 @@ const RankingModal = () =>{
 
     // ===== state =====
     const [rankingData, setRankingData ] = React.useState([{},
-        // {
-        //     id: "test1",
-        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-        //     max_score: 300,
-        //     university_name: "인하대학교"
-        // },
-        // {
-        //     id: "test2",
-        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-        //     max_score: 305,
-        //     university_name: "인하대학교"
-        // }
+        {
+            id: "test1",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 300,
+            university_name: "인하대학교"
+        },
+        {
+            id: "test2",
+            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+            max_score: 305,
+            university_name: "인하대학교"
+        }
 
     ])
     const [page, setPage] = React.useState(1)
@@ -107,26 +107,26 @@ const RankingModal = () =>{
 
     // ===== func =====
     // 랭킹 데이터 가져오기
-    const getRankingData = useCallback( async() => {
-        setLoading(true)
-        const response = await fetch(`${address}/${whichRanking}/record/all?offset=${page}`)
+    // const getRankingData = useCallback( async() => {
+    //     setLoading(true)
+    //     const response = await fetch(`${address}/${whichRanking}/record/all?offset=${page}`)
 
-        const result = await response.json()
-        console.log(result.data)
-        setRankingData(prevState => [...prevState, result.data])
+    //     const result = await response.json()
+    //     console.log(result.data)
+    //     setRankingData(prevState => [...prevState, result.data])
 
-        setLoading(false)
-    }, [page])
+    //     setLoading(false)
+    // }, [page])
 
-    React.useEffect( ()=>{
-        getRankingData()
-    }, [getRankingData])
+    // React.useEffect( ()=>{
+    //     getRankingData()
+    // }, [getRankingData])
 
-    React.useEffect( ()=>{
-        if(inView && !loading){
-            setPage(prevState => prevState+1)
-        }
-    }, [inView, loading])
+    // React.useEffect( ()=>{
+    //     if(inView && !loading){
+    //         setPage(prevState => prevState+1)
+    //     }
+    // }, [inView, loading])
 
     return(
         <Div width="611px" height="508px" align_items="flex-start">

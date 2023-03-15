@@ -55,7 +55,8 @@ const Find = (props) =>{
         }
 
     }
-    console.log(emailState)
+    // console.log(emailState)
+    
     const checkEvent = (e) =>{
         e.preventDefault()
         // ===== var =====

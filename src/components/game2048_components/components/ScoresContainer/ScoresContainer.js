@@ -1,6 +1,7 @@
 // ===== import base =====
 import React, {useEffect} from "react";
 import styled, {keyframes, css} from "styled-components";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 
 import useGameLocalStorage from "../../hooks/useLocalStorage"
 import { getMaxId } from "../../utils/boardUtils"
@@ -11,11 +12,17 @@ import ScoreBox from "../ScoreBox/ScoreBox"
 
 // ===== import hooks =====
 import { useMobile } from "../../../../hooks/useMediaComponent";
+
+// ===== import recoil =====
+import { scoreState } from "../../recoil/ScoreState";
+import { domainAddressState } from "../../../../recoil/DomainState";
+
 // ===== import style =====
 import { Div } from "../../../../styles/Div";
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../../../styles/style";
 import { doodleTheme } from "../../styles/theme";
+
 
 // ===== style =====
 const moveUp = keyframes`
@@ -156,6 +163,22 @@ const OtherUniv = styled(UserUniv)`
 const ScoresContainer = () =>{
     // ===== state =====
     const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
+    const [scoreData, setScoreData] = React.useState({
+        pre_id: "pre_id",
+        pre_university_name: "pre_univ_name",
+        pre_max_score: "10",
+
+        next_id: "next_id",
+        next_university_name: "next_univ_name",
+        next_max_scroe: "30",
+
+        rank: -1
+    })
+    
+    // ===== recoil =====
+    const setScore = useSetRecoilState(scoreState)
+    const score = useRecoilValue(scoreState)
+    const address = useRecoilValue(domainAddressState)
 
     // ===== hooks =====
     const { gameState } = useGameContext()
@@ -172,21 +195,49 @@ const ScoresContainer = () =>{
             oldAddScore.innerText = `+${state.newPoints}`
             const newAddScore = oldAddScore.cloneNode(true)
             oldAddScore.parentNode.replaceChild( newAddScore, oldAddScore)
+
+            setScore(state.score)
         }
     }, [state])
+
+    // 랭킹 추적
+    // const showRank2048 = async()=>{
+    //     const response = await fetch(`${address}/2048/score/rank?score=${score}`)
+
+    //     const result = await response.json()
+
+    //     if(result.message){
+    //         alert(result.message)
+    //     }
+    //     else{
+    //         setScoreData(result.data)
+    //     }
+    // }
+
+    // React.useEffect( () =>{
+    //     showRank2048()
+    // }, [score > scoreData.next_max_scroe])
+
 
     return(
         <ScoresContainerDiv isMobile={isMobile}>
             <OtherScore isMobile={isMobile}>
-                <OtherRank isMobile={isMobile}>33</OtherRank>
+                {
+                scoreData.rank === -1 || 
+                <OtherRank isMobile={isMobile}>{scoreData.rank+1}</OtherRank>
+                }
+                
                 <Div flex_direction="column">
-                    <OtherId isMobile={isMobile}>safsadf3e2</OtherId>
-                    <OtherUniv isMobile={isMobile}>아주대학교</OtherUniv>
+                    <OtherId isMobile={isMobile}>{scoreData.next_id}</OtherId>
+                    <OtherUniv isMobile={isMobile}>{scoreData.next_university_name}</OtherUniv>
                 </Div>
-                <ScoreBox/>
+                <ScoreBox score={scoreData.next_max_scroe} />
             </OtherScore>
             <MyScore isMobile={isMobile}>
-                <MyRank isMobile={isMobile}>34</MyRank>
+                {
+                    scoreData.rank === -1 ||
+                    <MyRank isMobile={isMobile}>{scoreData.rank}</MyRank>
+                }
                 <Div flex_direction="column">
                     <UserId isMobile={isMobile}>tmdgns97</UserId>
                     <UserUniv isMobile={isMobile}>인하대학교</UserUniv>
@@ -195,12 +246,15 @@ const ScoresContainer = () =>{
                 <AddScore isMobile={isMobile} id="additionScore"></AddScore>
             </MyScore>
             <OtherScore isMobile={isMobile}>
-                <OtherRank isMobile={isMobile}>35</OtherRank>
+                {
+                    scoreData.rank === -1 ||
+                    <OtherRank isMobile={isMobile}>{scoreData.rank-1}</OtherRank>
+                }
                 <Div flex_direction="column">
-                    <OtherId isMobile={isMobile}>safsadf3e2</OtherId>
-                    <OtherUniv isMobile={isMobile}>아주대학교</OtherUniv>
+                    <OtherId isMobile={isMobile}>{scoreData.pre_id}</OtherId>
+                    <OtherUniv isMobile={isMobile}>{scoreData.pre_university_name}</OtherUniv>
                 </Div>
-                <ScoreBox/>
+                <ScoreBox score={scoreData.pre_max_score}/>
             </OtherScore>
             {/* <ScoreBox title="BEST" score={state.bestScore} ></ScoreBox> */}
         </ScoresContainerDiv>
