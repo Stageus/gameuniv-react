@@ -2,33 +2,52 @@
 import React, {useEffect} from "react"
 import {useRecoilValue, useRecoilState} from "recoil"
 
+// ===== import cookies =====
+import { useCookies, setCookie } from "react-cookie"
+
 // ===== import component =====
 import ItemUnit from "./ItemUnit"
 
+
 //  ===== import recoil =====
 import { whichItemComponentState} from "../../recoil/ComponentState"
+import { domainAddressState} from "../../recoil/DomainState"
 import { myItemDataState, storeDataState, dibsOnDataState } from "../../recoil/DataState"
 
+//
+import { userDataState} from "../../recoil/UserDataState"
 //  ===== component =====
 const ItemContainer = () =>{
     
-    
+    // const token =Cookies.get(`userData`)
+
     // ===== recoil state =====
     const whichItemComponent= useRecoilValue(whichItemComponentState)
+    const address= useRecoilValue(domainAddressState)
     const [storeData,setStoreData]=useRecoilState(storeDataState)
     const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
     const [myItemData,setMyItemData]=useRecoilState(myItemDataState)
-
+    //
+    const [token, setToken, removeToken] = useCookies(['token'])
 
     const getItemDataEvent = async() =>{
 
-        const response_all = await fetch(`http://gameuniv.site/item/all`)
+        const response_all = await fetch(`${address}/item/all`,
+        {
+            credentials: "include"
+        })
         const result_all = await response_all.json()
 
-        const response_pick = await fetch(`http://gameuniv.site/item/pick/all`)
+        const response_pick = await fetch(`${address}/item/pick/all`,
+        {
+            credentials: "include"
+        })
         const result_pick = await response_pick.json()
 
-        const response_buy = await fetch(`http://gameuniv.site/item/buy/all`)
+        const response_buy = await fetch(`${address}/item/buy/all`,
+        {
+            credentials: "include"
+        })
         const result_buy = await response_buy.json()
 
         setStoreData(result_all.data)
@@ -53,22 +72,22 @@ const ItemContainer = () =>{
         <React.Fragment>
             {whichItemComponent === "store" && 
                 (
-                    storeData && storeData.map((data, item_idx)=>{
-                    return <ItemUnit key={data} item_idx={item_idx}/>
+                    storeData && storeData.map((data, idx)=>{
+                    return <ItemUnit key={data} idx={idx}/>
                     })
                 ) 
             }
             {whichItemComponent ==="dibsOn" && 
                 (
-                    dibsOnData && dibsOnData.map((data, item_idx)=>{
-                    return <ItemUnit key={data} item_idx={item_idx}/>
+                    dibsOnData && dibsOnData.map((data, idx)=>{
+                    return <ItemUnit key={data} idx={idx}/>
                     })
                 )
             }
             {whichItemComponent ==="myItem" && 
                 (
-                    myItemData && myItemData.map((data, item_idx)=>{
-                    return <ItemUnit key={data} item_idx={item_idx}/>
+                    myItemData && myItemData.map((data, idx)=>{
+                    return <ItemUnit key={data} idx={idx}/>
                     })
                 )
             }

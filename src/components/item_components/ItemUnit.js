@@ -8,6 +8,7 @@ import ItemShowDetail from "./ItemShowDetail"
 //  ===== import recoil =====
 import { whichItemComponentState, isClickUnitState, isItemDetailOpenState} from "../../recoil/ComponentState"
 import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
+import { domainAddressState } from "../../recoil/DomainState"
 
 // ===== import style =====
 import {H1} from "../../styles/H1"
@@ -23,17 +24,19 @@ const ItemUnit = (props) =>{
     //===== var =====
     let item_data
     //===== props =====
-    const {item_idx}=props
-    //===== state =====
-    const [isHeartFiled, setHeartFiledState] = React.useState(false)
+    const {idx}=props
+   
     //===== recoil state =====
     const whichItemComponent= useRecoilValue(whichItemComponentState)
+    
+    const address = useRecoilValue(domainAddressState)
     const storeData=useRecoilValue(storeDataState)
     const dibsOnData=useRecoilValue(dibsOnDataState)
     const myItemData=useRecoilValue(myItemDataState)
     const setItemIndexData=useSetRecoilState(itemIndexDataState)
     const [isClickUnit, setClickUnitState] = useRecoilState(isClickUnitState)
     const [isItemDetailOpen, setItemDetailOpenStateState] = useRecoilState(isItemDetailOpenState)
+
 
     // 조건에 맞는 데이터 세팅
     if(whichItemComponent==="store"){
@@ -43,11 +46,14 @@ const ItemUnit = (props) =>{
     }else if(whichItemComponent==="myItem"){
         item_data = myItemData
     }
+
+         // //===== state =====
+         const [isHeartFiled, setHeartFiledState] = React.useState(item_data[idx].item_picked_state)
     //===== event =====
     const itemShowDetailEvent=()=>{
-        setItemIndexData(item_idx)
+        setItemIndexData(idx)
         setItemDetailOpenStateState(true)
-        setClickUnitState(item_idx)
+        setClickUnitState(idx)
     }
     const dibsOnEvent=(e)=>{
         sendDibsOnStateEvent(e)
@@ -59,17 +65,13 @@ const ItemUnit = (props) =>{
 
         e.preventDefault()
 
-        console.log(item_idx)
+        console.log(item_data[idx].item_idx)
+        console.log(item_data[idx].item_picked_state)
 
-        if(isHeartFiled){
-            const response = await fetch("http://gameuniv.site/item/pick",{
+        if(item_data[idx].item_picked_state){
+            const response = await fetch(`${address}/item/pick?item-idx=${item_data[idx].item_idx}`,{
                 method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    itemIdx: item_idx
-                })
+                credentials: "include"
             })
 
             const result = await response.json()
@@ -81,14 +83,15 @@ const ItemUnit = (props) =>{
                 setHeartFiledState(false)
             }
         }else{
-            const response = await fetch("http://gameuniv.site/item/pick",{
+            const response = await fetch(`${address}/item/pick`,{
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    itemIdx: item_idx
-                })
+                    itemIdx: item_data[idx].item_idx
+                }),
+                credentials: "include"
             })
 
             const result = await response.json()
@@ -111,10 +114,10 @@ const ItemUnit = (props) =>{
                 <ItemShowDetail item_data={item_data}/>
             }
             <PC>
-                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==item_idx ? "blue6" : "grayscale1" }
+                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==idx ? "grayscale3" : "grayscale1" }
                 border_radius="10px" onClick={itemShowDetailEvent}>
                     <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
-                        <H1 font_size="s" color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[item_idx].item_name}</H1>
+                        <H1 font_size="s" color="grayscale7"   font_weight="regular">{item_data[idx].item_name}</H1>
                         {
                         whichItemComponent !="myItem" &&
                             (
@@ -125,7 +128,7 @@ const ItemUnit = (props) =>{
                         }
                     </Div>
                     <Div width = "88%"  align_items="flex-end" justify_content="space-between">
-                        <Img width="70px" margin="0 0 10px 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[item_idx].preview_img}`}/>
+                        <Img width="70px" margin="0 0 10px 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[idx].preview_img}`}/>
                         {
                             whichItemComponent ==="myItem" 
                             ?
@@ -135,7 +138,7 @@ const ItemUnit = (props) =>{
                             :
                             <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
                                 <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
-                                <P color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[item_idx].item_price}</P>
+                                <P color="grayscale7" font_weight="regular">{item_data[idx].item_price}</P>
                             </Div>
                         }   
                     </Div>
@@ -143,10 +146,10 @@ const ItemUnit = (props) =>{
             </PC>
 
             <Mobile>
-                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==item_idx ? "blue6" : "grayscale1" }
+                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==idx ? "grayscale3" : "grayscale1" }
                 border_radius="10px" onClick={itemShowDetailEvent}>
                     <Div width = "90%" justify_content="space-between" >
-                        <Img width="100px" margin="0 0 0 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[item_idx].preview_img}`}/>
+                        <Img width="100px" margin="0 0 0 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[idx].preview_img}`}/>
                         <Div align_items="flex-end" flex_direction="column" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
                             {
                                 whichItemComponent !="myItem" &&
@@ -156,7 +159,7 @@ const ItemUnit = (props) =>{
                                         : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
                                     )  
                             }
-                            <H1 font_size="s" margin="0 0 10px 0" color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"}  font_weight="regular">{item_data[item_idx].item_name}</H1>
+                            <H1 font_size="s" margin="0 0 10px 0" color="grayscale7"  font_weight="regular">{item_data[idx].item_name}</H1>
                             {
                                 whichItemComponent ==="myItem" 
                                 ?
@@ -166,7 +169,7 @@ const ItemUnit = (props) =>{
                                 :
                                 <Div width="80px" height="30px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
                                     <Img width="25px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
-                                    <P color={isClickUnit===item_idx ? "grayscale1" : "grayscale7"} font_weight="regular">{item_data[item_idx].item_price}</P>
+                                    <P color="grayscale7"  font_weight="regular">{item_data[idx].item_price}</P>
                                 </Div>
                             }   
                             </Div>

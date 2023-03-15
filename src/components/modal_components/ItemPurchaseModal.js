@@ -7,6 +7,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import { whichItemComponentState ,isItemDetailOpenState, isClickUnitState} from "../../recoil/ComponentState"
 import { isModalOpenState} from "../../recoil/ModalState"
 import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
+import { domainAddressState } from "../../recoil/DomainState"
 
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
@@ -22,6 +23,7 @@ const ItemPurchaseModal = () =>{
     // ===== var =====
     let item_data
     // ===== recoil state =====
+    const address = useRecoilValue(domainAddressState)
     const whichItemComponent= useRecoilValue(whichItemComponentState)
     const storeData=useRecoilValue(storeDataState)
     const dibsOnData=useRecoilValue(dibsOnDataState)
@@ -46,14 +48,15 @@ const ItemPurchaseModal = () =>{
 
         console.log(itemIndexData)
 
-        const response = await fetch("http://gameuniv.site/item/buy",{
+        const response = await fetch(`${address}/item/buy`,{
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                itemIdx: itemIndexData
-            })
+                itemIdx: item_data[itemIndexData].item_idx
+            }),
+            credentials: "include"
         })
 
         const result = await response.json()
@@ -75,7 +78,7 @@ const ItemPurchaseModal = () =>{
                 <H1 font_size="m" color="grayscale7" font_weight="regular" margin="0 0 10px 0">
                     정말 구매하시겠습니까?
                 </H1>
-                <Img width="150px"  src={`${process.env.PUBLIC_URL}/img_srcs/imgs/${item_data[itemIndexData].preview_img}`} />
+                <Img width="120px"  src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[itemIndexData].preview_img}`} />
                 <Div width="100px" height="40px" border="4px solid gray" border_radius="10px" align_items="center" justify_content="space-around">
                     <Img width="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`}/>
                     <P font_size="s"  font_weight="regular">{item_data[itemIndexData].item_price}</P>
