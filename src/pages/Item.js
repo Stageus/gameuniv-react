@@ -1,7 +1,8 @@
 // ===== import base =====
 import React from "react"
-import {useSetRecoilState} from "recoil"
+import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled , {css}from "styled-components"
+import { Navigate } from "react-router"
 
 // ===== import component =====
 import ItemContainer from "../components/item_components/ItemContainer"
@@ -11,6 +12,7 @@ import TabBtn from "../components/TabBtn"
 //  ===== import recoil =====
 import { whichItemComponentState , isItemDetailOpenState} from "../recoil/ComponentState"
 import { isTabOpenState ,isClickUnitState} from "../recoil/ComponentState"
+import { isLoginState } from "../recoil/DomainState"
 
 // ===== import hook =====
 import {PC, Mobile} from "../hooks/useMediaComponent"
@@ -18,6 +20,7 @@ import {PC, Mobile} from "../hooks/useMediaComponent"
 // ===== import style =====
 import {H1} from "../styles/H1"
 import {Div} from "../styles/Div"
+
 
 // ===== style =====
 // const ItemDiv = styled(Div)`
@@ -41,6 +44,13 @@ const Item = () =>{
     const setItemComponentState=useSetRecoilState(whichItemComponentState)
     const setTabOpenState=useSetRecoilState(isTabOpenState)
     const setClickUnitState=useSetRecoilState(isClickUnitState)
+    // 수정
+    const isLogin = useRecoilValue(isLoginState)
+    // // 비정상접근 막기
+    if(!isLogin){
+        alert("로그인 후 이용 가능합니다")
+        return <Navigate to="/" replace={true}/>
+    }
     // ===== event =====
     const itemTabBtnEvent = (e)=>{
         const target = e.target.id
@@ -68,6 +78,7 @@ const Item = () =>{
 
     }
     return(
+        
         <React.Fragment>
             <Div width = "1000px" height="85%" justify_content="center" >
                     <PC>

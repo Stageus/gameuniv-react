@@ -7,8 +7,9 @@ import styled from "styled-components"
 import { useCookies, setCookie } from "react-cookie"
 
 //  ===== import recoil =====
-import { domainAddressState } from "../recoil/DomainState"
+import { domainAddressState, isLoginState } from "../recoil/DomainState"
 import { userDataState } from "../recoil/UserDataState"
+
 
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
@@ -40,7 +41,7 @@ const Login = () =>{
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
     const setUserData = useSetRecoilState(userDataState)
-
+    const setLogin = useSetRecoilState(isLoginState)
     // ===== router =====
     const navigate = useNavigate()
     const audio = document.getElementById("audio")
@@ -73,10 +74,9 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
-            // alert(document.cookie)
-            // console.log(result.cookies)
-            // console.log(result.token)
-            // setToken('token', result.data.token)
+            testUserData()
+            setLogin(true)
+            navigate("/home")
         }
     }
 
@@ -100,12 +100,12 @@ const Login = () =>{
         }
         else{
             postLoginData(e)
-            // navigate("/home")
+            
         }
     }
 
 
-    const testUserData = async(e) =>{
+    const testUserData = async() =>{
         const response = await fetch(`${address}/auth/user`,
         {
             credentials: "include",
@@ -121,12 +121,12 @@ const Login = () =>{
         }
     }
     
-    console.log(userData)
+    // console.log(userData)
 
     return(
         <React.Fragment>
             {/* 로고 */}
-            <Button onClick={testUserData}>유저정보 확인</Button>
+            {/* <Button onClick={testUserData}>유저정보 확인</Button> */}
             <Div flex_direction="column" width="100%">
                 <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
                 {/* 로그인 폼 */}

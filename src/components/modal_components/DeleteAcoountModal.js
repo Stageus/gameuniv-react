@@ -8,6 +8,7 @@ import { useNavigate } from "react-router"
 // ===== import recoil =====
 import { domainAddressState } from "../../recoil/DomainState"
 import { isModalOpenState } from "../../recoil/ModalState"
+import { userDataState } from "../../recoil/UserDataState"
 
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
@@ -19,9 +20,6 @@ import { Button } from "../../styles/Button"
 // ===== import style func =====
 import { color } from "../../styles/style"
 
-
-
-
 // ===== style =====
 
 //  ===== component =====
@@ -31,22 +29,23 @@ const DeleteAcoountModal = () =>{
     const address = useRecoilValue(domainAddressState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const navigate = useNavigate()
-
+    const email = useRecoilValue(userDataState).email
     const deleteAccountEvent = async() =>{
-        // const response = await fetch(`${address}/user/${email}`,{
-        //     method: "DELETE"
-        // })
+        const response = await fetch(`${address}/user/${email}`,{
+            method: "DELETE",
+            credentials: "include"
+        })
 
-        // const result = await response.json()
+        const result = await response.json()
 
-        // if(result.message){
-        //     alert(result.message)
-        // }
-        // else{
-        //     setModalOpen(false)
-        //     navigate("/")
-        //     alert("계정삭제 성공")
-        // }
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setModalOpen(false)
+            navigate("/")
+            alert("계정삭제 성공")
+        }
     }
     return(
         <Div width="330px" height="287px" flex_direction="column" justify_content="space-evenly">

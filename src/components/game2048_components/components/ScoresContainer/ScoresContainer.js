@@ -201,22 +201,24 @@ const ScoresContainer = () =>{
     }, [state])
 
     // 랭킹 추적
-    // const showRank2048 = async()=>{
-    //     const response = await fetch(`${address}/2048/score/rank?score=${score}`)
+    const showRank2048 = async()=>{
+        const response = await fetch(`${address}/2048/score/rank?score=${score}`,{
+            credentials: "include"
+        })
 
-    //     const result = await response.json()
+        const result = await response.json()
 
-    //     if(result.message){
-    //         alert(result.message)
-    //     }
-    //     else{
-    //         setScoreData(result.data)
-    //     }
-    // }
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setScoreData(result.data)
+        }
+    }
 
-    // React.useEffect( () =>{
-    //     showRank2048()
-    // }, [score > scoreData.next_max_scroe])
+    React.useEffect( () =>{
+        showRank2048()
+    }, [score > scoreData.next_max_scroe])
 
 
     return(
@@ -224,7 +226,7 @@ const ScoresContainer = () =>{
             <OtherScore isMobile={isMobile}>
                 {
                 scoreData.rank === -1 || 
-                <OtherRank isMobile={isMobile}>{scoreData.rank+1}</OtherRank>
+                <OtherRank isMobile={isMobile}>{scoreData.rank-1}</OtherRank>
                 }
                 
                 <Div flex_direction="column">
@@ -248,7 +250,7 @@ const ScoresContainer = () =>{
             <OtherScore isMobile={isMobile}>
                 {
                     scoreData.rank === -1 ||
-                    <OtherRank isMobile={isMobile}>{scoreData.rank-1}</OtherRank>
+                    <OtherRank isMobile={isMobile}>{scoreData.rank+1}</OtherRank>
                 }
                 <Div flex_direction="column">
                     <OtherId isMobile={isMobile}>{scoreData.pre_id}</OtherId>
@@ -265,7 +267,6 @@ const initState = (tiles = []) =>{
     return{
         score:0,
         newPoints: 0,
-        bestScore: 0,
         tiles,
     }
 }

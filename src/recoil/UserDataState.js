@@ -1,5 +1,7 @@
 import {atom, selector} from "recoil"
+import { recoilPersist } from "recoil-persist"
 
+const {persistAtom } = recoilPersist()
 // 스테이트 역할 : 회원가입 유저 정보 저장
 // default : email, id, name, pw, pwCheck, universityIdx, defaultImg, profileImg
 // 사용하는 컴포넌트 : signUp.js
@@ -28,5 +30,6 @@ export const userDataState = atom({
         email: "",
         profileImg: "",
         universityName: ""
-    }
+    },
+    // effects_UNSTABLE: [persistAtom]
 })

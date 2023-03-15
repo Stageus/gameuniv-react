@@ -130,70 +130,75 @@ const Ranking = (props) =>{
     // ===== state =====
     const [rank2048, set2048] = React.useState([
         // {},
-        {
-            id: "20481",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 300,
-            university_name: "인하대학교"
-        },
-        {
-            id: "20482",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 305,
-            university_name: "인하대학교"
-        }
+        // {
+        //     id: "20481",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 300,
+        //     university_name: "인하대학교"
+        // },
+        // {
+        //     id: "20482",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 305,
+        //     university_name: "인하대학교"
+        // }
     ])
 
     const [rankTetris, setTetris] = React.useState([
         // {},
-        {
-            id: "test1",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 300,
-            university_name: "인하대학교"
-        },
-        {
-            id: "test2",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 305,
-            university_name: "인하대학교"
-        }
+        // {
+        //     id: "test1",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 300,
+        //     university_name: "인하대학교"
+        // },
+        // {
+        //     id: "test2",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 305,
+        //     university_name: "인하대학교"
+        // }
     ])
 
     // ===== func =====
     // 랭킹 데이터 가져오기
-    // const getRankingData = React.useCallback( async() =>{
-    //     const response2048 = await fetch(`${address}/2048/record/all?offset=${1}`)
-    //     const responseTetris = await fetch(`${address}/Tetris/record/all?offset=${1}`)
+    const getRankingData = React.useCallback( async() =>{
+        const response2048 = await fetch(`${address}/2048/record/all?offset=${1}`,{
+            credentials: "include"
+        })
+        const responseTetris = await fetch(`${address}/Tetris/record/all?offset=${1}`,{
+            credentials: "include"
+        })
 
-    //     const result2048 = await response2048.json()
-    //     const resultTetris = await responseTetris.json()
+        const result2048 = await response2048.json()
+        const resultTetris = await responseTetris.json()
 
-    //     if(result2048.message){
-    //         alert(result2048.message)
-    //     }
-    //     else{
-    //         set2048( prevState => [...prevState, result2048.data.slice(0,5)])
-    //     }
+        if(result2048.message){
+            // alert(result2048.message)
+        }
+        else{
+            set2048(result2048.data)
+        }
     
-    //     if(resultTetris.message){
-    //         alert(resultTetris.message)
-    //     }
-    //     else{
-    //         setTetris( prevState => [...prevState, resultTetris.data.slice(0,5)])
-    //     }
-    // },[])
+        if(resultTetris.message){
+            // alert(resultTetris.message)
+        }
+        else{
+            setTetris(resultTetris.data)
+        }
+        console.log(rank2048)
+        console.log(rankTetris)
+    },[])
 
-    // React.useEffect( ()=>{
-    //     getRankingData()
-    // }, [getRankingData])
+    React.useEffect( ()=>{
+        getRankingData()
+    }, [])
 
     // ===== event =====
     const showMoreBtnEvent = (e) =>{
 
         setModalState("rankingModal")
         setModalOpen(true)
-
         setRanking(game)
         
         // console.log(game, whichRanking)
@@ -231,6 +236,13 @@ const Ranking = (props) =>{
 
                 game === "tetris"
                 ?
+                rankTetris.length < 1
+                ?
+                <Div width="100%" height="185px">
+                    이번달 Tetris 기록이 없습니다
+                </Div>
+                :
+
                 (
                 rankTetris.map( (data,idx) =>{
                     return(
@@ -242,7 +254,7 @@ const Ranking = (props) =>{
                             
                             <Div width="33%" justify_content="flex_start" >
                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
+                                    <Img src={data.profile_img}
                                     width="20px"/>
                                 </Div>
                                 <P font_weight="bold">{data.id}</P>
@@ -254,6 +266,13 @@ const Ranking = (props) =>{
                     )
                     })
                 )
+                
+                :
+                rank2048.length < 1
+                ?
+                <Div width="100%" height="185px">
+                    이번달 2048 기록이 없습니다
+                </Div>
                 :
                 rank2048.map( (data,idx) =>{
                     return(
@@ -265,7 +284,7 @@ const Ranking = (props) =>{
                             
                             <Div width="33%" justify_content="flex_start" >
                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                    <Img src={`${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`}
+                                    <Img src={data.profile_img}
                                     width="20px"/>
                                 </Div>
                                 <P font_weight="bold">{data.id}</P>
