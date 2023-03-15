@@ -131,7 +131,7 @@ const SettingModal = () =>{
                 method: "DELETE"
             })
 
-        const result = await response.json
+        const result = await response.json()
         navigate("/")
         setModalOpen(false)
         if(result.message){

@@ -9,7 +9,8 @@ import imageCompression from "browser-image-compression"
 import UploadBox from "../modal_components/EditProfileModal"
 
 // ===== import recoil =====
-import { whichPageState } from "../../recoil/PageState"
+import { domainAddressState } from "../../recoil/DomainState"
+import { isModalOpenState } from "../../recoil/ModalState"
 
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
@@ -68,8 +69,11 @@ const PreviewImg = styled(Img)`
 
 const EditProfileModal = () =>{
     
-
+    // ===== recoil state =====
+    const address = useRecoilValue(domainAddressState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
     // ===== state =====
+    
     const [imgFile, setImgFile] = React.useState("")
     const imgRef = React.useRef()
     const [defaultImg, setDefaultImg] = React.useState("")
@@ -149,10 +153,36 @@ const EditProfileModal = () =>{
                 setDefaultImg(`${e.target.id}.png`)
                 setDefaultSrc(e.target.src)
                 setProfileImg([])
-                console.log(imgFile, defaultImg)
                 break
         }
     }
+    // console.log(defaultImg, profileImg)
+    // 프로필 수정
+    const profileChangeEvent = async(e) =>{
+        e.preventDefault()
+
+        const response = await fetch(`${address}/user/profile-img`,{
+            method: "PUT",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                profile_img: profileImg,
+                default_img: defaultImg
+            })
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            alert("이미지 변경 성공!")
+            setModalOpen(false)
+        }
+    }
+
     return(
         <Div width="357px" height="347px">
             <Div width="90%" height="100%"
@@ -206,7 +236,7 @@ const EditProfileModal = () =>{
                         </UploadTotalDiv>
                     </React.Fragment>
                 <Div justify_content="center" width="100%">
-                    <Button width="177px" height="38px" font_size="s">확인</Button>
+                    <Button onClick={profileChangeEvent} width="177px" height="38px" font_size="s">확인</Button>
                 </Div>
             </Div>
         </Div>
