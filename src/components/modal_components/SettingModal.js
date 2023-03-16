@@ -11,7 +11,8 @@ import useVolumeControl from "../../hooks/useVolumeControl"
 
 // ===== import recoil =====
 import { whichModalState, isModalOpenState } from "../../recoil/ModalState"
-import { whichPageState } from "../../recoil/PageState"
+import { domainAddressState, isLoginState } from "../../recoil/DomainState"
+import { userDataState } from "../../recoil/UserDataState"
 
 // ===== import react router =====
 import {Routes, Route, Link, useParams, useLocation, useNavigate} from "react-router-dom"
@@ -25,7 +26,7 @@ import { P } from "../../styles/P"
 
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../styles/style"
-import { domainAddressState, isLoginState } from "../../recoil/DomainState"
+
 
 
 // ===== style =====
@@ -114,7 +115,7 @@ const SettingModal = () =>{
     const setModalState = useSetRecoilState(whichModalState)
     const address = useRecoilValue(domainAddressState)
     const setLogin = useSetRecoilState(isLoginState)
-
+    const setUserData = useSetRecoilState(userDataState)
     const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
@@ -143,6 +144,7 @@ const SettingModal = () =>{
             navigate("/")
             setModalOpen(false)
             setLogin(false)
+            setUserData({})
         }
     }
 

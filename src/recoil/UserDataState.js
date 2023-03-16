@@ -31,5 +31,13 @@ export const userDataState = atom({
         profileImg: "",
         universityName: ""
     },
-    // effects_UNSTABLE: [persistAtom]
+    effects_UNSTABLE: [persistAtom]
+})
+
+export const coinState = atom({
+    "key" : "coinState",
+    "default":{
+        coin: 0
+    },
+    effects_UNSTABLE: [persistAtom]
 })

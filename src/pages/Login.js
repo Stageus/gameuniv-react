@@ -8,7 +8,7 @@ import { useCookies, setCookie } from "react-cookie"
 
 //  ===== import recoil =====
 import { domainAddressState, isLoginState } from "../recoil/DomainState"
-import { userDataState } from "../recoil/UserDataState"
+import { coinState, userDataState } from "../recoil/UserDataState"
 
 
 // ===== import react router =====
@@ -39,14 +39,16 @@ const Logo = styled(Img)`
 const Login = () =>{
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
-    const userData = useRecoilValue(userDataState)
+    // const userData = useRecoilValue(userDataState)
     const setUserData = useSetRecoilState(userDataState)
     const setLogin = useSetRecoilState(isLoginState)
+    const setCoin = useSetRecoilState(coinState)
+
     // ===== router =====
     const navigate = useNavigate()
-    const audio = document.getElementById("audio")
-    const login_form = document.getElementById("login_form")
-    const [token, setToken, removeToken] = useCookies(['token'])
+    // const audio = document.getElementById("audio")
+    // const login_form = document.getElementById("login_form")
+    // const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
 
 
@@ -74,7 +76,8 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
-            testUserData()
+            getUserData()
+            getCoinData()
             setLogin(true)
             navigate("/home")
         }
@@ -104,8 +107,8 @@ const Login = () =>{
         }
     }
 
-
-    const testUserData = async() =>{
+    // 
+    const getUserData = async() =>{
         const response = await fetch(`${address}/auth/user`,
         {
             credentials: "include",
@@ -121,6 +124,21 @@ const Login = () =>{
         }
     }
     
+    const getCoinData = async() =>{
+        const response = await fetch(`${address}/user/coin`,{
+            credentials: "include"
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setCoin(result.data.coin)
+        }
+    }
+
     // console.log(userData)
 
     return(

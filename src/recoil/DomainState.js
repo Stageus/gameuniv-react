@@ -27,5 +27,5 @@ export const profilePathState = atom({
 export const isLoginState = atom({
     "key" : "isLoginState",
     "default" : false,
-    // effects_UNSTABLE: [persistAtom]
+    effects_UNSTABLE: [persistAtom]
 })

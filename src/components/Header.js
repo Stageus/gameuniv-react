@@ -22,6 +22,7 @@ import { useSetModalState } from "../hooks/useSetModalState"
 
 //  ===== component =====
 import BtnAnimation from "./BtnAnimation"
+import { coinState } from "../recoil/UserDataState"
 
 
 const Header_style = styled.header`
@@ -43,6 +44,7 @@ const Header = () =>{
     const location = useLocation()
     const path = location.pathname
     const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
+    const coin = useRecoilValue(coinState)
 
     // ===== event =====
     const logoEvent = () =>{
@@ -65,7 +67,7 @@ const Header = () =>{
                     ||
                     <Div border={`2px solid ${color("grayscale6")}`} border_radius = "10px" height="36px" width="90px" justify_content = "space-around" margin="0 0 6px 0">
                         <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="24px"/>
-                        <P font_weight="regular" font_size="xss">25</P>
+                        <P font_weight="regular" font_size="xss">{coin}</P>
                     </Div>
                 }
                 <BtnAnimation event={useSetModalState("settingModal")}
