@@ -85,19 +85,19 @@ const RankingModal = () =>{
     console.log(whichRanking)
 
     // ===== state =====
-    const [rankingData, setRankingData ] = React.useState([{},
-        {
-            id: "test1",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 300,
-            university_name: "인하대학교"
-        },
-        {
-            id: "test2",
-            profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
-            max_score: 305,
-            university_name: "인하대학교"
-        }
+    const [rankingData, setRankingData ] = React.useState([
+        // {
+        //     id: "test1",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 300,
+        //     university_name: "인하대학교"
+        // },
+        // {
+        //     id: "test2",
+        //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
+        //     max_score: 305,
+        //     university_name: "인하대학교"
+        // }
 
     ])
     const [page, setPage] = React.useState(1)
@@ -107,31 +107,45 @@ const RankingModal = () =>{
 
     // ===== func =====
     // 랭킹 데이터 가져오기
-    // const getRankingData = useCallback( async() => {
-    //     setLoading(true)
-    //     const response = await fetch(`${address}/${whichRanking}/record/all?offset=${page}`)
+    const getRankingData = useCallback( async() => {
+        setLoading(true)
+        const response = await fetch(`${address}/${whichRanking}/record/all?offset=${page}`,{
+            credentials: "include"
+        })
 
-    //     const result = await response.json()
-    //     console.log(result.data)
-    //     setRankingData(prevState => [...prevState, result.data])
+        const result = await response.json()
 
-    //     setLoading(false)
-    // }, [page])
+        if(result.data.length < 1){
+            alert(result.message)
+        }
+        else{
+            setRankingData(prevState => [...prevState, ...result.data])
+            setLoading(false)
+        }
+    }, [page])
 
-    // React.useEffect( ()=>{
-    //     getRankingData()
-    // }, [getRankingData])
+    React.useEffect( ()=>{
+        getRankingData()
+    }, [getRankingData])
 
-    // React.useEffect( ()=>{
-    //     if(inView && !loading){
-    //         setPage(prevState => prevState+1)
-    //     }
-    // }, [inView, loading])
+    React.useEffect( ()=>{
+        if(inView && !loading){
+            setPage(prevState => prevState+1)
+        }
+    }, [inView, loading])
 
+    console.log(rankingData)
     return(
         <Div width="611px" height="508px" align_items="flex-start">
             <Div width="90%" flex_direction="column" justify_content="flex-start" align_items="flex-start">
                 <H1 font_size="xl" color="blue4" margin="0 0 10px 0">{whichRanking === "tetris" ? "Tetris" : 2048}</H1>
+                {
+                rankingData.length < 1
+                ?
+                <Div flex_direction="column" width="100%" height="400px">
+                    이번 달 {whichRanking} 기록이 없습니다
+                </Div>
+                :
                 <Div flex_direction="column" width="100%">
                 {/* rank list name */}
                     <Div width="100%" justify_content="space-between" margin="0 0 5px 0">
@@ -166,6 +180,7 @@ const RankingModal = () =>{
                         }
                     </RankScroll>
                 </Div>
+                }
             </Div>
         </Div>
 

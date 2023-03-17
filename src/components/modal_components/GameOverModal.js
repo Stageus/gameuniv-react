@@ -9,6 +9,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 // ===== import recoil =====
 import { whichPageState } from "../../recoil/PageState"
 import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
+import { domainAddressState } from "../../recoil/DomainState"
 
 // ===== import style =====
 import { Img, NoneEventImg } from "../../styles/Img"
@@ -37,6 +38,7 @@ const GameOverModal = (props) =>{
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setModalState = useSetRecoilState(whichModalState)
+    const address = useRecoilValue(domainAddressState)
     const navigate = useNavigate()
     // ===== event =====
     const gameOverBtnEvent = (e)=>{
@@ -57,6 +59,33 @@ const GameOverModal = (props) =>{
         }
 
     }
+
+    // 게임오버 시 게임점수 보내기
+    const postScore = async() =>{
+        const response = await fetch(`${address}/2048/score`,{
+            method: "POST",
+            credentials: "include",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                score: score2048,
+            })
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            console.log(result.data)
+        }
+    }
+
+    React.useEffect( () =>{
+        postScore()
+    }, [])
 
     return(
         <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"500px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">

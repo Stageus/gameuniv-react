@@ -1,7 +1,8 @@
 // ===== import base =====
 import React from "react"
-import {useSetRecoilState} from "recoil"
+import {useSetRecoilState, useRecoilValue} from "recoil"
 import styled , {css}from "styled-components"
+import { Navigate } from "react-router"
 
 // ===== import component =====
 import AchievementContainer from "../components/achievement_components/AchievementContainer"
@@ -9,6 +10,7 @@ import TabBtn from "../components/TabBtn"
 
 //  ===== import recoil =====
 import { whichAchievementComponentState,isTabOpenState } from "../recoil/ComponentState"
+import { isLoginState } from "../recoil/DomainState"
 
 // ===== import hook =====
 import {PC, Mobile} from "../hooks/useMediaComponent"
@@ -34,6 +36,15 @@ const Achievement = () =>{
     // ===== recoil state =====
     const setAchievementComponentState= useSetRecoilState(whichAchievementComponentState)
     const setTabOpenState=useSetRecoilState(isTabOpenState)
+
+    // 수정
+    const isLogin = useRecoilValue(isLoginState)
+    // // 비정상접근 막기
+    if(!isLogin){
+        alert("로그인 후 이용 가능합니다")
+        return <Navigate to="/" replace={true}/>
+    }
+
     // ===== event =====
     const achievementTabBtnEvent = (e)=>{
         const target = e.target.id

@@ -191,7 +191,7 @@ const SignUp = () =>{
         const result = await response.json()
 
         if(result.message){
-            alert(result.message)
+            alert("이미 가입된 아이디입니다")
         }
         else{
             alert("사용가능한 아이디입니다")
@@ -283,6 +283,7 @@ const SignUp = () =>{
         }
         else if(!result.message && result.id){
             alert(`계정이 복구되었습니다. ${result.id}로 로그인해주시기 바랍니다`)
+            setStep(stepState+1)
         }
         else{
             alert("회원가입 완료")

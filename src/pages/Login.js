@@ -7,8 +7,9 @@ import styled from "styled-components"
 import { useCookies, setCookie } from "react-cookie"
 
 //  ===== import recoil =====
-import { domainAddressState } from "../recoil/DomainState"
-import { userDataState } from "../recoil/UserDataState"
+import { domainAddressState, isLoginState } from "../recoil/DomainState"
+import { coinState, userDataState } from "../recoil/UserDataState"
+
 
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
@@ -38,14 +39,16 @@ const Logo = styled(Img)`
 const Login = () =>{
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
-    const userData = useRecoilValue(userDataState)
+    // const userData = useRecoilValue(userDataState)
     const setUserData = useSetRecoilState(userDataState)
+    const setLogin = useSetRecoilState(isLoginState)
+    const setCoin = useSetRecoilState(coinState)
 
     // ===== router =====
     const navigate = useNavigate()
-    const audio = document.getElementById("audio")
-    const login_form = document.getElementById("login_form")
-    const [token, setToken, removeToken] = useCookies(['token'])
+    // const audio = document.getElementById("audio")
+    // const login_form = document.getElementById("login_form")
+    // const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
 
 
@@ -73,10 +76,10 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
-            // alert(document.cookie)
-            // console.log(result.cookies)
-            // console.log(result.token)
-            // setToken('token', result.data.token)
+            getUserData()
+            getCoinData()
+            setLogin(true)
+            navigate("/home")
         }
     }
 
@@ -100,12 +103,11 @@ const Login = () =>{
         }
         else{
             postLoginData(e)
-            navigate("/home")
         }
     }
 
-
-    const testUserData = async(e) =>{
+    // 
+    const getUserData = async() =>{
         const response = await fetch(`${address}/auth/user`,
         {
             credentials: "include",
@@ -121,12 +123,27 @@ const Login = () =>{
         }
     }
     
-    console.log(userData)
+    const getCoinData = async() =>{
+        const response = await fetch(`${address}/user/coin`,{
+            credentials: "include"
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setCoin(result.data.coin)
+        }
+    }
+
+    // console.log(userData)
 
     return(
         <React.Fragment>
             {/* 로고 */}
-            <Button onClick={testUserData}>유저정보 확인</Button>
+            {/* <Button onClick={testUserData}>유저정보 확인</Button> */}
             <Div flex_direction="column" width="100%">
                 <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
                 {/* 로그인 폼 */}

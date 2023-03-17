@@ -28,7 +28,7 @@ const DevelopInfoModal = () =>{
             <Div flex_direction="column" align_items="flex-start" width="80%" margin="20px">
                 <H1 font_size="m" color="grayscale7" font_weight="regular" margin="15px 0">개발자 정보</H1>
                 <P>프론트엔드: 한승재, 장승훈</P>
-                <P>백엔드: 최민석</P>
+                <P>백엔드: 민경찬</P>
                 <P>디자인: 장승훈</P>
             </Div>
         </Div>

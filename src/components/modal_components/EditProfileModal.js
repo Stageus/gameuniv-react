@@ -163,12 +163,13 @@ const EditProfileModal = () =>{
 
         const response = await fetch(`${address}/user/profile-img`,{
             method: "PUT",
+            credentials: "include",
             headers:{
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
+                default_img: defaultImg,
                 profile_img: profileImg,
-                default_img: defaultImg
             })
         })
 

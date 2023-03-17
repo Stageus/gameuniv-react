@@ -11,6 +11,7 @@ import Home from "../pages/Home"
 import Achievement from "../pages/Achievement"
 import Item from "../pages/Item"
 import Game2048 from "../pages/Game2048"
+import NotFound from "../pages/NotFound"
 
 // ===== import component =====
 import Bg from "./Bg"
@@ -160,7 +161,7 @@ const Main = () =>{
                                     <Route path="/pwfind" element = {<Find/>}/>
                                     <Route path="/item" element = {<Item/>}/>
                                     <Route path="/achievement" element = {<Achievement/>}/>
-                                    
+                                    <Route path="/*" element = {<NotFound/>} />
                                 </Routes>
                                 <Link to={"/2048"}>
                                     2048

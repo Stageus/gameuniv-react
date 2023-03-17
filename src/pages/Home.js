@@ -2,7 +2,7 @@
 import React from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
-
+import { Navigate } from "react-router-dom"
 // ===== import component =====
 import Profile from "../components/home_components/Profile"
 import IndividualTetrisRanking from "../components/home_components/IndividualTetrisRanking"
@@ -10,6 +10,7 @@ import Individual2048Ranking from "../components/home_components/Individual2048R
 
 //  ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
+import { isLoginState } from "../recoil/DomainState"
 
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
@@ -23,6 +24,7 @@ import {Div, ShadowDiv} from "../styles/Div"
 
 // ===== import style func =====
 import {color} from "../styles/style"
+
 
 
 // ===== style =====
@@ -99,6 +101,7 @@ const AchivementBtnMobileDiv = styled(ShadowDiv)`
 const Home = () =>{
     // ===== recoil state =====
     const setPageState = useSetRecoilState(whichPageState)
+    const isLogin = useRecoilValue(isLoginState)
     // ===== router =====
     const navigate = useNavigate()
     // ===== event =====
@@ -114,6 +117,11 @@ const Home = () =>{
                 break
         }
 
+    }
+
+    if(!isLogin){
+        alert("로그인 후 이용 가능합니다")
+        return <Navigate to="/" replace={true}/>
     }
 
     return(

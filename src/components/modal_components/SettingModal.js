@@ -11,7 +11,8 @@ import useVolumeControl from "../../hooks/useVolumeControl"
 
 // ===== import recoil =====
 import { whichModalState, isModalOpenState } from "../../recoil/ModalState"
-import { whichPageState } from "../../recoil/PageState"
+import { domainAddressState, isLoginState } from "../../recoil/DomainState"
+import { userDataState } from "../../recoil/UserDataState"
 
 // ===== import react router =====
 import {Routes, Route, Link, useParams, useLocation, useNavigate} from "react-router-dom"
@@ -25,7 +26,7 @@ import { P } from "../../styles/P"
 
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../styles/style"
-import { domainAddressState } from "../../recoil/DomainState"
+
 
 
 // ===== style =====
@@ -113,7 +114,8 @@ const SettingModal = () =>{
     // ===== recoil state =====
     const setModalState = useSetRecoilState(whichModalState)
     const address = useRecoilValue(domainAddressState)
-    // const whichPage = useRecoilValue(whichPageState)
+    const setLogin = useSetRecoilState(isLoginState)
+    const setUserData = useSetRecoilState(userDataState)
     const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
@@ -128,17 +130,21 @@ const SettingModal = () =>{
 
         const response = await fetch(`${address}/auth`,
             {
-                method: "DELETE"
+                method: "DELETE",
+                credentials:"include"
             })
 
         const result = await response.json()
-        navigate("/")
-        setModalOpen(false)
+        
         if(result.message){
             alert(result.message)
         }
         else{
             alert("로그아웃 성공")
+            navigate("/")
+            setModalOpen(false)
+            setLogin(false)
+            setUserData({})
         }
     }
 

@@ -35,7 +35,7 @@ const fadeOut = keyframes`
 
 const AfterBtn = styled(ImgBtn)`
     position: relative;
-    width: 48px;
+    width: 40px;
     top : ${props=> props.top || "auto"};
     right : ${props=> props.right || "auto"};
     transform:rotate(${props => props.deg || "0deg"});
@@ -44,7 +44,7 @@ const AfterBtn = styled(ImgBtn)`
 `
 const BeforeBtn = styled(ImgBtn)`
     position: relative;
-    width: 48px;
+    width: 40px;
     top : ${props=> props.top || "auto"};
     right : ${props=> props.right || "auto"};
     transform:rotate(${props => props.deg || "0deg"});
