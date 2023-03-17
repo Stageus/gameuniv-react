@@ -12,6 +12,7 @@ import Achievement from "../pages/Achievement"
 import Item from "../pages/Item"
 import Game2048 from "../pages/Game2048"
 import NotFound from "../pages/NotFound"
+import Tetris from "../components/gameTetris_components/components/Tetris"
 
 
 // ===== import component =====
@@ -164,8 +165,8 @@ const Main = () =>{
                                     <Route path="/achievement" element = {<Achievement/>}/>
                                     <Route path="/*" element = {<NotFound/>} />
                                 </Routes>
-                                <Link to={"/Game2048"}>
-                                    2048
+                                <Link to={"/2048"}>
+                                2048
                                 </Link>
                             </Div>
                         </React.Fragment>
