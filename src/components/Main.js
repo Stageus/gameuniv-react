@@ -13,6 +13,7 @@ import Item from "../pages/Item"
 import Game2048 from "../pages/Game2048"
 import NotFound from "../pages/NotFound"
 
+
 // ===== import component =====
 import Bg from "./Bg"
 import Ranking from "./Ranking"
@@ -123,10 +124,10 @@ const Main = () =>{
                 <Div width="90%" min_width="1533px" height="calc(100vh - 155px);">
                     {/* 아마 랭킹 컴포넌트 자리 */}
                     {
-                        location === "/2048"
+                        location === "/2048" //
                         ?
                         <Routes>                            
-                            <Route path="/2048" element = {<Game2048/>}/>
+                            <Route path="/2048" element = {<Game2048/>}/> //
                         </Routes>
                         :
                         <React.Fragment>
@@ -163,7 +164,7 @@ const Main = () =>{
                                     <Route path="/achievement" element = {<Achievement/>}/>
                                     <Route path="/*" element = {<NotFound/>} />
                                 </Routes>
-                                <Link to={"/2048"}>
+                                <Link to={"/Game2048"}>
                                     2048
                                 </Link>
                             </Div>

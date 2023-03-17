@@ -14,12 +14,8 @@ import { whichItemComponentState} from "../../recoil/ComponentState"
 import { domainAddressState} from "../../recoil/DomainState"
 import { myItemDataState, storeDataState, dibsOnDataState } from "../../recoil/DataState"
 
-//
-import { userDataState} from "../../recoil/UserDataState"
 //  ===== component =====
 const ItemContainer = () =>{
-    
-    // const token =Cookies.get(`userData`)
 
     // ===== recoil state =====
     const whichItemComponent= useRecoilValue(whichItemComponentState)
@@ -27,8 +23,6 @@ const ItemContainer = () =>{
     const [storeData,setStoreData]=useRecoilState(storeDataState)
     const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
     const [myItemData,setMyItemData]=useRecoilState(myItemDataState)
-    //
-    const [token, setToken, removeToken] = useCookies(['token'])
 
     const getItemDataEvent = async() =>{
 
