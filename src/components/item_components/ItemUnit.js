@@ -30,8 +30,8 @@ const ItemUnit = (props) =>{
     const whichItemComponent= useRecoilValue(whichItemComponentState)
     
     const address = useRecoilValue(domainAddressState)
-    const storeData=useRecoilValue(storeDataState)
-    const dibsOnData=useRecoilValue(dibsOnDataState)
+    const [storeData,setStoreData]=useRecoilState(storeDataState)
+    const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
     const myItemData=useRecoilValue(myItemDataState)
     const setItemIndexData=useSetRecoilState(itemIndexDataState)
     const [isClickUnit, setClickUnitState] = useRecoilState(isClickUnitState)
@@ -80,7 +80,7 @@ const ItemUnit = (props) =>{
                 alert(result.message)
             }
             else{
-                setHeartFiledState(false)
+                // setHeartFiledState(false)
             }
         }else{
             const response = await fetch(`${address}/item/pick`,{
@@ -95,14 +95,28 @@ const ItemUnit = (props) =>{
             })
 
             const result = await response.json()
-
+            
             if(result.message){
                 alert(result.message)
             }
             else{
-                setHeartFiledState(true)
+                // setHeartFiledState(true)
             }  
         }
+
+        const response_all = await fetch(`${address}/item/all`,
+        {
+            credentials: "include"
+        })
+        const result_all = await response_all.json()
+
+        const response_pick = await fetch(`${address}/item/pick/all`,
+        {
+            credentials: "include"
+        })
+        const result_pick = await response_pick.json()
+        setStoreData(result_all.data)
+        setDibsOnData(result_pick.data)
     }
 
 
