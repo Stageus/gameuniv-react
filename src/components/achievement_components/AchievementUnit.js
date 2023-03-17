@@ -31,6 +31,8 @@ const AchievementUnit = (props) =>{
         achievement_data = achievement2048Data
     }
 
+    const target_achieve = ["1", "15", "50", "5000", "10000", "25000", "미달성"]
+
     return(
         <React.Fragment>
             <PC>
@@ -51,8 +53,16 @@ const AchievementUnit = (props) =>{
                             <React.Fragment>
                                 <P font_size="xxs" font_weight="regular">업적 달성도</P>
                                 <Div width="80px" height="23px" border="3px solid gray" border_radius="20px" align_items="center" justify_content="center">
-                                    <P font_size="xxs" font_weight="regular">{achievement_data[idx].achievement_value}/</P>
-                                    <P font_size="xxs" font_weight="regular">{achievement_data[idx].achievement_target_value}</P>
+                                    <P font_size="xxs" font_weight="regular">{achievement_data[idx].achievement_value}</P>
+                                    <P font_size="xxxs" font_weight="regular">
+                                        {
+                                            (idx< 6)
+                                            ?
+                                            " / " + target_achieve[idx]
+                                            :
+                                            target_achieve[6]
+                                        }           
+                                    </P>
                                 </Div>
                             </React.Fragment>
                         }
@@ -73,7 +83,7 @@ const AchievementUnit = (props) =>{
                                     <P font_size="xxs" font_weight="regular">게임 플레이 횟수</P>
                                     <Div width="80px" height="23px" border="3px solid gray" border_radius="20px" align_items="center" justify_content="center">
                                         <P font_size="xxs" font_weight="regular">{achievement_data[idx].achievement_value}/</P>
-                                        <P font_size="xxs" font_weight="regular">{achievement_data[idx].achievement_target_value}</P>
+                                        <P font_size="xxs" font_weight="regular">{target_achieve[idx]}</P>
                                     </Div>
                                 </React.Fragment>
                                 :
