@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${color("grayscale1")};
         max-width:2560px;
         overflow-x:hidden;
+        user-select:none;
     }
     a{
         text-decoration: none;
