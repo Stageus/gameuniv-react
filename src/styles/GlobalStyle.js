@@ -1,0 +1,31 @@
+import { createGlobalStyle } from "styled-components";
+import { fontSize, color, fontWeight } from "./style"
+
+const GlobalStyle = createGlobalStyle`
+    body {
+        margin: 0;
+        font-size: ${fontSize("m")};
+        ${fontWeight("regular")};
+        color : ${color("grayscale7")};
+        background-color: ${color("grayscale1")};
+        max-width:2560px;
+        overflow-x:hidden;
+        user-select:none;
+    }
+    a{
+        text-decoration: none;
+        color: ${color("grayscale7")}
+    }
+    ::-webkit-scrollbar{
+        width: 8px;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: ${color("blue3")};
+        border-radius: 25px;
+    }
+    ::-webkit-scrollbar-track{
+        background-color: ${color("grayscale4")};
+    }
+
+`
+export default GlobalStyle;
