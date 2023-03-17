@@ -2,161 +2,92 @@
 import React, {useEffect} from "react"
 import {useRecoilValue, useRecoilState} from "recoil"
 
+// ===== import cookies =====
+import { useCookies, setCookie } from "react-cookie"
+
 // ===== import component =====
 import ItemUnit from "./ItemUnit"
 
+
 //  ===== import recoil =====
 import { whichItemComponentState} from "../../recoil/ComponentState"
+import { domainAddressState} from "../../recoil/DomainState"
 import { myItemDataState, storeDataState, dibsOnDataState } from "../../recoil/DataState"
 
+//
+import { userDataState} from "../../recoil/UserDataState"
 //  ===== component =====
 const ItemContainer = () =>{
-    //===== dynamic data =====
-    const storeItemData=[
-        {   "item_id":"0",
-            "item_name":"Dummy0",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"01",
-        },
-        {   "item_id":"1",
-            "item_name":"Dummy1",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"12",
-        },
-        {   "item_id":"2",
-            "item_name":"Dummy2",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"13",
-        },
-        {   "item_id":"3",
-            "item_name":"Dummy3",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"14",
-        },
-        {   "item_id":"4",
-            "item_name":"Dummy4",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"11",
-        },
-        {   "item_id":"5",
-            "item_name":"Dummy5",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"11",
-        },
-        {   "item_id":"6",
-            "item_name":"Dummy6",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"11",
-        }
-    ]
+    
+    // const token =Cookies.get(`userData`)
 
-    const dibsOnItemData=[
-        {   "item_id":"0",
-            "item_name":"Dummy0",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"10",
-        },
-        {   "item_id":"1",
-            "item_name":"Dummy1",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"132",
-        },
-        {   "item_id":"2",
-            "item_name":"Dummy2",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"11",
-        },
-        {   "item_id":"3",
-            "item_name":"Dummy3",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"11",
-        },
-        {   "item_id":"4",
-            "item_name":"Dummy4",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"112",
-        },
-        {   "item_id":"5",
-            "item_name":"Dummy5",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"11",
-        },
-        {   "item_id":"6",
-            "item_name":"Dummy6",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"11",
-        }
-    ]
-
-    const myItemItemData=[
-        {   "item_id":"0",
-            "item_name":"Dummy2",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"19",
-        },
-        {   "item_id":"1",
-            "item_name":"Dummy3",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"18",
-        },
-        {   "item_id":"2",
-            "item_name":"Dummy2",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"17",
-        },
-        {   "item_id":"3",
-            "item_name":"Dummy3",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"16",
-        },
-        {   "item_id":"4",
-            "item_name":"Dummy4",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`,
-            "item_price":"11",
-        },
-        {   "item_id":"5",
-            "item_name":"Dummy5",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"11",
-        },
-        {   "item_id":"6",
-            "item_name":"Dummy6",
-            "item_img":`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`,
-            "item_price":"11",
-        }
-    ]
     // ===== recoil state =====
     const whichItemComponent= useRecoilValue(whichItemComponentState)
+    const address= useRecoilValue(domainAddressState)
     const [storeData,setStoreData]=useRecoilState(storeDataState)
     const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
     const [myItemData,setMyItemData]=useRecoilState(myItemDataState)
+    //
+    const [token, setToken, removeToken] = useCookies(['token'])
+
+    const getItemDataEvent = async() =>{
+
+        const response_all = await fetch(`${address}/item/all`,
+        {
+            credentials: "include"
+        })
+        const result_all = await response_all.json()
+
+        const response_pick = await fetch(`${address}/item/pick/all`,
+        {
+            credentials: "include"
+        })
+        const result_pick = await response_pick.json()
+
+        const response_buy = await fetch(`${address}/item/buy/all`,
+        {
+            credentials: "include"
+        })
+        const result_buy = await response_buy.json()
+
+        setStoreData(result_all.data)
+        setDibsOnData(result_pick.data)
+        setMyItemData(result_buy.data)
+
+        if(result_all.message){
+            alert(result_all.message)
+        }if(result_pick.message){
+            alert(result_pick.message)
+        }if(result_buy.message){
+            alert(result_buy.message)
+        }
+    }
+
     // ===== hook =====
     useEffect(() => {
-        setStoreData(storeItemData)
-        setDibsOnData(dibsOnItemData)
-        setMyItemData(myItemItemData)
+        getItemDataEvent()
     },[])
 
     return(
         <React.Fragment>
             {whichItemComponent === "store" && 
                 (
-                    storeData && storeData.map((data, index)=>{
-                    return <ItemUnit key={data} index={index}/>
+                    storeData && storeData.map((data, idx)=>{
+                    return <ItemUnit key={data} idx={idx}/>
                     })
                 ) 
             }
             {whichItemComponent ==="dibsOn" && 
                 (
-                    dibsOnData && dibsOnData.map((data, index)=>{
-                    return <ItemUnit key={data} index={index}/>
+                    dibsOnData && dibsOnData.map((data, idx)=>{
+                    return <ItemUnit key={data} idx={idx}/>
                     })
                 )
             }
             {whichItemComponent ==="myItem" && 
                 (
-                    myItemData && myItemData.map((data, index)=>{
-                    return <ItemUnit key={data} index={index}/>
+                    myItemData && myItemData.map((data, idx)=>{
+                    return <ItemUnit key={data} idx={idx}/>
                     })
                 )
             }

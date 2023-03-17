@@ -103,7 +103,6 @@ const Login = () =>{
         }
         else{
             postLoginData(e)
-            
         }
     }
 
