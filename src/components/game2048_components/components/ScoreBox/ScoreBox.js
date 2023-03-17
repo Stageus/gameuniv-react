@@ -35,7 +35,7 @@ const Score = styled(Div)`
 // ===== component =====
 const ScoreBox = (props) =>{
     const isMobile = useMobile()
-
+    console.log(props.score)
     return(
         <ScoreBoxDiv>
             <Title>{props.title}</Title>

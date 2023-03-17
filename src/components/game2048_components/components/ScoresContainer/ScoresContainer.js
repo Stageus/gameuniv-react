@@ -183,7 +183,6 @@ const ScoresContainer = () =>{
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
-
     // ===== event =====
     useEffect( ()=> {
         dispatch( {type: "change", payload: gameState.tiles})
@@ -218,7 +217,7 @@ const ScoresContainer = () =>{
 
     React.useEffect( () =>{
         showRank2048()
-    }, [score > scoreData.next_max_scroe])
+    }, [score])
 
 
     return(
@@ -233,7 +232,7 @@ const ScoresContainer = () =>{
                     <OtherId isMobile={isMobile}>{scoreData.next_id}</OtherId>
                     <OtherUniv isMobile={isMobile}>{scoreData.next_university_name}</OtherUniv>
                 </Div>
-                <ScoreBox score={scoreData.next_max_scroe} />
+                <ScoreBox score={scoreData.next_max_score} />
             </OtherScore>
             <MyScore isMobile={isMobile}>
                 {
