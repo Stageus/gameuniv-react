@@ -36,8 +36,6 @@ export const userDataState = atom({
 
 export const coinState = atom({
     "key" : "coinState",
-    "default":{
-        coin: 0
-    },
+    "default": 0,
     effects_UNSTABLE: [persistAtom]
 })
