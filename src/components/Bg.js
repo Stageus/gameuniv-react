@@ -29,6 +29,11 @@ const SolidImg = styled(Img)`
     transform:rotate(${props => props.deg || "30deg"});
     z-index:-1;
 `
+const SolidImgDiv = styled(Div)`
+     height: 100%;
+        overflow: hidden;
+
+`
 
 
 //  ===== component =====
@@ -58,12 +63,17 @@ const Bg = (props) =>{
         {
             ( location ==="/item")
             &&
-            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="600px" top="10%" right="72%" deg="20deg"/>
+            <SolidImgDiv>
+                <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="500px" top="13%" right="70%" deg="20deg"/>
+            </SolidImgDiv>
+            
         }
         {
             ( location ==="/achievement")
             &&
-            <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="800px" top="20%" right="68%" deg="-10deg"/>
+            <SolidImgDiv>
+                 <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="600px" top="25%" right="68%" deg="-10deg"/>
+            </SolidImgDiv>
         } 
         </React.Fragment>
     )

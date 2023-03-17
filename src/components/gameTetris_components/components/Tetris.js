@@ -18,6 +18,7 @@ import ScoreContainer from "./displays/ScoreContainer"
 import NextBlock from "./displays/NextBlock"
 import ReplayBtn from "./displays/ReplayBtn"
 import Controller from "./displays/Controller"
+import ScoresContainer from "../../game2048_components/components/ScoresContainer/ScoresContainer"
 
 
 // ===== import utils =====
@@ -41,6 +42,10 @@ const Tetris =()=>{
 
     const[player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer()
     const[stage, setStage] = useStage(player, resetPlayer)
+
+    useInterval(()=>{
+        drop()
+    }, dropTime)
 
     const movePlayer = (dir) =>{
         if(!checkCollision(player, stage, {x: dir, y:0})){
@@ -69,7 +74,18 @@ const Tetris =()=>{
         
     }
 
+    const keyUp =({keyCode}) =>{
+        if(!gameOver){
+            if(keyCode === 40){
+                console.log("interval on")
+                setDropTime(1000)
+            }
+        }
+    }
+
     const dropPlayer=() =>{
+        console.log("interval off")
+        setDropTime(null);
         drop()
     }
 
@@ -88,20 +104,6 @@ const Tetris =()=>{
 
     }
 
-    const keyUp =({keycode}) =>{
-        if(!gameOver){
-            if(keycode ===40){
-                setDropTime(1000)
-            }
-        }
-    }
-
-    useInterval(()=>{
-        setDropTime(null);
-        drop()
-    }, dropTime)
-
-    console.log("re-render")
 
     return(
             
@@ -118,7 +120,7 @@ const Tetris =()=>{
                             <H1>Tetris</H1>
                             <Div flex_direction="column">    
                                 <Level text="Level"/>
-                                <ScoreContainer text="ScoreContainer"/>
+                                <ScoreContainer/>
                                 <NextBlock text="NextBlock"/>
                                 <ReplayBtn text="ReplayBtn" callback={startGame}/>
                                 <Controller text="Controller"/>

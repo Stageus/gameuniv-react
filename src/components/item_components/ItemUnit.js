@@ -1,5 +1,5 @@
 // ===== import base =====
-import React from "react"
+import React, { useEffect } from "react"
 import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
 
 // ===== import component =====
@@ -47,8 +47,6 @@ const ItemUnit = (props) =>{
         item_data = myItemData
     }
 
-         // //===== state =====
-         const [isHeartFiled, setHeartFiledState] = React.useState(item_data[idx].item_picked_state)
     //===== event =====
     const itemShowDetailEvent=()=>{
         setItemIndexData(idx)
@@ -79,9 +77,6 @@ const ItemUnit = (props) =>{
             if(result.message){
                 alert(result.message)
             }
-            else{
-                // setHeartFiledState(false)
-            }
         }else{
             const response = await fetch(`${address}/item/pick`,{
                 method: "POST",
@@ -99,9 +94,6 @@ const ItemUnit = (props) =>{
             if(result.message){
                 alert(result.message)
             }
-            else{
-                // setHeartFiledState(true)
-            }  
         }
 
         const response_all = await fetch(`${address}/item/all`,
@@ -115,10 +107,16 @@ const ItemUnit = (props) =>{
             credentials: "include"
         })
         const result_pick = await response_pick.json()
+        
         setStoreData(result_all.data)
         setDibsOnData(result_pick.data)
-    }
 
+        if(whichItemComponent==="store"){
+            item_data = storeData
+        }else if(whichItemComponent==="dibsOn"){
+            item_data = dibsOnData
+        }
+    }
 
     return(
         <React.Fragment>
@@ -133,9 +131,9 @@ const ItemUnit = (props) =>{
                     <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
                         <H1 font_size="s" color="grayscale7"   font_weight="regular">{item_data[idx].item_name}</H1>
                         {
-                        whichItemComponent !="myItem" &&
+                        whichItemComponent ==="store" &&
                             (
-                                isHeartFiled
+                                item_data[idx].item_picked_state
                                 ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
                                 : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
                             )  
@@ -166,9 +164,9 @@ const ItemUnit = (props) =>{
                         <Img width="100px" margin="0 0 0 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[idx].preview_img}`}/>
                         <Div align_items="flex-end" flex_direction="column" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
                             {
-                                whichItemComponent !="myItem" &&
+                                whichItemComponent ==="store" &&
                                     (
-                                        isHeartFiled
+                                        item_data[idx].item_picked_state
                                         ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
                                         : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
                                     )  

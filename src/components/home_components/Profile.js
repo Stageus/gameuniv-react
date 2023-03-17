@@ -1,9 +1,12 @@
 // ===== import base =====
 import React from "react"
+import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
 //  ===== import recoil =====
 import { useSetModalState } from "../../hooks/useSetModalState"
+import { userDataState } from "../../recoil/UserDataState"
+import { imgDomainState, profilePathState } from "../../recoil/DomainState"
 
 // ===== import style =====
 import {H1} from "../../styles/H1"
@@ -46,6 +49,10 @@ const ProfileChangeMobileBtn = styled(Div)`
 
 //  ===== component =====
 const Profile = () =>{ 
+    // ===== recoil state =====
+    const userData = useRecoilValue(userDataState)
+    const imgAddress = useRecoilValue(imgDomainState)
+    const prifilePath = useRecoilValue(profilePathState)
     // ===== media query =====
     let isMobile=useMobile()
 
@@ -58,7 +65,7 @@ const Profile = () =>{
 
                     <PC>
                         <ProfileImgPcDiv width="250px" height="250px" border_radius="50%" background_color="grayscale3">
-                            <Img width="150px" src={`${process.env.PUBLIC_URL}/img_srcs/Profiles/defaultProfileImg0.png`}/>
+                            <Img width="150px" src={`${imgAddress}/${prifilePath}/${userData.profileImg}`}/>
                         </ProfileImgPcDiv>
                         <ProfileChangePcBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
@@ -80,12 +87,12 @@ const Profile = () =>{
                     </Mobile>
 
                     <Div width="100%" height="230px" margin="10px 0px 0px 0px" border_radius="3px" background_color="grayscale2" flex_direction="column" align_items="flex-end">
-                        <Div margin={isMobile ? "0 20px 0 0" :  "0 50px 0 0"} flex_direction="column">
+                        <Div margin={isMobile ? "0 20px 0 0" :  "0 100px 0 0"} flex_direction="column">
                             {/* 백엔드 데이터 */}
-                            <H1 font_size={isMobile ? "xl" : "xxl" }color="grayscale7" font_weight="bold">{11111111}</H1>
+                            <H1 font_size={isMobile ? "xl" : "xxl" }color="grayscale7" font_weight="bold">{userData.id}</H1>
                             <Div>
                                 <Img width={isMobile ? "20px" : "35px" } margin="0px 5px 0px 0px"  src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}/>
-                                <P font_size={isMobile ? "s" : "m" } color="grayscale7" font_weight="light">{111111}</P>
+                                <P font_size={isMobile ? "s" : "m" } color="grayscale7" font_weight="light">{userData.universityName}</P>
                             </Div> 
                         </Div>
                     </Div>

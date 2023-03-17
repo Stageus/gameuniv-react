@@ -12,6 +12,7 @@ import Achievement from "../pages/Achievement"
 import Item from "../pages/Item"
 import Game2048 from "../pages/Game2048"
 import NotFound from "../pages/NotFound"
+import GameTetris from "../pages/GameTetris"
 import Tetris from "../components/gameTetris_components/components/Tetris"
 
 
@@ -128,7 +129,13 @@ const Main = () =>{
                         location === "/2048" //
                         ?
                         <Routes>                            
-                            <Route path="/2048" element = {<Game2048/>}/> //
+                            <Route path="/2048" element = {<Game2048/>}/> 
+                        </Routes>
+                        : 
+                        location === "/tetris"
+                        ? 
+                        <Routes>                            
+                            <Route path="/tetris" element = {<Tetris/>}/> 
                         </Routes>
                         :
                         <React.Fragment>
@@ -150,7 +157,6 @@ const Main = () =>{
                                             <Ranking game="tetris"/>
                                             <Ranking game="2048"/>
                                         </React.Fragment>
-                                        
                                     }
                                 </Div>                                                
                             </Div>
@@ -165,9 +171,6 @@ const Main = () =>{
                                     <Route path="/achievement" element = {<Achievement/>}/>
                                     <Route path="/*" element = {<NotFound/>} />
                                 </Routes>
-                                <Link to={"/2048"}>
-                                2048
-                                </Link>
                             </Div>
                         </React.Fragment>
                     }

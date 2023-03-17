@@ -39,3 +39,19 @@ export const coinState = atom({
     "default": 0,
     effects_UNSTABLE: [persistAtom]
 })
+
+export const userTetrisRankDataState = atom({
+    "key": "userTetrisRankData",
+    "default": {
+        ranking : "",
+        max_score : "",
+    }
+})
+
+export const user2048RankDataState = atom({
+    "key": "user2048RankData",
+    "default": {
+        ranking : "",
+        max_score : "",
+    }
+})

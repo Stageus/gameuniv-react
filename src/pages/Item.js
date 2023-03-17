@@ -27,12 +27,12 @@ import {Div} from "../styles/Div"
 //     position :relative;
 // `
 const ItemContainerPcDiv = styled(Div)`
-    grid-gap: 30px;
+    gap: 30px;
     flex-wrap: wrap;
     overflow-y : scroll;
 `
 const ItemContainerMobileDiv = styled(Div)`
-    grid-gap: 10px;
+    gap: 10px;
     flex-wrap: wrap;
     overflow-y : scroll;
 `

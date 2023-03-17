@@ -48,8 +48,8 @@ const GameSelectModal = () =>{
 
         switch(target){
             case "tetris_btn":
-                setPageState("tetris")
-                setModalState("gameOverModal")
+                navigate("/tetris")
+                setModalOpen(false)
                 break
             case "2048_btn":
                 navigate("/2048")
