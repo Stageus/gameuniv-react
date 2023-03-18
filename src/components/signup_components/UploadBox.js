@@ -60,7 +60,7 @@ const UploadBox = (props) =>{
     const defaultImg = props.postDataState.defaultImg
     const profileImg = props.postDataState.profileImg
     // ===== var =====
-    const isUpload = (defaultImg !== "" || profileImg.length === 1)
+    const isUpload = (defaultImg !== "" || profileImg !== null)
 
     // ===== state =====
     const [imgFile, setImgFile] = React.useState("")
@@ -81,8 +81,15 @@ const UploadBox = (props) =>{
                 setImgFile(reader.result)
             }
 
+            const imgFile = new File(["compressedFile"], compressedFile.name)
+            const dataTransfer = new DataTransfer()
+
+            dataTransfer.items.add(imgFile)
+
+            const img_list = dataTransfer.files
+
             setPostData( (prevState) => ({
-                ...prevState, profileImg: [compressedFile], defaultImg: ""
+                ...prevState, profileImg: img_list, defaultImg: ""
             }))
             setDefaultSrc("")
             // const resultFile = new File([compressedFile], compressedFile.name, {
