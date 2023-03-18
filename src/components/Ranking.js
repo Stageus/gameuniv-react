@@ -214,7 +214,7 @@ const Ranking = (props) =>{
                     ?
                     <React.Fragment>
                         <H1 color="blue4" font_size="xl">Tetris</H1>
-                        <RankImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/tetrisImg.png`}
+                        <RankImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`}
                         width="100px" game={game}/>
                     </React.Fragment>
                     :
@@ -255,7 +255,7 @@ const Ranking = (props) =>{
                             <Div width="33%" justify_content="flex_start" >
                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
                                     <Img src= {`${img_src}/${data.profile_img}`}
-                                    width="20px"/>
+                                    width="20px" height="20px" border_radius="50%"/>
                                 </Div>
                                 <P font_weight="bold">{data.id}</P>
                             </Div>
@@ -284,8 +284,8 @@ const Ranking = (props) =>{
                             
                             <Div width="33%" justify_content="flex_start" >
                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                    <Img src={data.profile_img}
-                                    width="20px"/>
+                                    <Img src={`${img_src}/${data.profile_img}`}
+                                    width="20px" height="20px" border_radius="50%"/>
                                 </Div>
                                 <P font_weight="bold">{data.id}</P>
                             </Div>

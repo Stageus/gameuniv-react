@@ -89,7 +89,7 @@ const UploadBox = (props) =>{
             const img_list = dataTransfer.files
 
             setPostData( (prevState) => ({
-                ...prevState, profileImg: img_list, defaultImg: ""
+                ...prevState, profileImg: compressedFile, defaultImg: ""
             }))
             setDefaultSrc("")
             // const resultFile = new File([compressedFile], compressedFile.name, {

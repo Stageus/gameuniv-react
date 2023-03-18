@@ -258,22 +258,32 @@ const SignUp = () =>{
         e.preventDefault()
         const {email, id, name, pw, pwCheck, universityIdx, defaultImg, profileImg} = {...postDataState}
 
+        const form_data = new FormData()
+        form_data.append("email", email)
+        form_data.append("id", id)
+        form_data.append("pw", pw)
+        form_data.append("pwCheck", pwCheck)
+        form_data.append("universityIdx", universityIdx)
+        form_data.append("defaultImg", defaultImg)
+        form_data.append("profileImg", profileImg)
+
         console.log(postDataState)
         const response = await fetch(`${address}/user`,{
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email: email,
-                id: id,
-                name: name,
-                pw: pw,
-                pwCheck: pwCheck,
-                universityIdx: universityIdx,
-                defaultImg: defaultImg,
-                profileImg: profileImg,
-            })
+            // headers: {
+            //     "Content-Type": "application/json"
+            // },
+            body: form_data
+            // body: JSON.stringify({
+            //     email: email,
+            //     id: id,
+            //     name: name,
+            //     pw: pw,
+            //     pwCheck: pwCheck,
+            //     universityIdx: universityIdx,
+            //     defaultImg: defaultImg,
+            //     profileImg: profileImg,
+            // })
         })
 
         const result = await response.json()

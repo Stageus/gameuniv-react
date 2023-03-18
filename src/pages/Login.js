@@ -120,6 +120,7 @@ const Login = () =>{
         }
         else{
             setUserData(result.data)
+            // console.log(result.data)
         }
     }
     

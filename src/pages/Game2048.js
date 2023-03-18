@@ -31,12 +31,19 @@ const Game2048 = () =>{
     const [score, setScore] = React.useState(0)
     const isMobile = useMobile()
 
+
+    React.useEffect( ()=>{
+        return window.localStorage.removeItem("2048game")
+    }, [])
+    
     // 비정상 접근 막기
     const isLogin = useRecoilValue(isLoginState)
-
+    
     if(!isLogin){
         return <Navigate to="/" replace={true}/>
     }
+
+    
     return(
         <React.Fragment>
             <Game/>

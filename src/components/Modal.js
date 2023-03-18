@@ -26,6 +26,7 @@ import { Div } from "../styles/Div"
 // ===== import style func =====
 import { color } from "../styles/style"
 import RankingModal from "./modal_components/RankingModal"
+import { useLocation, useNavigate } from "react-router"
 
 
 // ===== style =====
@@ -57,7 +58,7 @@ const Modal = (props) =>{
     // const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
     const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
     const whichModal = useRecoilValue(whichModalState)
-
+    const location = useLocation()
     // ===== event =====
     const modalEvent = (e)=>{
         const target = e.target.id

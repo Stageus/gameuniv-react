@@ -196,6 +196,8 @@ const Game = () =>{
             navigate(-1)
         }
     }
+    
+    
 
     return(
         <GameProvider>

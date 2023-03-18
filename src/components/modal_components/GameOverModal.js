@@ -24,6 +24,7 @@ import { color } from "../../styles/style"
 // ===== import hooks =====
 import { useNavigate } from "react-router"
 import { useMobile } from "../../hooks/useMediaComponent"
+import { coinState } from "../../recoil/UserDataState"
 
 // ===== style =====
 
@@ -37,6 +38,8 @@ const GameOverModal = (props) =>{
 
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
+    const setCoin = useSetRecoilState(coinState)
+    const coin = useRecoilValue(coinState)
     const setModalState = useSetRecoilState(whichModalState)
     const address = useRecoilValue(domainAddressState)
     const navigate = useNavigate()
@@ -79,7 +82,9 @@ const GameOverModal = (props) =>{
             alert(result.message)
         }
         else{
-            console.log(result.data)
+            console.log(result.data.coin)
+            console.log(coin)
+            setCoin(prevState => prevState + result.data.coin)
         }
     }
 

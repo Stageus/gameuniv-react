@@ -11,7 +11,7 @@ import UploadBox from "../modal_components/EditProfileModal"
 // ===== import recoil =====
 import { domainAddressState } from "../../recoil/DomainState"
 import { isModalOpenState } from "../../recoil/ModalState"
-
+import { userDataState } from "../../recoil/UserDataState"
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
 import { Div } from "../../styles/Div"
@@ -73,7 +73,9 @@ const EditProfileModal = () =>{
     const address = useRecoilValue(domainAddressState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
     // ===== state =====
-    
+    const userData = useRecoilValue(userDataState)
+    const setUserData = useSetRecoilState(userDataState)
+
     const [imgFile, setImgFile] = React.useState("")
     const imgRef = React.useRef()
     const [defaultImg, setDefaultImg] = React.useState("")
@@ -108,7 +110,7 @@ const EditProfileModal = () =>{
             // filelist.push(imgFile)
             // console.log([imgFile])
             // console.log(img_list)
-            setProfileImg(img_list)
+            setProfileImg(compressedFile)
             // console.log(profileImg)
             setDefaultSrc("")
             setDefaultImg("")
@@ -166,7 +168,7 @@ const EditProfileModal = () =>{
                 // setImgFile(e.target.src)
                 setDefaultImg(`${e.target.id}.png`)
                 setDefaultSrc(e.target.src)
-                setProfileImg([])
+                setProfileImg(null)
                 break
         }
     }
@@ -174,17 +176,32 @@ const EditProfileModal = () =>{
     // 프로필 수정
     const profileChangeEvent = async(e) =>{
         e.preventDefault()
-        // console.log(profileImg)
+        console.log(profileImg)
+        console.log(defaultImg)
+        const form_data = new FormData()
+        form_data.append("defaultImg", defaultImg)
+        form_data.append("profileImg", profileImg)
+        // console.log(form_data.getAll("profileImg"))
+
         const response = await fetch(`${address}/user/profile-img`,{
-            method: "PUT",
+            method: "POST",
             credentials: "include",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                default_img: defaultImg,
-                profile_img: profileImg,
-            })
+            
+            body: form_data
+
+            // body: {
+                
+            //     // defaultImg: defaultImg,
+            //     // profileImg: form_data,
+            // }
+            
+            // body: JSON.stringify({
+            //     defaultImg: defaultImg,
+            //     profileImg: profileImg,
+            // })
+            // headers:{
+            //     "Content-Type": "multipart/form-data"
+            // },
         })
 
         const result = await response.json()
@@ -194,7 +211,25 @@ const EditProfileModal = () =>{
         }
         else{
             alert("이미지 변경 성공!")
+            getUserData()
             setModalOpen(false)
+        }
+    }
+
+    const getUserData = async() =>{
+        const response = await fetch(`${address}/auth/user`,
+        {
+            credentials: "include",
+        })
+
+        const result = await response.json()
+        
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setUserData(result.data)
+            console.log(userData)
         }
     }
 
@@ -216,7 +251,7 @@ const EditProfileModal = () =>{
                                     <Div width="142px" height="135px">
                                         <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
                                             <PreviewImg src={defaultSrc ? defaultSrc : imgFile}
-                                            width="100px" border_radius="50%" id="preview"/>    
+                                            width="100px" height="100px" border_radius="50%" id="preview"/>    
                                         </Div>
                                     </Div>
                                     
@@ -251,7 +286,7 @@ const EditProfileModal = () =>{
                         </UploadTotalDiv>
                     </React.Fragment>
                 <Div justify_content="center" width="100%">
-                    <Button onClick={profileChangeEvent} width="177px" height="38px" font_size="s">확인</Button>
+                    <Button onClick={profileChangeEvent} type="submit" width="177px" height="38px" font_size="s">확인</Button>
                 </Div>
             </Div>
         </Div>
