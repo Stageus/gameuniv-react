@@ -15,7 +15,7 @@ import Bg from "./Bg"
 // ===== import recoil =====
 import { isModalOpenState, whichModalState, whichRankingState } from "../recoil/ModalState"
 import { useSetModalState } from "../hooks/useSetModalState"
-import { domainAddressState } from "../recoil/DomainState"
+import { domainAddressState, imgDomainState, profilePathState } from "../recoil/DomainState"
 
 // ===== import style =====
 import { Div } from "../styles/Div"
@@ -126,10 +126,12 @@ const Ranking = (props) =>{
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const [whichRanking, setRanking] = useRecoilState(whichRankingState)
     const address = useRecoilValue(domainAddressState)
-
+    const img_domain = useRecoilValue(imgDomainState)
+    const profile_path = useRecoilValue(profilePathState)
+    const img_src = `${img_domain}/${profile_path}`
     // ===== state =====
     const [rank2048, set2048] = React.useState([
-        // {},
+        {},
         // {
         //     id: "20481",
         //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
@@ -145,7 +147,7 @@ const Ranking = (props) =>{
     ])
 
     const [rankTetris, setTetris] = React.useState([
-        // {},
+        {},
         // {
         //     id: "test1",
         //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
@@ -163,10 +165,10 @@ const Ranking = (props) =>{
     // ===== func =====
     // 랭킹 데이터 가져오기
     const getRankingData = React.useCallback( async() =>{
-        const response2048 = await fetch(`${address}/2048/record/all?offset=${1}`,{
+        const response2048 = await fetch(`${address}/2048/record/all?offset=${0}`,{
             credentials: "include"
         })
-        const responseTetris = await fetch(`${address}/Tetris/record/all?offset=${1}`,{
+        const responseTetris = await fetch(`${address}/Tetris/record/all?offset=${0}`,{
             credentials: "include"
         })
 
@@ -186,8 +188,6 @@ const Ranking = (props) =>{
         else{
             setTetris(resultTetris.data)
         }
-        console.log(rank2048)
-        console.log(rankTetris)
     },[])
 
     React.useEffect( ()=>{
@@ -204,7 +204,7 @@ const Ranking = (props) =>{
         // console.log(game, whichRanking)
     }
     // ===== variable =====
-    const rank = [1,2,3,4,5]
+    // const rank = [1,2,3,4,5]
 
     return(
         <RankTotalBox flex_direction="column" max_width="596px" width="90%" background_color="blue1" padding="0 10px" margin="5px 0">
@@ -254,7 +254,7 @@ const Ranking = (props) =>{
                             
                             <Div width="33%" justify_content="flex_start" >
                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                    <Img src={data.profile_img}
+                                    <Img src= {`${img_src}/${data.profile_img}`}
                                     width="20px"/>
                                 </Div>
                                 <P font_weight="bold">{data.id}</P>

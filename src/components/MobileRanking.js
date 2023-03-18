@@ -8,6 +8,7 @@ import 'animate.css'
 
 // ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
+import { imgDomainState, profilePathState } from "../recoil/DomainState"
 
 // ===== import style =====
 import { Img, ImgBtn } from "../styles/Img"
@@ -90,10 +91,13 @@ const MobileRangking = (props) =>{
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
     const rank = Array.from({length:100}, (v,i)=>i+1);
+    const img_domain = useRecoilValue(imgDomainState)
+    const profile_path = useRecoilValue(profilePathState)
+    const img_src = `${img_domain}/${profile_path}`
 
     // ===== state =====
-    const[page2048, setPage2048] = React.useState(1)
-    const[pageTetris, setPageTetris] = React.useState(1)
+    const[page2048, setPage2048] = React.useState(0)
+    const[pageTetris, setPageTetris] = React.useState(0)
     const [loading2048, setLoading2048] = React.useState(false)
     const [loadingTetris, setLoadingTetris] = React.useState(false)
     const [ref2048, inView2048] = useInView()
@@ -144,7 +148,7 @@ const MobileRangking = (props) =>{
             alert(result.message)
         }
         else{
-            set2048( prevState => [...prevState, ...result.data])
+            set2048( prevState => [...result.data])
             setLoading2048(false)
             console.log(rank2048)
         }
@@ -174,7 +178,7 @@ const MobileRangking = (props) =>{
             alert(result.message)
         }
         else{
-            setTetris( prevState => [...prevState, ...result.data])
+            setTetris( prevState => [...result.data])
             setLoadingTetris(false)
         }
         
@@ -233,7 +237,7 @@ const MobileRangking = (props) =>{
                                             
                                             <Div width="33%" justify_content="flex_start" >
                                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                                    <Img src={data.profile_img}
+                                                    <Img src={`${img_src}/${data.profile_img}`}
                                                     width="20px"/>
                                                 </Div>
                                                 <P font_weight="bold">{data.id}</P>
@@ -257,7 +261,7 @@ const MobileRangking = (props) =>{
                                             
                                             <Div width="33%" justify_content="flex_start" >
                                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                                    <Img src={data.profile_img}
+                                                    <Img src={`${img_src}/${data.profile_img}`}
                                                     width="20px"/>
                                                 </Div>
                                                 <P font_weight="bold">{data.id}</P>
