@@ -1,7 +1,7 @@
 // ===== import base =====
 import React from "react"
 import styled from "styled-components"
-import {useRecoilValue, useSetRecoilState} from "recoil"
+import {useRecoilValue, useSetRecoilState,useRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { whichItemComponentState ,isItemDetailOpenState, isClickUnitState} from "../../recoil/ComponentState"
@@ -25,9 +25,9 @@ const ItemPurchaseModal = () =>{
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
     const whichItemComponent= useRecoilValue(whichItemComponentState)
-    const storeData=useRecoilValue(storeDataState)
-    const dibsOnData=useRecoilValue(dibsOnDataState)
-    const myItemData=useRecoilValue(myItemDataState)
+    const [storeData,setStoreData]=useRecoilState(storeDataState)
+    const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
+    const [myItemData,setMyItemData]=useRecoilState(myItemDataState)
     const itemIndexData= useRecoilValue(itemIndexDataState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setItemDetailOpenStateState = useSetRecoilState(isItemDetailOpenState)
@@ -65,10 +65,46 @@ const ItemPurchaseModal = () =>{
             alert(result.message)
         }
         else{
+            const response_all = await fetch(`${address}/item/all`,
+            {
+                credentials: "include"
+            })
+            const result_all = await response_all.json()
+    
+            const response_pick = await fetch(`${address}/item/pick/all`,
+            {
+                credentials: "include"
+            })
+            const result_pick = await response_pick.json()
+    
+            const response_buy = await fetch(`${address}/item/buy/all`,
+            {
+                credentials: "include"
+            })
+            const result_buy = await response_buy.json()
+    
+            setStoreData(result_all.data)
+            setDibsOnData(result_pick.data)
+            setMyItemData(result_buy.data)
+    
+            if(result_all.message){
+                alert(result_all.message)
+            }if(result_pick.message){
+                alert(result_pick.message)
+            }if(result_buy.message){
+                alert(result_buy.message)
+            }
+
+            if(whichItemComponent==="store"){
+                item_data = storeData
+            }else if(whichItemComponent==="dibsOn"){
+                item_data = dibsOnData
+            }else if(whichItemComponent==="myItem"){
+                item_data = myItemData
+            }
             setItemDetailOpenStateState(false)
             setModalOpen(false)
             setClickUnitState(null)
-            // setHeartFiledState(true)
         }  
         
     }

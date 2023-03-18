@@ -40,6 +40,10 @@ export const coinState = atom({
     effects_UNSTABLE: [persistAtom]
 })
 
+// 스테이트 역할 : 테트리스 최고 랭킹 점수 정보
+// default : tetris - rank score
+// 사용하는 컴포넌트 : Home.js 
+
 export const userTetrisRankDataState = atom({
     "key": "userTetrisRankData",
     "default": {
@@ -47,6 +51,10 @@ export const userTetrisRankDataState = atom({
         max_score : "",
     }
 })
+
+// 스테이트 역할 : 2048 최고 랭킹 점수 정보
+// default : 2048 - rank score
+// 사용하는 컴포넌트 : Home.js 
 
 export const user2048RankDataState = atom({
     "key": "user2048RankData",

@@ -1,7 +1,7 @@
 // ===== import base =====
-import React from "react"
-import {useSetRecoilState, useRecoilValue} from "recoil"
-import styled , {css}from "styled-components"
+import React, { useEffect }  from "react"
+import {useSetRecoilState, useRecoilValue,useResetRecoilState} from "recoil"
+import styled from "styled-components"
 import { Navigate } from "react-router"
 
 // ===== import component =====
@@ -35,16 +35,20 @@ const AchievementContainerMobileDiv = styled(Div)`
 const Achievement = () =>{
     // ===== recoil state =====
     const setAchievementComponentState= useSetRecoilState(whichAchievementComponentState)
+    const resetAchievementComponent = useResetRecoilState(whichAchievementComponentState)
     const setTabOpenState=useSetRecoilState(isTabOpenState)
-
-    // 수정
+    const resetTabOpenState = useResetRecoilState(isTabOpenState)
     const isLogin = useRecoilValue(isLoginState)
-    // // 비정상접근 막기
+    // ===== hook =====
+    useEffect(()=>{
+        resetTabOpenState()
+        resetAchievementComponent()
+    })
+    // 비정상접근 막기
     if(!isLogin){
         alert("로그인 후 이용 가능합니다")
         return <Navigate to="/" replace={true}/>
     }
-
     // ===== event =====
     const achievementTabBtnEvent = (e)=>{
         const target = e.target.id
@@ -59,21 +63,20 @@ const Achievement = () =>{
                 setTabOpenState("tab2")
                 break
         }
-
     }
     return(
         <React.Fragment>
-            <Div width = "1000px" height="85%" align_items="center"  flex_direction="column">
+            <Div width = "100%" height="100%">
                 <PC>
-                    <Div width="800px" height="100%" align_items="flex-start"  flex_direction="column">
+                    <Div width="750px" height="95%" align_items="flex-start" flex_direction="column" margin="30px 0 0 0">
                         <H1 font_size="xl" color="grayscale7">
                             업적
                         </H1>
-                        <Div width="800px" height="62px" justify_content="space-between" margin="25px 0 0 0" onChange={achievementTabBtnEvent}>
+                        <Div width="750px" height="62px" justify_content="space-between" margin="25px 0 0 0" onChange={achievementTabBtnEvent}>
                             <TabBtn id="tab1" after_img="/img_srcs/icons/tetrisBlueIcon.png" before_img="/img_srcs/icons/tetrisGrayIcon.png" txt="Tetris" width="49.5%"/>
                             <TabBtn id="tab2" after_img="/img_srcs/icons/2048BlueIcon.png" before_img="/img_srcs/icons/2048GrayIcon.png" txt="2048" width="49.5%"/> 
                         </Div>
-                        <AchievementContainerPcDiv width="800px" height="100%" border_radius="0 0 3px 3px" background_color="blue2" padding="20px 0 20px 0">
+                        <AchievementContainerPcDiv width="750px" height="100%" border_radius="0 0 3px 3px" background_color="blue2" padding="20px 0 20px 0">
                             <AchievementContainer/>
                         </AchievementContainerPcDiv>
                     </Div>

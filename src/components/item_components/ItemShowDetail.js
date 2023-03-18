@@ -29,8 +29,8 @@ const Overlay = styled(Div)`
 `
 const ItemShowDetailPcDiv = styled(ShadowDiv)`
     position :absolute;
-    right : 58%;
-    top : 20%;
+    right : 108%;
+    top : 8%;
 `
 const ItemShowDetailMobileDiv = styled(ShadowDiv)`
     position :absolute;
@@ -75,12 +75,12 @@ const ItemShowDetail = (props) =>{
     return(
         <React.Fragment>
             <PC>
-                <ItemShowDetailPcDiv width="600px" height="800px" background_color="grayscale1" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
+                <ItemShowDetailPcDiv width="500px" height="700px" background_color="grayscale1" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
                     <H1 color="grayscale7" font_size="xxl" font_weight="regular">{item_data[itemIndexData].item_name}</H1>
                     <Div width="80%" height="70%" background_color="grayscale4" justify_content="space-evenly">
                         <Img width="80%" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[itemIndexData].detail_img}`}/>
                     </Div>
-                    <Div width="40%" height="100px" justify_content="space-evenly" onClick={itemShowDetailBtnEvent}>
+                    <Div width="50%" height="100px" justify_content="space-evenly" onClick={itemShowDetailBtnEvent}>
                         {
                         whichItemComponent === "myItem"
                         ?
