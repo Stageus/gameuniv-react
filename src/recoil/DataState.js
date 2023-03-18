@@ -24,6 +24,20 @@ export const myItemDataState = atom({
     "default": null
 })
 
+// 스테이트 역할 : 아이템 백엔드 인덱스 저장
+// default : 아이템 백엔드 인덱스
+// 사용하는 컴포넌트 : ItemContainer.js /ItemUnit.js
+export const extraItemDataArrayState = selector({
+    key: 'extraItemDataArrayState',
+    get: ({ get }) => {
+        const storeData = get(storeDataState);
+        const extraItemDataArray = storeData.map(value=>
+        [value.item_name, value.unlock_state, value.item_picked_state,value.item_bought_state]
+        )
+        return extraItemDataArray
+    }
+    });
+
 // 스테이트 역할 : 테트리스 업적 동적 데이터 저장
 // default : 테트리스 업적 동적 데이터
 // 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
@@ -45,6 +59,14 @@ export const achievement2048DataState = atom({
 // 사용하는 컴포넌트 : ItemUnit.js
 export const itemIndexDataState = atom({
     "key" : "itemIndexDataState",
+    "default": null
+})
+
+// 스테이트 역할 : 게임 횟수 저장
+// default : game_count
+// 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
+export const gameCountDataState = atom({
+    "key" : "gameCountDataState",
     "default": null
 })
 

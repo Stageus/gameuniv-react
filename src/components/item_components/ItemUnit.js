@@ -1,13 +1,14 @@
 // ===== import base =====
 import React, { useEffect } from "react"
 import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
+import styled from "styled-components"
 
 // ===== import component =====
 import ItemShowDetail from "./ItemShowDetail"
 
 //  ===== import recoil =====
 import { whichItemComponentState, isClickUnitState, isItemDetailOpenState} from "../../recoil/ComponentState"
-import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
+import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState, extraItemDataArrayState} from "../../recoil/DataState"
 import { domainAddressState } from "../../recoil/DomainState"
 
 // ===== import style =====
@@ -19,6 +20,24 @@ import {P} from "../../styles/P"
 // ===== import hook =====
 import {PC, Mobile} from "../../hooks/useMediaComponent"
 
+// ===== style =====
+const ItemUnitDiv = styled(Div)`
+    position : relative;
+    cursor :pointer;
+`
+const LockDiv = styled(Div)`
+    position : absolute;
+    background-color : rgba(0,0,0,0.5);
+`
+const UnitHeaderDiv = styled(Div)`
+    position : relative;
+`
+const HeartDiv = styled(Div)`
+    position : absolute;
+    top : -10px;
+    right : 1px;
+`
+
 //  ===== component =====
 const ItemUnit = (props) =>{
     //===== var =====
@@ -28,16 +47,16 @@ const ItemUnit = (props) =>{
    
     //===== recoil state =====
     const whichItemComponent= useRecoilValue(whichItemComponentState)
-    
     const address = useRecoilValue(domainAddressState)
+    const extraItemDataArray = useRecoilValue(extraItemDataArrayState)
     const [storeData,setStoreData]=useRecoilState(storeDataState)
     const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
     const myItemData=useRecoilValue(myItemDataState)
     const setItemIndexData=useSetRecoilState(itemIndexDataState)
     const [isClickUnit, setClickUnitState] = useRecoilState(isClickUnitState)
     const [isItemDetailOpen, setItemDetailOpenStateState] = useRecoilState(isItemDetailOpenState)
-
-
+    // const [isUnlock, setUnlockState] = React.useState(storeData[idx].unlock_state)
+    
     // 조건에 맞는 데이터 세팅
     if(whichItemComponent==="store"){
         item_data = storeData
@@ -47,11 +66,18 @@ const ItemUnit = (props) =>{
         item_data = myItemData
     }
 
+    //데이터 해금 데이터 설정
+    const unitItemData=extraItemDataArray.filter(data => data[0] == item_data[idx].item_name)
+    const isUnlock = unitItemData[0][1]
+    const isDibsOn = unitItemData[0][2]
+    const isBought = unitItemData[0][3]
+
     //===== event =====
     const itemShowDetailEvent=()=>{
         setItemIndexData(idx)
         setItemDetailOpenStateState(true)
         setClickUnitState(idx)
+        // console.log(dibsOnData[idx].item_idx)
     }
     const dibsOnEvent=(e)=>{
         sendDibsOnStateEvent(e)
@@ -65,8 +91,9 @@ const ItemUnit = (props) =>{
 
         console.log(item_data[idx].item_idx)
         console.log(item_data[idx].item_picked_state)
+        console.log(isBought)
 
-        if(item_data[idx].item_picked_state){
+        if(isDibsOn){
             const response = await fetch(`${address}/item/pick?item-idx=${item_data[idx].item_idx}`,{
                 method: "DELETE",
                 credentials: "include"
@@ -125,20 +152,33 @@ const ItemUnit = (props) =>{
                 &&
                 <ItemShowDetail item_data={item_data}/>
             }
+            {
+            ( isBought === false || whichItemComponent === "myItem" )
+            &&
+            <React.Fragment>
             <PC>
-                <ShadowDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==idx ? "grayscale3" : "grayscale1" }
-                border_radius="10px" onClick={itemShowDetailEvent}>
-                    <Div width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
+                <ItemUnitDiv width = "285px" height="200px"  flex_direction="column" justify_content="space-around" background_color={isClickUnit==idx ? "grayscale3" : "grayscale1" }
+                border_radius="10px" onClick={(isUnlock === false) ? null : itemShowDetailEvent}>
+                    {
+                        (isUnlock === false)
+                        &&
+                        <LockDiv width = "285px" height="200px" border_radius="10px" >
+                            <Img width="60px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/lockIcon.png`}/>
+                        </LockDiv>  
+                    }
+                    <UnitHeaderDiv width = "87%" align_items="flex-end" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
                         <H1 font_size="s" color="grayscale7"   font_weight="regular">{item_data[idx].item_name}</H1>
-                        {
-                        whichItemComponent ==="store" &&
-                            (
-                                item_data[idx].item_picked_state
-                                ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
-                                : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
-                            )  
-                        }
-                    </Div>
+                            <HeartDiv width="60px" height="60px">
+                            {
+                            whichItemComponent !="myItem" &&
+                                (
+                                    isDibsOn
+                                    ? <Img width="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
+                                    : <Img width="42px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
+                                )  
+                            }
+                            </HeartDiv>
+                    </UnitHeaderDiv>
                     <Div width = "88%"  align_items="flex-end" justify_content="space-between">
                         <Img width="70px" margin="0 0 10px 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[idx].preview_img}`}/>
                         {
@@ -154,7 +194,7 @@ const ItemUnit = (props) =>{
                             </Div>
                         }   
                     </Div>
-                </ShadowDiv>
+                </ItemUnitDiv>
             </PC>
 
             <Mobile>
@@ -188,6 +228,8 @@ const ItemUnit = (props) =>{
                     </Div>
                 </ShadowDiv>
             </Mobile>
+            </React.Fragment>
+            }
         </React.Fragment>
     )
 }
