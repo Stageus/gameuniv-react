@@ -49,12 +49,13 @@ const ProfileChangeMobileBtn = styled(Div)`
 
 //  ===== component =====
 const Profile = () =>{ 
-    // ===== recoil state =====
-    const userData = useRecoilValue(userDataState)
-    const imgAddress = useRecoilValue(imgDomainState)
-    const prifilePath = useRecoilValue(profilePathState)
     // ===== media query =====
     let isMobile=useMobile()
+    // ===== recoil state =====
+    const userData = useRecoilValue(userDataState)
+    const img_domain = useRecoilValue(imgDomainState)
+    const profile_path = useRecoilValue(profilePathState)
+    const img_src = `${img_domain}/${profile_path}`
     
     return(
         <React.Fragment>
@@ -65,7 +66,7 @@ const Profile = () =>{
 
                     <PC>
                         <ProfileImgPcDiv width="250px" height="250px" border_radius="50%" background_color="grayscale3">
-                            <Img width="150px" src={`${imgAddress}/${prifilePath}/${userData.profileImg}`}/>
+                            <Img width="150px" src= {`${img_src}/${userData.profilemg}`}/>
                         </ProfileImgPcDiv>
                         <ProfileChangePcBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
@@ -76,7 +77,7 @@ const Profile = () =>{
                     </PC>
                     <Mobile>
                         <ProfileImgMobileDiv width="200px" height="200px" border_radius="50%" background_color="grayscale3">
-                            <Img width="100px" src={`${process.env.PUBLIC_URL}/img_srcs/Profiles/defaultProfileImg0.png`}/>
+                            <Img width="100px" src= {`${img_src}/${userData.profilemg}`}/>
                         </ProfileImgMobileDiv>
                         <ProfileChangeMobileBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}

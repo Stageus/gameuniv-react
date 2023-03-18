@@ -123,9 +123,9 @@ const Home = () =>{
     const setPageState = useSetRecoilState(whichPageState)
     const [userTetrisRankData,setUserTetrisRankData]=useRecoilState(userTetrisRankDataState)
     const [user2048RankData, setUser2048RankDataState]=useRecoilState(user2048RankDataState)
-      // ===== state =====
-    const [isTetrisDataExist, setTetrisDataExistState]=React.useState(false)
-    const [is2048DataExist, set2048DataExistState]=React.useState(false)
+    // ===== var =====
+    let isTetrisDataExist
+    let is2048DataExist
     // ===== router =====
     const navigate = useNavigate()
     // ===== event =====
@@ -168,23 +168,17 @@ const Home = () =>{
     // ===== hook =====
     useEffect(() => {
         getUserRankDataEvent()
-        
-        if(userTetrisRankData.rank > 0){
-            setTetrisDataExistState(true)
-        }
-    
-        if(user2048RankData.rank > 0){
-            set2048DataExistState(true)
-        }
-
-        console.log(userTetrisRankData)
-        console.log(user2048RankData)
-    
     },[])
 
     if(!isLogin){
         alert("로그인 후 이용 가능합니다")
         return <Navigate to="/" replace={true}/>
+    }
+    if(userTetrisRankData.rank > 0){
+        isTetrisDataExist = true
+    }
+    if(user2048RankData.rank > 0){
+        is2048DataExist = true
     }
 
     return(
@@ -260,6 +254,9 @@ const Home = () =>{
                         </AchivementBtnPcDiv>
                     </Div>
                 </PC>
+
+
+                
                 <Mobile>
                     <Div width="440px"   height="301px" justify_content="space-between">
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
