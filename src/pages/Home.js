@@ -175,13 +175,13 @@ const Home = () =>{
         return <Navigate to="/" replace={true}/>
     }
 
-    if(userTetrisRankData.ranking != null){
-        setTetrisDataExistState(true)
-    }
+    // if(userTetrisRankData.ranking != null){
+    //     setTetrisDataExistState(true)
+    // }
 
-    if(user2048RankData.ranking != null){
-        set2048DataExistState(true)
-    }
+    // if(user2048RankData.ranking != null){
+    //     set2048DataExistState(true)
+    // }
 
     return(
         <React.Fragment>

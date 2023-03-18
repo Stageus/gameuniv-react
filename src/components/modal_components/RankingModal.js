@@ -116,12 +116,11 @@ const RankingModal = () =>{
         })
 
         const result = await response.json()
-
         if(result.data.length < 1){
             alert(result.message)
         }
         else{
-            setRankingData(prevState => [...result.data])
+            setRankingData([...result.data])
             setLoading(false)
         }
     }, [page])
@@ -136,7 +135,7 @@ const RankingModal = () =>{
         }
     }, [inView, loading])
 
-    console.log(rankingData)
+    // console.log(rankingData)
     return(
         <Div width="611px" height="508px" align_items="flex-start">
             <Div width="90%" flex_direction="column" justify_content="flex-start" align_items="flex-start">

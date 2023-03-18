@@ -78,8 +78,8 @@ const EditProfileModal = () =>{
     const imgRef = React.useRef()
     const [defaultImg, setDefaultImg] = React.useState("")
     const [defaultSrc, setDefaultSrc] = React.useState("")
-    const [profileImg, setProfileImg] = React.useState([])
-    const isUpload = (defaultImg !== "" || profileImg.length === 1)
+    const [profileImg, setProfileImg] = React.useState(null)
+    const isUpload = (defaultImg !== "" || profileImg !== null)
 
     // const setPostData = props.setPostData
     const isMobile = useMobile()
@@ -96,7 +96,20 @@ const EditProfileModal = () =>{
                 setImgFile(reader.result)
             }
 
-            setProfileImg([compressedFile])
+            // console.log(compressedFile)
+            // setProfileImg([compressedFile])
+            const imgFile = new File(["compressdFile"], compressedFile.name)
+            const dataTransfer = new DataTransfer()
+            dataTransfer.items.add(imgFile)
+            // console.log(dataTransfer)
+            const img_list = dataTransfer.files
+            // const profile_img = document.getElementById("profileImg")
+            // console.log(dataTransfer.files)
+            // filelist.push(imgFile)
+            // console.log([imgFile])
+            // console.log(img_list)
+            setProfileImg(img_list)
+            // console.log(profileImg)
             setDefaultSrc("")
             setDefaultImg("")
             return compressedFile
@@ -121,6 +134,7 @@ const EditProfileModal = () =>{
         }
         else{
             imgCompress(file)
+
         }
     }
 
@@ -160,7 +174,7 @@ const EditProfileModal = () =>{
     // 프로필 수정
     const profileChangeEvent = async(e) =>{
         e.preventDefault()
-
+        // console.log(profileImg)
         const response = await fetch(`${address}/user/profile-img`,{
             method: "PUT",
             credentials: "include",
