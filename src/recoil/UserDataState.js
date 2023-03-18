@@ -43,7 +43,7 @@ export const coinState = atom({
 export const userTetrisRankDataState = atom({
     "key": "userTetrisRankData",
     "default": {
-        ranking : "",
+        rank : "",
         max_score : "",
     }
 })
@@ -51,7 +51,7 @@ export const userTetrisRankDataState = atom({
 export const user2048RankDataState = atom({
     "key": "user2048RankData",
     "default": {
-        ranking : "",
+        rank : "",
         max_score : "",
     }
 })
