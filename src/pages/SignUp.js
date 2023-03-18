@@ -83,7 +83,7 @@ const SignUp = () =>{
         pwCheck: "",
         universityIdx: undefined,
         defaultImg: "",
-        profileImg: [],
+        profileImg: null,
     })
     const [univIdx, setUnivIdx] = React.useState(undefined)
     // console.log(postDataState)
@@ -137,7 +137,7 @@ const SignUp = () =>{
                     pwCheck: pw_same,
                     universityIdx: undefined,
                     defaultImg: "",
-                    profileImg: [],
+                    profileImg: null,
                 })
             }
         }
