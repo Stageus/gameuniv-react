@@ -23,6 +23,7 @@ import { useSetModalState } from "../hooks/useSetModalState"
 //  ===== component =====
 import BtnAnimation from "./BtnAnimation"
 import { coinState } from "../recoil/UserDataState"
+import { domainAddressState } from "../recoil/DomainState"
 
 
 const Header_style = styled.header`
@@ -42,9 +43,10 @@ const Header = () =>{
     // ===== router =====
     const navigate = useNavigate()
     const location = useLocation()
+    const address = useRecoilValue(domainAddressState)
+    const [coin, setCoin] = useRecoilState(coinState)
     const path = location.pathname
     const which_page = (path === "/" || path === "/idfind" || path === "/pwfind" || path === "/signup")
-    const coin = useRecoilValue(coinState)
 
     // ===== event =====
     const logoEvent = () =>{
@@ -55,6 +57,25 @@ const Header = () =>{
             navigate("/home")
         }
     }
+
+    const getCoinData = async() =>{
+        const response = await fetch(`${address}/user/coin`,{
+            credentials: "include"
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            setCoin(result.data.coin)
+        }
+    }
+
+    React.useEffect( ()=>{
+        getCoinData()
+    },[coin])
 
     return(
         <Header_style>

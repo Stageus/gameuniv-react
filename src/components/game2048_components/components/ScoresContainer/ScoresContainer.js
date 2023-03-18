@@ -16,12 +16,14 @@ import { useMobile } from "../../../../hooks/useMediaComponent";
 // ===== import recoil =====
 import { scoreState } from "../../recoil/ScoreState";
 import { domainAddressState } from "../../../../recoil/DomainState";
+import { userDataState } from "../../../../recoil/UserDataState";
 
 // ===== import style =====
 import { Div } from "../../../../styles/Div";
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../../../styles/style";
 import { doodleTheme } from "../../styles/theme";
+
 
 
 // ===== style =====
@@ -179,7 +181,7 @@ const ScoresContainer = () =>{
     const setScore = useSetRecoilState(scoreState)
     const score = useRecoilValue(scoreState)
     const address = useRecoilValue(domainAddressState)
-
+    const userData = useRecoilValue(userDataState)
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
@@ -240,8 +242,8 @@ const ScoresContainer = () =>{
                     <MyRank isMobile={isMobile}>{scoreData.rank}</MyRank>
                 }
                 <Div flex_direction="column">
-                    <UserId isMobile={isMobile}>tmdgns97</UserId>
-                    <UserUniv isMobile={isMobile}>인하대학교</UserUniv>
+                    <UserId isMobile={isMobile}>{userData.id}</UserId>
+                    <UserUniv isMobile={isMobile}>{userData.universityName}</UserUniv>
                 </Div>
                 <ScoreBox score={state.score}/>
                 <AddScore isMobile={isMobile} id="additionScore"></AddScore>

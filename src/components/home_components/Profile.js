@@ -55,7 +55,7 @@ const Profile = () =>{
     const prifilePath = useRecoilValue(profilePathState)
     // ===== media query =====
     let isMobile=useMobile()
-
+    
     return(
         <React.Fragment>
                 <ProfileInfoDiv  width ={isMobile ? "440px" : "100%" }   height="301px" flex_direction="column" align_items="flex-end">

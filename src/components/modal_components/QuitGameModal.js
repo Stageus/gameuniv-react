@@ -35,7 +35,8 @@ const QuitGameModal = (props) =>{
     
     // ===== event =====
     const yesBtnEvent = ()=>{
-        props.onRestart()
+        // props.onRestart()
+        window.localStorage.removeItem("2048game")
         navigate("/home")    
         setModalOpen(false)
     }
