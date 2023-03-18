@@ -8,7 +8,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
 import { whichRankingState } from "../../recoil/ModalState"
-import { domainAddressState } from "../../recoil/DomainState"
+import { domainAddressState, imgDomainState, profilePathState } from "../../recoil/DomainState"
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
 import { Div } from "../../styles/Div"
@@ -82,7 +82,9 @@ const RankingModal = () =>{
     const whichRanking = useRecoilValue(whichRankingState)
     const address = useRecoilValue(domainAddressState)
     const rank = Array.from({length:100}, (v,i)=>i+1);
-    console.log(whichRanking)
+    const img_domain = useRecoilValue(imgDomainState)
+    const profile_path = useRecoilValue(profilePathState)
+    const img_src = `${img_domain}/${profile_path}`
 
     // ===== state =====
     const [rankingData, setRankingData ] = React.useState([
@@ -100,7 +102,7 @@ const RankingModal = () =>{
         // }
 
     ])
-    const [page, setPage] = React.useState(1)
+    const [page, setPage] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
 
     const [ref, inView] = useInView()
@@ -119,7 +121,7 @@ const RankingModal = () =>{
             alert(result.message)
         }
         else{
-            setRankingData(prevState => [...prevState, ...result.data])
+            setRankingData(prevState => [...result.data])
             setLoading(false)
         }
     }, [page])
@@ -166,7 +168,7 @@ const RankingModal = () =>{
                                         
                                         <Div width="33%" justify_content="flex_start" >
                                             <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                                <Img src={data.profile_img}
+                                                <Img src={`${img_src}/${data.profile_img}`}
                                                 width="20px"/>
                                             </Div>
                                             <P font_weight="bold">{data.id}</P>
