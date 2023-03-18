@@ -8,6 +8,7 @@ import { whichItemComponentState ,isItemDetailOpenState, isClickUnitState} from 
 import { isModalOpenState} from "../../recoil/ModalState"
 import { storeDataState, dibsOnDataState, myItemDataState, itemIndexDataState} from "../../recoil/DataState"
 import { domainAddressState } from "../../recoil/DomainState"
+import { coinState } from "../../recoil/UserDataState"
 
 // ===== import style =====
 import { Img, ImgBtn } from "../../styles/Img"
@@ -28,6 +29,7 @@ const ItemPurchaseModal = () =>{
     const [storeData,setStoreData]=useRecoilState(storeDataState)
     const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
     const [myItemData,setMyItemData]=useRecoilState(myItemDataState)
+    const [coin,setCoin]=useRecoilState(coinState)
     const itemIndexData= useRecoilValue(itemIndexDataState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setItemDetailOpenStateState = useSetRecoilState(isItemDetailOpenState)
@@ -93,20 +95,20 @@ const ItemPurchaseModal = () =>{
                 alert(result_pick.message)
             }if(result_buy.message){
                 alert(result_buy.message)
+            } else {
+                if(whichItemComponent==="store"){
+                    item_data = storeData
+                }else if(whichItemComponent==="dibsOn"){
+                    item_data = dibsOnData
+                }else if(whichItemComponent==="myItem"){
+                    item_data = myItemData
+                }
+                setItemDetailOpenStateState(false)
+                setModalOpen(false)
+                setClickUnitState(null)
+                setCoin(prevState => prevState - item_data[itemIndexData].item_price)
             }
-
-            if(whichItemComponent==="store"){
-                item_data = storeData
-            }else if(whichItemComponent==="dibsOn"){
-                item_data = dibsOnData
-            }else if(whichItemComponent==="myItem"){
-                item_data = myItemData
-            }
-            setItemDetailOpenStateState(false)
-            setModalOpen(false)
-            setClickUnitState(null)
         }  
-        
     }
 
     return(

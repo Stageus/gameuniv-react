@@ -1,5 +1,5 @@
 // ===== import base =====
-import React from "react"
+import React, { useEffect } from "react"
 import {useRecoilValue} from "recoil"
 
 //  ===== import recoil =====
@@ -31,6 +31,7 @@ const AchievementUnit = (props) =>{
     const userTetrisRankData=useRecoilValue(userTetrisRankDataState)
     const user2048RankData=useRecoilValue(user2048RankDataState)
     const gameCountData= useRecoilValue(gameCountDataState)
+
     // 조건에 맞는 데이터 세팅
     if(whichAcheivementComponent==="tetris"){
         achievement_data = achievementTetrisData

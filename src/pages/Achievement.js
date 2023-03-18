@@ -39,10 +39,23 @@ const Achievement = () =>{
     const setTabOpenState=useSetRecoilState(isTabOpenState)
     const resetTabOpenState = useResetRecoilState(isTabOpenState)
     const isLogin = useRecoilValue(isLoginState)
+
+    // const resetAcheivementComponent= useResetRecoilState(whichAchievementComponentState)
+    // const resetAchievementTetrisData=useResetRecoilState(achievementTetrisDataState)
+    // const resetAchievement2048Data=useResetRecoilState(achievement2048DataState)
+    // const resetUserTetrisRankData=useResetRecoilState(userTetrisRankDataState)
+    // const resetUser2048RankData=useResetRecoilState(user2048RankDataState)
+    // const resetGameCountData= useResetRecoilState(gameCountDataState)
     // ===== hook =====
     useEffect(()=>{
         resetTabOpenState()
         resetAchievementComponent()
+
+        // resetAchievement2048Data()
+        // resetAchievementTetrisData()
+        // resetUserTetrisRankData()
+        // resetUser2048RankData()
+        // resetGameCountData()
     })
     // 비정상접근 막기
     if(!isLogin){
