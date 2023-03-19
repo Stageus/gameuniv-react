@@ -6,7 +6,7 @@ import styled, {css, ThemeProvider} from "styled-components"
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import { isModalOpenState, whichModalState } from "../../../../recoil/ModalState";
 
-import { basicTheme, pastelTheme, doodleTheme } from "../../styles/theme";
+import { basicTheme, pastelTheme, doodleTheme, jellyTheme, retroTheme, legoTheme } from "../../styles/theme";
 
 // ===== import components =====
 import GameHeader from "../GameHeader/GameHeader";
@@ -53,7 +53,7 @@ const GameContainer = styled(Div)`
     width: 540px;
     height: 720px;
     border-radius: 10px;
-    background-color: ${props=> props.theme.totalBoxColor};
+    background: ${props=> props.theme.totalBoxColor};
 
     ${props=> props.isMobile && css`
         width: 320px;
@@ -62,6 +62,24 @@ const GameContainer = styled(Div)`
 
     ${props => props.theme === doodleTheme && css`
         border: 5px solid black;
+    `}
+
+    ${props => props.theme === retroTheme && css`
+        background-size: cover;
+            ${props => props.isMobile && css`
+                background-size: 320px 500px;
+                background-repeat: no-repeat;
+                `
+            }
+    `}
+
+    ${props => props.theme === legoTheme && css`
+    background-size: cover;
+        ${props => props.isMobile && css`
+            background-size: 320px 500px;
+            background-repeat: no-repeat;
+            `
+        }
     `}
 `
 
@@ -153,15 +171,6 @@ const GameProvider = (props) =>{
     }
     // ===== event =====
     useEffect( ()=>{
-        // const handleKeyPress = (e) =>{
-        //     e.preventDefault()
-        //     const effect = Effect
-        //     let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
-        //     if(direction){
-        //         dispatch({type : "move", payload: direction})
-        //         effect.play()
-        //     }
-        // }
         document.addEventListener("keydown", handleKeyPress)
         return () =>{
             document.removeEventListener("keydown", handleKeyPress)
@@ -201,7 +210,7 @@ const Game = () =>{
 
     return(
         <GameProvider>
-            <ThemeProvider theme = {doodleTheme}>
+            <ThemeProvider theme = {legoTheme}>
                 <Container isMobile={isMobile}>
                     <GameContainer isMobile={isMobile}>
                         <GameHeader/>
@@ -209,12 +218,6 @@ const Game = () =>{
                     </GameContainer>
                 </Container>
             </ThemeProvider>
-            {/* <BackDiv onClick={backBtnEvent} isMobile={isMobile}>
-                <BtnAnimation 
-                before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backBeforeBtnImg.png`}
-                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/backAfterBtnImg.png`}
-                />adasdas
-            </BackDiv> */}
         </GameProvider>
     )
 }

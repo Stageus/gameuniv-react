@@ -25,7 +25,7 @@ import { color } from "../../styles/style"
 import { useNavigate } from "react-router"
 import { useMobile } from "../../hooks/useMediaComponent"
 import { coinState } from "../../recoil/UserDataState"
-
+import { scoreState } from "../game2048_components/recoil/ScoreState"
 // ===== style =====
 
 //  ===== component =====
@@ -35,7 +35,7 @@ const GameOverModal = (props) =>{
     const isMobile = useMobile()
     // ===== 2048 state =====
     const score2048 = props.score2048
-
+    const score2222 = useRecoilValue(scoreState)
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setCoin = useSetRecoilState(coinState)
@@ -65,6 +65,10 @@ const GameOverModal = (props) =>{
 
     // 게임오버 시 게임점수 보내기
     const postScore = async() =>{
+        fetch(`${address}/2048/score/rank?score=${score2048}`,{
+            credentials: "include"
+        })
+
         const response = await fetch(`${address}/2048/score`,{
             method: "POST",
             credentials: "include",

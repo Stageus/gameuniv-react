@@ -18,6 +18,7 @@ import { Button } from "../../styles/Button"
 
 // ===== import style func =====
 import { color } from "../../styles/style"
+import { isRetryState, scoreState } from "../game2048_components/recoil/ScoreState"
 
 
 // ===== style =====
@@ -27,7 +28,7 @@ import { color } from "../../styles/style"
 const RetryGameModal = (props) =>{
     // ===== recoil state ======
     const setModalOpen = useSetRecoilState(isModalOpenState)
-
+    const setRetry = useSetRecoilState(isRetryState)
     return(
         <Div width="400px" height="260px" flex_direction="column" justify_content="space-evenly">
             <Div flex_direction="column">
@@ -37,6 +38,7 @@ const RetryGameModal = (props) =>{
             <Button width="110px" height="37px" onClick={() => {
                 props.onRestart()
                 setModalOpen(false)
+                setRetry(true)
             }}>네</Button>
             
         </Div>

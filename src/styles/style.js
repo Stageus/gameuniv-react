@@ -56,4 +56,20 @@ export const fontWeight = (font_weight) =>{
         } 
         font-family: "NotoSansKR-Black";
     `
+
+    else if( font_weight === "retro") return css`
+        @font-face {
+            font-family: "retro";
+            src: url("/fonts/Galmuri11-Bold.woff2");
+        } 
+        font-family: "retro";
+    `
+
+    else if( font_weight === "lego") return css`
+        @font-face {
+            font-family: "lego";
+            src: url("/fonts/Legothick.ttf");
+        } 
+        font-family: "lego";
+    `
 }

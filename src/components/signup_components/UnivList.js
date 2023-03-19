@@ -36,6 +36,7 @@ const UnivList = (props) =>{
             return data.university_name === univ_name
         })[0].university_idx
         setUnivIdx(idx)
+        // console.log(univIdx)
     }
 
 

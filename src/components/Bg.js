@@ -30,8 +30,8 @@ const SolidImg = styled(Img)`
     z-index:-1;
 `
 const SolidImgDiv = styled(Div)`
-     height: 100%;
-        overflow: hidden;
+    height: 100%;
+    overflow: hidden;
 
 `
 

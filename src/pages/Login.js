@@ -4,12 +4,13 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
 // ===== import cookies =====
+import { useExpireTime } from "../hooks/useExpireTime"
 import { useCookies, setCookie } from "react-cookie"
 
 //  ===== import recoil =====
 import { domainAddressState, isLoginState } from "../recoil/DomainState"
 import { coinState, userDataState } from "../recoil/UserDataState"
-
+import { Navigate } from "react-router-dom"
 
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
@@ -42,6 +43,7 @@ const Login = () =>{
     // const userData = useRecoilValue(userDataState)
     const setUserData = useSetRecoilState(userDataState)
     const setLogin = useSetRecoilState(isLoginState)
+    const isLogin = useRecoilValue(isLoginState)
     const setCoin = useSetRecoilState(coinState)
 
     // ===== router =====
@@ -50,13 +52,17 @@ const Login = () =>{
     // const login_form = document.getElementById("login_form")
     // const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
-
+    React.useEffect(()=>{
+        setLogin(false)
+        setUserData({})
+    }, [])
+    // 자동 로그인
 
     const postLoginData = async() =>{
         const id = document.getElementById("id").value
         const pw = document.getElementById("pw").value
 
-        console.log(id, pw)
+        // console.log(id, pw)
         const response = await fetch(`${address}/auth`,{
             method: "POST",
             credentials: "include",
