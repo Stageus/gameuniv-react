@@ -29,8 +29,8 @@ const Overlay = styled(Div)`
 `
 const ItemShowDetailPcDiv = styled(ShadowDiv)`
     position :absolute;
-    right : 108%;
-    top : 8%;
+    right : 120%;
+    top : 16%;
 `
 const ItemShowDetailMobileDiv = styled(ShadowDiv)`
     position :absolute;
