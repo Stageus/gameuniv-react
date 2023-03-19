@@ -171,15 +171,6 @@ const GameProvider = (props) =>{
     }
     // ===== event =====
     useEffect( ()=>{
-        // const handleKeyPress = (e) =>{
-        //     e.preventDefault()
-        //     const effect = Effect
-        //     let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
-        //     if(direction){
-        //         dispatch({type : "move", payload: direction})
-        //         effect.play()
-        //     }
-        // }
         document.addEventListener("keydown", handleKeyPress)
         return () =>{
             document.removeEventListener("keydown", handleKeyPress)

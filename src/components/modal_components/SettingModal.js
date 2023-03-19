@@ -140,11 +140,12 @@ const SettingModal = () =>{
             alert(result.message)
         }
         else{
-            alert("로그아웃 성공")
+            // alert("로그아웃 성공")
             navigate("/")
             setModalOpen(false)
             setLogin(false)
             setUserData({})
+            window.localStorage.removeItem("recoil-persist")
         }
     }
 

@@ -2,7 +2,7 @@
 import React from "react"
 import styled, {css} from "styled-components"
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil"
-import { useLocation } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 
 // ===== import component =====
 import Login from "../pages/Login"
@@ -132,9 +132,10 @@ const Ranking = (props) =>{
     const img_src = `${img_domain}/${profile_path}`
     const isLogin = useRecoilValue(isLoginState)
     const location = useLocation()
+    const navigate = useNavigate()
     // ===== state =====
     const [rank2048, set2048] = React.useState([
-        {},
+        
         // {
         //     id: "20481",
         //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,
@@ -150,7 +151,7 @@ const Ranking = (props) =>{
     ])
 
     const [rankTetris, setTetris] = React.useState([
-        {},
+        
         // {
         //     id: "test1",
         //     profile_img: `${process.env.PUBLIC_URL}/img_srcs/profiles/defaultProfileImg0.png`,

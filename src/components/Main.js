@@ -118,6 +118,7 @@ const Main = () =>{
             navigate(-1)
         }
     }
+    // ===== event =====
     return(
         <MainStyle>
             <Modal></Modal>

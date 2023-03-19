@@ -239,7 +239,6 @@ const ScoresContainer = () =>{
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
     const isRetry = useRecoilValue(isRetryState)
-
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
@@ -272,15 +271,12 @@ const ScoresContainer = () =>{
         }
         else{
             setScoreData(result.data)
-
         }
-        
-
     }
 
     React.useEffect( () =>{
         showRank2048()
-    }, [score > scoreData.next_max_score, score === 0])
+    }, [score > scoreData.next_max_score])
 
     return(
         <ScoresContainerDiv isMobile={isMobile}>
