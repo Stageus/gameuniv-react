@@ -210,7 +210,7 @@ const Game = () =>{
 
     return(
         <GameProvider>
-            <ThemeProvider theme = {legoTheme}>
+            <ThemeProvider theme = {retroTheme}>
                 <Container isMobile={isMobile}>
                     <GameContainer isMobile={isMobile}>
                         <GameHeader/>
