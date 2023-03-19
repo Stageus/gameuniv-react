@@ -42,8 +42,8 @@ const ProfileChangePcBtn = styled(Div)`
 `
 const ProfileChangeMobileBtn = styled(Div)`
     position : absolute;
-    left : 160px;
-    top : 160px;
+    left : 170px;
+    top : 170px;
     z-index : 2;
 `
 
@@ -56,7 +56,7 @@ const Profile = () =>{
     const img_domain = useRecoilValue(imgDomainState)
     const profile_path = useRecoilValue(profilePathState)
     const img_src = `${img_domain}/${profile_path}`
-    
+
     return(
         <React.Fragment>
                 <ProfileInfoDiv  width ={isMobile ? "440px" : "100%" }   height="301px" flex_direction="column" align_items="flex-end">
@@ -66,7 +66,7 @@ const Profile = () =>{
 
                     <PC>
                         <ProfileImgPcDiv width="250px" height="250px" border_radius="50%" background_color="grayscale3">
-                            <Img width="150px" src= {`${img_src}/${userData.profilemg}`}/>
+                            <Img width="200px" border_radius="50%" src= {`${img_src}/${userData.profileImg}`}/>
                         </ProfileImgPcDiv>
                         <ProfileChangePcBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
@@ -77,7 +77,7 @@ const Profile = () =>{
                     </PC>
                     <Mobile>
                         <ProfileImgMobileDiv width="200px" height="200px" border_radius="50%" background_color="grayscale3">
-                            <Img width="100px" src= {`${img_src}/${userData.profilemg}`}/>
+                            <Img width="150px" border_radius="50%" src= {`${img_src}/${userData.profileImg}`}/>
                         </ProfileImgMobileDiv>
                         <ProfileChangeMobileBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
