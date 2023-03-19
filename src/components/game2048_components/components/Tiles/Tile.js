@@ -6,8 +6,8 @@ import styled, { css, keyframes } from "styled-components"
 import { useMobile } from "../../../../hooks/useMediaComponent"
 
 // ===== import style =====
-import { fontSize } from "../../../../styles/style"
-import { doodleTheme } from "../../styles/theme"
+import { fontSize, fontWeight } from "../../../../styles/style"
+import { doodleTheme, jellyTheme, legoTheme, retroTheme } from "../../styles/theme"
 // ===== style =====
 const appear = (x,y) => keyframes`
     0% {
@@ -96,6 +96,8 @@ const TileOuter = styled.div`
         -webkit-text-stroke: 1px black;
     `}
 
+    
+
 `
 
 const TileInner = styled.div`
@@ -109,6 +111,27 @@ const TileInner = styled.div`
         font-size: ${fontSize("m")};
     `}
 
+    ${props => props.theme === jellyTheme && css`
+        border-radius: 20px;
+    `}
+
+    ${props => props.theme === retroTheme && css`
+        border-radius: 0px;
+
+        ${fontWeight("retro")};
+    `}
+
+
+    ${props => props.theme === legoTheme && css`
+        border-radius: 0px;
+        font-size: 60px;
+        ${fontWeight("lego")};
+
+        ${props => props.isMobile && css`
+            font-size: 30px;
+        `}
+    `}
+    
     ${props =>{
         const value = props.value
         switch(value){
@@ -116,57 +139,68 @@ const TileInner = styled.div`
                 return css`
                     color: ${props.theme.cell24fontColor};
                     background: ${props.theme.n2};
+                    background-size: cover;
                 `
             case 4:
                 return css`
                     color: ${props.theme.cell24fontColor};
                     background: ${props.theme.n4};
+                    background-size: cover;
                 `
             case 8:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n8};
+                    background-size: cover;
                 `
             case 16:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n16};
+                    background-size: cover;
                 `
             case 32:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n32};
+                    background-size: cover;
                 `
             case 64:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n64};
+                    background-size: cover;
                 `
             case 128:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n128};
+                    background-size: cover;
                 `
             case 256:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n256};
+                    background-size: cover;
                 `
             case 512:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n512};
+                    background-size: cover;
                 `
             case 1024:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n1024};
+                    background-size: cover;
                 `
             // 2048 이후
             default:
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n2048};
+                    background-size: cover;
                 `
         }
     }}

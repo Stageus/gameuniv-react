@@ -66,7 +66,7 @@ const Header = () =>{
         const result = await response.json()
 
         if(result.message){
-            alert(result.message)
+            // alert(result.message)
         }
         else{
             setCoin(result.data.coin)

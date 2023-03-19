@@ -1,7 +1,7 @@
 // ===== import base =====
 import React, {useEffect} from "react";
 import styled, {keyframes, css} from "styled-components";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 
 import useGameLocalStorage from "../../hooks/useLocalStorage"
 import { getMaxId } from "../../utils/boardUtils"
@@ -14,7 +14,7 @@ import ScoreBox from "../ScoreBox/ScoreBox"
 import { useMobile } from "../../../../hooks/useMediaComponent";
 
 // ===== import recoil =====
-import { scoreState } from "../../recoil/ScoreState";
+import { isRetryState, scoreDataState, scoreState } from "../../recoil/ScoreState";
 import { domainAddressState } from "../../../../recoil/DomainState";
 import { userDataState } from "../../../../recoil/UserDataState";
 
@@ -22,7 +22,7 @@ import { userDataState } from "../../../../recoil/UserDataState";
 import { Div } from "../../../../styles/Div";
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../../../styles/style";
-import { doodleTheme } from "../../styles/theme";
+import { doodleTheme, jellyTheme, legoTheme, retroTheme } from "../../styles/theme";
 
 
 
@@ -45,7 +45,7 @@ const ScoresContainerDiv = styled.div`
     align-items: center;
     width: 248px;
     height: 135px;
-    background-color: ${props => props.theme.scoreBoxColor};
+    background: ${props => props.theme.scoreBoxColor};
     border-radius: 5px;
     border: 2px solid white;
 
@@ -56,6 +56,52 @@ const ScoresContainerDiv = styled.div`
 
     ${props => props.theme === doodleTheme && css`
         border: 3px solid black;
+    `}
+
+    ${props => props.theme === jellyTheme && css`
+        border: 3px solid ${props.theme.totalBoxColor};
+        border-radius: 15px;
+    `}
+
+    ${props => props.theme === retroTheme && css`
+        border: 3px solid ${props.theme.totalBoxColor};
+        border-radius: 15px;
+        width: 208px;
+        height: 133px;
+        border-radius: 0px;
+        border: none;
+        position: relative;
+        right: 0px;
+        top: -7px;
+
+        ${props => props.isMobile && css`
+            width: 123px;
+            height: 100px;
+            top: -25px;
+            right: 100px;
+        `
+        }
+    `}
+
+    ${props => props.theme === legoTheme && css`
+        border: 3px solid ${props.theme.totalBoxColor};
+        border-radius: 15px;
+        width: 225px;
+        height: 135px;
+        border-radius: 0px;
+        border: none;
+        position: relative;
+        right: 25px;
+        top: 2px;
+
+        ${props => props.isMobile && css`
+            width: 133px;
+            height: 100px;
+            top: -20px;
+            right: 17px;
+        `
+
+        }
     `}
 `
 
@@ -74,9 +120,9 @@ const AddScore = styled.div`
 const MyScore = styled(Div)`
     position: relative;
     right:0;
-    width: 230px;
+    width: 90%;
     height: 49px;
-    background-color: ${props=> props.theme.scoreColor};
+    background: ${props=> props.theme.scoreColor};
     border-radius: 10px;
     border: 2px solid ${props=>props.theme.borderColor};
     color: ${props=> props.theme.fontColor};
@@ -99,7 +145,7 @@ const UserUniv = styled.div`
 `
 
 const MyRank = styled(Div)`
-    background-color: ${props => props.theme.rankColor};
+    background: ${props => props.theme.rankColor};
     font-size:${fontSize("s")};
     width:34px;
     height:34px;
@@ -120,6 +166,14 @@ const MyRank = styled(Div)`
     ${props => props.theme === doodleTheme && css`
         border: 2px solid black;
         -webkit-text-stroke: 1px black;
+    `}
+
+    ${props => props.theme === retroTheme && css`
+        border: 1px solid black;
+    `}
+
+    ${props => props.theme === legoTheme && css`
+        border: 1px solid black;
     `}
 `
 
@@ -165,26 +219,31 @@ const OtherUniv = styled(UserUniv)`
 const ScoresContainer = () =>{
     // ===== state =====
     const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
-    const [scoreData, setScoreData] = React.useState({
-        pre_id: "pre_id",
-        pre_university_name: "pre_univ_name",
-        pre_max_score: "10",
+    const [scoreData, setScoreData] = useRecoilState(scoreDataState)
+    // const [scoreData, setScoreData] = 
+    // React.useState({
+        // pre_id: "pre_id",
+        // pre_university_name: "pre_univ_name",
+        // pre_max_score: "10",
 
-        next_id: "next_id",
-        next_university_name: "next_univ_name",
-        next_max_scroe: "30",
+        // next_id: "next_id",
+        // next_university_name: "next_univ_name",
+        // next_max_scroe: "30",
 
-        rank: -1
-    })
+        // rank: -1
+    // })
     
     // ===== recoil =====
     const setScore = useSetRecoilState(scoreState)
     const score = useRecoilValue(scoreState)
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
+    const isRetry = useRecoilValue(isRetryState)
+
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
+    
     // ===== event =====
     useEffect( ()=> {
         dispatch( {type: "change", payload: gameState.tiles})
@@ -208,19 +267,20 @@ const ScoresContainer = () =>{
         })
 
         const result = await response.json()
-
         if(result.message){
-            alert(result.message)
+            // alert(result.message)
         }
         else{
             setScoreData(result.data)
+
         }
+        
+
     }
 
     React.useEffect( () =>{
         showRank2048()
-    }, [score])
-
+    }, [score > scoreData.next_max_score, score === 0])
 
     return(
         <ScoresContainerDiv isMobile={isMobile}>
@@ -266,7 +326,7 @@ const ScoresContainer = () =>{
 
 const initState = (tiles = []) =>{
     return{
-        score:0,
+        score: 0,
         newPoints: 0,
         tiles,
     }
@@ -316,9 +376,9 @@ const stateReducer = (state, action) =>{
             }, 0)
 
             const score = state.score + newPoints
-            const bestScore = Math.max(score, state.bestScore)
+            // const bestScore = Math.max(score, state.bestScore)
 
-            return { tiles, newPoints, score, bestScore}
+            return { tiles, newPoints, score}
         }
         default:{
             throw new Error(`Unhandled action type: ${action.type}`)

@@ -13,7 +13,7 @@ import { useMobile } from "../../../../hooks/useMediaComponent"
 
 // ===== import style func =====
 import { color } from "../../../../styles/style";
-import { doodleTheme } from "../../styles/theme";
+import { doodleTheme, legoTheme } from "../../styles/theme";
 // ===== style =====
 const BoardContainerDiv = styled.div`
     position: relative;
@@ -37,6 +37,7 @@ const BoardContainerDiv = styled.div`
     ${props => props.theme === doodleTheme && css`
         border: 4px solid black;
     `}
+
 `
 
 const GridContainer = styled.div`

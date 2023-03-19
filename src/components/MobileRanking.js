@@ -194,6 +194,10 @@ const MobileRangking = (props) =>{
         }
     }, [inViewTetris, loadingTetris])
 
+    // ===== event =====
+    const imgErrorEvent = (e) =>{
+        e.target.src = `${img_src}/defaultProfileImg0.png`
+    }
     // console.log(rank2048)
     // console.log(rankTetris)
     return(
@@ -237,7 +241,7 @@ const MobileRangking = (props) =>{
                                             
                                             <Div width="33%" justify_content="flex_start" >
                                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                                    <Img src={`${img_src}/${data.profile_img}`}
+                                                    <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
                                                     width="20px" height="20px" border_radius="50%"/>
                                                 </Div>
                                                 <P font_weight="bold">{data.id}</P>
@@ -261,7 +265,7 @@ const MobileRangking = (props) =>{
                                             
                                             <Div width="33%" justify_content="flex_start" >
                                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                                    <Img src={`${img_src}/${data.profile_img}`}
+                                                    <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
                                                     width="20px" height="20px" border_radius="50%"/>
                                                 </Div>
                                                 <P font_weight="bold">{data.id}</P>

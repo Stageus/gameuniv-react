@@ -2,6 +2,7 @@
 import React from "react"
 import styled, {css} from "styled-components"
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil"
+import { useLocation } from "react-router"
 
 // ===== import component =====
 import Login from "../pages/Login"
@@ -15,7 +16,7 @@ import Bg from "./Bg"
 // ===== import recoil =====
 import { isModalOpenState, whichModalState, whichRankingState } from "../recoil/ModalState"
 import { useSetModalState } from "../hooks/useSetModalState"
-import { domainAddressState, imgDomainState, profilePathState } from "../recoil/DomainState"
+import { domainAddressState, imgDomainState, isLoginState, profilePathState } from "../recoil/DomainState"
 
 // ===== import style =====
 import { Div } from "../styles/Div"
@@ -129,6 +130,8 @@ const Ranking = (props) =>{
     const img_domain = useRecoilValue(imgDomainState)
     const profile_path = useRecoilValue(profilePathState)
     const img_src = `${img_domain}/${profile_path}`
+    const isLogin = useRecoilValue(isLoginState)
+    const location = useLocation()
     // ===== state =====
     const [rank2048, set2048] = React.useState([
         {},
@@ -164,7 +167,7 @@ const Ranking = (props) =>{
 
     // ===== func =====
     // 랭킹 데이터 가져오기
-    const getRankingData = React.useCallback( async() =>{
+    const getRankingData = async() =>{
         const response2048 = await fetch(`${address}/2048/record/all?offset=${0}`,{
             credentials: "include"
         })
@@ -188,11 +191,11 @@ const Ranking = (props) =>{
         else{
             setTetris(resultTetris.data)
         }
-    },[])
+    }
 
     React.useEffect( ()=>{
         getRankingData()
-    }, [])
+    }, [location])
 
     // ===== event =====
     const showMoreBtnEvent = (e) =>{
@@ -202,6 +205,10 @@ const Ranking = (props) =>{
         setRanking(game)
         
         // console.log(game, whichRanking)
+    }
+
+    const imgErrorEvent = (e) =>{
+        e.target.src = `${img_src}/defaultProfileImg0.png`
     }
     // ===== variable =====
     // const rank = [1,2,3,4,5]
@@ -254,7 +261,7 @@ const Ranking = (props) =>{
                             
                             <Div width="33%" justify_content="flex_start" >
                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                    <Img src= {`${img_src}/${data.profile_img}`}
+                                    <Img src= {`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
                                     width="20px" height="20px" border_radius="50%"/>
                                 </Div>
                                 <P font_weight="bold">{data.id}</P>
@@ -284,7 +291,7 @@ const Ranking = (props) =>{
                             
                             <Div width="33%" justify_content="flex_start" >
                                 <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                    <Img src={`${img_src}/${data.profile_img}`}
+                                    <Img src={`${img_src}/${data.profile_img}`} 
                                     width="20px" height="20px" border_radius="50%"/>
                                 </Div>
                                 <P font_weight="bold">{data.id}</P>
