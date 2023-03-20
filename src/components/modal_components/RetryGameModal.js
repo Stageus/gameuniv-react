@@ -19,6 +19,7 @@ import { Button } from "../../styles/Button"
 // ===== import style func =====
 import { color } from "../../styles/style"
 import { isRetryState, scoreState } from "../game2048_components/recoil/ScoreState"
+import { useLocation } from "react-router"
 
 
 // ===== style =====
@@ -29,17 +30,22 @@ const RetryGameModal = (props) =>{
     // ===== recoil state ======
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setRetry = useSetRecoilState(isRetryState)
+    const location = useLocation().pathname
+    // ===== event =====
+    const retryBtnEvent = () => {
+        if(location === "/2048") props.onRestart()
+        setModalOpen(false)
+        setRetry(true)
+        window.location.reload()
+    }
+
     return(
         <Div width="400px" height="260px" flex_direction="column" justify_content="space-evenly">
             <Div flex_direction="column">
                 <P font_size="m" margin="0 0 10px 0">정말 다시 하시겠습니까?</P>
                 <P font_size="xxs">지금까지 진행한 게임내용은 저장되지 않습니다</P>
             </Div>
-            <Button width="110px" height="37px" onClick={() => {
-                props.onRestart()
-                setModalOpen(false)
-                setRetry(true)
-            }}>네</Button>
+            <Button width="110px" height="37px" onClick={retryBtnEvent}>네</Button>
             
         </Div>
     )

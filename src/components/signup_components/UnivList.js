@@ -13,6 +13,7 @@ const UnivList = (props) =>{
     const [univData, setUniv] = React.useState([])
     const univIdx = props.univIdx
     const setUnivIdx = props.setUnivIdx
+    const setPostData = props.setPostData
     // 대학정보 불러오기 get
     React.useEffect( ()=>{
 
@@ -35,8 +36,9 @@ const UnivList = (props) =>{
         const idx = univData.filter( data => {
             return data.university_name === univ_name
         })[0].university_idx
-        setUnivIdx(idx)
-        // console.log(univIdx)
+        setPostData( prevState => ({...prevState, universityIdx: idx}))
+        // console.log(idx, univIdx)
+        // console.log(props.postDataState)
     }
 
 
@@ -50,9 +52,6 @@ const UnivList = (props) =>{
                         return <option value={data.university_name}></option>
                     })
                 }
-                {/* <option value="인하대학교"/>
-                <option value="아주대학교"/>
-                <option value="숭실대학교"/> */}
             </datalist>
         </React.Fragment>
     )

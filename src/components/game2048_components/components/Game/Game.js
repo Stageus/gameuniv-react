@@ -189,24 +189,6 @@ const GameProvider = (props) =>{
 
 const Game = () =>{
     const isMobile = useMobile()
-    const whichModal = useRecoilValue(whichModalState)
-    const setModalState = useSetRecoilState(whichModalState)
-    const setModalOpen = useSetRecoilState(isModalOpenState)
-
-    const navigate = useNavigate()
-    const location = useLocation().pathname;
-    const backBtnEvent = ()=>{
-        
-        if(location === "/2048"){
-            setModalState("quitGameModal")
-            setModalOpen(true)
-        }
-        else{
-            navigate(-1)
-        }
-    }
-    
-    
 
     return(
         <GameProvider>
