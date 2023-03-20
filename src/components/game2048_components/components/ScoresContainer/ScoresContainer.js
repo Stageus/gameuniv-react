@@ -244,8 +244,13 @@ const ScoresContainer = () =>{
     const isMobile = useMobile()
     
     // ===== event =====
+    useEffect( ()=>{
+        state.score = 0
+    },[])
+
     useEffect( ()=> {
         dispatch( {type: "change", payload: gameState.tiles})
+        
     }, [gameState.tiles, dispatch])
 
     useEffect( () =>{
@@ -254,8 +259,8 @@ const ScoresContainer = () =>{
             oldAddScore.innerText = `+${state.newPoints}`
             const newAddScore = oldAddScore.cloneNode(true)
             oldAddScore.parentNode.replaceChild( newAddScore, oldAddScore)
-
             setScore(state.score)
+            // console.log(score)
         }
     }, [state])
 
@@ -273,6 +278,11 @@ const ScoresContainer = () =>{
             setScoreData(result.data)
         }
     }
+    // console.log(gameState.status)
+    React.useEffect( ()=> {
+        setScore(state.score)
+        // showRank2048()
+    }, [gameState.status])
 
     React.useEffect( () =>{
         showRank2048()

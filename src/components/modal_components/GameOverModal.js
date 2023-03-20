@@ -51,19 +51,21 @@ const GameOverModal = (props) =>{
     const address = useRecoilValue(domainAddressState)
     const whichModal = useRecoilValue(whichGameState)
     const navigate = useNavigate()
-    const location = useLocation()
+    const location = useLocation().pathname
     // ===== event =====
     const gameOverBtnEvent = (e)=>{
         const target = e.target.id
 
         switch(target){
             case "replay_btn":
-                props.onRestart()
+                if(location === "/2048"){
+                    props.onRestart()
+                }
+                window.location.reload()
                 break
             case "home_btn":
                 navigate("/home")
                 setModalOpen(false)
-                // if(location === "/2048") props.onRestart()
                 break
             case "share_btn":
                 setModalState("shareModal")
@@ -80,7 +82,7 @@ const GameOverModal = (props) =>{
         })
         
         // const result_first = await first.json()
-
+        console.log(score2048)
         const response = await fetch(`${address}/2048/score`,{
             method: "POST",
             credentials: "include",
@@ -98,7 +100,7 @@ const GameOverModal = (props) =>{
             alert(result.message)
         }
         else{
-            console.log(result.data.coin, coin)
+            // console.log(result.data.coin, coin)
             console.log(score2048)
             setCoin(prevState => prevState + result.data.coin)
         }
