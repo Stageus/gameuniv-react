@@ -148,9 +148,9 @@ const MobileRangking = (props) =>{
             alert(result.message)
         }
         else{
-            set2048( prevState => [...result.data])
+            set2048( prevState => [...prevState, ...result.data])
             setLoading2048(false)
-            console.log(rank2048)
+            // console.log(rank2048)
         }
         
     },[page2048])
@@ -167,7 +167,7 @@ const MobileRangking = (props) =>{
 
     // tetris 랭킹 데이터 가져오기
     const getRankingDataTetris = React.useCallback( async() =>{
-        setLoading2048(true)
+        setLoadingTetris(true)
         const response = await fetch(`${address}/tetris/record/all?offset=${pageTetris}`, {
             credentials: "include"
         })
@@ -178,7 +178,7 @@ const MobileRangking = (props) =>{
             alert(result.message)
         }
         else{
-            setTetris( prevState => [...result.data])
+            setTetris( prevState => [...prevState, ...result.data])
             setLoadingTetris(false)
         }
         
@@ -226,60 +226,71 @@ const MobileRangking = (props) =>{
                             <RankList>대학</RankList>
                         </Div>
                     {/* rank list */}
-                        <RankScroll ref={game==="tetris"? refTetris : ref2048} flex_direction="column" width="100%" height="220px">
+                        
                             {
                                 game === "tetris"
-                                ?
-                                (
-                                rankTetris.map( (data,idx) =>{
-                                    return(
-                                        <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
-                                            <Div width= "33%" justify_content="flex_start">
-                                                <RankP>{idx+1}</RankP>
-                                                <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
-                                            </Div>
-                                            
-                                            <Div width="33%" justify_content="flex_start" >
-                                                <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                                    <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
-                                                    width="20px" height="20px" border_radius="50%"/>
-                                                </Div>
-                                                <P font_weight="bold">{data.id}</P>
-                                            </Div>
-                                            <Div width="33%" justify_content="flex_start">
-                                                <P>{data.university_name}</P>
-                                            </Div>
-                                        </RankDiv>
-                                    )
-                                    })
-                                )
-                                :
-                                (
-                                rank2048.map( (data,idx) =>{
-                                    return(
-                                        <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
-                                            <Div width= "33%" justify_content="flex_start">
-                                                <RankP>{idx+1}</RankP>
-                                                <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
-                                            </Div>
-                                            
-                                            <Div width="33%" justify_content="flex_start" >
-                                                <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
-                                                    <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
-                                                    width="20px" height="20px" border_radius="50%"/>
-                                                </Div>
-                                                <P font_weight="bold">{data.id}</P>
-                                            </Div>
-                                            <Div width="33%" justify_content="flex_start">
-                                                <P>{data.university_name}</P>
-                                            </Div>
-                                        </RankDiv>
-                                    )
-                                })
-                                )
-                                
+                                &&
+                                <RankScroll  flex_direction="column" width="100%" height="220px">
+                                    <React.Fragment>
+                                        {
+                                            rankTetris.map( (data,idx) =>{
+                                                return(
+                                                    <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
+                                                        <Div width= "33%" justify_content="flex_start">
+                                                            <RankP>{data.rank}</RankP>
+                                                            <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
+                                                        </Div>
+                                                        
+                                                        <Div width="33%" justify_content="flex_start" >
+                                                            <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                                                <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
+                                                                width="20px" height="20px" border_radius="50%"/>
+                                                            </Div>
+                                                            <P font_weight="bold">{data.id}</P>
+                                                        </Div>
+                                                        <Div width="33%" justify_content="flex_start">
+                                                            <P>{data.university_name}</P>
+                                                        </Div>
+                                                    </RankDiv>
+                                                )
+                                                })
+                                        }
+                                        <Div ref={refTetris}></Div>
+                                    </React.Fragment>
+                                </RankScroll>
                             }
-                        </RankScroll>
+                            {
+                                game === "2048"
+                                &&
+                                <RankScroll  flex_direction="column" width="100%" height="220px">
+                                    <React.Fragment>
+                                        {
+                                            rank2048.map( (data,idx) =>{
+                                                return(
+                                                    <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
+                                                        <Div width= "33%" justify_content="flex_start">
+                                                            <RankP>{data.rank}</RankP>
+                                                            <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
+                                                        </Div>
+                                                        
+                                                        <Div width="33%" justify_content="flex_start" >
+                                                            <Div width="26px" height="26px" background_color="grayscale1" border_radius="50%" margin="0 5px 0 0">
+                                                                <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
+                                                                width="20px" height="20px" border_radius="50%"/>
+                                                            </Div>
+                                                            <P font_weight="bold">{data.id}</P>
+                                                        </Div>
+                                                        <Div width="33%" justify_content="flex_start">
+                                                            <P>{data.university_name}</P>
+                                                        </Div>
+                                                    </RankDiv>
+                                                    )
+                                                })
+                                        }
+                                        <Div ref={ref2048}></Div>
+                                    </React.Fragment>
+                                </RankScroll>
+                            }
                     </Div>
                 }
             </Div>

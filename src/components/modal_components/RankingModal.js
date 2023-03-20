@@ -102,12 +102,12 @@ const RankingModal = () =>{
         // }
 
     ])
+
+    // 무한 스크롤 관련
     const [page, setPage] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
-
     const [ref, inView] = useInView()
 
-    // ===== func =====
     // 랭킹 데이터 가져오기
     const getRankingData = useCallback( async() => {
         setLoading(true)
@@ -159,13 +159,13 @@ const RankingModal = () =>{
                         <RankList>대학</RankList>
                     </Div>
                 {/* rank list */}
-                    <RankScroll ref={ref} flex_direction="column" width="100%" height="400px">
+                    <RankScroll  flex_direction="column" width="100%" height="400px">
                         {
                             rankingData.map( (data, idx) =>{
                                 return(
                                     <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
                                         <Div width= "33%" justify_content="flex_start">
-                                            <RankP>{idx+1}</RankP>
+                                            <RankP>{data.rank}</RankP>
                                             <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
                                         </Div>
                                         
@@ -183,6 +183,7 @@ const RankingModal = () =>{
                                 )
                             })
                         }
+                        <Div ref={ref}></Div>
                     </RankScroll>
                 </Div>
                 }
