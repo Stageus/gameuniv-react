@@ -85,7 +85,7 @@ const SignUp = () =>{
         defaultImg: "",
         profileImg: null,
     })
-    const [univIdx, setUnivIdx] = React.useState(undefined)
+    // const [univIdx, setUnivIdx] = React.useState(undefined)
     // console.log(postDataState)
     // ===== var =====
     // ===== event =====
@@ -171,7 +171,7 @@ const SignUp = () =>{
             }
             else{
                 setPostData( (prevState) => ({
-                    ...prevState, universityIdx: univIdx, email: email
+                    ...prevState, email: email
                 }))
                 console.log(postDataState)
                 postSignUpDataEvent(e)
@@ -235,11 +235,11 @@ const SignUp = () =>{
         const email = document.getElementById("email").value
         const auth_number = document.getElementById("auth_number").value
 
-        setPostData( (prevState) => ({
-            ...prevState, universityIdx: univIdx, email: email
-        }))
+        // setPostData( (prevState) => ({
+        //     ...prevState, universityIdx: univIdx, email: email
+        // }))
 
-        console.log(postDataState)
+        // console.log(postDataState)
         const response = await fetch(`${address}/auth/email/number?email=${email}&number=${auth_number}`)
         
         const result = await response.json()
@@ -400,7 +400,7 @@ const SignUp = () =>{
                                 id="univ_input"/> */}
                                 {/* <SignUpInput placeholder="대학교" id="universityIdx" value={postDataState.universityIdx} 
                                 postDataState={postDataState} setPostData={setPostData}/> */}
-                                <UnivList univIdx={univIdx} setUnivIdx={setUnivIdx}/>
+                                <UnivList setPostData={setPostData} postDataState={postDataState}/>
                             </InputBoxDiv>
                             <InputBoxDiv >
                                 <P font_size = "xxs" padding="5px 0">인증번호</P>

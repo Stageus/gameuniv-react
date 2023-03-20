@@ -23,10 +23,10 @@ import { P, NoneEventP } from "../../styles/P"
 import { color } from "../../styles/style"
 
 // ===== import hooks =====
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { useMobile } from "../../hooks/useMediaComponent"
 import { coinState } from "../../recoil/UserDataState"
-import { scoreState } from "../game2048_components/recoil/ScoreState"
+import { scoreDataState, scoreState } from "../game2048_components/recoil/ScoreState"
  // 수정 부분 ======================================================================
 import { whichGameState } from "../../recoil/PageState"
 // ===== style =====
@@ -37,11 +37,11 @@ const GameOverModal = (props) =>{
     // ===== hooks =====
     const isMobile = useMobile()
     // ===== 2048 state =====
-    const score2048 = props.score2048
+    const score2048 = useRecoilValue(scoreState)
     // ===== tetris state ===== // 수정 부분 ====================================================
     const scoreTetris = useRecoilValue(tetrisScoreState)
     // const scoreTetris = props.scoreTetris
-    const score2222 = useRecoilValue(scoreState)
+    // const score2222 = useRecoilValue(scoreState)
     
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
@@ -51,7 +51,7 @@ const GameOverModal = (props) =>{
     const address = useRecoilValue(domainAddressState)
     const whichModal = useRecoilValue(whichGameState)
     const navigate = useNavigate()
-    
+    const location = useLocation()
     // ===== event =====
     const gameOverBtnEvent = (e)=>{
         const target = e.target.id
@@ -61,9 +61,9 @@ const GameOverModal = (props) =>{
                 props.onRestart()
                 break
             case "home_btn":
-                props.onRestart()
                 navigate("/home")
                 setModalOpen(false)
+                // if(location === "/2048") props.onRestart()
                 break
             case "share_btn":
                 setModalState("shareModal")
@@ -73,11 +73,14 @@ const GameOverModal = (props) =>{
     }
 
     // 게임오버 시 게임점수 보내기
-    const postScore = async() =>{
+    const post2048Score = async() =>{
+        // const first = 
         fetch(`${address}/2048/score/rank?score=${score2048}`,{
             credentials: "include"
         })
         
+        // const result_first = await first.json()
+
         const response = await fetch(`${address}/2048/score`,{
             method: "POST",
             credentials: "include",
@@ -95,8 +98,8 @@ const GameOverModal = (props) =>{
             alert(result.message)
         }
         else{
-            console.log(result.data.coin)
-            console.log(coin)
+            console.log(result.data.coin, coin)
+            console.log(score2048)
             setCoin(prevState => prevState + result.data.coin)
         }
     }
@@ -134,7 +137,7 @@ const GameOverModal = (props) =>{
         if(whichModal === "tetris"){
             postTetrisScore()
         }else{
-            postScore()
+            post2048Score()
         }
         
     }, [])

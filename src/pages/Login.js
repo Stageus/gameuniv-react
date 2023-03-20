@@ -10,7 +10,7 @@ import { useCookies, setCookie } from "react-cookie"
 //  ===== import recoil =====
 import { domainAddressState, isLoginState } from "../recoil/DomainState"
 import { coinState, userDataState } from "../recoil/UserDataState"
-import { Navigate } from "react-router-dom"
+import { Navigate, useLocation } from "react-router-dom"
 
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
@@ -45,7 +45,7 @@ const Login = () =>{
     const setLogin = useSetRecoilState(isLoginState)
     const isLogin = useRecoilValue(isLoginState)
     const setCoin = useSetRecoilState(coinState)
-
+    const location = useLocation()
     // ===== router =====
     const navigate = useNavigate()
     // const audio = document.getElementById("audio")
@@ -53,12 +53,15 @@ const Login = () =>{
     // const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
     React.useEffect(()=>{
-        setLogin(false)
-        setUserData({})
+        // getUserData()
+        // setLogin(false)
+        // setUserData({})
     }, [])
     // 자동 로그인
 
     const postLoginData = async() =>{
+        
+
         const id = document.getElementById("id").value
         const pw = document.getElementById("pw").value
 
@@ -122,11 +125,15 @@ const Login = () =>{
         const result = await response.json()
         
         if(result.message){
-            alert(result.message)
+            // alert(result.message)
+            console.log(1)
         }
         else{
+            // if(location.pathname === "/"){
+            //     setLogin(true)
+            //     navigate("/home")
+            // }
             setUserData(result.data)
-            // console.log(result.data)
         }
     }
     
