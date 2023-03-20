@@ -55,5 +55,5 @@ export const useStage =(player, resetPlayer)=>{
         setStage(prev => updateStage(prev))
     },[player,resetPlayer, rowsCleared])
 
-    return [stage, setStage]
+    return [stage, setStage, rowsCleared]
 }
