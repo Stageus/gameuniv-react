@@ -3,10 +3,6 @@ import React from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
-// ===== import cookies =====
-import { useExpireTime } from "../hooks/useExpireTime"
-import { useCookies, setCookie } from "react-cookie"
-
 //  ===== import recoil =====
 import { domainAddressState, isLoginState } from "../recoil/DomainState"
 import { coinState, userDataState } from "../recoil/UserDataState"
@@ -59,10 +55,13 @@ const Login = () =>{
     React.useEffect(()=>{
         const expire = window.localStorage.getItem("time")
         console.log(expire > Date.now())
-        if(expire > Date.now()){
+        if(( expire > Date.now() && isLogin) ){
             getUserData()
-            window.localStorage.setItem("time", Date.now() + 60*24*24)
+            window.localStorage.setItem("time", Date.now() + 1000*60*24*24)
             navigate("/home")
+        }
+        else{
+            window.localStorage.removeItem("recoil-persist")
         }
     }, [])
     // 자동 로그인
@@ -93,8 +92,7 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
-            window.localStorage.setItem("time", Date.now() + 60*24*24)
-            // 60*60*24
+            window.localStorage.setItem("time", Date.now() + 1000*60*24*24)
             getUserData()
             getCoinData()
             setLogin(true)

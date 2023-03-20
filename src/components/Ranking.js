@@ -256,7 +256,7 @@ const Ranking = (props) =>{
                     return(
                         <RankDiv width="100%" height="37px" justify_content="space-between" rank={idx+1}>
                             <Div width= "33%" justify_content="flex_start">
-                                <RankP>{idx+1}</RankP>
+                                <RankP>{data.rank}</RankP>
                                 <ScoreP rank={idx+1}>{data.max_score}</ScoreP>
                             </Div>
                             
