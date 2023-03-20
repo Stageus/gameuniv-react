@@ -9,6 +9,7 @@ const {persistAtom } = recoilPersist()
 export const scoreState = atom({
     "key" : "scoreState",
     "default": 0,
+    effects_UNSTABLE: [persistAtom]
 })
 
 export const scoreDataState = atom({
@@ -17,8 +18,8 @@ export const scoreDataState = atom({
     // effects_UNSTABLE: [persistAtom]
 })
 
-export const isRetryState = atom({
-    "key" : "isRetryState",
-    "default": false,
+export const game2048ResultState = atom({
+    "key" : "game2048ResultState",
+    "default": {},
 })
 

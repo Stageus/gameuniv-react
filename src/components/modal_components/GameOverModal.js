@@ -26,7 +26,9 @@ import { color } from "../../styles/style"
 import { useLocation, useNavigate } from "react-router"
 import { useMobile } from "../../hooks/useMediaComponent"
 import { coinState } from "../../recoil/UserDataState"
-import { scoreDataState, scoreState } from "../game2048_components/recoil/ScoreState"
+
+import { game2048ResultState, scoreDataState, scoreState } from "../game2048_components/recoil/ScoreState"
+
 import { whichGameState } from "../../recoil/PageState"
 // ===== style =====
 
@@ -37,7 +39,12 @@ const GameOverModal = (props) =>{
     const isMobile = useMobile()
     // ===== 2048 state =====
     const score2048 = useRecoilValue(scoreState)
-    // ===== tetris state ===== 
+
+    const game2048Result = useRecoilValue(game2048ResultState)
+    // 객체로 {achieveList: [], rank : , coin : } 들어가 있음
+    // console.log(game2048Result)
+    // ===== tetris state ===== // 수정 부분 ====================================================
+
     const scoreTetris = useRecoilValue(tetrisScoreState)
     // const scoreTetris = props.scoreTetris
     // const score2222 = useRecoilValue(scoreState)
@@ -105,7 +112,6 @@ const GameOverModal = (props) =>{
         }
     }
 
-    // 게임오버 시 게임점수 보내기 tetris
     const postTetrisScore = async() =>{
         fetch(`${address}/tetris/score/rank?score=${scoreTetris}`,{
             credentials: "include"
@@ -138,7 +144,7 @@ const GameOverModal = (props) =>{
         if(whichModal === "tetris"){
             postTetrisScore()
         }else{
-            post2048Score()
+            // post2048Score()
         }
         
     }, [])

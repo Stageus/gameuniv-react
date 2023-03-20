@@ -14,9 +14,9 @@ import ScoreBox from "../ScoreBox/ScoreBox"
 import { useMobile } from "../../../../hooks/useMediaComponent";
 
 // ===== import recoil =====
-import { isRetryState, scoreDataState, scoreState } from "../../recoil/ScoreState";
+import { game2048ResultState, scoreDataState, scoreState } from "../../recoil/ScoreState";
 import { domainAddressState } from "../../../../recoil/DomainState";
-import { userDataState } from "../../../../recoil/UserDataState";
+import { userDataState, coinState } from "../../../../recoil/UserDataState";
 
 // ===== import style =====
 import { Div } from "../../../../styles/Div";
@@ -238,16 +238,16 @@ const ScoresContainer = () =>{
     const score = useRecoilValue(scoreState)
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
-    const isRetry = useRecoilValue(isRetryState)
+    const setGameResult = useSetRecoilState(game2048ResultState)
+    
+    const game2048Result = useRecoilValue(game2048ResultState)
+    const setCoin = useSetRecoilState(coinState)
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
-    
-    // ===== event =====
-    useEffect( ()=>{
-        state.score = 0
-    },[])
+    const [isGameOver, setGameOver] = React.useState(false)
 
+    // ===== event =====
     useEffect( ()=> {
         dispatch( {type: "change", payload: gameState.tiles})
         
@@ -281,12 +281,61 @@ const ScoresContainer = () =>{
     // console.log(gameState.status)
     React.useEffect( ()=> {
         setScore(state.score)
-        // showRank2048()
+        if(gameState.status === "GAME_OVER") setGameOver(true)
     }, [gameState.status])
 
     React.useEffect( () =>{
         showRank2048()
     }, [score > scoreData.next_max_score])
+
+    //게임 오버 시 점수보내기
+    const post2048Score = async() =>{
+        // const first = 
+        fetch(`${address}/2048/score/rank?score=${score}`,{
+            credentials: "include"
+        })
+        
+        // const result_first = await first.json()
+        console.log(score)
+        const response = await fetch(`${address}/2048/score`,{
+            method: "POST",
+            credentials: "include",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                score: score,
+            })
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            // console.log(result.data.coin, coin)
+            // console.log(score)
+            console.log(result.data)
+            setGameResult(result.data)
+            const achieve_list = result.data.achieveList
+            let achieve_coin = 0
+
+            if(achieve_list){
+                achieve_list.forEach( achieve => {
+                    achieve_coin += achieve.reward_coin
+                })
+            }
+
+            setCoin(prevState => prevState + (result.data.coin + achieve_coin) )
+        }
+    }
+    // 게임오버 시 점수 보내기
+    useEffect( () => {
+        if(isGameOver === true){
+            post2048Score()
+        }
+    }, [isGameOver]) 
 
     return(
         <ScoresContainerDiv isMobile={isMobile}>
