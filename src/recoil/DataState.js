@@ -70,3 +70,16 @@ export const gameCountDataState = atom({
     "default": null
 })
 
+
+
+
+
+
+// 스테이트 역할 : 테트리스 점수 저장
+// default : 테트리스 점수
+// 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
+export const tetrisScoreState = atom({
+    "key" : "tetrisScoreState",
+    "default": null
+})
+
