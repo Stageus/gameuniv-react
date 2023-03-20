@@ -103,11 +103,6 @@ const getGameStatus = (tiles) =>{
     if( isGameOver(tiles)){
         return "GAME_OVER"
     }
-
-    // if(isGameWon(tiles)){
-    //     return "WIN"
-    // }
-
     return "IN_PROGRESS"
 }
 
@@ -178,7 +173,6 @@ const GameProvider = (props) =>{
         
         
     }, [isModalOpen] )
-
 
     return(
         <GameContext.Provider value={ { gameState: state, dispatch } }>

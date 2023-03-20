@@ -29,13 +29,11 @@ import { useLocation } from "react-router"
 const RetryGameModal = (props) =>{
     // ===== recoil state ======
     const setModalOpen = useSetRecoilState(isModalOpenState)
-    const setRetry = useSetRecoilState(isRetryState)
     const location = useLocation().pathname
     // ===== event =====
     const retryBtnEvent = () => {
         if(location === "/2048") props.onRestart()
         setModalOpen(false)
-        setRetry(true)
         window.location.reload()
     }
 
