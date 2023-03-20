@@ -42,6 +42,7 @@ const GameOverModal = (props) =>{
     const scoreTetris = useRecoilValue(tetrisScoreState)
     // const scoreTetris = props.scoreTetris
     const score2222 = useRecoilValue(scoreState)
+    
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setCoin = useSetRecoilState(coinState)
@@ -76,7 +77,7 @@ const GameOverModal = (props) =>{
         fetch(`${address}/2048/score/rank?score=${score2048}`,{
             credentials: "include"
         })
-
+        
         const response = await fetch(`${address}/2048/score`,{
             method: "POST",
             credentials: "include",
