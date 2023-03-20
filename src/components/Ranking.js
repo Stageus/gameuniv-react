@@ -183,14 +183,14 @@ const Ranking = (props) =>{
             // alert(result2048.message)
         }
         else{
-            set2048(result2048.data)
+            set2048(result2048.data.slice(0,5))
         }
     
         if(resultTetris.message){
             // alert(resultTetris.message)
         }
         else{
-            setTetris(resultTetris.data)
+            setTetris(resultTetris.data.slice(0,5))
         }
     }
 
