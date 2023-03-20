@@ -123,6 +123,7 @@ const Home = () =>{
     const setPageState = useSetRecoilState(whichPageState)
     const [userTetrisRankData,setUserTetrisRankData]=useRecoilState(userTetrisRankDataState)
     const [user2048RankData, setUser2048RankDataState]=useRecoilState(user2048RankDataState)
+
     // ===== var =====
     let isTetrisDataExist
     let is2048DataExist
@@ -162,8 +163,12 @@ const Home = () =>{
 
         if(result_tetris.message){
             alert(result_tetris.message)
+            // 수정 => 자동로그인 푸렸을시 홈으로 이동
+            navigate("/")
         }if(result_2048.message){
             alert(result_2048.message)
+            // 수정
+            navigate("/")
         }
     }
     // ===== hook =====

@@ -63,3 +63,4 @@ export const user2048RankDataState = atom({
         max_score : "",
     }
 })
+

@@ -48,22 +48,30 @@ const Login = () =>{
     const location = useLocation()
     // ===== router =====
     const navigate = useNavigate()
+
+    // 
+    // const id = document.getElementById("id").value
+    // const pw = document.getElementById("pw").value
     // const audio = document.getElementById("audio")
     // const login_form = document.getElementById("login_form")
     // const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
     React.useEffect(()=>{
-        // getUserData()
-        // setLogin(false)
-        // setUserData({})
+        const expire = window.localStorage.getItem("time")
+        console.log(expire > Date.now())
+        if(expire > Date.now()){
+            getUserData()
+            window.localStorage.setItem("time", Date.now() + 60*24*24)
+            navigate("/home")
+        }
     }, [])
     // 자동 로그인
 
-    const postLoginData = async() =>{
+    const postLoginData = async(id, pw) =>{
         
 
-        const id = document.getElementById("id").value
-        const pw = document.getElementById("pw").value
+        // const id = document.getElementById("id").value
+        // const pw = document.getElementById("pw").value
 
         // console.log(id, pw)
         const response = await fetch(`${address}/auth`,{
@@ -85,6 +93,8 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
+            window.localStorage.setItem("time", Date.now() + 60*24*24)
+            // 60*60*24
             getUserData()
             getCoinData()
             setLogin(true)
@@ -111,7 +121,7 @@ const Login = () =>{
             alert("비밀번호 형식이 올바르지 않습니다(8~20자, 하나 이상의 숫자, 문자, 특수문자")
         }
         else{
-            postLoginData(e)
+            postLoginData(id, pw)
         }
     }
 
