@@ -22,11 +22,12 @@ const StageDiv=styled.div`
     grid-gap :0.1px;
 
     width :360px;
-    background: #FFFFFF;
-    border: 9px solid #FFE973;
-    border-radius : 10px;
-    padding :1px;
-    box-shadow: inset 0px 4px 17px rgba(0, 0, 0, 0.1);
+    height : 610px;
+    background-image: url("img_srcs/game_img/tetris/jelly/asset/smallBoardImg.png");
+    background-size : 360px 610px;
+    background-repeat : no-repeat;
+    // background-position : center center;
+    // padding :1px;
 
 `
 

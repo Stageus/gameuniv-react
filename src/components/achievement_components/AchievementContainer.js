@@ -8,7 +8,7 @@ import AchievementUnit from "./AchievementUnit"
 
 //  ===== import recoil =====
 import { whichAchievementComponentState } from "../../recoil/ComponentState"
-import { achievementTetrisDataState, achievement2048DataState } from "../../recoil/DataState"
+import { achievementTetrisDataState, achievement2048DataState , gameCountDataState} from "../../recoil/DataState"
 import { domainAddressState} from "../../recoil/DomainState"
 
 //  ===== component =====
@@ -18,6 +18,7 @@ const AchievementContainer = () =>{
     const whichAcheivementComponent= useRecoilValue(whichAchievementComponentState)
     const [achievementTetrisData,setAchievementTetrisData]=useRecoilState(achievementTetrisDataState)
     const [achievement2048Data,setAchievement2048Data]=useRecoilState(achievement2048DataState)
+    const [gameCountData,setGameCountData]=useRecoilState(gameCountDataState)
 
     const getAchievementDataEvent = async() =>{
 
@@ -35,7 +36,8 @@ const AchievementContainer = () =>{
 
         setAchievementTetrisData(result_tetris.data)
         setAchievement2048Data(result_2048.data)
-
+        //2048이라써있지만 둘다 가능
+        setGameCountData(result_2048.game_count)
 
         if(result_tetris.message){
             alert(result_tetris.message)
@@ -43,6 +45,8 @@ const AchievementContainer = () =>{
             alert(result_2048.message)
         }
     }
+
+    console.log(gameCountData)
 
     // ===== hook =====
     useEffect(() => {

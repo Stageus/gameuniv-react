@@ -123,9 +123,9 @@ const Home = () =>{
     const setPageState = useSetRecoilState(whichPageState)
     const [userTetrisRankData,setUserTetrisRankData]=useRecoilState(userTetrisRankDataState)
     const [user2048RankData, setUser2048RankDataState]=useRecoilState(user2048RankDataState)
-      // ===== state =====
-    const [isTetrisDataExist, setTetrisDataExistState]=React.useState(false)
-    const [is2048DataExist, set2048DataExistState]=React.useState(false)
+    // ===== var =====
+    let isTetrisDataExist
+    let is2048DataExist
     // ===== router =====
     const navigate = useNavigate()
     // ===== event =====
@@ -175,14 +175,12 @@ const Home = () =>{
         alert("로그인 후 이용 가능합니다")
         return <Navigate to="/" replace={true}/>
     }
-
-    // if(userTetrisRankData.ranking != null){
-    //     setTetrisDataExistState(true)
-    // }
-
-    // if(user2048RankData.ranking != null){
-    //     set2048DataExistState(true)
-    // }
+    if(userTetrisRankData.rank > 0){
+        isTetrisDataExist = true
+    }
+    if(user2048RankData.rank > 0){
+        is2048DataExist = true
+    }
 
     return(
         <React.Fragment>
@@ -196,9 +194,16 @@ const Home = () =>{
                                 <React.Fragment>
                                     <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
                                         <H1 font_size="m" color="blue4">Tetris</H1>
-                                        <P font_size="xxxl" font_weight="bold" color="grayscale7">{userTetrisRankData.ranking}th</P>
-                                        <H1 font_size="m" color="grayscale7">Your Score</H1>
-                                        <P font_size="xxs" font_weight="light" color="grayscale7">{userTetrisRankData.max_score}</P>
+                                        <P font_size="xxxl" font_weight="bold" color="grayscale7">
+                                            {((userTetrisRankData.rank === -1) || (userTetrisRankData.rank > 100))
+                                            ?
+                                            "99등 초과"
+                                            :
+                                            userTetrisRankData.rank + "등"
+                                            }               
+                                        </P>
+                                        <H1 font_size="s" color="grayscale7">최고 점수</H1>
+                                        <P font_size="xs" color="grayscale7">{userTetrisRankData.max_score}</P>
                                     </Div>
                                     <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisCropImg.png`}/>
                                 </React.Fragment>
@@ -216,9 +221,16 @@ const Home = () =>{
                                 <React.Fragment>
                                     <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
                                         <H1 font_size="m" color="blue4">2048</H1>
-                                        <P font_size="xxxl" font_weight="bold" color="grayscale7">{user2048RankData.ranking}th</P>
-                                        <H1 font_size="m" color="grayscale7">Your Score</H1>
-                                        <P font_size="xxs" font_weight="light" color="grayscale7">{user2048RankData.max_score}</P>
+                                        <P font_size="xxxl" font_weight="bold" color="grayscale7">
+                                            {((user2048RankData.rank === -1) || (user2048RankData.rank > 100))
+                                            ?
+                                            "99등 초과"
+                                            :
+                                            user2048RankData.rank + "등"
+                                            }       
+                                            </P>
+                                        <H1 font_size="s" color="grayscale7">최고 점수</H1>
+                                        <P font_size="xs" color="grayscale7">{user2048RankData.max_score}</P>
                                     </Div>
                                     <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048CropImg.png`}/>
                                 </React.Fragment>
@@ -243,6 +255,9 @@ const Home = () =>{
                         </AchivementBtnPcDiv>
                     </Div>
                 </PC>
+
+
+                
                 <Mobile>
                     <Div width="440px"   height="301px" justify_content="space-between">
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">

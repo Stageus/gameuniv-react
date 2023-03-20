@@ -8,7 +8,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 // ===== import recoil =====
 import { whichPageState } from "../../recoil/PageState"
 import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
-
+import { whichGameState } from "../../recoil/PageState"
 // ===== import hooks =====
 import { useNavigate } from "react-router"
 
@@ -36,6 +36,7 @@ const GameSelectModal = () =>{
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setPageState= useSetRecoilState(whichPageState)
+    const setGameState= useSetRecoilState(whichGameState)
     //삭제할 스테이트
     const setModalState = useSetRecoilState(whichModalState)
 
@@ -50,10 +51,12 @@ const GameSelectModal = () =>{
             case "tetris_btn":
                 navigate("/tetris")
                 setModalOpen(false)
+                setGameState("tetris")
                 break
             case "2048_btn":
                 navigate("/2048")
                 setModalOpen(false)
+                setGameState("2048")
                 break
         }
 

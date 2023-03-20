@@ -64,7 +64,7 @@ const Bg = (props) =>{
             ( location ==="/item")
             &&
             <SolidImgDiv>
-                <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="500px" top="13%" right="70%" deg="20deg"/>
+                <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisImg.png`} width="480px" top="10%" right="70%" deg="20deg"/>
             </SolidImgDiv>
             
         }

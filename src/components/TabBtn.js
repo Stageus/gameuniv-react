@@ -21,8 +21,8 @@ const Label = styled.label`
     justify-content :center;
     width: 100%;
     height: 100%;
+    cursor :pointer;
 `
-
 const InputRadio = styled.input`
     display : none;
 `

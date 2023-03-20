@@ -80,12 +80,12 @@ const Modal = (props) =>{
         {
             isModalOpen 
             &&
-            <Overlay onClick={modalEvent} id="overlay">
+            <Overlay onClick={ !(whichModal == "gameOverModal" || whichModal == "itemEquipModal") &&  modalEvent} id="overlay">
                 <Div background_color="grayscale1" 
                 flex_direction="column" justify_content="flex-start" border_radius="3px">
                     {/* 수정된 부분 - 게임오버 모달은 끄기 비활성화*/}
                     { 
-                        whichModal != ("gameOverModal" && "itemEquipModal") && 
+                        !(whichModal == "gameOverModal" || whichModal == "itemEquipModal") && 
                             <Div width="100%" justify_content="flex-end">
                                 <CancelBtn src= {`${process.env.PUBLIC_URL}/img_srcs/icons/crossGrayIcon.png`} id="cancel_btn"/>
                             </Div>

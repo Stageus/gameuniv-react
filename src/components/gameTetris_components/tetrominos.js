@@ -7,7 +7,8 @@ export const TETROMINOS ={
             [0, 'I', 0, 0],
             [0, 'I', 0, 0]
         ],
-        cellImg : "img_srcs/game_img/tetris/cell/tetrisJellyCellYellow.png"
+        cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellI.png",
+        tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoI.png"
 
     },
     J: {
@@ -16,7 +17,8 @@ export const TETROMINOS ={
             [0, 'J', 0],
             ['J', 'J', 0]
         ],
-        cellImg : "img_srcs/game_img/tetris/cell/tetrisJellyCellGreen.png"
+        cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellJ.png",
+        tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoJ.png"
 
     },
     L: {
@@ -25,7 +27,8 @@ export const TETROMINOS ={
             [0, 'L', 0],
             [0, 'L', 'L']
         ],
-        cellImg : "img_srcs/game_img/tetris/cell/tetrisJellyCellPurple.png"
+        cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellL.png",
+        tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoL.png"
 
     },
     O: {
@@ -33,7 +36,8 @@ export const TETROMINOS ={
             ['O', 'O'],
             ['O', 'O'],
         ],
-        cellImg : "img_srcs/game_img/tetris/cell/tetrisJellyCellOrange.png"
+        cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellO.png",
+        tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoO.png"
 
     },
     S: {
@@ -42,7 +46,8 @@ export const TETROMINOS ={
             ['S', 'S', 0],
             [0, 0, 0]
         ],
-        cellImg : "img_srcs/game_img/tetris/cell/tetrisJellyCellRed.png"
+        cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellS.png",
+        tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoS.png"
     },
     T: {
         shape :[
@@ -50,7 +55,8 @@ export const TETROMINOS ={
             ['T', 'T', 'T'],
             [0, 'T', 0]
         ],
-        cellImg : "img_srcs/game_img/tetris/cell/tetrisJellyCellLightBlue.png"
+        cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellT.png",
+        tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoT.png"
     },
     Z: {
         shape :[
@@ -58,7 +64,8 @@ export const TETROMINOS ={
             [0, 'Z', 'Z'],
             [0, 0, 0]
         ],
-        cellImg : "img_srcs/game_img/tetris/cell/tetrisJellyCellBlue.png"
+        cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellZ.png",
+        tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoZ.png"
     }
     
 }

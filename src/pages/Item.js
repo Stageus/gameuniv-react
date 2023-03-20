@@ -1,7 +1,7 @@
 // ===== import base =====
-import React from "react"
-import {useRecoilValue, useSetRecoilState} from "recoil"
-import styled , {css}from "styled-components"
+import React, { useEffect } from "react"
+import {useRecoilValue, useSetRecoilState,useResetRecoilState} from "recoil"
+import styled from "styled-components"
 import { Navigate } from "react-router"
 
 // ===== import component =====
@@ -23,14 +23,17 @@ import {Div} from "../styles/Div"
 
 
 // ===== style =====
-// const ItemDiv = styled(Div)`
-//     position :relative;
-// `
+const ItemDiv = styled(Div)`
+    position :relative;
+`
 const ItemContainerPcDiv = styled(Div)`
     gap: 30px;
     flex-wrap: wrap;
+`
+const ItemContainerDiv = styled(Div)`
     overflow-y : scroll;
 `
+
 const ItemContainerMobileDiv = styled(Div)`
     gap: 10px;
     flex-wrap: wrap;
@@ -38,15 +41,20 @@ const ItemContainerMobileDiv = styled(Div)`
 `
 //  ===== component =====
 const Item = () =>{
-    //===== state =====
-    const setItemDetailOpenState=useSetRecoilState(isItemDetailOpenState)
     // ===== recoil state =====
+    const setItemDetailOpenState=useSetRecoilState(isItemDetailOpenState)
     const setItemComponentState=useSetRecoilState(whichItemComponentState)
+    const resetItemComponentState = useResetRecoilState(whichItemComponentState)
     const setTabOpenState=useSetRecoilState(isTabOpenState)
+    const resetTabOpenState = useResetRecoilState(isTabOpenState)
     const setClickUnitState=useSetRecoilState(isClickUnitState)
-    // 수정
     const isLogin = useRecoilValue(isLoginState)
-    // // 비정상접근 막기
+    // ===== hook =====
+    useEffect(()=>{
+        resetTabOpenState()
+        resetItemComponentState()
+    })
+    // 비정상접근 막기
     if(!isLogin){
         alert("로그인 후 이용 가능합니다")
         return <Navigate to="/" replace={true}/>
@@ -78,22 +86,23 @@ const Item = () =>{
 
     }
     return(
-        
         <React.Fragment>
-            <Div width = "1000px" height="85%" justify_content="center" >
+            <ItemDiv width="100%" height="100%">
                     <PC>
-                        <Div width="800px" height="100%" align_items="flex-start"  flex_direction="column">
+                        <Div width="750px" height="95%" align_items="flex-start" flex_direction="column" margin="30px 0 0 0">
                             <H1 font_size="xl" color="grayscale7">
                                 아이템
                             </H1>
-                            <Div width="800px"  height="62px" justify_content="space-between" margin="25px 0 0 0" onChange={itemTabBtnEvent}>
+                            <Div width="750px"  height="62px" justify_content="space-between" margin="25px 0 0 0" onChange={itemTabBtnEvent}>
                                 <TabBtn id="tab1" after_img="/img_srcs/icons/storeBlueIcon.png" before_img="/img_srcs/icons/storeGrayIcon.png" txt="상점" width="33%"/>
                                 <TabBtn id="tab2" after_img="/img_srcs/icons/heartBlueIcon.png" before_img="/img_srcs/icons/heartGrayIcon.png" txt="찜목록" width="33%"/>
                                 <TabBtn id="tab3" after_img="/img_srcs/icons/myItemBlueIcon.png" before_img="/img_srcs/icons/myItemGrayIcon.png" txt="내 아이템" width="33%"/>
                             </Div>
-                            <ItemContainerPcDiv width="800px" height="100%" border_radius="0 0 3px 3px" background_color="blue2" padding="20px 0 20px 0">
-                                <ItemContainer/>
-                            </ItemContainerPcDiv>
+                            <ItemContainerDiv align_items="flex-start" width="100%" height="100%" border_radius="0 0 3px 3px" background_color="blue2" padding="20px 0 20px 0">
+                                <ItemContainerPcDiv width="100%" justify_content="flex-start" margin="0px 0 20px 80px">
+                                    <ItemContainer/>
+                                </ItemContainerPcDiv>
+                            </ItemContainerDiv>
                         </Div>
                     </PC>
                     <Mobile>
@@ -111,7 +120,7 @@ const Item = () =>{
                             </Div>
                         </Div>
                     </Mobile>
-            </Div>
+            </ItemDiv>
         </React.Fragment>
     )
 }
