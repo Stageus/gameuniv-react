@@ -27,7 +27,6 @@ import { useLocation, useNavigate } from "react-router"
 import { useMobile } from "../../hooks/useMediaComponent"
 import { coinState } from "../../recoil/UserDataState"
 import { scoreDataState, scoreState } from "../game2048_components/recoil/ScoreState"
- // 수정 부분 ======================================================================
 import { whichGameState } from "../../recoil/PageState"
 // ===== style =====
 
@@ -38,7 +37,7 @@ const GameOverModal = (props) =>{
     const isMobile = useMobile()
     // ===== 2048 state =====
     const score2048 = useRecoilValue(scoreState)
-    // ===== tetris state ===== // 수정 부분 ====================================================
+    // ===== tetris state ===== 
     const scoreTetris = useRecoilValue(tetrisScoreState)
     // const scoreTetris = props.scoreTetris
     // const score2222 = useRecoilValue(scoreState)
@@ -74,7 +73,7 @@ const GameOverModal = (props) =>{
 
     }
 
-    // 게임오버 시 게임점수 보내기
+    // 게임오버 시 게임점수 보내기 2048
     const post2048Score = async() =>{
         // const first = 
         fetch(`${address}/2048/score/rank?score=${score2048}`,{
@@ -106,7 +105,7 @@ const GameOverModal = (props) =>{
         }
     }
 
-    // 수정 부분 ============= 테트리스 스코어 보내주기
+    // 게임오버 시 게임점수 보내기 tetris
     const postTetrisScore = async() =>{
         fetch(`${address}/tetris/score/rank?score=${scoreTetris}`,{
             credentials: "include"
@@ -145,7 +144,7 @@ const GameOverModal = (props) =>{
     }, [])
     // 수정 부분 ====================================================
     return(
-        <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"500px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
+        <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
             <H1 color="grayscale7" font_size="l" font_weight="regular">
                 게임 오버
             </H1>
@@ -169,7 +168,7 @@ const GameOverModal = (props) =>{
                 </Div>
             </Div>
 
-            <Div width="18%" height="70px" flex_direction="column" justify_content="space-between">
+            <Div width="18%" height="80px" flex_direction="column" justify_content="space-between">
                 <P color="grayscale7" font_size="m" font_weight="regular">
                     코인
                 </P>
@@ -179,13 +178,22 @@ const GameOverModal = (props) =>{
                 </Div>
             </Div>
 
-            <Div width="50%" height="140px" flex_direction="column" justify_content="space-between">
+            <Div width="50%" height="170px" flex_direction="column" justify_content="space-between">
                 <P color="grayscale7" font_size="m" font_weight="regular">
                     업적
                 </P>
                 <Div>
                     {/* 아마 컴포넌트로 뺼듯 */}
-                    <ShadowDiv width="95px" height="100px" border_radius="10px"></ShadowDiv>
+                    <ShadowDiv width="181px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
+                        <H1 color="blue3" font_size="xs" font_weight="medium" >테트리스 랭킹 100위 이내 달성</H1>
+                        <Div width="60%" justify_content="space-around">
+                            <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`}/>
+                            <P  color="grayscale7" font_size="xxs" font_weight="regular">1코인</P>
+                        </Div>
+                        <Div width="50px" height="20px" border_radius="10px" background_color="green">
+                            <P color="grayscale1" font_size="xxxs" font_weight="regular">달성!</P>
+                        </Div>
+                    </ShadowDiv>
                 </Div>
             </Div>
 
