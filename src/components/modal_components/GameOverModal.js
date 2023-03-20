@@ -10,6 +10,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import { whichPageState } from "../../recoil/PageState"
 import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
 import { domainAddressState } from "../../recoil/DomainState"
+import { tetrisScoreState} from "../../recoil/DataState"
 
 // ===== import style =====
 import { Img, NoneEventImg } from "../../styles/Img"
@@ -26,6 +27,8 @@ import { useNavigate } from "react-router"
 import { useMobile } from "../../hooks/useMediaComponent"
 import { coinState } from "../../recoil/UserDataState"
 import { scoreState } from "../game2048_components/recoil/ScoreState"
+ // 수정 부분 ======================================================================
+import { whichGameState } from "../../recoil/PageState"
 // ===== style =====
 
 //  ===== component =====
@@ -35,6 +38,9 @@ const GameOverModal = (props) =>{
     const isMobile = useMobile()
     // ===== 2048 state =====
     const score2048 = props.score2048
+    // ===== tetris state ===== // 수정 부분 ====================================================
+    const scoreTetris = useRecoilValue(tetrisScoreState)
+    // const scoreTetris = props.scoreTetris
     const score2222 = useRecoilValue(scoreState)
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
@@ -42,7 +48,9 @@ const GameOverModal = (props) =>{
     const coin = useRecoilValue(coinState)
     const setModalState = useSetRecoilState(whichModalState)
     const address = useRecoilValue(domainAddressState)
+    const whichModal = useRecoilValue(whichGameState)
     const navigate = useNavigate()
+    
     // ===== event =====
     const gameOverBtnEvent = (e)=>{
         const target = e.target.id
@@ -92,10 +100,44 @@ const GameOverModal = (props) =>{
         }
     }
 
-    React.useEffect( () =>{
-        postScore()
-    }, [])
+    // 수정 부분 ============= 테트리스 스코어 보내주기
+    const postTetrisScore = async() =>{
+        fetch(`${address}/tetris/score/rank?score=${scoreTetris}`,{
+            credentials: "include"
+        })
 
+        const response = await fetch(`${address}/tetris/score`,{
+            method: "POST",
+            credentials: "include",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                score: scoreTetris,
+            })
+        })
+
+        const result = await response.json()
+
+        if(result.message){
+            alert(result.message)
+        }
+        else{
+            console.log(result.data.coin)
+            console.log(coin)
+            setCoin(prevState => prevState + result.data.coin)
+        }
+    }
+
+    React.useEffect( () =>{
+        if(whichModal === "tetris"){
+            postTetrisScore()
+        }else{
+            postScore()
+        }
+        
+    }, [])
+    // 수정 부분 ====================================================
     return(
         <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"500px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
             <H1 color="grayscale7" font_size="l" font_weight="regular">
@@ -105,11 +147,19 @@ const GameOverModal = (props) =>{
             <Div width="50%" justify_content="space-between">
                 <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" margin="0 10px" >
                     <P color="blue3" font_size="m" font_weight="regular">점수</P>
-                    <P color="grayscale1" font_size="s" font_weight="regular">{score2048}</P>
+                    <P color="grayscale1" font_size="s" font_weight="regular">
+                    {
+                        (whichModal === "tetris")
+                        ?
+                        scoreTetris
+                        :
+                        score2048
+                    }
+                    </P>
                 </Div>
                 <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" >
                     <P color="blue3" font_size="m" font_weight="regular">순위</P>
-                    <P color="grayscale1" font_size="s" font_weight="regular">{1111}</P>
+                    <P color="grayscale1" font_size="s" font_weight="regular">{111}</P>
                 </Div>
             </Div>
 

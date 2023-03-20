@@ -14,7 +14,7 @@ import { TETROMINOS,randomTetromino} from "../tetrominos"
 import {createStage, checkCollision} from "../gameHelpers"
 
 import { isModalOpenState ,whichModalState} from "../../../recoil/ModalState"
-
+import { tetrisScoreState} from "../../../recoil/DataState"
 // ===== import components =====
 import Stage from "./Stage"
 import Level from "./displays/Level"
@@ -48,12 +48,18 @@ height: 120px;
 border-radius : 25px;
 border : 7px solid #F258FF;
 `
+const DisplayDiv =styled.div`
+    height :60px;
+`
+const ArrowBtnImg =styled.img`
+    transform:rotate(${props => props.deg || "0deg"});
+`
 
 const Tetris =()=>{
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
+    const setTetrisScoreState = useSetRecoilState(tetrisScoreState)
     const [dropTime, setDropTime] = useState(null)
-    const [gameOver, setGameOver] = useState(false)
 
     const[player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer()
     const[stage, setStage, rowsCleared] = useStage(player, resetPlayer)
@@ -73,7 +79,6 @@ const Tetris =()=>{
         setStage(createStage())
         setDropTime(1000)
         resetPlayer()
-        setGameOver(false)
         setScore(0)
         setRows(0)
         setLevel(0)
@@ -91,8 +96,11 @@ const Tetris =()=>{
         }else{
             if(player.pos.y<1){
                 console.log("gameover")
-            setGameOver(true)
+            // setGameOver(true)
             setDropTime(null)
+            setModalState("gameOverModal")
+            setModalOpen(true)
+            setTetrisScoreState(score)
             }
             updatePlayerPos({x:0, y:0 ,collided:true})
         }
@@ -100,12 +108,11 @@ const Tetris =()=>{
     }
 
     const keyUp =({keyCode}) =>{
-        if(!gameOver){
+        // if(!gameOver){
             if(keyCode === 40){
                 console.log("interval on")
                 setDropTime(1200 /(level +1)+200)
             }
-        }
     }
 
     const dropPlayer=() =>{
@@ -115,7 +122,7 @@ const Tetris =()=>{
     }
 
     const move=({keyCode}) =>{
-        if(!gameOver){
+        // if(!gameOver){
             if(keyCode===37){
                 movePlayer(-1);
             }else if(keyCode===39){
@@ -125,45 +132,37 @@ const Tetris =()=>{
             }else if (keyCode === 32){
                 playerRotate(stage, 1)
             }
-        }
-
     }
     console.log(rowsCleared)
 
-    const gameOverEvent = (e) =>{
-        setModalState("gameOverModal")
-        setModalOpen(true)
-    }
-
     return(
-        
+        <TetrisDiv align_items="center" justify_content="center"
+        role="button" tabIndex="0" onKeyDown={e => move(e)} onKeyUp={keyUp}>
             
-                // gameOver 
-                // ? 
-                // {gameOverEvent}
-                // :
-                <TetrisDiv align_items="center" justify_content="center"
-                role="button" tabIndex="0" onKeyDown={e => move(e)} onKeyUp={keyUp}>
-                    
-                    <Stage stage={stage}/>
-                    <Div height="700px" margin="0 0 30px 30px" flex_direction="column">
-                        <Img height="60px" src={"img_srcs/game_img/tetris/jelly/asset/tetrisLogoImg.png"}/>
-                        <Div height="400px" justify_content="space-around" flex_direction="column">    
-                            <P font_size="l" font_weight="bold">LEVEL : {level}</P>  {/* <Display text={`Lv : ${score}`}/> */}
-                            <TetrominoPriviewDiv>
-                                <Img height="70px" src={player.preview.tetrominoImg}/>
-                            </TetrominoPriviewDiv>
-                        
-                            <ReplayBtn text="ReplayBtn" callback={startGame}/>
-                            <Controller/>
+            <Stage stage={stage}/>
+            <Div height="700px" margin="0 0 30px 30px" flex_direction="column">
+                <Img height="60px" src={"img_srcs/game_img/tetris/jelly/asset/tetrisLogoImg.png"}/>
+                <Div height="400px" justify_content="space-around" flex_direction="column">    
+                    <P font_size="l" font_weight="bold">LEVEL : {level}</P>  {/* <Display text={`Lv : ${score}`}/> */}
+                    <TetrominoPriviewDiv>
+                        <Img height="70px" src={player.preview.tetrominoImg}/>
+                    </TetrominoPriviewDiv>
+                
+                    <ReplayBtn text="ReplayBtn" callback={startGame}/>
+                    <Div>
+                        <Div flex_direction="column">
+                            <Div  width="180px" justify_content="space-around" >
+                                <ArrowBtnImg deg="90deg" src="img_srcs/game_img/tetris/jelly/asset/arrowBtnImg.png"/>
+                                <ArrowBtnImg deg="270deg" src="img_srcs/game_img/tetris/jelly/asset/arrowBtnImg.png"/>
+                            </Div>
+                            <ArrowBtnImg src="img_srcs/game_img/tetris/jelly/asset/arrowBtnImg.png"/>
                         </Div>
+                        <Img src="img_srcs/game_img/tetris/jelly/asset/rotateBtnImg.png"/>
                     </Div>
-            
-                </TetrisDiv>
-            
-        )
-
-    
+                </Div>
+            </Div>
+        </TetrisDiv>
+        ) 
 }
 
 export default Tetris
