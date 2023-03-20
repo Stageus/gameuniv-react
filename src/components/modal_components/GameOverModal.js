@@ -35,7 +35,7 @@ const GameOverModal = (props) =>{
     const isMobile = useMobile()
     // ===== 2048 state =====
     const score2048 = props.score2048
-    const score2222 = useRecoilValue(scoreState)
+    // const score2222 = useRecoilValue(scoreState)
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setCoin = useSetRecoilState(coinState)
@@ -68,7 +68,7 @@ const GameOverModal = (props) =>{
         fetch(`${address}/2048/score/rank?score=${score2048}`,{
             credentials: "include"
         })
-
+        
         const response = await fetch(`${address}/2048/score`,{
             method: "POST",
             credentials: "include",

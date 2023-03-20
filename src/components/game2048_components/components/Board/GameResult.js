@@ -76,11 +76,10 @@ const GameResult = styled.div`
 
 const Result = (props) =>{
     // ===== state =====
-    // const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
     const onRestart = props.onRestart
     const isMobile = useMobile()
     const score2048 = useRecoilValue(scoreState)
-    // console.log(props.whichModal)
+    
     return(
 
         <GameResult isMobile={isMobile} whichModal={props.whichModal}>

@@ -193,6 +193,7 @@ const TileInner = styled.div`
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n1024};
+                    font-size: 35px;
                     background-size: cover;
                 `
             // 2048 이후
@@ -200,6 +201,7 @@ const TileInner = styled.div`
                 return css`
                     color: ${props.theme.cellfontColor};
                     background: ${props.theme.n2048};
+                    font-size: 35px;
                     background-size: cover;
                 `
         }
