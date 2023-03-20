@@ -26,7 +26,7 @@ import { color } from "../../styles/style"
 import { useLocation, useNavigate } from "react-router"
 import { useMobile } from "../../hooks/useMediaComponent"
 import { coinState } from "../../recoil/UserDataState"
-import { scoreDataState, scoreState } from "../game2048_components/recoil/ScoreState"
+import { game2048ResultState, scoreDataState, scoreState } from "../game2048_components/recoil/ScoreState"
  // 수정 부분 ======================================================================
 import { whichGameState } from "../../recoil/PageState"
 // ===== style =====
@@ -38,6 +38,9 @@ const GameOverModal = (props) =>{
     const isMobile = useMobile()
     // ===== 2048 state =====
     const score2048 = useRecoilValue(scoreState)
+    const game2048Result = useRecoilValue(game2048ResultState)
+    // 객체로 {achieveList: [], rank : , coin : } 들어가 있음
+    // console.log(game2048Result)
     // ===== tetris state ===== // 수정 부분 ====================================================
     const scoreTetris = useRecoilValue(tetrisScoreState)
     // const scoreTetris = props.scoreTetris
@@ -74,38 +77,6 @@ const GameOverModal = (props) =>{
 
     }
 
-    // 게임오버 시 게임점수 보내기
-    const post2048Score = async() =>{
-        // const first = 
-        fetch(`${address}/2048/score/rank?score=${score2048}`,{
-            credentials: "include"
-        })
-        
-        // const result_first = await first.json()
-        console.log(score2048)
-        const response = await fetch(`${address}/2048/score`,{
-            method: "POST",
-            credentials: "include",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                score: score2048,
-            })
-        })
-
-        const result = await response.json()
-
-        if(result.message){
-            alert(result.message)
-        }
-        else{
-            // console.log(result.data.coin, coin)
-            console.log(score2048)
-            setCoin(prevState => prevState + result.data.coin)
-        }
-    }
-
     // 수정 부분 ============= 테트리스 스코어 보내주기
     const postTetrisScore = async() =>{
         fetch(`${address}/tetris/score/rank?score=${scoreTetris}`,{
@@ -139,7 +110,7 @@ const GameOverModal = (props) =>{
         if(whichModal === "tetris"){
             postTetrisScore()
         }else{
-            post2048Score()
+            // post2048Score()
         }
         
     }, [])
