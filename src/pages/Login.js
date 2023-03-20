@@ -53,11 +53,11 @@ const Login = () =>{
     // const [token, setToken, removeToken] = useCookies(['token'])
     // ===== event =====
     React.useEffect(()=>{
-        const expire = window.localStorage.getItem("time")
+        const expire = window.sessionStorage.getItem("time")
         console.log(expire > Date.now())
-        if(( expire > Date.now() && isLogin) ){
+        if(( expire > Date.now()) ){
             getUserData()
-            window.localStorage.setItem("time", Date.now() + 1000*60*24*24)
+            window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
             navigate("/home")
         }
         else{
@@ -92,7 +92,7 @@ const Login = () =>{
         }
         else{
             alert("로그인 성공")
-            window.localStorage.setItem("time", Date.now() + 1000*60*24*24)
+            window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
             getUserData()
             getCoinData()
             setLogin(true)
@@ -134,7 +134,6 @@ const Login = () =>{
         
         if(result.message){
             // alert(result.message)
-            console.log(1)
         }
         else{
             // if(location.pathname === "/"){

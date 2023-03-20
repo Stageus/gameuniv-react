@@ -239,7 +239,7 @@ const ScoresContainer = () =>{
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
     const setGameResult = useSetRecoilState(game2048ResultState)
-    
+
     const game2048Result = useRecoilValue(game2048ResultState)
     const setCoin = useSetRecoilState(coinState)
     // ===== hooks =====
@@ -280,7 +280,7 @@ const ScoresContainer = () =>{
     }
     // console.log(gameState.status)
     React.useEffect( ()=> {
-        setScore(state.score)
+        // setScore(state.score)
         if(gameState.status === "GAME_OVER") setGameOver(true)
     }, [gameState.status])
 
@@ -290,13 +290,14 @@ const ScoresContainer = () =>{
 
     //게임 오버 시 점수보내기
     const post2048Score = async() =>{
-        // const first = 
-        fetch(`${address}/2048/score/rank?score=${score}`,{
+        setScore(state.score)
+        console.log(state.score)
+        await fetch(`${address}/2048/score/rank?score=${state.score}`,{
             credentials: "include"
         })
         
         // const result_first = await first.json()
-        console.log(score)
+        // console.log(score)
         const response = await fetch(`${address}/2048/score`,{
             method: "POST",
             credentials: "include",
@@ -304,7 +305,7 @@ const ScoresContainer = () =>{
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                score: score,
+                score: state.score,
             })
         })
 
