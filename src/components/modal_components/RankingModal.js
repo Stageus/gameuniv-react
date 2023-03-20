@@ -120,7 +120,7 @@ const RankingModal = () =>{
             alert(result.message)
         }
         else{
-            setRankingData([...result.data])
+            setRankingData(prevState => [...prevState, ...result.data])
             setLoading(false)
         }
     }, [page])
