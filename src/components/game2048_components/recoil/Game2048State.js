@@ -5,6 +5,11 @@ import { areEqual, createRandomTile, generateBoard,
 
 // 스테이트 역할 : tile 상태 정의
 // default : {id value type positionX positionY}
+export const isGetState = atom({
+    "key": "isGetState",
+    "default": true,
+})
+
 export const tileState = atom({
     "key" : "tileState",
     "default": {
