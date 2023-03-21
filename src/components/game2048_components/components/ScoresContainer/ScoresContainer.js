@@ -23,6 +23,7 @@ import { Div } from "../../../../styles/Div";
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../../../styles/style";
 import { doodleTheme, jellyTheme, legoTheme, retroTheme } from "../../styles/theme";
+import { isGetState } from "../../recoil/Game2048State";
 
 
 
@@ -239,14 +240,15 @@ const ScoresContainer = () =>{
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
     const setGameResult = useSetRecoilState(game2048ResultState)
-
+    const setIsGet = useSetRecoilState(isGetState)
+    const isGet = useRecoilValue(isGetState)
     const game2048Result = useRecoilValue(game2048ResultState)
     const setCoin = useSetRecoilState(coinState)
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
     const [isGameOver, setGameOver] = React.useState(false)
-
+    const [timer, setTimer] = React.useState(0)
     // ===== event =====
     useEffect( ()=> {
         dispatch( {type: "change", payload: gameState.tiles})
@@ -260,12 +262,11 @@ const ScoresContainer = () =>{
             const newAddScore = oldAddScore.cloneNode(true)
             oldAddScore.parentNode.replaceChild( newAddScore, oldAddScore)
             setScore(state.score)
-            // console.log(score)
         }
     }, [state])
 
     // 랭킹 추적
-    const showRank2048 = async()=>{
+    const showRank2048 = async(score)=>{
         const response = await fetch(`${address}/2048/score/rank?score=${score}`,{
             credentials: "include"
         })
@@ -276,17 +277,31 @@ const ScoresContainer = () =>{
         }
         else{
             setScoreData(result.data)
+            
         }
     }
+
+    React.useEffect( ()=>{
+        if(timer){
+            console.log('clear timer')
+            clearTimeout(timer)
+        }
+        const newTimer = setTimeout( async () => {
+            showRank2048(state.score)    
+        }, 500)
+        setTimer(newTimer)
+    }, [score])
+
     // console.log(gameState.status)
     React.useEffect( ()=> {
         // setScore(state.score)
         if(gameState.status === "GAME_OVER") setGameOver(true)
     }, [gameState.status])
 
-    React.useEffect( () =>{
-        showRank2048()
-    }, [score > scoreData.next_max_score])
+    // React.useEffect( () =>{
+    //     showRank2048(score)
+    // }, [score > scoreData.pre_max_score])
+
 
     //게임 오버 시 점수보내기
     const post2048Score = async() =>{
@@ -296,8 +311,6 @@ const ScoresContainer = () =>{
             credentials: "include"
         })
         
-        // const result_first = await first.json()
-        // console.log(score)
         const response = await fetch(`${address}/2048/score`,{
             method: "POST",
             credentials: "include",
@@ -315,8 +328,6 @@ const ScoresContainer = () =>{
             alert(result.message)
         }
         else{
-            // console.log(result.data.coin, coin)
-            // console.log(score)
             console.log(result.data)
             setGameResult(result.data)
             const achieve_list = result.data.achieveList
@@ -340,21 +351,22 @@ const ScoresContainer = () =>{
 
     return(
         <ScoresContainerDiv isMobile={isMobile}>
+            {/* 높은 등수 */}
             <OtherScore isMobile={isMobile}>
                 {
-                scoreData.rank === -1 || 
-                <OtherRank isMobile={isMobile}>{scoreData.rank-1}</OtherRank>
+                    scoreData.rank > 100 ||
+                    <OtherRank isMobile={isMobile}>{scoreData.pre_rank}</OtherRank>
                 }
-                
                 <Div flex_direction="column">
-                    <OtherId isMobile={isMobile}>{scoreData.next_id}</OtherId>
-                    <OtherUniv isMobile={isMobile}>{scoreData.next_university_name}</OtherUniv>
+                    <OtherId isMobile={isMobile}>{scoreData.pre_id}</OtherId>
+                    <OtherUniv isMobile={isMobile}>{scoreData.pre_university_name}</OtherUniv>
                 </Div>
-                <ScoreBox score={scoreData.next_max_score} />
+                <ScoreBox score={scoreData.pre_max_score}/>
             </OtherScore>
+            {/* 내 등수 */}
             <MyScore isMobile={isMobile}>
                 {
-                    scoreData.rank === -1 ||
+                    scoreData.rank > 100 ||
                     <MyRank isMobile={isMobile}>{scoreData.rank}</MyRank>
                 }
                 <Div flex_direction="column">
@@ -364,18 +376,19 @@ const ScoresContainer = () =>{
                 <ScoreBox score={state.score}/>
                 <AddScore isMobile={isMobile} id="additionScore"></AddScore>
             </MyScore>
+            {/* 아래 등수 */}
             <OtherScore isMobile={isMobile}>
                 {
-                    scoreData.rank === -1 ||
-                    <OtherRank isMobile={isMobile}>{scoreData.rank+1}</OtherRank>
+                scoreData.rank > 100 || 
+                <OtherRank isMobile={isMobile}>{scoreData.next_rank}</OtherRank>
                 }
+                
                 <Div flex_direction="column">
-                    <OtherId isMobile={isMobile}>{scoreData.pre_id}</OtherId>
-                    <OtherUniv isMobile={isMobile}>{scoreData.pre_university_name}</OtherUniv>
+                    <OtherId isMobile={isMobile}>{scoreData.next_id}</OtherId>
+                    <OtherUniv isMobile={isMobile}>{scoreData.next_university_name}</OtherUniv>
                 </Div>
-                <ScoreBox score={scoreData.pre_max_score}/>
+                <ScoreBox score={scoreData.next_max_score} />
             </OtherScore>
-            {/* <ScoreBox title="BEST" score={state.bestScore} ></ScoreBox> */}
         </ScoresContainerDiv>
     )
 }

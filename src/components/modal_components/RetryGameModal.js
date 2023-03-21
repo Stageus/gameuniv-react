@@ -30,9 +30,13 @@ const RetryGameModal = (props) =>{
     // ===== recoil state ======
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const location = useLocation().pathname
+    const setScore = useSetRecoilState(scoreState)
     // ===== event =====
     const retryBtnEvent = () => {
-        if(location === "/2048") props.onRestart()
+        if(location === "/2048") {
+            props.onRestart()
+
+        }
         setModalOpen(false)
         window.location.reload()
     }

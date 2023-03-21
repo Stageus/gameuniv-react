@@ -39,6 +39,7 @@ import { Div } from "../../../../styles/Div";
 
 // ===== import style func =====
 import { color } from "../../../../styles/style";
+import { isGetState } from "../../recoil/Game2048State";
 
 
 
@@ -149,20 +150,32 @@ const gameReducer = (state, action) =>{
 const GameProvider = (props) =>{
     const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
     const isModalOpen = useRecoilValue(isModalOpenState)
+    const isGet = useRecoilValue(isGetState)
+
+    const [timer, setTimer] = React.useState(0)
 
     const handleKeyPress = (e) =>{
-        if(isModalOpen){
-            e.preventDefault()
-        }
-        else{
-            e.preventDefault()
-            const effect = Effect
-            let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
-            if(direction){
-                dispatch({type : "move", payload: direction})
-                effect.play()
+
+        // if(timer){
+        //     console.log('clear timer')
+        //     clearTimeout(timer)
+        // }
+
+        // const newTimer = setTimeout( ()=>{
+            if(isModalOpen){
+                e.preventDefault()
             }
-        }
+            else{
+                e.preventDefault()
+                const effect = Effect
+                let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
+                if(direction){
+                    dispatch({type : "move", payload: direction})
+                    effect.play()
+                }
+            }
+        // }, 100)
+        
     }
     // ===== event =====
     useEffect( ()=>{
@@ -170,8 +183,6 @@ const GameProvider = (props) =>{
         return () =>{
             document.removeEventListener("keydown", handleKeyPress)
         }
-        
-        
     }, [isModalOpen] )
 
     return(
