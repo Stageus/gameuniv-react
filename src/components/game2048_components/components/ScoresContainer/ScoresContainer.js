@@ -330,6 +330,7 @@ const ScoresContainer = () =>{
         else{
             console.log(result.data)
             setGameResult(result.data)
+            console.log(game2048Result)
             const achieve_list = result.data.achieveList
             let achieve_coin = 0
 

@@ -205,9 +205,6 @@ const Main = () =>{
                                 {/* 나머지 부분 추가해주시면 될듯 합니다 */}
                             </Routes>
                         </LoginDiv>
-                        <Link to={"/2048"}>
-                            2048
-                        </Link>
                     </React.Fragment>
                 }
                 </Div>
