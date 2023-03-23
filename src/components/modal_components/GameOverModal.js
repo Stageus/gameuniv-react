@@ -96,9 +96,7 @@ const GameOverModal = (props) =>{
     // setScore(scoreTetris) 
     // setResult(gameTetrisResult)
 
-    console.log(result)
-    console.log(score)
-
+  
 
     React.useEffect( () =>{
     
@@ -110,6 +108,8 @@ const GameOverModal = (props) =>{
             setResult(game2048Result)
         }
     }, [])
+
+    
 
     return(
         <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
