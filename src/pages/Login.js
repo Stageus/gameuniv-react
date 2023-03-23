@@ -44,31 +44,25 @@ const Login = () =>{
     const location = useLocation()
     // ===== router =====
     const navigate = useNavigate()
-
-    // 
-    // const id = document.getElementById("id").value
-    // const pw = document.getElementById("pw").value
-    // const audio = document.getElementById("audio")
-    // const login_form = document.getElementById("login_form")
-    // const [token, setToken, removeToken] = useCookies(['token'])
+    
     // ===== event =====
     React.useEffect(()=>{
         const expire = window.sessionStorage.getItem("time")
         console.log(expire > Date.now())
-        if(( expire > Date.now()) ){
+        console.log(isLogin)
+        if(( expire > Date.now() && isLogin) ){
             getUserData()
             window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
             navigate("/home")
         }
         else{
-            window.localStorage.removeItem("recoil-persist")
+            // window.localStorage.removeItem("recoil-persist")
+            setUserData({})
         }
     }, [])
     // 자동 로그인
 
     const postLoginData = async(id, pw) =>{
-        
-
         // const id = document.getElementById("id").value
         // const pw = document.getElementById("pw").value
 

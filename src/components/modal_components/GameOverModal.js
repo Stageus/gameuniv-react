@@ -42,6 +42,7 @@ const GameOverModal = (props) =>{
     // ===== 2048 state =====
     const score2048 = useRecoilValue(scoreState)
     const game2048Result = useRecoilValue(game2048ResultState)
+    console.log(game2048Result)
     // 객체로 {achieveList: [], rank : , coin : } 들어가 있음
     // console.log(game2048Result)
     // ===== tetris state ===== // 수정 부분 ====================================================

@@ -155,27 +155,18 @@ const GameProvider = (props) =>{
     const [timer, setTimer] = React.useState(0)
 
     const handleKeyPress = (e) =>{
-
-        // if(timer){
-        //     console.log('clear timer')
-        //     clearTimeout(timer)
-        // }
-
-        // const newTimer = setTimeout( ()=>{
-            if(isModalOpen){
-                e.preventDefault()
+        if(isModalOpen){
+            e.preventDefault()
+        }
+        else{
+            e.preventDefault()
+            const effect = Effect
+            let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
+            if(direction){
+                dispatch({type : "move", payload: direction})
+                effect.play()
             }
-            else{
-                e.preventDefault()
-                const effect = Effect
-                let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
-                if(direction){
-                    dispatch({type : "move", payload: direction})
-                    effect.play()
-                }
-            }
-        // }, 100)
-        
+        }
     }
     // ===== event =====
     useEffect( ()=>{
