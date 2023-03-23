@@ -1,9 +1,15 @@
 import {useState, useEffect, useCallback} from 'react'
+import { useSetRecoilState } from "recoil"
+
+
+import { tetrisScoreState} from "../../../recoil/DataState"
 
 export const useGameStatus= rowsCleared =>{
     const [score, setScore] =useState(0)
     const [rows, setRows] =useState(0)
     const [level, setLevel] =useState(0)
+    const setTetrisScore = useSetRecoilState(tetrisScoreState)
+  
 
     const linePoints = [40, 100, 300, 1200]
 
@@ -11,6 +17,7 @@ export const useGameStatus= rowsCleared =>{
         if (rowsCleared >0){
             setScore(prev => prev + linePoints[rowsCleared-1]*(level +1))
             setRows(prev => prev + rowsCleared)
+            setTetrisScore(score)
         }
 
 

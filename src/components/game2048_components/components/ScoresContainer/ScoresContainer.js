@@ -17,6 +17,7 @@ import { useMobile } from "../../../../hooks/useMediaComponent";
 import { game2048ResultState, scoreDataState, scoreState } from "../../recoil/ScoreState";
 import { domainAddressState } from "../../../../recoil/DomainState";
 import { userDataState, coinState } from "../../../../recoil/UserDataState";
+import { isModalOpenState ,whichModalState} from "../../../../recoil/ModalState"
 
 // ===== import style =====
 import { Div } from "../../../../styles/Div";
@@ -221,6 +222,8 @@ const ScoresContainer = () =>{
     // ===== state =====
     const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
     const [scoreData, setScoreData] = useRecoilState(scoreDataState)
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
     // const [scoreData, setScoreData] = 
     // React.useState({
         // pre_id: "pre_id",
@@ -305,7 +308,7 @@ const ScoresContainer = () =>{
 
     //게임 오버 시 점수보내기
     const post2048Score = async() =>{
-        setScore(state.score)
+        
         console.log(state.score)
         await fetch(`${address}/2048/score/rank?score=${state.score}`,{
             credentials: "include"
@@ -342,10 +345,15 @@ const ScoresContainer = () =>{
             setCoin(prevState => prevState + (result.data.coin + achieve_coin) )
         }
     }
-    // 게임오버 시 점수 보내기
+    // 게임오버 시 점수 보내기 //////수정===========
     useEffect( () => {
         if(isGameOver === true){
             post2048Score()
+            setScore(state.score)
+            setModalOpen(true)
+            setTimeout(()=>{
+                setModalState("gameOverModal")
+            }, 2000)
         }
     }, [isGameOver]) 
 
