@@ -290,7 +290,7 @@ const ScoresContainer = () =>{
             showRank2048(state.score)    
         }, 500)
         setTimer(newTimer)
-    }, [score])
+    }, [state.score])
 
     // console.log(gameState.status)
     React.useEffect( ()=> {
