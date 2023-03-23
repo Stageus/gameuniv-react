@@ -1,7 +1,7 @@
 // ===== import base =====
 import React, {useState} from "react"
 import styled from "styled-components"
-import { useRecoilValue, useSetRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 
 // ===== import hooks =====
 import {useInterval} from "../hooks/useInterval"
@@ -14,11 +14,11 @@ import { TETROMINOS,randomTetromino} from "../tetrominos"
 import {createStage, checkCollision} from "../gameHelpers"
 
 import { isModalOpenState ,whichModalState} from "../../../recoil/ModalState"
-import { tetrisScoreState} from "../../../recoil/DataState"
+import { tetrisScoreState, isGameOverState} from "../../../recoil/DataState"
 // ===== import components =====
 import Stage from "./Stage"
 import Level from "./displays/Level"
-import ScoreContainer from "./displays/ScoreContainer"
+import TetrisScoresContainer from "./displays/TetrisScoresContainer"
 import NextBlock from "./displays/NextBlock"
 import ReplayBtn from "./displays/ReplayBtn"
 import Controller from "./displays/Controller"
@@ -56,9 +56,9 @@ const ArrowBtnImg =styled.img`
 `
 
 const Tetris =()=>{
-    const setModalState = useSetRecoilState(whichModalState)
-    const setModalOpen = useSetRecoilState(isModalOpenState)
-    const setTetrisScoreState = useSetRecoilState(tetrisScoreState)
+  
+    const setTetrisScore = useSetRecoilState(tetrisScoreState)
+    const [isGameOver, setGameOver] = useRecoilState(isGameOverState)
     const [dropTime, setDropTime] = useState(null)
 
     const[player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer()
@@ -76,6 +76,7 @@ const Tetris =()=>{
     } 
 
     const startGame = () =>{
+        setGameOver(false)
         setStage(createStage())
         setDropTime(1000)
         resetPlayer()
@@ -96,11 +97,8 @@ const Tetris =()=>{
         }else{
             if(player.pos.y<1){
                 console.log("gameover")
-            // setGameOver(true)
+            setGameOver(true)
             setDropTime(null)
-            setModalState("gameOverModal")
-            setModalOpen(true)
-            setTetrisScoreState(score)
             }
             updatePlayerPos({x:0, y:0 ,collided:true})
         }
@@ -108,11 +106,12 @@ const Tetris =()=>{
     }
 
     const keyUp =({keyCode}) =>{
-        // if(!gameOver){
+        if(!isGameOver){
             if(keyCode === 40){
                 console.log("interval on")
                 setDropTime(1200 /(level +1)+200)
             }
+        }
     }
 
     const dropPlayer=() =>{
@@ -122,16 +121,17 @@ const Tetris =()=>{
     }
 
     const move=({keyCode}) =>{
-        // if(!gameOver){
-            if(keyCode===37){
-                movePlayer(-1);
-            }else if(keyCode===39){
-                movePlayer(1);
-            }else if(keyCode===40){
-                dropPlayer();
-            }else if (keyCode === 32){
-                playerRotate(stage, 1)
-            }
+            if(!isGameOver){
+                if(keyCode===37){
+                    movePlayer(-1);
+                }else if(keyCode===39){
+                    movePlayer(1);
+                }else if(keyCode===40){
+                    dropPlayer();
+                }else if (keyCode === 32){
+                    playerRotate(stage, 1)
+                }
+        }
     }
     console.log(rowsCleared)
 
@@ -144,6 +144,7 @@ const Tetris =()=>{
                 <Img height="60px" src={"img_srcs/game_img/tetris/jelly/asset/tetrisLogoImg.png"}/>
                 <Div height="400px" justify_content="space-around" flex_direction="column">    
                     <P font_size="l" font_weight="bold">LEVEL : {level}</P>  {/* <Display text={`Lv : ${score}`}/> */}
+                    <TetrisScoresContainer score={score} rowsCleared={rowsCleared}/> 
                     <TetrominoPriviewDiv>
                         <Img height="70px" src={player.preview.tetrominoImg}/>
                     </TetrominoPriviewDiv>

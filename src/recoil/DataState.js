@@ -72,7 +72,7 @@ export const gameCountDataState = atom({
 
 
 
-
+// 테트리스-------------------------------------------//
 
 
 // 스테이트 역할 : 테트리스 점수 저장
@@ -82,6 +82,34 @@ export const tetrisScoreState = atom({
     "key" : "tetrisScoreState",
     "default": null
 })
+
+
+// 스테이트 역할 : 앞뒤 자신 테트리스 점수 저장
+// default : 테트리스 점수
+// 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
+export const tetrisScoreDataState = atom({
+    "key" : "tetrisScoreDataState",
+    "default": {}
+})
+
+
+
+// 스테이트 역할 : 테트리스 점수 저장
+// default : 테트리스 점수
+// 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
+export const gameTetrisResultState = atom({
+    "key" : "gameTetrisResultState",
+    "default": null
+})
+
+// 스테이트 역할 : 게임오버 저장
+// default : 테트리스 점수
+// 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
+export const isGameOverState = atom({
+    "key" : "isGameOverState",
+    "default": null
+})
+
 
 
 

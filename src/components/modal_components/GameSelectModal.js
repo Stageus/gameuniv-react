@@ -52,11 +52,13 @@ const GameSelectModal = () =>{
                 navigate("/tetris")
                 setModalOpen(false)
                 setGameState("tetris")
+                setModalState("gameOverLoadingModal")
                 break
             case "2048_btn":
                 navigate("/2048")
                 setModalOpen(false)
                 setGameState("2048")
+                setModalState("gameOverLoadingModal")
                 break
         }
 
