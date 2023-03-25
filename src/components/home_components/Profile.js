@@ -29,6 +29,13 @@ const ProfileImgPcDiv = styled(ShadowDiv)`
     left : 40px;
     z-index : 1;
 `
+
+const ImgDiv = styled(Div)`
+    background-image : url(${(props)=> props.address}/${(props)=> props.img_address});
+    background-repeat : no-repeat;
+    background-position : center;
+    background-size : cover;
+`
 const ProfileImgMobileDiv = styled(ShadowDiv)`
     position : absolute;
     left : 10px;
@@ -65,8 +72,8 @@ const Profile = () =>{
                     </H1>
 
                     <PC>
-                        <ProfileImgPcDiv width="250px" height="250px" border_radius="50%" background_color="grayscale3">
-                            <Img width="200px" border_radius="50%" src= {`${img_src}/${userData.profileImg}`}/>
+                        <ProfileImgPcDiv border_radius="50%" width="250px" height="250px" background_color="grayscale3"  >
+                            <ImgDiv width="180px" height="180px" border_radius="50%" address={img_src} img_address={userData.profileImg}></ImgDiv>
                         </ProfileImgPcDiv>
                         <ProfileChangePcBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
@@ -77,7 +84,7 @@ const Profile = () =>{
                     </PC>
                     <Mobile>
                         <ProfileImgMobileDiv width="200px" height="200px" border_radius="50%" background_color="grayscale3">
-                            <Img width="150px" border_radius="50%" src= {`${img_src}/${userData.profileImg}`}/>
+                            <Img width="150px" border_radius="50%"/>
                         </ProfileImgMobileDiv>
                         <ProfileChangeMobileBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}

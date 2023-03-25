@@ -11,18 +11,16 @@ export const useGameStatus= rowsCleared =>{
     const setTetrisScore = useSetRecoilState(tetrisScoreState)
   
 
-    const linePoints = [40, 100, 300, 1200]
+    // const linePoints = [100, 200]
 
     const calcScore = useCallback(()=>{
-        if (rowsCleared >0){
-            setScore(prev => prev + linePoints[rowsCleared-1]*(level +1))
+        if (rowsCleared > 0){
+            setScore(prev => prev + 10000 *(level +1))
             setRows(prev => prev + rowsCleared)
             setTetrisScore(score)
         }
 
-
-
-    }, [level, linePoints, rowsCleared])
+    }, [level, rowsCleared])
 
     useEffect(()=>{
         calcScore()

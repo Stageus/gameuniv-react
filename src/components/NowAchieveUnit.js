@@ -8,6 +8,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 
 import { game2048ResultState} from "./game2048_components/recoil/ScoreState"
 import { whichGameState } from "../recoil/PageState"
+import { gameTetrisResultState } from "../recoil/DataState"
 
 
 // ===== import style =====
@@ -22,38 +23,38 @@ import { Img } from "../styles/Img"
 //  ===== component =====
 
 const NowAchieveUnit = (props) =>{
-    const [idx] = props
+    const {idx} = props
 
     // ===== recoil state =====
     const whichGame = useRecoilValue(whichGameState)
     const game2048Result =  useRecoilValue(game2048ResultState)
-    // const gameTetrisResult = useRecoilValue(gameTetrisResultState)
+    const gameTetrisResult = useRecoilValue(gameTetrisResultState)
     const [gameResult, setGameResultState] = React.useState(null)
-    if(whichGame==="tetris"){
-        // setGameResultState(gameTetrisResult)
-    }else{
-        setGameResultState(game2048Result)
-    }
+    // if(whichGame==="tetris"){
+    //     setGameResultState(gameTetrisResult)
+    // }else{
+    //     // setGameResultState(game2048Result)
+    // }
    
 
     return(
         <ShadowDiv width="181px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
             <H1 color="blue3" font_size="xs" font_weight="medium" >
-                {gameResult.achieveList[idx].achieve_name}
+                {gameTetrisResult.achieveList[idx].achieve_name}
             </H1>
             <Div width="60%" justify_content="space-around">
                 {
-                    gameResult.achieveList[idx].reward_type === "coin"
+                    gameTetrisResult.achieveList[idx].reward_type === "coin"
                     ?
                     <React.Fragment>
                         <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`}/>
                         <P  color="grayscale7" font_size="xxs" font_weight="regular">
-                        {gameResult.achieveList[idx].reward_coin}
+                        {gameTetrisResult.achieveList[idx].reward_coin}
                         </P>
                     </React.Fragment>
                     :
                     <React.Fragment>
-                        <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/${gameResult.achieveList[idx].reward_img}`}/>
+                        <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/${gameTetrisResult.achieveList[idx].reward_img}`}/>
                         <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/unlockImg.png`}/>
                     </React.Fragment>
                 }
