@@ -1,5 +1,5 @@
 // ===== import base =====
-import React ,{useState} from "react"
+import React ,{useState,useRef,useEffect} from "react"
 import styled from "styled-components"
 import {useRecoilValue, useSetRecoilState, useResetRecoilState} from "recoil"
 
@@ -27,7 +27,7 @@ import { useMobile } from "../../hooks/useMediaComponent"
 import { coinState } from "../../recoil/UserDataState"
 
 import { game2048ResultState, scoreDataState, scoreState } from "../game2048_components/recoil/ScoreState"
-import { gameTetrisResultState, tetrisScoreDataState, tetrisScoreState } from "../../recoil/DataState"
+import { gameTetrisResultState, tetrisScoreDataState, tetrisScoreState, isGameOverState } from "../../recoil/DataState"
 
 import { whichGameState } from "../../recoil/PageState"
 // ===== style =====
@@ -35,14 +35,19 @@ import { whichGameState } from "../../recoil/PageState"
 //  ===== component =====
 
 const GameOverModal = (props) =>{
-    const [result, setResult] =useState(null)
+    const [result, setResult] =useState({
+        "rank" : null,
+        "coin" : null,
+        "achieve_list" : null
+    })
     const [score, setScore] =useState(null)
+    
     // ===== hooks =====
     const isMobile = useMobile()
     // ===== 2048 state =====
     const score2048 = useRecoilValue(scoreState)
     const game2048Result = useRecoilValue(game2048ResultState)
-    console.log(game2048Result)
+   
     // 객체로 {achieveList: [], rank : , coin : } 들어가 있음
     // console.log(game2048Result)
     // ===== tetris state ===== // 수정 부분 ====================================================
@@ -61,15 +66,20 @@ const GameOverModal = (props) =>{
     const whichModal = useRecoilValue(whichGameState)
     const navigate = useNavigate()
     const location = useLocation().pathname
+    const setGameOverState = useSetRecoilState(isGameOverState)
+    const resetModalState = useResetRecoilState(whichModalState)
     const resetTetrisScoreData = useResetRecoilState(tetrisScoreDataState)
     const resetTetrisScore = useResetRecoilState(tetrisScoreState)
     const resetGameTetrisResultState = useResetRecoilState(gameTetrisResultState)
+
+    const mounted = useRef(false);
     // ===== event =====
     const gameOverBtnEvent = (e)=>{
         const target = e.target.id
 
         switch(target){
             case "replay_btn":
+                setModalOpen(false)
                 if(location === "/2048"){
                     props.onRestart()
                 }
@@ -77,15 +87,18 @@ const GameOverModal = (props) =>{
                 //
                 resetTetrisScoreData()
                 resetTetrisScore()
+                setModalState("gameOverLoadingModal")
                 resetGameTetrisResultState()
+                setGameOverState(false)
                 break
             case "home_btn":
-                navigate("/home")
                 setModalOpen(false)
-                //
+                navigate("/home")
                 resetTetrisScoreData()
+                resetModalState()
                 resetTetrisScore()
                 resetGameTetrisResultState()
+                setGameOverState(false)
                 break
             case "share_btn":
                 setModalState("shareModal")
@@ -96,19 +109,8 @@ const GameOverModal = (props) =>{
     // setScore(scoreTetris) 
     // setResult(gameTetrisResult)
 
-    React.useEffect( () =>{
-    
-        if(whichModal === "tetris"){
-            setScore(scoreTetris) 
-            setResult(gameTetrisResult)
-        }else if (whichModal === "2048"){
-            setScore(score2048) 
-            setResult(game2048Result)
-        }
-    }, [])
 
     
-
     return(
         <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
             <H1 color="grayscale7" font_size="l" font_weight="regular">
@@ -119,12 +121,26 @@ const GameOverModal = (props) =>{
                 <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" margin="0 10px" >
                     <P color="blue3" font_size="m" font_weight="regular">점수</P>
                     <P color="grayscale1" font_size="s" font_weight="regular">
-                    {scoreTetris}
+                        {
+                            (whichModal === "tetris")
+                            ?
+                            scoreTetris
+                            :
+                            score2048
+                        }
                     </P>
                 </Div>
                 <Div width="120px" height="100px" border_radius="10px" background_color="blue4" flex_direction="column" >
                     <P color="blue3" font_size="m" font_weight="regular">순위</P>
-                    <P color="grayscale1" font_size="s" font_weight="regular">{gameTetrisResult.rank}</P>
+                    <P color="grayscale1" font_size="s" font_weight="regular">
+                        {
+                            (whichModal === "tetris")
+                            ?
+                            gameTetrisResult.rank
+                            :
+                            game2048Result.rank
+                        }   
+                    </P>
                 </Div>
             </Div>
 
@@ -134,7 +150,15 @@ const GameOverModal = (props) =>{
                 </P>
                 <Div width="100%" justify_content="space-between">
                     <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} height="29px"/>
-                    <P color="green" font_size="m" font_weight="regular">+{gameTetrisResult.coin}</P>
+                    <P color="green" font_size="m" font_weight="regular">+
+                        {
+                            (whichModal === "tetris")
+                            ?
+                            gameTetrisResult.coin
+                            :
+                            game2048Result.coin
+                        }  
+                    </P>
                 </Div>
             </Div>
 
@@ -142,18 +166,31 @@ const GameOverModal = (props) =>{
                 <P color="grayscale7" font_size="m" font_weight="regular">
                     업적
                 </P>
-                <Div>
+                <Div height="150px">
                 
-
-                {   
-                    (gameTetrisResult.achieveList.length === 0)
+            {   
+                (whichModal === "tetris")
+                ?
+                   
+                    (gameTetrisResult.achieve_list === null)
                     ?
-                    <P color="blue1" >달성한 업적이 없습니다</P>
+                    <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
                     :
-                    gameTetrisResult.achieveList && gameTetrisResult.achieveList.map((data, idx)=>{
+                    gameTetrisResult.achieve_list && gameTetrisResult.achieve_list.map((data, idx)=>{
                             return <NowAchieveUnit key={data} idx={idx}/>
-                        })
-                }      
+                    })
+                   
+                :
+                  
+                    (game2048Result.achieve_list === null)
+                    ?
+                    <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
+                    :
+                    game2048Result.achieve_list && game2048Result.achieve_list.map((data, idx)=>{
+                            return <NowAchieveUnit key={data} idx={idx}/>
+                    })
+                   
+            }
                     {/* 아마 컴포넌트로 뺼듯 */}
                     {/* <ShadowDiv width="181px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
                         <H1 color="blue3" font_size="xs" font_weight="medium" >테트리스 랭킹 100위 이내 달성</H1>

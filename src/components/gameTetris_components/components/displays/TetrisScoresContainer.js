@@ -165,9 +165,8 @@ const TetrisScoresContainer = (props) =>{
     // }, [gameState.status])
 
     React.useEffect( () =>{
-        
         showRankTetris(tetrisScore)
-    }, [(tetrisScore > tetrisScoreData.pre_max_score), rowsCleared])
+    }, [rowsCleared]) 
 
 
     //게임 오버 시 점수보내기
@@ -239,7 +238,7 @@ const TetrisScoresContainer = (props) =>{
             {/* 내 등수 */}
             <MyScore width ="90%" height ="49px" border_radius="10px" border =" 2px solid white">
                 {
-                    // tetrisScoreData.rank > 100 ||
+                    tetrisScoreData.rank > 52000 ||
                     <MyRank >{tetrisScoreData.rank}</MyRank>
                 }
                 <Div flex_direction="column">

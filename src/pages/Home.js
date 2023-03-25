@@ -1,6 +1,6 @@
 // ===== import base =====
 import React from "react"
-import {useEffect}  from "react"
+import {useEffect,useState,useRef}  from "react"
 import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
 import styled from "styled-components"
 import { Navigate } from "react-router-dom"
@@ -116,6 +116,9 @@ const AbsoluteImg = styled(Img)`
 const Home = () =>{
     // ===== media query =====
     let isMobile=useMobile()
+    const mounted = useRef(false);
+
+
     // ===== recoil state =====
     const address= useRecoilValue(domainAddressState)
     const isLogin = useRecoilValue(isLoginState)
@@ -124,9 +127,7 @@ const Home = () =>{
     const [userTetrisRankData,setUserTetrisRankData]=useRecoilState(userTetrisRankDataState)
     const [user2048RankData, setUser2048RankDataState]=useRecoilState(user2048RankDataState)
 
-    // ===== var =====
-    let isTetrisDataExist
-    let is2048DataExist
+
     // ===== router =====
     const navigate = useNavigate()
     // ===== event =====
@@ -145,6 +146,10 @@ const Home = () =>{
 
     }
     const getUserRankDataEvent = async() =>{
+
+        // console.log(userData.email)
+        // console.log(userData)
+        // console.log(userData)
 
         const response_tetris = await fetch(`${address}/tetris/record/${userData.email}`,
         {
@@ -171,21 +176,23 @@ const Home = () =>{
             navigate("/")
         }
     }
-    // ===== hook =====
+
+    // getUserRankDataEvent()
+    // // ===== hook =====
     useEffect(() => {
-        getUserRankDataEvent()
-    },[])
+        if(!mounted.current){
+            mounted.current = true;
+          } else {
+            getUserRankDataEvent()
+          }
+        
+    },[userData])
 
     if(!isLogin){
         alert("로그인 후 이용 가능합니다")
         return <Navigate to="/" replace={true}/>
     }
-    if(userTetrisRankData.rank > 0){
-        isTetrisDataExist = true
-    }
-    if(user2048RankData.rank > 0){
-        is2048DataExist = true
-    }
+   
 
     return(
         <React.Fragment>
@@ -194,7 +201,7 @@ const Home = () =>{
                     <Div width="100%"   height="301px" justify_content="space-between">
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
                             {
-                                isTetrisDataExist
+                                (userData != null && userTetrisRankData.rank != -2)
                                 ?
                                 <React.Fragment>
                                     <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
@@ -214,14 +221,23 @@ const Home = () =>{
                                 </React.Fragment>
                                 :
                                 <Div width="100%" justify_content="center" align_items="center">
-                                    <P font_size="s" font_weight="bold">이번 달 Teteis 기록이 없습니다</P>
+                                    {
+                                        (userTetrisRankData.rank != -2)
+                                        ?
+                                        <P font_size="s" font_weight="bold">이번 달 Teteis 기록이 없습니다</P>
+                                        :
+                                        <P font_size="s" font_weight="bold">로딩중...</P>
+
+                                    }
+                                    
                                 </Div>
                             
                             }   
                         </RelativeDiv>
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
                             {
-                                is2048DataExist
+
+                                (userData != null && user2048RankData.rank != -2)
                                 ?
                                 <React.Fragment>
                                     <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
@@ -241,7 +257,13 @@ const Home = () =>{
                                 </React.Fragment>
                                 :
                                 <Div width="100%" justify_content="center" align_items="center">
-                                    <P font_size="s" font_weight="bold">이번 달 2048 기록이 없습니다</P>
+                                    {
+                                        (user2048RankData.rank != -2)
+                                        ?
+                                        <P font_size="s" font_weight="bold">이번 달 2048 기록이 없습니다</P>
+                                        :
+                                        <P font_size="s" font_weight="bold">로딩중...</P>
+                                    }
                                 </Div>
                             }  
                         </RelativeDiv>
