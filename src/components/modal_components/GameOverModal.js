@@ -106,35 +106,10 @@ const GameOverModal = (props) =>{
         }
 
     }
-
     // setScore(scoreTetris) 
     // setResult(gameTetrisResult)
 
-    // React.useEffect( () =>{
 
-    //     if(!mounted.current){
-    //         mounted.current = true;
-    //       } else {
-    //         if(whichModal === "tetris"){
-    //             setScore(scoreTetris) 
-    //             setResult(gameTetrisResult)
-    //         }else if (whichModal === "2048"){
-    //             setScore(score2048) 
-    //             setResult(game2048Result)
-    //         }
-    //         console.log(gameTetrisResult)
-    //       }
-    // }, [])
-   
-    // if{
-        
-    //     setScore(scoreTetris) 
-    //     setResult(gameTetrisResult)
-       
-    // }else if (whichModal === "2048"){
-    //     setScore(score2048) 
-    //     setResult(game2048Result)
-    // }
     
     return(
         <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
