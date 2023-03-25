@@ -12,6 +12,7 @@ import ScoreBox from "../ScoreBox/ScoreBox"
 
 // ===== import hooks =====
 import { useMobile } from "../../../../hooks/useMediaComponent";
+import { useGetUserData } from "../../../../hooks/useGetUserData";
 
 // ===== import recoil =====
 import { game2048ResultState, scoreDataState, scoreState } from "../../recoil/ScoreState";
@@ -218,7 +219,7 @@ const OtherUniv = styled(UserUniv)`
     position:relative;
     left: 5px;
 `
-const ScoresContainer = () =>{
+const ScoresContainer = (props) =>{
     // ===== state =====
     const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
     const [scoreData, setScoreData] = useRecoilState(scoreDataState)
@@ -236,15 +237,15 @@ const ScoresContainer = () =>{
 
         // rank: -1
     // })
-    
     // ===== recoil =====
     const setScore = useSetRecoilState(scoreState)
     const score = useRecoilValue(scoreState)
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
+    
+    // const a = props.userData
+    // console.log(userData, a)
     const setGameResult = useSetRecoilState(game2048ResultState)
-    const setIsGet = useSetRecoilState(isGetState)
-    const isGet = useRecoilValue(isGetState)
     const game2048Result = useRecoilValue(game2048ResultState)
     const setCoin = useSetRecoilState(coinState)
     // ===== hooks =====
@@ -252,6 +253,7 @@ const ScoresContainer = () =>{
     const isMobile = useMobile()
     const [isGameOver, setGameOver] = React.useState(false)
     const [timer, setTimer] = React.useState(0)
+
     // ===== event =====
     useEffect( ()=> {
         dispatch( {type: "change", payload: gameState.tiles})
@@ -367,7 +369,7 @@ const ScoresContainer = () =>{
                     <OtherRank isMobile={isMobile}>{scoreData.pre_rank}</OtherRank>
                 }
                 <Div flex_direction="column">
-                    <OtherId isMobile={isMobile}>{scoreData.pre_id}</OtherId>
+                    <OtherId isMobile={isMobile}>{scoreData.pre_user_name}</OtherId>
                     <OtherUniv isMobile={isMobile}>{scoreData.pre_university_name}</OtherUniv>
                 </Div>
                 <ScoreBox score={scoreData.pre_max_score}/>
@@ -379,7 +381,7 @@ const ScoresContainer = () =>{
                     <MyRank isMobile={isMobile}>{scoreData.rank}</MyRank>
                 }
                 <Div flex_direction="column">
-                    <UserId isMobile={isMobile}>{userData.id}</UserId>
+                    <UserId isMobile={isMobile}>{userData.user_name}</UserId>
                     <UserUniv isMobile={isMobile}>{userData.universityName}</UserUniv>
                 </Div>
                 <ScoreBox score={state.score}/>
@@ -393,7 +395,7 @@ const ScoresContainer = () =>{
                 }
                 
                 <Div flex_direction="column">
-                    <OtherId isMobile={isMobile}>{scoreData.next_id}</OtherId>
+                    <OtherId isMobile={isMobile}>{scoreData.next_user_name}</OtherId>
                     <OtherUniv isMobile={isMobile}>{scoreData.next_university_name}</OtherUniv>
                 </Div>
                 <ScoreBox score={scoreData.next_max_score} />

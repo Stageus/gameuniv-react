@@ -11,6 +11,8 @@ import { Navigate, useLocation } from "react-router-dom"
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
 
+import { useGetUserData } from "../hooks/useGetUserData"
+
 // ===== import style =====
 import {Img} from "../styles/Img"
 
@@ -36,7 +38,7 @@ const Logo = styled(Img)`
 const Login = () =>{
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
-    // const userData = useRecoilValue(userDataState)
+    const userData = useRecoilValue(userDataState)
     const setUserData = useSetRecoilState(userDataState)
     const setLogin = useSetRecoilState(isLoginState)
     const isLogin = useRecoilValue(isLoginState)
@@ -44,7 +46,6 @@ const Login = () =>{
     const location = useLocation()
     // ===== router =====
     const navigate = useNavigate()
-    
     // ===== event =====
     React.useEffect(()=>{
         const expire = window.sessionStorage.getItem("time")
@@ -56,17 +57,12 @@ const Login = () =>{
             navigate("/home")
         }
         else{
-            // window.localStorage.removeItem("recoil-persist")
             setUserData({})
         }
     }, [])
     // 자동 로그인
-
+    // useGetUserData()
     const postLoginData = async(id, pw) =>{
-        // const id = document.getElementById("id").value
-        // const pw = document.getElementById("pw").value
-
-        // console.log(id, pw)
         const response = await fetch(`${address}/auth`,{
             method: "POST",
             credentials: "include",
@@ -88,11 +84,13 @@ const Login = () =>{
             alert("로그인 성공")
             window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
             getUserData()
+            // useGetUserData()
             getCoinData()
             setLogin(true)
             navigate("/home")
         }
     }
+
 
     const loginEvent = (e) =>{
         e.preventDefault()
@@ -130,10 +128,7 @@ const Login = () =>{
             // alert(result.message)
         }
         else{
-            // if(location.pathname === "/"){
-            //     setLogin(true)
-            //     navigate("/home")
-            // }
+            console.log(result.data)
             setUserData(result.data)
         }
     }

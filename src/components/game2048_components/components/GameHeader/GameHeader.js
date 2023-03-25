@@ -176,7 +176,7 @@ const RetryBtn = styled(Button)`
 `
 // const GameTitle = () => <P>2048</P>
 
-const GameHeader = () =>{
+const GameHeader = (props) =>{
     const { dispatch } = useGameContext()
     const isMobile = useMobile()
     const setModalState = useSetRecoilState(whichModalState)

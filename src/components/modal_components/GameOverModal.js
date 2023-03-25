@@ -93,11 +93,8 @@ const GameOverModal = (props) =>{
         }
 
     }
-
     // setScore(scoreTetris) 
     // setResult(gameTetrisResult)
-
-  
 
     React.useEffect( () =>{
     

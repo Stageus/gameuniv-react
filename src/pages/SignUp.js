@@ -97,7 +97,7 @@ const SignUp = () =>{
         const target = e.target.id
 
         if(stepState === 1){
-            const name_regex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}$/
+            const name_regex = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/
             const name = document.getElementById("name").value
             const name_check = name_regex.test(name)
             const id_regex = /^[a-z0-9]{5,20}$/
@@ -235,9 +235,9 @@ const SignUp = () =>{
         const email = document.getElementById("email").value
         const auth_number = document.getElementById("auth_number").value
 
-        // setPostData( (prevState) => ({
-        //     ...prevState, universityIdx: univIdx, email: email
-        // }))
+        setPostData( (prevState) => ({
+            ...prevState, email: email
+        }))
 
         // console.log(postDataState)
         const response = await fetch(`${address}/auth/email/number?email=${email}&number=${auth_number}`)
@@ -257,10 +257,10 @@ const SignUp = () =>{
     const postSignUpDataEvent = async(e) => {
         e.preventDefault()
         const {email, id, name, pw, pwCheck, universityIdx, defaultImg, profileImg} = {...postDataState}
-
         const form_data = new FormData()
         form_data.append("email", email)
         form_data.append("id", id)
+        form_data.append("name", name)
         form_data.append("pw", pw)
         form_data.append("pwCheck", pwCheck)
         form_data.append("universityIdx", universityIdx)
@@ -336,10 +336,10 @@ const SignUp = () =>{
                         <Div width="100%" flex_direction="column" align_items="flex-start">
                             <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                             <InputBoxDiv>
-                                <P font_size = "xxs" padding="5px 0">이름</P>
+                                <P font_size = "xxs" padding="5px 0">닉네임</P>
                                 {/* <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
                                 id="name" maxLength={10} value={postDataState.name} onChange={inputChangeEvent}/> */}
-                                <SignUpInput placeholder="이름" id="name" value={postDataState.name} 
+                                <SignUpInput placeholder="닉네임" id="name" value={postDataState.name} 
                                 postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
                             

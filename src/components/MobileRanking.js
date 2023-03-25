@@ -222,7 +222,7 @@ const MobileRangking = (props) =>{
                     {/* rank list name */}
                         <Div width="95%" justify_content="space-between" margin="10px 0 5px 0">
                             <RankList>순위</RankList>                
-                            <RankList>아이디</RankList>
+                            <RankList>닉네임</RankList>
                             <RankList>대학</RankList>
                         </Div>
                     {/* rank list */}
@@ -246,7 +246,7 @@ const MobileRangking = (props) =>{
                                                                 <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
                                                                 width="20px" height="20px" border_radius="50%"/>
                                                             </Div>
-                                                            <P font_weight="bold" font_size="xxs">{data.id}</P>
+                                                            <P font_weight="bold" font_size="xxs">{data.user_name}</P>
                                                         </Div>
                                                         <Div width="33%" justify_content="flex_start">
                                                             <P font_size="xxs">{data.university_name}</P>
@@ -278,7 +278,7 @@ const MobileRangking = (props) =>{
                                                                 <Img src={`${img_src}/${data.profile_img}`} onError={imgErrorEvent}
                                                                 width="20px" height="20px" border_radius="50%"/>
                                                             </Div>
-                                                            <P font_weight="bold" font_size="xxs">{data.id}</P>
+                                                            <P font_weight="bold" font_size="xxs">{data.user_name}</P>
                                                         </Div>
                                                         <Div width="33%" justify_content="flex_start">
                                                             <P font_size="xxs">{data.university_name}</P>
