@@ -40,6 +40,7 @@ import { Div } from "../../../../styles/Div";
 // ===== import style func =====
 import { color } from "../../../../styles/style";
 import { isGetState } from "../../recoil/Game2048State";
+import { useGetUserData } from "../../../../hooks/useGetUserData";
 
 
 
@@ -185,7 +186,6 @@ const GameProvider = (props) =>{
 
 const Game = () =>{
     const isMobile = useMobile()
-
     return(
         <GameProvider>
             <ThemeProvider theme = {retroTheme}>
