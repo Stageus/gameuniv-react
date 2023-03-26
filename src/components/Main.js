@@ -107,18 +107,8 @@ const Main = () =>{
         setModalState("gameSelectModal")
         setModalOpen(true)
     }
+    
 
-    // 뒤로가기 버튼
-    const backBtnEvent = ()=>{
-        
-        if(location === "/2048"){
-            setModalState("quitGameModal")
-            setModalOpen(true)
-        }
-        else{
-            navigate(-1)
-        }
-    }
     // ===== event =====
     return(
         <MainStyle>

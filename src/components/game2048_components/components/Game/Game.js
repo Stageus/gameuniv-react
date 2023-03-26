@@ -153,6 +153,17 @@ const GameProvider = (props) =>{
     const isModalOpen = useRecoilValue(isModalOpenState)
     const isGet = useRecoilValue(isGetState)
 
+    React.useEffect( ()=>{
+        // state.status = "IN_PROGRESS"
+        // state.tiles = generateBoard(2)
+
+        return ()=>{
+            state.status = "IN_PROGRESS" 
+            state.tiles = generateBoard(2)
+        }
+        
+    }, [])
+    
     const [timer, setTimer] = React.useState(0)
 
     const handleKeyPress = (e) =>{
@@ -186,6 +197,7 @@ const GameProvider = (props) =>{
 
 const Game = () =>{
     const isMobile = useMobile()
+    // const setModalOpen = useSetRecoilState(isModalOpenState)
     return(
         <GameProvider>
             <ThemeProvider theme = {retroTheme}>

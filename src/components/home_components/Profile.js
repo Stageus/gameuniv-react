@@ -79,7 +79,7 @@ const Profile = () =>{
                             <BtnAnimation event={useSetModalState("editProfileModal")}
                                 before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeBeforeBtnImg.png`}
                                 after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeAfterBtnImg.png`}
-                                padding="0 20px 6px 10px"/>
+                                margin="0 20px 6px 10px"/>
                         </ProfileChangePcBtn>
                     </PC>
                     <Mobile>
@@ -90,7 +90,7 @@ const Profile = () =>{
                             <BtnAnimation event={useSetModalState("editProfileModal")}
                                 before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeBeforeBtnImg.png`}
                                 after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeAfterBtnImg.png`}
-                                padding="0 20px 6px 10px"/>
+                                margin="0 20px 6px 10px"/>
                         </ProfileChangeMobileBtn>
                     </Mobile>
 
