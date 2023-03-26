@@ -149,9 +149,7 @@ const TetrisScoresContainer = (props) =>{
 
     //게임 오버 시 점수보내기
     const postTetrisScore = async() =>{
-        // setTetrisScore()
- 
-
+        
         await fetch(`${address}/tetris/score/rank?score=${tetrisScore}`,{
             credentials: "include"
         })
