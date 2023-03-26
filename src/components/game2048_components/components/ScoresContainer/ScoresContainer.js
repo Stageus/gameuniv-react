@@ -353,10 +353,6 @@ const ScoresContainer = (props) =>{
         if(isGameOver === true){
             post2048Score()
             setScore(state.score)
-            setModalOpen(true)
-            setTimeout(()=>{
-                setModalState("gameOverModal")
-            }, 2000)
         }
     }, [isGameOver]) 
 

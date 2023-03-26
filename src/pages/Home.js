@@ -126,6 +126,8 @@ const Home = () =>{
     const setPageState = useSetRecoilState(whichPageState)
     const [userTetrisRankData,setUserTetrisRankData]=useRecoilState(userTetrisRankDataState)
     const [user2048RankData, setUser2048RankDataState]=useRecoilState(user2048RankDataState)
+    //유저데이터 체크
+    const [isUserDataNull, setUserDataNull] = useState(true)
 
 
     // ===== router =====
@@ -184,6 +186,7 @@ const Home = () =>{
             mounted.current = true;
           } else {
             getUserRankDataEvent()
+            setUserDataNull(false)
           }
         
     },[userData])
@@ -200,9 +203,13 @@ const Home = () =>{
                 <PC>
                     <Div width="100%"   height="301px" justify_content="space-between">
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
-                            {
-                                (userData != null && userTetrisRankData.rank != -2)
+                            { 
+                                (userTetrisRankData.rank === -2)
                                 ?
+                                <Div width="100%" justify_content="center" align_items="center">
+                                    <P font_size="s" font_weight="bold">이번 달 테트리스 기록이 없습니다</P>
+                                </Div>
+                                :
                                 <React.Fragment>
                                     <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
                                         <H1 font_size="m" color="blue4">Tetris</H1>
@@ -219,26 +226,16 @@ const Home = () =>{
                                     </Div>
                                     <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisCropImg.png`}/>
                                 </React.Fragment>
-                                :
-                                <Div width="100%" justify_content="center" align_items="center">
-                                    {
-                                        (userTetrisRankData.rank != -2)
-                                        ?
-                                        <P font_size="s" font_weight="bold">이번 달 Teteis 기록이 없습니다</P>
-                                        :
-                                        <P font_size="s" font_weight="bold">로딩중...</P>
-
-                                    }
-                                    
-                                </Div>
-                            
                             }   
                         </RelativeDiv>
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
                             {
-
-                                (userData != null && user2048RankData.rank != -2)
+                                (user2048RankData.rank === -2)
                                 ?
+                                <Div width="100%" justify_content="center" align_items="center">
+                                    <P font_size="s" font_weight="bold">이번 달 2048 기록이 없습니다</P>
+                                </Div>
+                                :
                                 <React.Fragment>
                                     <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
                                         <H1 font_size="m" color="blue4">2048</H1>
@@ -255,17 +252,7 @@ const Home = () =>{
                                     </Div>
                                     <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048CropImg.png`}/>
                                 </React.Fragment>
-                                :
-                                <Div width="100%" justify_content="center" align_items="center">
-                                    {
-                                        (user2048RankData.rank != -2)
-                                        ?
-                                        <P font_size="s" font_weight="bold">이번 달 2048 기록이 없습니다</P>
-                                        :
-                                        <P font_size="s" font_weight="bold">로딩중...</P>
-                                    }
-                                </Div>
-                            }  
+                            }
                         </RelativeDiv>
                     </Div>
                     <Profile/>

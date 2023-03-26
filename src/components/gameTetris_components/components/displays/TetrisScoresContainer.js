@@ -1,5 +1,5 @@
 // ===== import base =====
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import styled, {keyframes, css} from "styled-components";
 import { useSetRecoilState, useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
 
@@ -51,8 +51,8 @@ const AddScore = styled(Div)`
 const MyScore = styled(Div)`
     position: relative;
     right:0;
+    background-color : #FFFCED;
 `
-
 
 const UserId = styled.div`
     font-size: ${fontSize("xs")};
@@ -73,9 +73,12 @@ const MyRank = styled(Div)`
 `
 
 const OtherScore = styled(MyScore)`
-    width:140px;
+    width:150px;
     height: 29px;
-    border: none;
+    border-radius : 10px;
+    background-color : #FFF0A8;
+    
+    border : 3px solid #ECECEC;
 `
 
 
@@ -100,13 +103,12 @@ const OtherUniv = styled(UserUniv)`
     left: 5px;
 `
 const TetrisScoresContainer = (props) =>{
-
+    const mounted = useRef(false);
     const {score, rowsCleared}=props
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
 
     // ===== state =====
-    // const [state, dispatch] = useGameLocalStorage("scores", initState(), stateReducer)
     const [tetrisScoreData, setTetrisScoreDataState] = useRecoilState(tetrisScoreDataState)
 
     // ===== recoil =====
@@ -115,27 +117,15 @@ const TetrisScoresContainer = (props) =>{
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
     const setGameTetrisResult= useSetRecoilState(gameTetrisResultState)
-    // const setIsGet = useSetRecoilState(isGetState)
-    // const isGet = useRecoilValue(isGetState)
     const gameTetrisResult = useRecoilValue(gameTetrisResultState)
     const setCoin = useSetRecoilState(coinState)
 
     
     // ===== event =====
 
-    // useEffect( () =>{
-    //     if(state.newPoints > 0){
-    //         const oldAddScore = document.getElementById("additionScore")
-    //         oldAddScore.innerText = `+${state.newPoints}`
-    //         const newAddScore = oldAddScore.cloneNode(true)
-    //         oldAddScore.parentNode.replaceChild( newAddScore, oldAddScore)
-    //         setScore(state.score)
-    //     }
-    // }, [tetrisScore])
-
     // 랭킹 추적
-    const showRankTetris = async(tetrisScore)=>{
-        const response = await fetch(`${address}/tetris/score/rank?score=${tetrisScore}`,{
+    const showRankTetris = async(score)=>{
+        const response = await fetch(`${address}/tetris/score/rank?score=${score}`,{
             credentials: "include"
         })
 
@@ -144,29 +134,17 @@ const TetrisScoresContainer = (props) =>{
         }
         else{
             setTetrisScoreDataState(result.data)
+            setTetrisScore(score)
         }
     }
 
-    // React.useEffect( ()=>{
-    //     if(timer){
-    //         console.log('clear timer')
-    //         clearTimeout(timer)
-    //     }
-    //     const newTimer = setTimeout( async () => {
-    //         showRank2048(state.score)    
-    //     }, 500)
-    //     setTimer(newTimer)
-    // }, [score])
-
-    // console.log(gameState.status)
-    // React.useEffect( ()=> {
-    //     // setScore(state.score)
-    //     if(gameState.status === "GAME_OVER") setGameOver(true)
-    // }, [gameState.status])
-
     React.useEffect( () =>{
-        showRankTetris(tetrisScore)
-    }, [rowsCleared]) 
+        if(!mounted.current){
+            mounted.current = true;
+        } else {
+            showRankTetris(score)
+        }
+    }, [score]) 
 
 
     //게임 오버 시 점수보내기
@@ -212,7 +190,6 @@ const TetrisScoresContainer = (props) =>{
     useEffect( () => {
         if(isGameOver === true){
             postTetrisScore()
-            setTetrisScore(score)
             setModalOpen(true)
             setTimeout(()=>{
                 setModalState("gameOverModal")
@@ -222,7 +199,7 @@ const TetrisScoresContainer = (props) =>{
     }, [isGameOver]) 
 
     return(
-        <Div width ="248px" height ="135px" border_radius="5px" border =" 2px solid white" flex_direction="column" justify_content="space-evenly">
+        <Div width ="248px" height ="135px" border_radius="40px" border ="7px solid #FFE973" flex_direction="column" justify_content="space-evenly">
             {/* 높은 등수 */}
             <OtherScore>
                 {
@@ -236,9 +213,9 @@ const TetrisScoresContainer = (props) =>{
                 <ScoreBox score={tetrisScoreData.pre_max_score}/>
             </OtherScore>
             {/* 내 등수 */}
-            <MyScore width ="90%" height ="49px" border_radius="10px" border =" 2px solid white">
+            <MyScore width ="90%" height ="49px" border_radius="20px" border =" 4px solid #F258FF">
                 {
-                    tetrisScoreData.rank > 52000 ||
+                    tetrisScoreData.rank > 100 ||
                     <MyRank >{tetrisScoreData.rank}</MyRank>
                 }
                 <Div flex_direction="column">
