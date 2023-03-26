@@ -104,6 +104,10 @@ const Footer = () =>{
             setModalState("quitGameModal")
             setModalOpen(true)
         }
+        else if(location === "/tetris"){
+            setModalState("quitGameModal")
+            setModalOpen(true)
+        }
         else{
             navigate(-1)
         }
