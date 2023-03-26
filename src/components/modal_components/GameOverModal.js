@@ -32,6 +32,18 @@ import { gameTetrisResultState, tetrisScoreDataState, tetrisScoreState, isGameOv
 import { whichGameState } from "../../recoil/PageState"
 // ===== style =====
 
+const NowAchievementContainerDiv = styled(Div)`
+    grid-gap: 10px;
+    flex-wrap: no-wrap;
+    overflow-x: scroll;
+    justify-content :flex-start;
+    padding : 5px;
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+`
+
 //  ===== component =====
 
 const GameOverModal = (props) =>{
@@ -106,9 +118,8 @@ const GameOverModal = (props) =>{
         }
 
     }
-    // setScore(scoreTetris) 
-    // setResult(gameTetrisResult)
-
+    
+    console.log(gameTetrisResult)
 
     
     return(
@@ -136,9 +147,17 @@ const GameOverModal = (props) =>{
                         {
                             (whichModal === "tetris")
                             ?
-                            gameTetrisResult.rank
+                            gameTetrisResult.rank === -1 
+                                ?
+                                "1xx.."
+                                :
+                                gameTetrisResult.rank
                             :
-                            game2048Result.rank
+                            game2048Result.rank === -1 
+                                ?
+                                "1xx..."
+                                :
+                                game2048Result.rank
                         }   
                     </P>
                 </Div>
@@ -162,47 +181,35 @@ const GameOverModal = (props) =>{
                 </Div>
             </Div>
 
-            <Div width="50%" height="170px" flex_direction="column" justify_content="space-between">
+            <Div width="400px" height="230px" flex_direction="column" justify_content="space-between">
                 <P color="grayscale7" font_size="m" font_weight="regular">
                     업적
                 </P>
-                <Div height="150px">
-                
-            {   
-                (whichModal === "tetris")
-                ?
-                   
-                    (gameTetrisResult.achieve_list === null)
+                <NowAchievementContainerDiv  width="500px" height="200px">
+                {   
+                    (whichModal === "tetris")
                     ?
-                    <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
+                    
+                        (gameTetrisResult.achieveList === null)
+                        ?
+                        <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
+                        :
+                        gameTetrisResult.achieveList && gameTetrisResult.achieveList.map((data, idx)=>{
+                                return <NowAchieveUnit key={data} idx={idx}/>
+                        })
+                    
                     :
-                    gameTetrisResult.achieve_list && gameTetrisResult.achieve_list.map((data, idx)=>{
-                            return <NowAchieveUnit key={data} idx={idx}/>
-                    })
-                   
-                :
-                  
-                    (game2048Result.achieve_list === null)
-                    ?
-                    <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
-                    :
-                    game2048Result.achieve_list && game2048Result.achieve_list.map((data, idx)=>{
-                            return <NowAchieveUnit key={data} idx={idx}/>
-                    })
-                   
-            }
-                    {/* 아마 컴포넌트로 뺼듯 */}
-                    {/* <ShadowDiv width="181px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
-                        <H1 color="blue3" font_size="xs" font_weight="medium" >테트리스 랭킹 100위 이내 달성</H1>
-                        <Div width="60%" justify_content="space-around">
-                            <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`}/>
-                            <P  color="grayscale7" font_size="xxs" font_weight="regular">1코인</P>
-                        </Div>
-                        <Div width="50px" height="20px" border_radius="10px" background_color="green">
-                            <P color="grayscale1" font_size="xxxs" font_weight="regular">달성!</P>
-                        </Div>
-                    </ShadowDiv> */}
-                </Div>
+                    
+                        (game2048Result.achieveList === null)
+                        ?
+                        <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
+                        :
+                        game2048Result.achieveList && game2048Result.achieveList.map((data, idx)=>{
+                                return <NowAchieveUnit key={data} idx={idx}/>
+                        })
+                    
+                }
+                </NowAchievementContainerDiv>
             </Div>
 
             <Div width="88%" justify_content="space-evenly" onClick={gameOverBtnEvent}>

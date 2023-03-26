@@ -38,26 +38,21 @@ const NowAchieveUnit = (props) =>{
    
 
     return(
-        <ShadowDiv width="181px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
+        <ShadowDiv width="180px" min_width="180px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
             <H1 color="blue3" font_size="xs" font_weight="medium" >
                 {gameTetrisResult.achieveList[idx].achieve_name}
             </H1>
             <Div width="60%" justify_content="space-around">
-                {
+                <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/${gameTetrisResult.achieveList[idx].reward_img}`}/>
+                {/* {
                     gameTetrisResult.achieveList[idx].reward_type === "coin"
-                    ?
-                    <React.Fragment>
-                        <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`}/>
+                    ? */}
                         <P  color="grayscale7" font_size="xxs" font_weight="regular">
-                        {gameTetrisResult.achieveList[idx].reward_coin}
+                        {gameTetrisResult.achieveList[idx].reward_coin} 코인
                         </P>
-                    </React.Fragment>
-                    :
-                    <React.Fragment>
-                        <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/${gameTetrisResult.achieveList[idx].reward_img}`}/>
-                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/unlockImg.png`}/>
-                    </React.Fragment>
-                }
+                    {/* :
+                        <Img height="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/unlockImg.png`}/>
+                } */}
             </Div>
             <Div width="50px" height="20px" border_radius="10px" background_color="green">
                 <P color="grayscale1" font_size="xxxs" font_weight="regular">달성!</P>

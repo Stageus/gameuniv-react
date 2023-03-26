@@ -111,6 +111,15 @@ export const isGameOverState = atom({
 })
 
 
+//------------------------------------------//
+
+// 스테이트 역할 : 2048 스킨 설정
+// default : 2048 스킨
+// 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
+export const skin2048State = atom({
+    "key" : "skin2048State",
+    "default": "basicTheme"
+})
 
 
 
