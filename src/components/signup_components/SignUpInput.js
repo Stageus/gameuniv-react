@@ -35,10 +35,6 @@ const SignUpInput = (props) =>{
         const target = e.target.id
         const value = e.target.value
         setData(value)
-        // setPostData( (prevState) => ({
-        //     ...prevState, [target]: value,
-        // }))
-        // console.log(postDataState)
     }
 
     return(

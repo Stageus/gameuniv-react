@@ -82,7 +82,6 @@ const GameStartDiv = styled(Div)`
 
 //  ===== component =====
 
-// 헤더 아이콘 크기가 너무크다고 생각 줄이는거 어떨지?
 const Main = () =>{
 
     // ===== hooks =====
