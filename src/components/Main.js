@@ -107,6 +107,12 @@ const Main = () =>{
         setModalState("gameSelectModal")
         setModalOpen(true)
     }
+    
+    React.useEffect( ()=>{
+
+
+        return setModalOpen(false)
+    })
 
     // ===== event =====
     return(

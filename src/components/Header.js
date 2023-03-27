@@ -39,8 +39,11 @@ const Header_style = styled.header`
 `
 
 const Header = () =>{
-    
-    // ===== router =====
+    // recoil
+    const setModalState = useSetRecoilState(whichModalState)
+    const setModalOpen = useSetRecoilState(isModalOpenState)
+    const whichModal = useRecoilValue(whichModalState)
+    // ===== router =====  
     const navigate = useNavigate()
     const location = useLocation()
     const address = useRecoilValue(domainAddressState)
@@ -54,7 +57,14 @@ const Header = () =>{
             navigate("/")
         }
         else{
-            navigate("/home")
+            if(path === "/2048" || path === "/tetris"){
+                setModalState("quitGameModal")
+                setModalOpen(true)
+
+            }
+            else{
+                navigate("/home")
+            }
         }
     }
 
@@ -94,7 +104,7 @@ const Header = () =>{
                 <BtnAnimation event={useSetModalState("settingModal")}
                 before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`}
                 after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingAfterBtnImg.png`}
-                padding="0 20px 6px 10px"/>
+                margin="0 20px 6px 10px"/>
             </Div>
         </Header_style>        
     )

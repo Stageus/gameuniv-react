@@ -44,6 +44,7 @@ const DeleteAcoountModal = () =>{
         else{
             setModalOpen(false)
             navigate("/")
+            window.localStorage.clear()
             alert("계정삭제 성공")
         }
     }

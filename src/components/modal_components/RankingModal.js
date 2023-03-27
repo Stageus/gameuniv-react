@@ -117,7 +117,7 @@ const RankingModal = () =>{
 
         const result = await response.json()
         if(result.data.length < 1){
-            alert(result.message)
+            // alert(result.message)
         }
         else{
             setRankingData(prevState => [...prevState, ...result.data])

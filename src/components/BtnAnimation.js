@@ -58,13 +58,14 @@ const BtnAnimation = (props) => {
 
     // ===== props =====
     const padding = props.padding
+    const margin = props.margin
     const before_src = props.before_src
     const after_src = props.after_src
     const deg = props.deg
     const event = props.event
 
     return(
-        <Div padding={padding} onMouseOver={()=>setMouseHover(true)} onMouseOut={()=>setMouseHover(false)} onClick={event}>
+        <Div padding={padding} margin={margin} onMouseOver={()=>setMouseHover(true)} onMouseOut={()=>setMouseHover(false)} onClick={event}>
             {
                 isMouseHover
                 ?

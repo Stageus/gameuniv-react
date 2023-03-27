@@ -157,6 +157,17 @@ const GameProvider = (props) =>{
     const isGet = useRecoilValue(isGetState)
    
 
+    React.useEffect( ()=>{
+        // state.status = "IN_PROGRESS"
+        // state.tiles = generateBoard(2)
+
+        return ()=>{
+            state.status = "IN_PROGRESS" 
+            state.tiles = generateBoard(2)
+        }
+        
+    }, [])
+    
     const [timer, setTimer] = React.useState(0)
 
     const handleKeyPress = (e) =>{
@@ -192,6 +203,9 @@ const Game = () =>{
     //====수정 테마
     let skin = basicTheme
     const isMobile = useMobile()
+
+    // const setModalOpen = useSetRecoilState(isModalOpenState)
+
     const skin2048 = useRecoilValue(skin2048State)
     //====수정 테마
     if(skin2048===2){
@@ -205,6 +219,7 @@ const Game = () =>{
     }if(skin2048===10){
         skin = legoTheme
     }
+
 
     return(
         <GameProvider>

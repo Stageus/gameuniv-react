@@ -107,7 +107,7 @@ const GameResultContainer = (props) =>{
     const handleRestart = () => {
         dispatch( {type: "restart"})
     }
-
+    
     return(
         <React.Fragment>
             
