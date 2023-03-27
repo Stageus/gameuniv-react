@@ -2,14 +2,10 @@
 import React, { Fragment } from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
-// ===== import component =====
-
 // ===== import recoil =====
-
 import { game2048ResultState} from "./game2048_components/recoil/ScoreState"
 import { whichGameState } from "../recoil/PageState"
 import { gameTetrisResultState } from "../recoil/DataState"
-
 
 // ===== import style =====
 import { ShadowDiv } from "../styles/Div"
@@ -18,37 +14,36 @@ import { H1 } from "../styles/H1"
 import { P } from "../styles/P"
 import { Img } from "../styles/Img"
 
-// ===== style =====
-
 //  ===== component =====
-
 const NowAchieveUnit = (props) =>{
     const {idx} = props
 
     // ===== recoil state =====
+    let now_achieve_data
     const whichGame = useRecoilValue(whichGameState)
     const game2048Result =  useRecoilValue(game2048ResultState)
     const gameTetrisResult = useRecoilValue(gameTetrisResultState)
-    const [gameResult, setGameResultState] = React.useState(null)
-    // if(whichGame==="tetris"){
-    //     setGameResultState(gameTetrisResult)
-    // }else{
-    //     // setGameResultState(game2048Result)
-    // }
+    
+    // 조건에 맞는 데이터 세팅
+    if(whichGame==="tetris"){
+        now_achieve_data = gameTetrisResult.achieveList
+    }else if(whichGame==="2048"){
+        now_achieve_data = game2048Result.achieveList
+    }
    
 
     return(
         <ShadowDiv width="180px" min_width="180px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
             <H1 color="blue3" font_size="xs" font_weight="medium" >
-                {gameTetrisResult.achieveList[idx].achieve_name}
+                {now_achieve_data[idx].achieve_name}
             </H1>
             <Div width="60%" justify_content="space-around">
-                <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/${gameTetrisResult.achieveList[idx].reward_img}`}/>
+                <Img height="50px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/${now_achieve_data[idx].reward_img}`}/>
                 {/* {
                     gameTetrisResult.achieveList[idx].reward_type === "coin"
                     ? */}
                         <P  color="grayscale7" font_size="xxs" font_weight="regular">
-                        {gameTetrisResult.achieveList[idx].reward_coin} 코인
+                        {now_achieve_data[idx].reward_coin} 코인
                         </P>
                     {/* :
                         <Img height="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/unlockImg.png`}/>

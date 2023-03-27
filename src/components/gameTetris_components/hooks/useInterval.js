@@ -1,5 +1,7 @@
+// ===== import base =====
 import { useEffect, useRef } from 'react';
 
+// ===== custom hook =====
 export function useInterval(callback, delay) {
   const savedCallback = useRef();
 

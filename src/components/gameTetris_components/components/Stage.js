@@ -2,13 +2,10 @@
 import React, {useContext, useEffect } from "react"
 import styled, {css} from "styled-components"
 
-
 // ===== import components =====
 import Cell from "./Cell"
 
-// ===== import utils =====
-
-
+// ===== style =====
 const StageDiv=styled.div`
     display :grid;
     grid-template-rows: repeat(
@@ -30,8 +27,7 @@ const StageDiv=styled.div`
     // padding :1px;
 
 `
-
-
+//  ===== component =====
 const Stage =({stage})=>{
     return(
     <StageDiv width={stage[0].length} height={stage.length} > 

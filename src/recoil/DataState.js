@@ -1,4 +1,7 @@
 import {atom, selector} from "recoil"
+import { recoilPersist } from "recoil-persist"
+
+const {persistAtom } = recoilPersist()
 
 // 스테이트 역할 : 상점 동적 데이터 저장
 // default : 상점 동적 데이터
@@ -118,7 +121,8 @@ export const isGameOverState = atom({
 // 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
 export const skin2048State = atom({
     "key" : "skin2048State",
-    "default": "basicTheme"
+    "default": "basicTheme",
+    effects_UNSTABLE: [persistAtom]
 })
 
 

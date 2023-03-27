@@ -67,7 +67,6 @@ export const TETROMINOS ={
         cellImg : "img_srcs/game_img/tetris/jelly/cell/tetrominoCellZ.png",
         tetrominoImg: "img_srcs/game_img/tetris/jelly/tetromino/tetrominoZ.png"
     }
-    
 }
 
 export const randomTetromino =()=>{
