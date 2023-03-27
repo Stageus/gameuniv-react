@@ -6,6 +6,9 @@ import styled, {css, ThemeProvider} from "styled-components"
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import { isModalOpenState, whichModalState } from "../../../../recoil/ModalState";
 
+//수정
+import {skin2048State } from "../../../../recoil/DataState";
+
 import { basicTheme, pastelTheme, doodleTheme, jellyTheme, retroTheme, legoTheme } from "../../styles/theme";
 
 // ===== import components =====
@@ -152,6 +155,7 @@ const GameProvider = (props) =>{
     const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
     const isModalOpen = useRecoilValue(isModalOpenState)
     const isGet = useRecoilValue(isGetState)
+   
 
     React.useEffect( ()=>{
         // state.status = "IN_PROGRESS"
@@ -196,11 +200,30 @@ const GameProvider = (props) =>{
 }
 
 const Game = () =>{
+    //====수정 테마
+    let skin = basicTheme
     const isMobile = useMobile()
+
     // const setModalOpen = useSetRecoilState(isModalOpenState)
+
+    const skin2048 = useRecoilValue(skin2048State)
+    //====수정 테마
+    if(skin2048===2){
+        skin = pastelTheme
+    }if(skin2048===4){
+        skin = doodleTheme
+    }if(skin2048===6){
+        skin = jellyTheme
+    }if(skin2048===8){
+        skin = retroTheme
+    }if(skin2048===10){
+        skin = legoTheme
+    }
+
+
     return(
         <GameProvider>
-            <ThemeProvider theme = {retroTheme}>
+        <ThemeProvider theme = {skin}> 
                 <Container isMobile={isMobile}>
                     <GameContainer isMobile={isMobile}>
                         <GameHeader/>

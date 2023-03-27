@@ -1,5 +1,5 @@
 // ===== import base =====
-import React, {useState} from "react"
+import React, {useState, useRef, useEffect} from "react"
 import styled from "styled-components"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 
@@ -11,18 +11,14 @@ import {useGameStatus} from "../hooks/useGameStatus"
 import { TETROMINOS,randomTetromino} from "../tetrominos"
 
 
+
 import {createStage, checkCollision} from "../gameHelpers"
 
 import { isModalOpenState ,whichModalState} from "../../../recoil/ModalState"
 import { tetrisScoreState, isGameOverState} from "../../../recoil/DataState"
 // ===== import components =====
 import Stage from "./Stage"
-import Level from "./displays/Level"
 import TetrisScoresContainer from "./displays/TetrisScoresContainer"
-import NextBlock from "./displays/NextBlock"
-import ReplayBtn from "./displays/ReplayBtn"
-import Controller from "./displays/Controller"
-import ScoresContainer from "../../game2048_components/components/ScoresContainer/ScoresContainer"
 
 
 // ===== import utils =====
@@ -48,22 +44,38 @@ height: 120px;
 border-radius : 25px;
 border : 7px solid #F258FF;
 `
-const DisplayDiv =styled.div`
-    height :60px;
+const ImgDiv = styled(Div)`
+    width: 80px;
+    height: 80px;
+    background-image : url(${(props)=> props.img_address});
+    background-repeat : no-repeat;
+    background-position : center;
+    background-size : contain;
+`
+const BtnP=styled(P)`
+    color : #F258FF;
 `
 const ArrowBtnImg =styled.img`
     transform:rotate(${props => props.deg || "0deg"});
 `
 
 const Tetris =()=>{
+    const mounted = useRef(false);
+    const [isModalOpen,setModalOpen] = useRecoilState(isModalOpenState)
+    const setModalState = useSetRecoilState(whichModalState)
   
     const setTetrisScore = useSetRecoilState(tetrisScoreState)
     const [isGameOver, setGameOver] = useRecoilState(isGameOverState)
     const [dropTime, setDropTime] = useState(null)
 
+    const [isGameStart, setGameStart] = useState(false)
+
     const[player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer()
     const[stage, setStage, rowsCleared] = useStage(player, resetPlayer)
     const[score, setScore, rows, setRows, level, setLevel] =useGameStatus(rowsCleared)
+
+
+   
 
     useInterval(()=>{
         drop()
@@ -76,13 +88,19 @@ const Tetris =()=>{
     } 
 
     const startGame = () =>{
+        setGameStart(true)
         setGameOver(false)
         setStage(createStage())
-        setDropTime(1000)
+        setDropTime(1200)
         resetPlayer()
         setScore(0)
         setRows(0)
         setLevel(0)
+    } 
+
+    const replayGame = () =>{
+        setModalOpen(true)
+        setModalState("retryGameModal")
     } 
 
     const drop =() =>{
@@ -135,21 +153,42 @@ const Tetris =()=>{
     }
     console.log(rowsCleared)
 
+    useEffect( () =>{
+        if(isModalOpen === true){
+            setDropTime(null);
+        }else{
+            if (isGameStart === true){
+                setDropTime(1200 /(level +1)+200)
+            }
+        }
+    }, [isModalOpen]) 
+
+
+
     return(
-        <TetrisDiv align_items="center" justify_content="center"
+        <TetrisDiv align_items="center" justify_content="center" margin="50px 0 0 0"
         role="button" tabIndex="0" onKeyDown={e => move(e)} onKeyUp={keyUp}>
             
             <Stage stage={stage}/>
-            <Div height="700px" margin="0 0 30px 30px" flex_direction="column">
+            <Div height="90%" margin="0 0 20px 20px" flex_direction="column">
                 <Img height="60px" src={"img_srcs/game_img/tetris/jelly/asset/tetrisLogoImg.png"}/>
-                <Div height="400px" justify_content="space-around" flex_direction="column">    
+                <Div height="80%" justify_content="space-around" flex_direction="column">    
                     <P font_size="l" font_weight="bold">LEVEL : {level}</P>  {/* <Display text={`Lv : ${score}`}/> */}
                     <TetrisScoresContainer score={score} rowsCleared={rowsCleared}/> 
                     <TetrominoPriviewDiv>
-                        <Img height="70px" src={player.preview.tetrominoImg}/>
+                        <ImgDiv img_address={player.preview.tetrominoImg}></ImgDiv>
                     </TetrominoPriviewDiv>
-                
-                    <ReplayBtn text="ReplayBtn" callback={startGame}/>
+                    {
+                        isGameStart
+                        ?
+                        <Div width="150px" height="40px" border_radius="10px" border="6px solid #FFE973" onClick={replayGame}>
+                            <BtnP font_size="s" font_weight="bold">다시 하기</BtnP>
+                        </Div>
+                        :
+                        <Div  width="150px" height="40px" border_radius="10px" border="6px solid #FFE973"  onClick={startGame}>
+                            <BtnP font_size="s" font_weight="bold">게임 시작</BtnP>
+                        </Div>
+                    }
                     <Div>
                         <Div flex_direction="column">
                             <Div  width="180px" justify_content="space-around" >

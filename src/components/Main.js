@@ -110,8 +110,10 @@ const Main = () =>{
     
     React.useEffect( ()=>{
 
+
         return setModalOpen(false)
     })
+
     // ===== event =====
     return(
         <MainStyle>

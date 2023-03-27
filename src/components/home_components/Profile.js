@@ -89,15 +89,19 @@ const Profile = () =>{
                         <ProfileChangeMobileBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
                                 before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeBeforeBtnImg.png`}
+
                                 after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeAfterBtnImg.png`}
                                 margin="0 20px 6px 10px"/>
+
+                                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeAfterBtnImg.png`}/>
+
                         </ProfileChangeMobileBtn>
                     </Mobile>
 
                     <Div width="100%" height="230px" margin="10px 0px 0px 0px" border_radius="3px" background_color="grayscale2" flex_direction="column" align_items="flex-end">
                         <Div margin={isMobile ? "0 20px 0 0" :  "0 100px 0 0"} flex_direction="column">
                             {/* 백엔드 데이터 */}
-                            <H1 font_size={isMobile ? "xl" : "xxl" }color="grayscale7" font_weight="bold">{userData.id}</H1>
+                            <H1 font_size={isMobile ? "xl" : "xxl" }color="grayscale7" font_weight="bold">{userData.user_name}</H1>
                             <Div>
                                 <Img width={isMobile ? "20px" : "35px" } margin="0px 5px 0px 0px"  src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}/>
                                 <P font_size={isMobile ? "s" : "m" } color="grayscale7" font_weight="light">{userData.universityName}</P>
