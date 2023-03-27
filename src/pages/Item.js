@@ -45,6 +45,7 @@ const Item = () =>{
     const setItemDetailOpenState=useSetRecoilState(isItemDetailOpenState)
     const setItemComponentState=useSetRecoilState(whichItemComponentState)
     const resetItemComponentState = useResetRecoilState(whichItemComponentState)
+    const resetItemDetailOpen = useResetRecoilState(isItemDetailOpenState)
     const setTabOpenState=useSetRecoilState(isTabOpenState)
     const resetTabOpenState = useResetRecoilState(isTabOpenState)
     const setClickUnitState=useSetRecoilState(isClickUnitState)
@@ -53,6 +54,7 @@ const Item = () =>{
     useEffect(()=>{
         resetTabOpenState()
         resetItemComponentState()
+        resetItemDetailOpen()
     })
     // 비정상접근 막기
     if(!isLogin){
