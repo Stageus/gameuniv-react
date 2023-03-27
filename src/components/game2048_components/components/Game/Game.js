@@ -220,7 +220,7 @@ const Game = () =>{
         skin = legoTheme
     }
 
-
+    // console.log(skin)
     return(
         <GameProvider>
         <ThemeProvider theme = {skin}> 

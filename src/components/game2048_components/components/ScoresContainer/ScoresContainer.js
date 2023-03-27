@@ -133,6 +133,10 @@ const MyScore = styled(Div)`
         width: 90%;
         height: 27px;
     `}
+
+    ${props => props.theme === doodleTheme && css`
+        border: 2px solid black;
+    `}
 `
 
 const UserId = styled.div`
@@ -189,6 +193,10 @@ const OtherScore = styled(MyScore)`
         position:relative;
         width:80%;
         height:25px;
+    `}
+
+    ${props => props.theme === doodleTheme && css`
+        border: 2px solid black;
     `}
 `
 
