@@ -217,7 +217,7 @@ const TetrisScoresContainer = (props) =>{
                     <MyRank >{tetrisScoreData.rank}</MyRank>
                 }
                 <Div flex_direction="column">
-                    <UserId >{userData.id}</UserId>
+                    <UserId >{userData.user_name}</UserId>
                     <UserUniv>{userData.universityName}</UserUniv>
                 </Div>
                 <ScoreBox score={score}/>

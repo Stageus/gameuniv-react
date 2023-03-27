@@ -4,12 +4,9 @@ import { useAsyncError } from "react-router";
 
 // ===== import utils =====
 import { randomTetromino, TETROMINOS } from "../tetrominos"
-
 import {createStage} from "../gameHelpers"
 
-
-
-
+// ===== custom hook =====
 export const useStage =(player, resetPlayer)=>{
 
     const [stage, setStage] =useState(createStage());

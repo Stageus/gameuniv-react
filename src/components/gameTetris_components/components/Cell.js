@@ -2,16 +2,13 @@
 import React, {useContext, useEffect } from "react"
 import styled, {css} from "styled-components"
 
-
-// ===== import components =====
-
+// ===== import style =====
 import { Div } from "../../../styles/Div"
 
 // ===== import utils =====
 import { TETROMINOS } from "../tetrominos"
 
-// ===== import utils =====
-
+// ===== style =====
 const CellDiv=styled.div`
     width :30px;
     height :30px;
@@ -20,7 +17,7 @@ const CellDiv=styled.div`
     background-position : center;
     background-size : 30px;
 `
-
+//  ===== component =====
 const Cell =({type})=>{
     return( 
     <CellDiv type={type} img={TETROMINOS[type].cellImg}/>

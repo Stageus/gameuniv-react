@@ -8,28 +8,26 @@ import {useInterval} from "../hooks/useInterval"
 import {usePlayer} from "../hooks/usePlayer"
 import {useStage} from "../hooks/useStage"
 import {useGameStatus} from "../hooks/useGameStatus"
+
+// ===== import utils =====
 import { TETROMINOS,randomTetromino} from "../tetrominos"
-
-
-
 import {createStage, checkCollision} from "../gameHelpers"
 
+//  ===== import recoil =====
 import { isModalOpenState ,whichModalState} from "../../../recoil/ModalState"
 import { tetrisScoreState, isGameOverState} from "../../../recoil/DataState"
+
 // ===== import components =====
 import Stage from "./Stage"
 import TetrisScoresContainer from "./displays/TetrisScoresContainer"
 
-
-// ===== import utils =====
-
-
+// ===== import style =====
 import { Div } from "../../../styles/Div"
 import { H1 } from "../../../styles/H1"
 import { P } from "../../../styles/P"
 import { Img } from "../../../styles/Img"
-import Display from "./Display"
 
+// ===== style =====
 const TetrisDiv=styled(Div)`
 width: 734px;
 height: 760px;
@@ -37,7 +35,6 @@ background-image: url("img_srcs/game_img/tetris/jelly/asset/bigBoardImg.png");
 background-size : 734px 760px;
 background-repeat : no-repeat;
 `
-
 const TetrominoPriviewDiv=styled(Div)`
 width: 120px;
 height: 120px;
@@ -55,32 +52,38 @@ const ImgDiv = styled(Div)`
 const BtnP=styled(P)`
     color : #F258FF;
 `
+const LevelP=styled(P)`
+    color : #F258FF;
+    -webkit-text-stroke: 2px #FFEC3D;
+`
 const ArrowBtnImg =styled.img`
     transform:rotate(${props => props.deg || "0deg"});
 `
 
+//  ===== component =====
 const Tetris =()=>{
-    const mounted = useRef(false);
-    const [isModalOpen,setModalOpen] = useRecoilState(isModalOpenState)
+
+    // ===== recoil state =====
     const setModalState = useSetRecoilState(whichModalState)
-  
     const setTetrisScore = useSetRecoilState(tetrisScoreState)
     const [isGameOver, setGameOver] = useRecoilState(isGameOverState)
-    const [dropTime, setDropTime] = useState(null)
+    const [isModalOpen,setModalOpen] = useRecoilState(isModalOpenState)
 
+    // ===== state =====
+    const [dropTime, setDropTime] = useState(null)
     const [isGameStart, setGameStart] = useState(false)
 
+    // ===== hooks =====
+    const mounted = useRef(false);
     const[player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer()
     const[stage, setStage, rowsCleared] = useStage(player, resetPlayer)
     const[score, setScore, rows, setRows, level, setLevel] =useGameStatus(rowsCleared)
-
-
-   
 
     useInterval(()=>{
         drop()
     }, dropTime)
 
+    // ===== event =====
     const movePlayer = (dir) =>{
         if(!checkCollision(player, stage, {x: dir, y:0})){
             updatePlayerPos({x: dir, y:0 })
@@ -89,13 +92,12 @@ const Tetris =()=>{
 
     const startGame = () =>{
         setGameStart(true)
-        setGameOver(false)
         setStage(createStage())
-        setDropTime(1200)
+        setDropTime(800)
         resetPlayer()
         setScore(0)
         setRows(0)
-        setLevel(0)
+        setLevel(1)
     } 
 
     const replayGame = () =>{
@@ -104,17 +106,15 @@ const Tetris =()=>{
     } 
 
     const drop =() =>{
-        if (rows > (level +1)*10){
+        if (rows > (level)*5){
             setLevel(prev => prev+1)
-
-            setDropTime(1200 /(level +1)+200)
+            setDropTime(800 /(level)+250)
         }
 
         if(!checkCollision(player,stage, {x: 0, y:1})){
             updatePlayerPos({x:0, y:1, collided : false})
         }else{
             if(player.pos.y<1){
-                console.log("gameover")
             setGameOver(true)
             setDropTime(null)
             }
@@ -126,14 +126,13 @@ const Tetris =()=>{
     const keyUp =({keyCode}) =>{
         if(!isGameOver){
             if(keyCode === 40){
-                console.log("interval on")
-                setDropTime(1200 /(level +1)+200)
+                console.log(rows)
+                setDropTime(800 /(level)+250)
             }
         }
     }
 
     const dropPlayer=() =>{
-        console.log("interval off")
         setDropTime(null);
         drop()
     }
@@ -151,29 +150,25 @@ const Tetris =()=>{
                 }
         }
     }
-    console.log(rowsCleared)
 
     useEffect( () =>{
         if(isModalOpen === true){
             setDropTime(null);
         }else{
             if (isGameStart === true){
-                setDropTime(1200 /(level +1)+200)
+                setDropTime(800 /(level)+250)
             }
         }
     }, [isModalOpen]) 
 
-
-
     return(
         <TetrisDiv align_items="center" justify_content="center" margin="50px 0 0 0"
         role="button" tabIndex="0" onKeyDown={e => move(e)} onKeyUp={keyUp}>
-            
             <Stage stage={stage}/>
             <Div height="90%" margin="0 0 20px 20px" flex_direction="column">
                 <Img height="60px" src={"img_srcs/game_img/tetris/jelly/asset/tetrisLogoImg.png"}/>
                 <Div height="80%" justify_content="space-around" flex_direction="column">    
-                    <P font_size="l" font_weight="bold">LEVEL : {level}</P>  {/* <Display text={`Lv : ${score}`}/> */}
+                    <LevelP font_size="l" font_weight="bold">LEVEL : {level}</LevelP>
                     <TetrisScoresContainer score={score} rowsCleared={rowsCleared}/> 
                     <TetrominoPriviewDiv>
                         <ImgDiv img_address={player.preview.tetrominoImg}></ImgDiv>

@@ -5,10 +5,7 @@ import { checkCollision, STAGE_WIDTH } from "../gameHelpers"
 // ===== import utils =====
 import { TETROMINOS,randomTetromino} from "../tetrominos"
 
-
-
-
-
+// ===== custom hook =====
 export const usePlayer =()=>{
 
     const [player, setPlayer] =useState({

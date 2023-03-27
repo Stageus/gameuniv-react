@@ -75,14 +75,16 @@ const GameOverModal = (props) =>{
     const coin = useRecoilValue(coinState)
     const setModalState = useSetRecoilState(whichModalState)
     const address = useRecoilValue(domainAddressState)
-    const whichModal = useRecoilValue(whichGameState)
+    const whichGame = useRecoilValue(whichGameState)
     const navigate = useNavigate()
     const location = useLocation().pathname
-    const setGameOverState = useSetRecoilState(isGameOverState)
+    const setGameOver = useSetRecoilState(isGameOverState)
     const resetModalState = useResetRecoilState(whichModalState)
     const resetTetrisScoreData = useResetRecoilState(tetrisScoreDataState)
     const resetTetrisScore = useResetRecoilState(tetrisScoreState)
     const resetGameTetrisResultState = useResetRecoilState(gameTetrisResultState)
+
+    const setGameState= useSetRecoilState(whichGameState)
 
     const mounted = useRef(false);
     // ===== event =====
@@ -95,13 +97,13 @@ const GameOverModal = (props) =>{
                 if(location === "/2048"){
                     props.onRestart()
                 }
-                window.location.reload()
-                //
                 resetTetrisScoreData()
                 resetTetrisScore()
-                setModalState("gameOverLoadingModal")
                 resetGameTetrisResultState()
-                setGameOverState(false)
+                setGameOver(false)
+                window.location.reload()
+                //
+                
                 break
             case "home_btn":
                 setModalOpen(false)
@@ -110,7 +112,7 @@ const GameOverModal = (props) =>{
                 resetModalState()
                 resetTetrisScore()
                 resetGameTetrisResultState()
-                setGameOverState(false)
+                setGameOver(false)
                 break
             case "share_btn":
                 setModalState("shareModal")
@@ -119,7 +121,11 @@ const GameOverModal = (props) =>{
 
     }
     
-    console.log(gameTetrisResult)
+    if(location === "/tetris"){
+        setGameState("tetris")
+    } else {
+        setGameState("2048")
+    }
 
     
     return(
@@ -133,7 +139,7 @@ const GameOverModal = (props) =>{
                     <P color="blue3" font_size="m" font_weight="regular">점수</P>
                     <P color="grayscale1" font_size="s" font_weight="regular">
                         {
-                            (whichModal === "tetris")
+                            (whichGame === "tetris")
                             ?
                             scoreTetris
                             :
@@ -145,7 +151,7 @@ const GameOverModal = (props) =>{
                     <P color="blue3" font_size="m" font_weight="regular">순위</P>
                     <P color="grayscale1" font_size="s" font_weight="regular">
                         {
-                            (whichModal === "tetris")
+                            (whichGame === "tetris")
                             ?
                             gameTetrisResult.rank === -1 
                                 ?
@@ -171,7 +177,7 @@ const GameOverModal = (props) =>{
                     <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} height="29px"/>
                     <P color="green" font_size="m" font_weight="regular">+
                         {
-                            (whichModal === "tetris")
+                            (whichGame === "tetris")
                             ?
                             gameTetrisResult.coin
                             :
@@ -187,7 +193,7 @@ const GameOverModal = (props) =>{
                 </P>
                 <NowAchievementContainerDiv  width="500px" height="200px">
                 {   
-                    (whichModal === "tetris")
+                    (whichGame === "tetris")
                     ?
                     
                         (gameTetrisResult.achieveList === null)
