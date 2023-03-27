@@ -47,13 +47,13 @@ const Overlay = styled.div`
 
 const GameResult = styled.div`
     display: flex;
-    position: absolute;
+    position: fixed;
     width:fit-content;
     height:fit-content;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    top: 25%;
+    right: 25%;
+    // bottom: 50%;
+    // left: 0;
 
     ${props => props.isMobile && css`
         top: -100px;

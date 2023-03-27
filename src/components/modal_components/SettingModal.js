@@ -137,10 +137,9 @@ const SettingModal = () =>{
         const result = await response.json()
         
         if(result.message){
-            alert(result.message)
+            // alert(result.message)
         }
         else{
-            // alert("로그아웃 성공")
             navigate("/")
             setModalOpen(false)
             setLogin(false)

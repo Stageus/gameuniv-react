@@ -12,7 +12,6 @@ import ScoreBox from "../ScoreBox/ScoreBox"
 
 // ===== import hooks =====
 import { useMobile } from "../../../../hooks/useMediaComponent";
-import { useGetUserData } from "../../../../hooks/useGetUserData";
 
 // ===== import recoil =====
 import { game2048ResultState, scoreDataState, scoreState } from "../../recoil/ScoreState";
@@ -296,7 +295,7 @@ const ScoresContainer = (props) =>{
 
     React.useEffect( ()=>{
         if(timer){
-            console.log('clear timer')
+            // console.log('clear timer')
             clearTimeout(timer)
         }
         const newTimer = setTimeout( async () => {
@@ -341,9 +340,9 @@ const ScoresContainer = (props) =>{
             alert(result.message)
         }
         else{
-            console.log(result.data)
+            // console.log(result.data)
             setGameResult(result.data)
-            console.log(game2048Result)
+            // console.log(game2048Result)
             const achieve_list = result.data.achieveList
             let achieve_coin = 0
 
@@ -352,17 +351,20 @@ const ScoresContainer = (props) =>{
                     achieve_coin += achieve.reward_coin
                 })
             }
-
+            // console.log(achieve_coin)
+            
             setCoin(prevState => prevState + (result.data.coin + achieve_coin) )
         }
     }
     // 게임오버 시 점수 보내기 //////수정===========
     useEffect( () => {
-        if(isGameOver === true){
+        if(gameState.status === "GAME_OVER"){
+            console.log("게임오버")
+            // console.log(state.score)
             post2048Score()
             setScore(state.score)
         }
-    }, [isGameOver]) 
+    }, [gameState.status]) 
 
     return(
         <ScoresContainerDiv isMobile={isMobile}>

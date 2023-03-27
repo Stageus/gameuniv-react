@@ -11,8 +11,6 @@ import { Navigate, useLocation } from "react-router-dom"
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
 
-import { useGetUserData } from "../hooks/useGetUserData"
-
 // ===== import style =====
 import {Img} from "../styles/Img"
 
@@ -61,7 +59,6 @@ const Login = () =>{
         }
     }, [])
     // 자동 로그인
-    // useGetUserData()
     const postLoginData = async(id, pw) =>{
         const response = await fetch(`${address}/auth`,{
             method: "POST",
@@ -84,7 +81,6 @@ const Login = () =>{
             alert("로그인 성공")
             window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
             getUserData()
-            // useGetUserData()
             getCoinData()
             setLogin(true)
             navigate("/home")
@@ -148,12 +144,9 @@ const Login = () =>{
         }
     }
 
-    // console.log(userData)
-
     return(
         <React.Fragment>
             {/* 로고 */}
-            {/* <Button onClick={testUserData}>유저정보 확인</Button> */}
             <Div flex_direction="column" width="100%">
                 <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
                 {/* 로그인 폼 */}

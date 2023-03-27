@@ -55,13 +55,11 @@ const Find = (props) =>{
         }
 
     }
-    // console.log(emailState)
-    
+
     const checkEvent = (e) =>{
         e.preventDefault()
         // ===== var =====
         const target = e.target.id
-        
         
         switch(target){
             case "id_find":
@@ -82,10 +80,6 @@ const Find = (props) =>{
                     }
                 }
                 break
-            
-            // case "certification_check":
-            //     setIdFindStep(idFindStep+1)
-            //     break
             
             case "confirm_auth":
                 confirmAuthNumberEvent(e)
@@ -211,47 +205,11 @@ const Find = (props) =>{
                                     <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
                                     id="email"/>
                                 </Div>
-                                {/* <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px"
-                                onClick={checkEvent} id="id_find">인증번호 받기</Button> */}
                                 <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px"
                                 onClick={idFindEvent} id="id_find">아이디 찾기</Button>
                             </Div>
                         </form>
                     }
-                    {/* {
-                        idFindStep === 2
-                        &&
-                        <form>
-                            <Div flex_direction="column">
-                                <Div flex_direction="column" align_items="felx-start" padding="0 20px">
-                                    <H1 font_size= "xxl" padding="20px 0" color="grayscale7">아이디 찾기</H1>
-                                    <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
-                                    <P font_size = "xxs" padding="5px 0">인증번호</P>
-                                    <Div>
-                                        <Input width="100%" max_width="289px" height="28px" placeholder="인증번호를 입력해주세요" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                        id="certification_number"/>
-                                        <Timer/>
-                                    </Div>
-                                </Div>
-                                <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px"
-                                onClick={checkEvent} id="certification_check">인증 확인</Button>
-                            </Div>
-                        </form>
-                    }
-                    {
-                        idFindStep === 3
-                        &&
-                        
-                        <Div flex_direction="column">
-                            <Div flex_direction="column" align_items="center" padding="0 20px">
-                                <H1 font_size= "xxl" padding="20px 0" color="grayscale7">아이디 찾기</H1>
-                                <P>고객님의 아이디는 ---입니다</P>
-                            </Div>
-                            <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px"
-                            onClick={checkEvent} id="move_loginpage">로그인 페이지로 이동</Button>
-                        </Div>
-                    } */}
-                    
                 </React.Fragment>
                 :
                 // 비밀번호 찾기
@@ -269,12 +227,7 @@ const Find = (props) =>{
                                     <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
                                     id="email"/>
                                     <P font_size = "xxs" padding="5px 0">대학교</P>
-                                    {/* <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0" */}
-                                    {/* id="univ"/> */}
                                     <UnivList></UnivList>
-                                    {/* <P font_size = "xxs" padding="5px 0">아이디</P>
-                                    <Input width="100%" max_width="289px" height="28px" placeholder="아이디" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                    id="id_input" minLength={6} maxLength={20}/> */}
                                 </Div>
                                 <Button margin="10px 0" font_size = "s" width="100%" max_width="195px" height="46px"
                                 onClick={checkEvent} id="get_auth">인증번호 발송</Button>

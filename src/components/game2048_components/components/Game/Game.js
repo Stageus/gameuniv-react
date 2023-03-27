@@ -43,9 +43,6 @@ import { Div } from "../../../../styles/Div";
 // ===== import style func =====
 import { color } from "../../../../styles/style";
 import { isGetState } from "../../recoil/Game2048State";
-import { useGetUserData } from "../../../../hooks/useGetUserData";
-
-
 
 // ===== style =====
 const Container = styled.div`

@@ -72,7 +72,7 @@ const Bg = (props) =>{
             ( location ==="/achievement")
             &&
             <SolidImgDiv>
-                 <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="600px" top="25%" right="68%" deg="-10deg"/>
+                <SolidImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048Img.png`} width="600px" top="25%" right="68%" deg="-10deg"/>
             </SolidImgDiv>
         } 
         </React.Fragment>

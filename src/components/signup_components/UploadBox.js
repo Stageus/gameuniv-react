@@ -92,9 +92,6 @@ const UploadBox = (props) =>{
                 ...prevState, profileImg: compressedFile, defaultImg: ""
             }))
             setDefaultSrc("")
-            // const resultFile = new File([compressedFile], compressedFile.name, {
-            //     type: compressedFile.type,
-            // })
 
             return compressedFile
         } catch(error){
@@ -103,7 +100,6 @@ const UploadBox = (props) =>{
     }
 
     const fileCheck = async(file) =>{
-        // const reader = new FileReader()
         const max_size = 5*1024*1024
         const file_size = file.size
         const file_regex = /(\.png|\.jpg|\.jpeg)$/i
@@ -117,19 +113,6 @@ const UploadBox = (props) =>{
         }
         else{
             imgCompress(file)
-            // const resultFile = imgCompress(file)
-            // const previewURL = URL.createObjectURL(resultFile)
-            // reader.readAsText(resultFile)
-            // console.log(resultFile)
-
-            // reader.readAsDataURL(file)
-            // reader.onloadend = () =>{
-            //     setImgFile(reader.result)
-            // }
-
-            // setPostData( (prevState) => ({
-            //     ...prevState, profileImg: [file], defaultImg: ""
-            // }))
         }
     }
 
@@ -137,9 +120,6 @@ const UploadBox = (props) =>{
     const saveImgFile = (e) =>{
         const file = imgRef.current.files[0]
         fileCheck(file)
-        // setPostData( (prevState) => ({
-        //     ...prevState, profileImg: [file], defaultImg: ""
-        // }))
     }
 
     // 이미지 드래그앤 드롭

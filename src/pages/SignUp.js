@@ -85,17 +85,13 @@ const SignUp = () =>{
         defaultImg: "",
         profileImg: null,
     })
-    // const [univIdx, setUnivIdx] = React.useState(undefined)
-    // console.log(postDataState)
-    // ===== var =====
     // ===== event =====
 
     // 정규식 빈칸 등 체크
     const checkEvent = (e) =>{
         e.preventDefault()
-        // ===== var =====
-        const target = e.target.id
 
+        // ===== var =====
         if(stepState === 1){
             const name_regex = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/
             const name = document.getElementById("name").value
@@ -270,20 +266,7 @@ const SignUp = () =>{
         console.log(postDataState)
         const response = await fetch(`${address}/user`,{
             method: "POST",
-            // headers: {
-            //     "Content-Type": "application/json"
-            // },
             body: form_data
-            // body: JSON.stringify({
-            //     email: email,
-            //     id: id,
-            //     name: name,
-            //     pw: pw,
-            //     pwCheck: pwCheck,
-            //     universityIdx: universityIdx,
-            //     defaultImg: defaultImg,
-            //     profileImg: profileImg,
-            // })
         })
 
         const result = await response.json()
@@ -337,8 +320,6 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">닉네임</P>
-                                {/* <Input width="100%" max_width="289px" height="28px" placeholder="이름" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                id="name" maxLength={10} value={postDataState.name} onChange={inputChangeEvent}/> */}
                                 <SignUpInput placeholder="닉네임" id="name" value={postDataState.name} 
                                 postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
@@ -346,8 +327,6 @@ const SignUp = () =>{
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">아이디</P>
                                 <Div width="105%" justify_content="space-between">
-                                    {/* <Input width="80%" max_width="289px" height="28px" placeholder=" 6~20자 이하 영문 또는 숫자" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                    id="id" value={postDataState.id} onChange={inputChangeEvent}/> */}
                                     <SignUpInput placeholder="6~20자 이하 영문 또는 숫자" id="id" value={postDataState.id} 
                                     postDataState={postDataState} setPostData={setPostData}/>
 
@@ -356,15 +335,11 @@ const SignUp = () =>{
                             </InputBoxDiv>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">비밀번호</P>
-                                {/* <Input type="password" placeholder="8~20자, 하나 이상의 문자와 하나의 숫자" width="100%" max_width="289px" height="28px"
-                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pw" onChange={inputChangeEvent}/> */}
                                 <SignUpInput placeholder="8~20자 하나 이상의 문자, 숫자, 특수문자" id="pw" value={postDataState.pw} 
                                 postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">비밀번호 확인</P>
-                                {/* <Input type="password" placeholder="비밀번호 확인" width="100%" max_width="289px" height="28px" 
-                                font_size="xxs" padding="0 10px" margin="0 10px 0 0" id="pwCheck" onChange={inputChangeEvent}/>     */}
                                 <SignUpInput placeholder="비밀번호 확인" id="pwCheck" value={postDataState.pwCheck} 
                                 postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
@@ -388,18 +363,12 @@ const SignUp = () =>{
                             <P font_size = "xxs" padding="10px 0">정보를 입력해주세요</P>
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">학교 이메일</P>
-                                {/* <Input width="100%" max_width="289px" height="28px" placeholder="예시 : 00000@inha.ac.kr" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                id="email" value={postDataState.email} onChange={inputChangeEvent}/> */}
                                 <SignUpInput placeholder="예시 : 00000@inha.ac.kr" id="email" value={postDataState.email} 
                                 postDataState={postDataState} setPostData={setPostData}/>
                             </InputBoxDiv>
                             
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">대학교</P>
-                                {/* <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-                                id="univ_input"/> */}
-                                {/* <SignUpInput placeholder="대학교" id="universityIdx" value={postDataState.universityIdx} 
-                                postDataState={postDataState} setPostData={setPostData}/> */}
                                 <UnivList setPostData={setPostData} postDataState={postDataState}/>
                             </InputBoxDiv>
                             <InputBoxDiv >
