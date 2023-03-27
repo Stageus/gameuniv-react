@@ -190,7 +190,7 @@ const GameProvider = (props) =>{
 
 const Game = () =>{
     //====수정 테마
-    let skin
+    let skin = basicTheme
     const isMobile = useMobile()
     const skin2048 = useRecoilValue(skin2048State)
     //====수정 테마
