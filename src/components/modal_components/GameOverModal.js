@@ -36,9 +36,8 @@ const NowAchievementContainerDiv = styled(Div)`
     grid-gap: 10px;
     flex-wrap: no-wrap;
     overflow-x: scroll;
-    justify-content :flex-start;
+    justify-content : flex-start;
     padding : 5px;
-
     ::-webkit-scrollbar {
         display: none;
     }
@@ -83,7 +82,6 @@ const GameOverModal = (props) =>{
     const resetTetrisScoreData = useResetRecoilState(tetrisScoreDataState)
     const resetTetrisScore = useResetRecoilState(tetrisScoreState)
     const resetGameTetrisResultState = useResetRecoilState(gameTetrisResultState)
-
     const setGameState= useSetRecoilState(whichGameState)
 
     const mounted = useRef(false);
@@ -127,6 +125,7 @@ const GameOverModal = (props) =>{
         setGameState("2048")
     }
 
+    // console.log(gameTetrisResult.rank)
     
     return(
         <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
@@ -187,11 +186,11 @@ const GameOverModal = (props) =>{
                 </Div>
             </Div>
 
-            <Div width="400px" height="230px" flex_direction="column" justify_content="space-between">
+            <Div width="400px" height="230px" flex_direction="column" justify_content="space-between" >
                 <P color="grayscale7" font_size="m" font_weight="regular">
                     업적
                 </P>
-                <NowAchievementContainerDiv  width="500px" height="200px">
+                <NowAchievementContainerDiv  max_width="500px" height="200px">
                 {   
                     (whichGame === "tetris")
                     ?
