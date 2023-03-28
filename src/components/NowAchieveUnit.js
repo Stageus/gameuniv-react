@@ -23,14 +23,13 @@ const NowAchieveUnit = (props) =>{
     const whichGame = useRecoilValue(whichGameState)
     const game2048Result =  useRecoilValue(game2048ResultState)
     const gameTetrisResult = useRecoilValue(gameTetrisResultState)
-    
+    console.log(game2048Result.achieveList)
     // 조건에 맞는 데이터 세팅
     if(whichGame==="tetris"){
         now_achieve_data = gameTetrisResult.achieveList
     }else if(whichGame==="2048"){
         now_achieve_data = game2048Result.achieveList
     }
-   
 
     return(
         <ShadowDiv width="180px" min_width="180px" height="110px" padding="5px 0 5px 0" border_radius="10px" flex_direction="column" justify_content="space-around">
@@ -40,7 +39,7 @@ const NowAchieveUnit = (props) =>{
             <Div width="70%" justify_content="space-around">
                 <Img width="50px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${now_achieve_data[idx].reward_img}`}/>
                 {
-                    gameTetrisResult.achieveList[idx].reward_coin === 0
+                    now_achieve_data[idx].reward_coin === 0
                     ?
                     <Img height="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/unlockImg.png`}/>
                     :

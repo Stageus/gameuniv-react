@@ -66,8 +66,13 @@ const Header = () =>{
                 navigate("/home")
             }
         }
-    }
+        }
+    
 
+    const settingEvent  = () =>{
+        setModalState("settingModal")
+        setModalOpen(true)
+    }
     const getCoinData = async() =>{
         const response = await fetch(`${address}/user/coin`,{
             credentials: "include"
@@ -96,15 +101,19 @@ const Header = () =>{
                 {
                     which_page
                     ||
-                    <Div border={`2px solid ${color("grayscale6")}`} border_radius = "10px" height="36px" width="90px" justify_content = "space-around" margin="0 0 6px 0">
-                        <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="24px"/>
-                        <P font_weight="regular" font_size="xss">{coin}</P>
-                    </Div>
+                    <React.Fragment>
+                        <Div border={`2px solid ${color("grayscale6")}`} border_radius = "10px" height="36px" width="90px" justify_content = "space-around" margin="0 0 6px 0">
+                            <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="24px"/>
+                            <P font_weight="regular" font_size="xss">{coin}</P>
+                        </Div>
+                        <BtnAnimation event={settingEvent}
+                        before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`}
+                        after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingAfterBtnImg.png`}
+                        margin="0 20px 6px 10px"/>
+                    </React.Fragment>
                 }
-                <BtnAnimation event={useSetModalState("settingModal")}
-                before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`}
-                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingAfterBtnImg.png`}
-                margin="0 20px 6px 10px"/>
+                
+                
             </Div>
         </Header_style>        
     )

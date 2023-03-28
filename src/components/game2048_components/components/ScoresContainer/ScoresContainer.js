@@ -359,7 +359,7 @@ const ScoresContainer = (props) =>{
     // 게임오버 시 점수 보내기 //////수정===========
     useEffect( () => {
         if(gameState.status === "GAME_OVER"){
-            console.log("게임오버")
+            // console.log("게임오버")
             // console.log(state.score)
             post2048Score()
             setScore(state.score)
