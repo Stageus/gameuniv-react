@@ -37,7 +37,6 @@ const GameSelectModal = () =>{
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setPageState= useSetRecoilState(whichPageState)
     const setGameState= useSetRecoilState(whichGameState)
-    //삭제할 스테이트
     const setModalState = useSetRecoilState(whichModalState)
 
     // ===== hooks =====
@@ -52,11 +51,13 @@ const GameSelectModal = () =>{
                 navigate("/tetris")
                 setModalOpen(false)
                 setGameState("tetris")
+                setModalState(null)
                 break
             case "2048_btn":
                 navigate("/2048")
                 setModalOpen(false)
                 setGameState("2048")
+                setModalState(null)
                 break
         }
 

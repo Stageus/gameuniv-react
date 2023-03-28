@@ -26,32 +26,23 @@ import { color, fontSize, fontWeight } from "../../../../styles/style";
 
 
 // ===== style =====
-const moveUp = keyframes`
-    0%  {
-        top: 25px;
-        opacity: 1;
-    }
-    100% {
-        top: -50px;
-        opacity: 0;
-    }
-`
-
-const AddScore = styled(Div)`
-    position: absolute;
-    right: 0;
-    font-size: 15px;
-    line-height: 25px;
-    font-weight: bold;
-    z-index: 100;
-    animation: ${moveUp} 600ms ease-in;
-    animation-fill-mode: both;
+const ScoresContainerDiv = styled(Div)`
+    width   : 248px;
+    height : 135px;
+    border-radius : 40px;
+    border : 7px solid ${props => props.theme.borderColor};
+    justify-content: space-evenly;
+    flex-direction: column;
 `
 
 const MyScore = styled(Div)`
+    width   : 90%;
+    height : 49px;
+    border-radius : 20px;
+    border : 4px solid ${props => props.theme.userBorderColor};
     position: relative;
     right:0;
-    background-color : #FFFCED;
+    background-color : ${props => props.theme.scoreBoxBgColor};
 `
 
 const UserId = styled.div`
@@ -76,9 +67,9 @@ const OtherScore = styled(MyScore)`
     width:150px;
     height: 29px;
     border-radius : 10px;
-    background-color : #FFF0A8;
+    background-color : ${props => props.theme.scoreBoxBgColor};
     
-    border : 3px solid #ECECEC;
+    border : 3px solid ${props => props.theme.otherBorderColor};
 `
 
 
@@ -188,17 +179,17 @@ const TetrisScoresContainer = (props) =>{
     useEffect( () => {
         if(isGameOver === true){
             postTetrisScore()
-            setModalOpen(true)
             setTimeout(()=>{
+                setModalOpen(true)
                 setModalState("gameOverModal")
-            }, 1000)
+            }, 500)
             
         }
     }, [isGameOver]) 
     
 
     return(
-        <Div width ="248px" height ="135px" border_radius="40px" border ="7px solid #FFE973" flex_direction="column" justify_content="space-evenly">
+        <ScoresContainerDiv>
             {/* 높은 등수 */}
             <OtherScore>
                 {
@@ -212,7 +203,7 @@ const TetrisScoresContainer = (props) =>{
                 <ScoreBox score={tetrisScoreData.pre_max_score}/>
             </OtherScore>
             {/* 내 등수 */}
-            <MyScore width ="90%" height ="49px" border_radius="20px" border =" 4px solid #F258FF">
+            <MyScore>
                 {
                     tetrisScoreData.rank > 100 ||
                     <MyRank >{tetrisScoreData.rank}</MyRank>
@@ -222,7 +213,7 @@ const TetrisScoresContainer = (props) =>{
                     <UserUniv>{userData.universityName}</UserUniv>
                 </Div>
                 <ScoreBox score={score}/>
-                <AddScore></AddScore>
+                {/* <AddScore></AddScore> */}
             </MyScore>
             {/* 아래 등수 */}
             <OtherScore>
@@ -237,7 +228,7 @@ const TetrisScoresContainer = (props) =>{
                 </Div>
                 <ScoreBox score={tetrisScoreData.next_max_score} />
             </OtherScore>
-        </Div>
+        </ScoresContainerDiv>
     )
 }
 
