@@ -1,5 +1,5 @@
 // ===== import base =====
-import React, { Fragment } from "react"
+import React, { Fragment, useEffect } from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
@@ -25,6 +25,7 @@ const NowAchieveUnit = (props) =>{
     const gameTetrisResult = useRecoilValue(gameTetrisResultState)
     
     // 조건에 맞는 데이터 세팅
+
     if(whichGame==="tetris"){
         now_achieve_data = gameTetrisResult.achieveList
     }else if(whichGame==="2048"){
@@ -40,7 +41,7 @@ const NowAchieveUnit = (props) =>{
             <Div width="70%" justify_content="space-around">
                 <Img width="50px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${now_achieve_data[idx].reward_img}`}/>
                 {
-                    gameTetrisResult.achieveList[idx].reward_coin === 0
+                    now_achieve_data[idx].reward_coin === 0
                     ?
                     <Img height="30px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/unlockImg.png`}/>
                     :
