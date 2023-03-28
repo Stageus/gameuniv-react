@@ -173,11 +173,11 @@ const GameProvider = (props) =>{
         }
         else{
             e.preventDefault()
-            const effect = Effect
+            // const effect = Effect
             let direction = KEYBOARD_ARROW_TO_DIRECTION_MAP[e.key]
             if(direction){
                 dispatch({type : "move", payload: direction})
-                effect.play()
+                // effect.play()
             }
         }
     }

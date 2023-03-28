@@ -149,52 +149,53 @@ const SettingModal = () =>{
     }
 
     // sound 관련
-    const backControlEvent = (e) =>{
-        let value = e.target.value
-        setBgmRange(value)
-        audio.volume = bgmRange/100
-    }
+    // const backControlEvent = (e) =>{
+    //     let value = e.target.value
+    //     setBgmRange(value)
+    //     audio.volume = bgmRange/100
+    // }
 
-    const backMuteEvent = (e) =>{
-        let check = e.target.checked
-        setBgm(!bgmOn)
-        check = bgmOn
-        if(check){
-            audio.play()
-        }
-        else{
-            audio.pause()
-        }
-    }
+    // const backMuteEvent = (e) =>{
+    //     let check = e.target.checked
+    //     setBgm(!bgmOn)
+    //     check = bgmOn
+    //     if(check){
+    //         audio.play()
+    //     }
+    //     else{
+    //         audio.pause()
+    //     }
+    // }
 
-    const effectControlEvent = (e) =>{
-        let value = e.target.value
-        setEffectRange(value)
-        effect.volume = effectRange/100
-    }
+    // const effectControlEvent = (e) =>{
+    //     let value = e.target.value
+    //     setEffectRange(value)
+    //     effect.volume = effectRange/100
+    // }
 
-    const effectMuteEvent = (e) =>{
-        let check = e.target.checked
-        setEffect(!effectOn)
-        check = effectOn
-        if(check){
-            effect.volume = 0
-        }
-        else{
-            effect.volume = 1
-        }
-    }
+    // const effectMuteEvent = (e) =>{
+    //     let check = e.target.checked
+    //     setEffect(!effectOn)
+    //     check = effectOn
+    //     if(check){
+    //         effect.volume = 0
+    //     }
+    //     else{
+    //         effect.volume = 1
+    //     }
+    // }
 
 
 
     return(
-        <Div width="330px" height={which_page ? "220px" : "325px"}>
+        
+        <Div width="330px" height="200px">
             <Div width="80%" height="100%">
                 <Div flex_direction="column" align_items="flex-start" justify_content="space-evenly"
                 width="100%" height="100%">
                     <H1 font_size="m" color="grayscale7">설정</H1>
                     {/* 사운드 관련 */}
-                    <Div width="100%" flex_direction="column" align_items="flex-start">
+                    {/* <Div width="100%" flex_direction="column" align_items="flex-start">
                         <Div width="103%" justify_content="space-between">
                         <P font_weight="regular" font_size="xs" margin="0 0 5px 0">사운드</P>
                         <P font_weight="regular" font_size="xxs" margin="0 0 5px 0">켜기 / 끄기</P>
@@ -212,7 +213,7 @@ const SettingModal = () =>{
                                 <CheckBox type="checkbox" checked={effectOn} id="check_btn" onChange={effectMuteEvent}></CheckBox>    
                             </Div>
                         </VolumeBox>
-                    </Div>
+                    </Div> */}
                     {/* 버튼 */}
                     <Div flex_direction="column" width="100%">
                         <Div justify_content={which_page ? "center" : "space-around"} 

@@ -52,8 +52,8 @@ const GameResult = styled.div`
     height:fit-content;
     top: 25%;
     right: 25%;
-    // bottom: 50%;
-    // left: 0;
+    // bottom: 25%;
+    // left: 25%;
 
     ${props => props.isMobile && css`
         top: -100px;
