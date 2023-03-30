@@ -59,20 +59,24 @@ const UploadBox = (props) =>{
     // ===== props =====
     const defaultImg = props.postDataState.defaultImg
     const profileImg = props.postDataState.profileImg
+    const imgFile = props.imgFile
+    const setImgFile = props.setImgFile
+    const defaultSrc = props.defaultSrc
+    const setDefaultSrc = props. setDefaultSrc
     // ===== var =====
     const isUpload = (defaultImg !== "" || profileImg !== null)
 
     // ===== state =====
-    const [imgFile, setImgFile] = React.useState("")
+    // const [imgFile, setImgFile] = React.useState("")
     const imgRef = React.useRef()
     const setPostData = props.setPostData
     const isMobile = useMobile()
-    const [defaultSrc, setDefaultSrc] = React.useState("")
+    // const [defaultSrc, setDefaultSrc] = React.useState("")
 
     // ===== func =====
     // 이미지 압축
     const imgCompress = async(file) =>{
-        const options = {maxSizeMB: 1, maxWidhOrHeight : 128}
+        const options = {maxSizeMB: 1, maxWidthOrHeight : 128}
         const reader = new FileReader()
         try{
             const compressedFile = await imageCompression(file, options)
@@ -168,7 +172,7 @@ const UploadBox = (props) =>{
                         <Div width="142px" height="135px">
                             <Div width="128px" height="128px" background_color="grayscale1" border_radius="50%">
                                 <PreviewImg src={defaultSrc ? defaultSrc : imgFile}
-                                width="100px" border_radius="50%" id="preview"/>    
+                                width="100px" height="100px" border_radius="50%" id="preview"/>    
                             </Div>
                         </Div>
                         

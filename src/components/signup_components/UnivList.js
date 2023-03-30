@@ -37,7 +37,7 @@ const UnivList = (props) =>{
             return data.university_name === univ_name
         })[0].university_idx
         setPostData( prevState => ({...prevState, universityIdx: idx}))
-        // console.log(idx, univIdx)
+        console.log(idx, univIdx)
         // console.log(props.postDataState)
     }
 

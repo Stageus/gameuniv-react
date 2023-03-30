@@ -71,6 +71,8 @@ const SignUp = () =>{
     const address = useRecoilValue(domainAddressState)
 
     // ===== state =====
+    const [imgFile, setImgFile] = React.useState("")
+    const [defaultSrc, setDefaultSrc] = React.useState("")
     const [isConfirm, setConfirm] = React.useState(false)
     const [isIdDouble, setIdDouble] = React.useState(false)
     const [stepState, setStep] = React.useState(1)
@@ -85,6 +87,7 @@ const SignUp = () =>{
         defaultImg: "",
         profileImg: null,
     })
+
     // ===== event =====
 
     // 정규식 빈칸 등 체크
@@ -351,7 +354,8 @@ const SignUp = () =>{
                         &&
                         <Div width="100%" flex_direction="column" align_items="flex-start">
                             <P font_size = "xxs" padding="10px 0">프로필 사진을 올리거나 기본 프로필을 선택해주세요</P>
-                            <UploadBox id="upload_box" postDataState={postDataState} setPostData={setPostData}></UploadBox>
+                            <UploadBox id="upload_box" postDataState={postDataState} setPostData={setPostData}
+                            imgFile={imgFile} setImgFile={setImgFile} defaultSrc={defaultSrc} setDefaultSrc={setDefaultSrc}></UploadBox>
                             
                         </Div>
                     }
