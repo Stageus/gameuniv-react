@@ -4,6 +4,7 @@ import {useEffect,useState,useRef}  from "react"
 import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
 import styled from "styled-components"
 import { Navigate } from "react-router-dom"
+
 // ===== import component =====
 import Profile from "../components/home_components/Profile"
 import IndividualTetrisRanking from "../components/home_components/IndividualTetrisRanking"
@@ -118,7 +119,6 @@ const Home = () =>{
     let isMobile=useMobile()
     const mounted = useRef(false);
 
-
     // ===== recoil state =====
     const address= useRecoilValue(domainAddressState)
     const isLogin = useRecoilValue(isLoginState)
@@ -128,7 +128,6 @@ const Home = () =>{
     const [user2048RankData, setUser2048RankDataState]=useRecoilState(user2048RankDataState)
     //유저데이터 체크
     const [isUserDataNull, setUserDataNull] = useState(true)
-
 
     // ===== router =====
     const navigate = useNavigate()

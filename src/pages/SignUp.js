@@ -75,6 +75,7 @@ const SignUp = () =>{
     const [defaultSrc, setDefaultSrc] = React.useState("")
     const [isConfirm, setConfirm] = React.useState(false)
     const [isIdDouble, setIdDouble] = React.useState(false)
+    const [isSend, setSend] = React.useState(false)
     const [stepState, setStep] = React.useState(1)
     const [authState, setAuth] = React.useState(false)
     const [postDataState, setPostData] = React.useState({
@@ -203,29 +204,34 @@ const SignUp = () =>{
     const sendAuthNumberEvent = async(e) =>{
 
         e.preventDefault()
+        setSend(true)
         const email = document.getElementById("email").value
         const university_name = document.getElementById("univ").value
 
-        console.log(email, university_name)
-        const response = await fetch(`${address}/auth/email/number`,{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email: email,
-                universityName : university_name,
-            })
-        })
-
-        const result = await response.json()
-        // console.log(result.message)
-        if(result.message){
-            alert(result.message)
-        }
+        if(isSend) alert("이미 인증번호가 발송되었습니다. 잠시만 기다려 주십시오.")
         else{
-            setAuth(true)
+            const response = await fetch(`${address}/auth/email/number`,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    universityName : university_name,
+                })
+            })
+    
+            const result = await response.json()
+            // console.log(result.message)
+            if(result.message){
+                alert(result.message)
+            }
+            else{
+                setAuth(true)
+            }
         }
+
+        
     }
 
     // 인증번호 확인
