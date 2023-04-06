@@ -1,6 +1,9 @@
 // ===== import base =====
 import React, {useContext, useEffect } from "react"
 import styled, {css} from "styled-components"
+import { useRecoilState, useRecoilValue } from "recoil"
+
+import {skinTetrisState} from "../../../recoil/DataState"
 
 // ===== import style =====
 import { Div } from "../../../styles/Div"
@@ -19,8 +22,23 @@ const CellDiv=styled.div`
 `
 //  ===== component =====
 const Cell =({type})=>{
+
+    const skinTetris = useRecoilValue(skinTetrisState)
+
+    let skin = TETROMINOS[type].basicCellImg
+
+    if(skinTetris===-1){
+        skin = TETROMINOS[type].basicCellImg
+    }if(skinTetris===1){
+        skin = TETROMINOS[type].pastelCellImg
+    }if(skinTetris===3){
+        skin = TETROMINOS[type].doodleCellImg
+    }if(skinTetris===5){
+        skin = TETROMINOS[type].jellyCellImg
+    }
+
     return( 
-    <CellDiv type={type} img={TETROMINOS[type].cellImg}/>
+    <CellDiv type={type} img={skin}/>
     )
 }
 

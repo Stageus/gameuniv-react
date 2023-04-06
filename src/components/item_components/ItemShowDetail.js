@@ -6,7 +6,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 // ===== import recoil =====
 import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
 import { whichItemComponentState, isClickUnitState, isItemDetailOpenState} from "../../recoil/ComponentState"
-import { itemIndexDataState, skin2048State} from "../../recoil/DataState"
+import { itemIndexDataState, skin2048State, skinTetrisState} from "../../recoil/DataState"
 
 // ===== import style =====
 import { Img, NoneEventImg } from "../../styles/Img"
@@ -46,6 +46,7 @@ const ItemShowDetail = (props) =>{
     const setModalOpen = useSetRecoilState(isModalOpenState)
     const setModalState = useSetRecoilState(whichModalState)
     const setSkin2048 = useSetRecoilState(skin2048State)
+    const setSkinTetris = useSetRecoilState(skinTetrisState)
     const setItemDetailOpenStateState = useSetRecoilState(isItemDetailOpenState)
     const setClickUnitState=useSetRecoilState(isClickUnitState)
     const itemIndexData= useRecoilValue(itemIndexDataState)
@@ -68,7 +69,11 @@ const ItemShowDetail = (props) =>{
             case "equip_btn":
                 setModalOpen(true)
                 setModalState("itemEquipModal")
-                setSkin2048(item_data[itemIndexData].item_idx)
+                if(item_data[itemIndexData].item_idx%2 != 0){
+                    setSkinTetris(item_data[itemIndexData].item_idx)
+                }else{
+                    setSkin2048(item_data[itemIndexData].item_idx)
+                }
                 break
         }
 

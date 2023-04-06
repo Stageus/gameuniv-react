@@ -121,10 +121,18 @@ export const isGameOverState = atom({
 // 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
 export const skin2048State = atom({
     "key" : "skin2048State",
-    "default": "basicTheme",
+    "default": -2,
     effects_UNSTABLE: [persistAtom]
 })
 
 
+// 스테이트 역할 : Tetris 스킨 설정
+// default : Tetris 스킨
+// 사용하는 컴포넌트 : AchievementContainer.js /AchievementUnit.js
+export const skinTetrisState = atom({
+    "key" : "skinTetrisState",
+    "default": -1,
+    effects_UNSTABLE: [persistAtom]
+})
 
 

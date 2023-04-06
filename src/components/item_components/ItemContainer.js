@@ -10,19 +10,30 @@ import ItemUnit from "./ItemUnit"
 
 
 //  ===== import recoil =====
+import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
 import { whichItemComponentState} from "../../recoil/ComponentState"
 import { domainAddressState} from "../../recoil/DomainState"
-import { myItemDataState, storeDataState, dibsOnDataState } from "../../recoil/DataState"
+import { myItemDataState, storeDataState, dibsOnDataState,skin2048State, skinTetrisState } from "../../recoil/DataState"
+
+// ===== import style =====
+import { Div } from "../../styles/Div"
+import { Button } from "../../styles/Button"
+import { H1 } from "../../styles/H1"
+import { P, NoneEventP } from "../../styles/P"
 
 //  ===== component =====
 const ItemContainer = () =>{
 
     // ===== recoil state =====
+    const setModalOpen = useSetRecoilState(isModalOpenState)
+    const setModalState = useSetRecoilState(whichModalState)
     const whichItemComponent= useRecoilValue(whichItemComponentState)
     const address= useRecoilValue(domainAddressState)
     const [storeData,setStoreData]=useRecoilState(storeDataState)
     const [dibsOnData,setDibsOnData]=useRecoilState(dibsOnDataState)
     const [myItemData,setMyItemData]=useRecoilState(myItemDataState)
+    const setSkin2048 = useSetRecoilState(skin2048State)
+    const setSkinTetris = useSetRecoilState(skinTetrisState)
 
     const getItemDataEvent = async() =>{
 
@@ -57,6 +68,24 @@ const ItemContainer = () =>{
         }
     }
 
+    const equipBasicSkinBtnEvent = (e)=>{
+
+        const target = e.target.id
+
+        switch(target){
+            case "basic_tetris_btn":
+                setModalOpen(true)
+                setModalState("itemEquipModal")
+                setSkinTetris(-1)
+            break
+            case "basic_2048_btn":
+                setModalOpen(true)
+                setModalState("itemEquipModal")
+                setSkin2048(-2)
+            break
+        }
+    }
+
     // ===== hook =====
     useEffect(() => {
         getItemDataEvent()
@@ -80,9 +109,22 @@ const ItemContainer = () =>{
             }
             {whichItemComponent ==="myItem" && 
                 (
-                    myItemData && myItemData.map((data, idx)=>{
-                    return <ItemUnit key={data} idx={idx}/>
-                    })
+                    <React.Fragment>
+                    <Div width="70%" justify_content="space-around" margin="0 0 0 68px" onClick={equipBasicSkinBtnEvent}>
+                        <Button id="basic_tetris_btn" width="220px" height="50px">
+                            <NoneEventP font_size="s" font_weight="regular" color="grayscale1" >테트리스 기본 스킨 착용</NoneEventP>
+                        </Button>
+                        <Button id="basic_2048_btn" width="220px" height="50px">
+                            <NoneEventP font_size="s" font_weight="regular" color="grayscale1" >2048 기본 스킨 착용</NoneEventP>
+                        </Button>
+                    </Div>
+                    {
+                        myItemData && myItemData.map((data, idx)=>{
+                            return <ItemUnit key={data} idx={idx}/>
+                            })
+
+                    }
+                    </React.Fragment>
                 )
             }
         </React.Fragment>

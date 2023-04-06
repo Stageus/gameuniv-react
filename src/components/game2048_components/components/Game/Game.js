@@ -198,14 +198,16 @@ const GameProvider = (props) =>{
 
 const Game = () =>{
     //====수정 테마
-    let skin = basicTheme
+    let skin
     const isMobile = useMobile()
 
     // const setModalOpen = useSetRecoilState(isModalOpenState)
 
     const skin2048 = useRecoilValue(skin2048State)
     //====수정 테마
-    if(skin2048===2){
+    if(skin2048===-2){
+        skin = basicTheme
+    }if(skin2048===2){
         skin = pastelTheme
     }if(skin2048===4){
         skin = doodleTheme

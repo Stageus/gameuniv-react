@@ -1,5 +1,5 @@
 // ===== import base =====
-import React, { Fragment } from "react"
+import React, { Fragment, useEffect } from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 
 // ===== import recoil =====
@@ -25,6 +25,7 @@ const NowAchieveUnit = (props) =>{
     const gameTetrisResult = useRecoilValue(gameTetrisResultState)
     console.log(game2048Result.achieveList)
     // 조건에 맞는 데이터 세팅
+
     if(whichGame==="tetris"){
         now_achieve_data = gameTetrisResult.achieveList
     }else if(whichGame==="2048"){

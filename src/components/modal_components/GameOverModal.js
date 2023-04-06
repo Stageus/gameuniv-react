@@ -198,7 +198,7 @@ const GameOverModal = (props) =>{
                     (whichGame === "tetris")
                     ?
                     
-                        (gameTetrisResult.achieveList === null)
+                        (gameTetrisResult.achieveList === [])
                         ?
                         <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
                         :
@@ -208,7 +208,7 @@ const GameOverModal = (props) =>{
                     
                     :
                     
-                        (game2048Result.achieveList === null)
+                        (game2048Result.achieveList === [])
                         ?
                         <P color="grayscale7" font_size="xs" font_weight="regular" >달성한 업적이 없습니다</P>
                         :
