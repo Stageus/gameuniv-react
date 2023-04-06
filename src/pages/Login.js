@@ -2,6 +2,7 @@
 import React from "react"
 import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
+import { useCookies } from "react-cookie"
 
 //  ===== import recoil =====
 import { domainAddressState, isLoginState } from "../recoil/DomainState"
@@ -34,6 +35,8 @@ const Logo = styled(Img)`
 //  ===== component =====
 
 const Login = () =>{
+    
+    const [cookies, setCookie] = useCookies(['token'])
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
@@ -86,7 +89,6 @@ const Login = () =>{
             navigate("/home")
         }
     }
-
 
     const loginEvent = (e) =>{
         e.preventDefault()

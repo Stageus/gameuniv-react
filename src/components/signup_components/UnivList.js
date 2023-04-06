@@ -37,8 +37,7 @@ const UnivList = (props) =>{
             return data.university_name === univ_name
         })[0].university_idx
         setPostData( prevState => ({...prevState, universityIdx: idx}))
-        // console.log(idx, univIdx)
-        // console.log(props.postDataState)
+        console.log(idx, univIdx)
     }
 
 
@@ -49,7 +48,7 @@ const UnivList = (props) =>{
             <datalist id="univ_list">
                 {
                     univData.map( data =>{
-                        return <option value={data.university_name}></option>
+                        return <option  value={data.university_name}></option>
                     })
                 }
             </datalist>
