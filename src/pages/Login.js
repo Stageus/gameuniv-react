@@ -9,6 +9,9 @@ import { domainAddressState, isLoginState } from "../recoil/DomainState"
 import { coinState, userDataState } from "../recoil/UserDataState"
 import { Navigate, useLocation } from "react-router-dom"
 
+// ===== import hooks =====
+import { useGet, usePost } from "../hooks/useFetch"
+
 // ===== import react router =====
 import {Route, Link, useNavigate} from "react-router-dom"
 
@@ -61,7 +64,9 @@ const Login = () =>{
             setUserData({})
         }
     }, [])
+    
     // 자동 로그인
+
     const postLoginData = async(id, pw) =>{
         const response = await fetch(`${address}/auth`,{
             method: "POST",

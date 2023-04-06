@@ -34,6 +34,7 @@ const Find = (props) =>{
     const [isConfirm, setConfirm] = React.useState(false)
     const [isAuthClick, setAuthClick] = React.useState(false)
     const [emailState, setEmail] = React.useState("")
+    const [isSend, setSend] = React.useState(false)
     //  ===== router =====
     const navigate = useNavigate()
 
@@ -111,32 +112,37 @@ const Find = (props) =>{
     }
         // 이메일 인증번호 발송
     const sendAuthNumberEvent = async(e) =>{
-
+        setSend(true)
         e.preventDefault()
         const email = document.getElementById("email").value
         const university_name = document.getElementById("univ").value
 
-        console.log(email, university_name)
-        const response = await fetch(`${address}/auth/email/number`,{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email: email,
-                universityName : university_name,
-            })
-        })
-
-        const result = await response.json()
-        // console.log(result.message)
-        if(result.message){
-            alert(result.message)
+        if(isSend){
+            alert("이미 인증번호가 발송되었습니다. 잠시만 기다려 주십시오.")
         }
         else{
-            setPwFindStep(pwFindStep+1)
-            setAuthClick(true)
+            const response = await fetch(`${address}/auth/email/number`,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    universityName : university_name,
+                })
+            })
+    
+            const result = await response.json()
+            // console.log(result.message)
+            if(result.message){
+                alert(result.message)
+            }
+            else{
+                setPwFindStep(pwFindStep+1)
+                setAuthClick(true)
+            }
         }
+        
     }
 
     // 인증번호 확인
