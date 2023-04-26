@@ -183,7 +183,7 @@ const EditProfileModal = () =>{
         form_data.append("profileImg", profileImg)
         // console.log(form_data.getAll("profileImg"))
 
-        const response = await fetch(`${address}/user/profile-img`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/profile-img`,{
             method: "POST",
             credentials: "include",
             
@@ -210,14 +210,14 @@ const EditProfileModal = () =>{
             alert(result.message)
         }
         else{
-            alert("이미지 변경 성공!")
+            // alert("이미지 변경 성공!")
             getUserData()
             setModalOpen(false)
         }
     }
 
     const getUserData = async() =>{
-        const response = await fetch(`${address}/auth/user`,
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/user`,
         {
             credentials: "include",
         })

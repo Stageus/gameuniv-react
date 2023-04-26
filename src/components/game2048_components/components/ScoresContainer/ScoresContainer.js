@@ -279,7 +279,7 @@ const ScoresContainer = (props) =>{
 
     // 랭킹 추적
     const showRank2048 = async(score)=>{
-        const response = await fetch(`${address}/2048/score/rank?score=${score}`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/2048/score/rank?score=${score}`,{
             credentials: "include"
         })
 
@@ -319,11 +319,11 @@ const ScoresContainer = (props) =>{
     const post2048Score = async() =>{
         
         console.log(state.score)
-        await fetch(`${address}/2048/score/rank?score=${state.score}`,{
+        await fetch(`${process.env.REACT_APP_API_URL}/2048/score/rank?score=${state.score}`,{
             credentials: "include"
         })
         
-        const response = await fetch(`${address}/2048/score`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/2048/score`,{
             method: "POST",
             credentials: "include",
             headers:{

@@ -146,19 +146,33 @@ const Home = () =>{
         }
 
     }
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
     const getUserRankDataEvent = async() =>{
-
         // console.log(userData.email)
         // console.log(userData)
         // console.log(userData)
 
-        const response_tetris = await fetch(`${address}/tetris/record/${userData.email}`,
+        const response_tetris = await fetch(`${process.env.REACT_APP_API_URL}/tetris/record/${userData.email}`,
         {
             credentials: "include"
         })
         const result_tetris = await response_tetris.json()
 
-        const response_2048 = await fetch(`${address}/2048/record/${userData.email}`,
+        const response_2048 = await fetch(`${process.env.REACT_APP_API_URL}/2048/record/${userData.email}`,
         {
             credentials: "include"
         })
@@ -183,10 +197,10 @@ const Home = () =>{
     useEffect(() => {
         if(!mounted.current){
             mounted.current = true;
-          } else {
+        } else {
             getUserRankDataEvent()
             setUserDataNull(false)
-          }
+        }
         
     },[userData])
 
@@ -194,7 +208,6 @@ const Home = () =>{
         alert("로그인 후 이용 가능합니다")
         return <Navigate to="/" replace={true}/>
     }
-   
 
     return(
         <React.Fragment>

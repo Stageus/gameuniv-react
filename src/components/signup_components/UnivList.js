@@ -11,6 +11,7 @@ import { Input } from "../../styles/Input"
 const UnivList = (props) =>{
     // ===== state =====
     const [univData, setUniv] = React.useState([])
+    const [timer, setTimer] = React.useState(0)
     const univIdx = props.univIdx
     const setUnivIdx = props.setUnivIdx
     const setPostData = props.setPostData
@@ -31,13 +32,19 @@ const UnivList = (props) =>{
     // console.log(univData)
 
     const changeEvent = () =>{
-        const univ_name = (document.getElementById("univ").value)
-        // console.log(document.getElementById("univ").label)
-        const idx = univData.filter( data => {
-            return data.university_name === univ_name
-        })[0].university_idx
-        setPostData( prevState => ({...prevState, universityIdx: idx}))
-        console.log(idx, univIdx)
+        if(timer){
+            clearTimeout(timer)
+        }
+        const newTimer = setTimeout( async() => {
+            const univ_name = (document.getElementById("univ").value)
+            // console.log(document.getElementById("univ").label)
+            const idx = univData.filter( data => {
+                return data.university_name === univ_name
+            })[0].university_idx
+            setPostData( prevState => ({...prevState, universityIdx: idx}))
+            // console.log(idx, univIdx)
+        }, 300)
+        setTimer(newTimer)
     }
 
 

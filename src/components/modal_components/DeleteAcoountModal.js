@@ -31,7 +31,7 @@ const DeleteAcoountModal = () =>{
     const navigate = useNavigate()
     const email = useRecoilValue(userDataState).email
     const deleteAccountEvent = async() =>{
-        const response = await fetch(`${address}/user/${email}`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${email}`,{
             method: "DELETE",
             credentials: "include"
         })
