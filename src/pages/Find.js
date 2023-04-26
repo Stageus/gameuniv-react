@@ -44,7 +44,7 @@ const Find = (props) =>{
         e.preventDefault()
         const email = document.getElementById("email").value
         
-        const response = await fetch(`${address}/user/id?email=${email}`)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/id?email=${email}`)
         
         const result = await response.json()
 
@@ -121,7 +121,7 @@ const Find = (props) =>{
             alert("이미 인증번호가 발송되었습니다. 잠시만 기다려 주십시오.")
         }
         else{
-            const response = await fetch(`${address}/auth/email/number`,{
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/email/number`,{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -150,7 +150,7 @@ const Find = (props) =>{
         e.preventDefault()
         const email = emailState
         const auth_number = document.getElementById("auth_number").value
-        const response = await fetch(`${address}/auth/email/number?email=${email}&number=${auth_number}`)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/email/number?email=${email}&number=${auth_number}`)
         
         const result = await response.json()
 
@@ -170,7 +170,7 @@ const Find = (props) =>{
         const pw = document.getElementById("new_pw").value
         const pwCheck = document.getElementById("pwCheck").value
 
-        const response = await fetch(`${address}/user/pw`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/pw`,{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

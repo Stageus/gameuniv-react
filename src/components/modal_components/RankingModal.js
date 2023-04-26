@@ -111,7 +111,7 @@ const RankingModal = () =>{
     // 랭킹 데이터 가져오기
     const getRankingData = useCallback( async() => {
         setLoading(true)
-        const response = await fetch(`${address}/${whichRanking}/record/all?offset=${page}`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/${whichRanking}/record/all?offset=${page}`,{
             credentials: "include"
         })
 

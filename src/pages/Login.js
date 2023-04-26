@@ -39,7 +39,7 @@ const Logo = styled(Img)`
 
 const Login = () =>{
     
-    const [cookies, setCookie] = useCookies(['token'])
+    const [token] = useCookies(['token'])
     // ===== recoil state =====
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
@@ -48,6 +48,8 @@ const Login = () =>{
     const isLogin = useRecoilValue(isLoginState)
     const setCoin = useSetRecoilState(coinState)
     const location = useLocation()
+
+    console.log(token)
     // ===== router =====
     const navigate = useNavigate()
     // ===== event =====
@@ -68,7 +70,7 @@ const Login = () =>{
     // 자동 로그인
 
     const postLoginData = async(id, pw) =>{
-        const response = await fetch(`${address}/auth`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth`,{
             method: "POST",
             credentials: "include",
             headers: {
@@ -120,7 +122,7 @@ const Login = () =>{
 
     // 
     const getUserData = async() =>{
-        const response = await fetch(`${address}/auth/user`,
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/user`,
         {
             credentials: "include",
         })
@@ -137,7 +139,7 @@ const Login = () =>{
     }
     
     const getCoinData = async() =>{
-        const response = await fetch(`${address}/user/coin`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/coin`,{
             credentials: "include"
         })
 

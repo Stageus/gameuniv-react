@@ -50,7 +50,7 @@ const ItemPurchaseModal = () =>{
 
         console.log(itemIndexData)
 
-        const response = await fetch(`${address}/item/buy`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/item/buy`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -67,19 +67,19 @@ const ItemPurchaseModal = () =>{
             alert(result.message)
         }
         else{
-            const response_all = await fetch(`${address}/item/all`,
+            const response_all = await fetch(`${process.env.REACT_APP_API_URL}/item/all`,
             {
                 credentials: "include"
             })
             const result_all = await response_all.json()
     
-            const response_pick = await fetch(`${address}/item/pick/all`,
+            const response_pick = await fetch(`${process.env.REACT_APP_API_URL}/item/pick/all`,
             {
                 credentials: "include"
             })
             const result_pick = await response_pick.json()
     
-            const response_buy = await fetch(`${address}/item/buy/all`,
+            const response_buy = await fetch(`${process.env.REACT_APP_API_URL}/item/buy/all`,
             {
                 credentials: "include"
             })

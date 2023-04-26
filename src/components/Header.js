@@ -74,7 +74,7 @@ const Header = () =>{
         setModalOpen(true)
     }
     const getCoinData = async() =>{
-        const response = await fetch(`${address}/user/coin`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/coin`,{
             credentials: "include"
         })
 

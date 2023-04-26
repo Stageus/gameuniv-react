@@ -186,7 +186,7 @@ const SignUp = () =>{
         e.preventDefault()
         const id = document.getElementById("id").value
 
-        const response = await fetch(`${address}/user/id/duplication?id=${id}`)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/id/duplication?id=${id}`)
         
         const result = await response.json()
 
@@ -210,7 +210,7 @@ const SignUp = () =>{
 
         if(isSend) alert("이미 인증번호가 발송되었습니다. 잠시만 기다려 주십시오.")
         else{
-            const response = await fetch(`${address}/auth/email/number`,{
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/email/number`,{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -245,7 +245,7 @@ const SignUp = () =>{
         }))
 
         // console.log(postDataState)
-        const response = await fetch(`${address}/auth/email/number?email=${email}&number=${auth_number}`)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/email/number?email=${email}&number=${auth_number}`)
         
         const result = await response.json()
 
@@ -273,7 +273,7 @@ const SignUp = () =>{
         form_data.append("profileImg", profileImg)
 
         console.log(postDataState)
-        const response = await fetch(`${address}/user`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user`,{
             method: "POST",
             body: form_data
         })
