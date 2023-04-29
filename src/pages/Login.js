@@ -88,7 +88,7 @@ const Login = () =>{
             alert(result.message)
         }
         else{
-            alert("로그인 성공")
+            // alert("로그인 성공")
             window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
             getUserData()
             getCoinData()

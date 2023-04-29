@@ -2,7 +2,7 @@
 import React, { useEffect }  from "react"
 import {useSetRecoilState, useRecoilValue,useResetRecoilState} from "recoil"
 import styled from "styled-components"
-import { Navigate } from "react-router"
+import { Navigate, useNavigate } from "react-router"
 
 // ===== import component =====
 import AchievementContainer from "../components/achievement_components/AchievementContainer"
@@ -39,7 +39,7 @@ const Achievement = () =>{
     const setTabOpenState=useSetRecoilState(isTabOpenState)
     const resetTabOpenState = useResetRecoilState(isTabOpenState)
     const isLogin = useRecoilValue(isLoginState)
-
+    const navigate = useNavigate()
     // const resetAcheivementComponent= useResetRecoilState(whichAchievementComponentState)
     // const resetAchievementTetrisData=useResetRecoilState(achievementTetrisDataState)
     // const resetAchievement2048Data=useResetRecoilState(achievement2048DataState)
@@ -58,10 +58,12 @@ const Achievement = () =>{
         // resetGameCountData()
     })
     // 비정상접근 막기
-    if(!isLogin){
-        alert("로그인 후 이용 가능합니다")
-        return <Navigate to="/" replace={true}/>
-    }
+    useEffect( ()=>{
+        if(!isLogin){
+            alert("로그인 후 이용 가능합니다")
+            navigate('/')
+        }
+    },[])
     // ===== event =====
     const achievementTabBtnEvent = (e)=>{
         const target = e.target.id

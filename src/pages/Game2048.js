@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { useRecoilValue } from "recoil"
-import { Navigate } from "react-router"
+import { Navigate, useNavigate } from "react-router"
 
 // ===== import hooks =====
 import {PC, Mobile, useMobile} from "../hooks/useMediaComponent"
@@ -30,7 +30,7 @@ const Container = styled(Div)`
 const Game2048 = () =>{
     const [score, setScore] = React.useState(0)
     const isMobile = useMobile()
-
+    const navigate = useNavigate()
 
     React.useEffect( ()=>{
         return window.localStorage.removeItem("2048game")
@@ -39,10 +39,12 @@ const Game2048 = () =>{
     // 비정상 접근 막기
     const isLogin = useRecoilValue(isLoginState)
     
-    if(!isLogin){
-        return <Navigate to="/" replace={true}/>
-    }
-
+    React.useEffect( ()=>{
+        if(!isLogin){
+            alert("로그인 후 이용 가능합니다")
+            navigate('/')
+        }
+    },[])
     
     return(
         <React.Fragment>
