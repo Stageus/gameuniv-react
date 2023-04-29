@@ -23,7 +23,7 @@ const NowAchieveUnit = (props) =>{
     const whichGame = useRecoilValue(whichGameState)
     const game2048Result =  useRecoilValue(game2048ResultState)
     const gameTetrisResult = useRecoilValue(gameTetrisResultState)
-    console.log(game2048Result.achieveList)
+    // console.log(game2048Result.achieveList)
     // 조건에 맞는 데이터 세팅
 
     if(whichGame==="tetris"){

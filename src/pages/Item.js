@@ -2,7 +2,7 @@
 import React, { useEffect } from "react"
 import {useRecoilValue, useSetRecoilState,useResetRecoilState} from "recoil"
 import styled from "styled-components"
-import { Navigate } from "react-router"
+import { Navigate, useNavigate } from "react-router"
 
 // ===== import component =====
 import ItemContainer from "../components/item_components/ItemContainer"
@@ -41,6 +41,7 @@ const ItemContainerMobileDiv = styled(Div)`
 `
 //  ===== component =====
 const Item = () =>{
+    const navigate = useNavigate()
     // ===== recoil state =====
     const setItemDetailOpenState=useSetRecoilState(isItemDetailOpenState)
     const setItemComponentState=useSetRecoilState(whichItemComponentState)
@@ -57,10 +58,13 @@ const Item = () =>{
         resetItemDetailOpen()
     })
     // 비정상접근 막기
-    if(!isLogin){
-        alert("로그인 후 이용 가능합니다")
-        return <Navigate to="/" replace={true}/>
-    }
+    useEffect( ()=>{
+        if(!isLogin){
+            alert("로그인 후 이용 가능합니다")
+            navigate('/')
+        }
+    },[])
+
     // ===== event =====
     const itemTabBtnEvent = (e)=>{
         const target = e.target.id

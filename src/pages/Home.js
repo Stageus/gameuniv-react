@@ -204,10 +204,13 @@ const Home = () =>{
         
     },[userData])
 
-    if(!isLogin){
-        alert("로그인 후 이용 가능합니다")
-        return <Navigate to="/" replace={true}/>
-    }
+    useEffect( ()=>{
+        if(!isLogin){
+            alert("로그인 후 이용 가능합니다")
+            navigate('/')
+        }
+    },[])
+    
 
     return(
         <React.Fragment>
