@@ -49,14 +49,14 @@ const Login = () =>{
     const setCoin = useSetRecoilState(coinState)
     const location = useLocation()
 
-    console.log(token)
+    // console.log(token)
     // ===== router =====
     const navigate = useNavigate()
     // ===== event =====
     React.useEffect(()=>{
         const expire = window.sessionStorage.getItem("time")
-        console.log(expire > Date.now())
-        console.log(isLogin)
+        // console.log(expire > Date.now())
+        // console.log(isLogin)
         if(( expire > Date.now() && isLogin) ){
             getUserData()
             window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
@@ -133,7 +133,7 @@ const Login = () =>{
             // alert(result.message)
         }
         else{
-            console.log(result.data)
+            // console.log(result.data)
             setUserData(result.data)
         }
     }

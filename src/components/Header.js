@@ -24,14 +24,14 @@ import { useSetModalState } from "../hooks/useSetModalState"
 import BtnAnimation from "./BtnAnimation"
 import { coinState } from "../recoil/UserDataState"
 import { domainAddressState } from "../recoil/DomainState"
-
+import { useGet, useGetData } from "../hooks/useFetch"
 
 const Header_style = styled.header`
     position:relative;
     display:flex;
     justify-content: space-between;
     align-items:center;
-    width: 100vw;
+    width: 100%;
     background-color: ${color("grayscale1")};
     z-index: 20;
     border-bottom: 3px solid ${color("grayscale3")};
@@ -73,24 +73,27 @@ const Header = () =>{
         setModalState("settingModal")
         setModalOpen(true)
     }
-    const getCoinData = async() =>{
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/coin`,{
-            credentials: "include"
-        })
 
-        const result = await response.json()
+    const data = useGetData('/user/coin', coin)
+    
+    // const getCoinData = async() =>{
+    //     const response = await fetch(`${process.env.REACT_APP_API_URL}/user/coin`,{
+    //         credentials: "include"
+    //     })
 
-        if(result.message){
-            // alert(result.message)
-        }
-        else{
-            setCoin(result.data.coin)
-        }
-    }
+    //     const result = await response.json()
 
-    React.useEffect( ()=>{
-        getCoinData()
-    },[coin])
+    //     if(result.message){
+    //         // alert(result.message)
+    //     }
+    //     else{
+    //         setCoin(result.data.coin)
+    //     }
+    // }
+
+    // React.useEffect( ()=>{
+    //     getCoinData()
+    // },[coin])
 
     return(
         <Header_style>
@@ -104,7 +107,7 @@ const Header = () =>{
                     <React.Fragment>
                         <Div border={`2px solid ${color("grayscale6")}`} border_radius = "10px" height="36px" width="90px" justify_content = "space-around" margin="0 0 6px 0">
                             <Img src={`${process.env.PUBLIC_URL}/img_srcs/icons/severalCoinIcon.png`} width="24px"/>
-                            <P font_weight="regular" font_size="xss">{coin}</P>
+                            <P font_weight="regular" font_size="xss">{data && data.coin}</P>
                         </Div>
                         <BtnAnimation event={settingEvent}
                         before_src={`${process.env.PUBLIC_URL}/img_srcs/btns/settingBeforeBtnImg.png`}
