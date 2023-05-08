@@ -15,8 +15,11 @@ export const TETROMINOS ={
         doodleCellImg : `img_srcs/game_img/tetris/doodle/cell/tetrominoCell.png`,
         doodleTetrominoImg: `img_srcs/game_img/tetris/doodle/tetromino/tetrominoI.png`,
         jellyCellImg : `img_srcs/game_img/tetris/jelly/cell/tetrominoCellI.png`,
-        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoI.png`
-
+        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoI.png`,
+        retroCellImg : `img_srcs/game_img/tetris/retro/cell/tetrominoCellI.png`,
+        retroTetrominoImg: `img_srcs/game_img/tetris/retro/tetromino/tetrominoI.png`,
+        legoCellImg : `img_srcs/game_img/tetris/lego/cell/tetrominoCellI.png`,
+        legoTetrominoImg: `img_srcs/game_img/tetris/lego/tetromino/tetrominoI.png`
     },
     J: {
         shape :[
@@ -31,8 +34,11 @@ export const TETROMINOS ={
         doodleCellImg : `img_srcs/game_img/tetris/doodle/cell/tetrominoCell.png`,
         doodleTetrominoImg: `img_srcs/game_img/tetris/doodle/tetromino/tetrominoJ.png`,
         jellyCellImg : `img_srcs/game_img/tetris/jelly/cell/tetrominoCellJ.png`,
-        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoJ.png`
-
+        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoJ.png`,
+        retroCellImg : `img_srcs/game_img/tetris/retro/cell/tetrominoCellJ.png`,
+        retroTetrominoImg: `img_srcs/game_img/tetris/retro/tetromino/tetrominoJ.png`,
+        legoCellImg : `img_srcs/game_img/tetris/lego/cell/tetrominoCellJ.png`,
+        legoTetrominoImg: `img_srcs/game_img/tetris/lego/tetromino/tetrominoJ.png`
     },
     L: {
         shape :[
@@ -47,7 +53,11 @@ export const TETROMINOS ={
         doodleCellImg : `img_srcs/game_img/tetris/doodle/cell/tetrominoCell.png`,
         doodleTetrominoImg: `img_srcs/game_img/tetris/doodle/tetromino/tetrominoL.png`,
         jellyCellImg : `img_srcs/game_img/tetris/jelly/cell/tetrominoCellL.png`,
-        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoL.png`
+        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoL.png`,
+        retroCellImg : `img_srcs/game_img/tetris/retro/cell/tetrominoCellL.png`,
+        retroTetrominoImg: `img_srcs/game_img/tetris/retro/tetromino/tetrominoL.png`,
+        legoCellImg : `img_srcs/game_img/tetris/lego/cell/tetrominoCellL.png`,
+        legoTetrominoImg: `img_srcs/game_img/tetris/lego/tetromino/tetrominoL.png`
 
     },
     O: {
@@ -62,7 +72,11 @@ export const TETROMINOS ={
         doodleCellImg : `img_srcs/game_img/tetris/doodle/cell/tetrominoCell.png`,
         doodleTetrominoImg: `img_srcs/game_img/tetris/doodle/tetromino/tetrominoO.png`,
         jellyCellImg : `img_srcs/game_img/tetris/jelly/cell/tetrominoCellO.png`,
-        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoO.png`
+        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoO.png`,
+        retroCellImg : `img_srcs/game_img/tetris/retro/cell/tetrominoCellO.png`,
+        retroTetrominoImg: `img_srcs/game_img/tetris/retro/tetromino/tetrominoO.png`,
+        legoCellImg : `img_srcs/game_img/tetris/lego/cell/tetrominoCellO.png`,
+        legoTetrominoImg: `img_srcs/game_img/tetris/lego/tetromino/tetrominoO.png`
 
     },
     S: {
@@ -78,7 +92,11 @@ export const TETROMINOS ={
         doodleCellImg : `img_srcs/game_img/tetris/doodle/cell/tetrominoCell.png`,
         doodleTetrominoImg: `img_srcs/game_img/tetris/doodle/tetromino/tetrominoS.png`,
         jellyCellImg : `img_srcs/game_img/tetris/jelly/cell/tetrominoCellS.png`,
-        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoS.png`
+        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoS.png`,
+        retroCellImg : `img_srcs/game_img/tetris/retro/cell/tetrominoCellS.png`,
+        retroTetrominoImg: `img_srcs/game_img/tetris/retro/tetromino/tetrominoS.png`,
+        legoCellImg : `img_srcs/game_img/tetris/lego/cell/tetrominoCellS.png`,
+        legoTetrominoImg: `img_srcs/game_img/tetris/lego/tetromino/tetrominoS.png`
     },
     T: {
         shape :[
@@ -93,7 +111,11 @@ export const TETROMINOS ={
         doodleCellImg : `img_srcs/game_img/tetris/doodle/cell/tetrominoCell.png`,
         doodleTetrominoImg: `img_srcs/game_img/tetris/doodle/tetromino/tetrominoT.png`,
         jellyCellImg : `img_srcs/game_img/tetris/jelly/cell/tetrominoCellT.png`,
-        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoT.png`
+        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoT.png`,
+        retroCellImg : `img_srcs/game_img/tetris/retro/cell/tetrominoCellT.png`,
+        retroTetrominoImg: `img_srcs/game_img/tetris/retro/tetromino/tetrominoT.png`,
+        legoCellImg : `img_srcs/game_img/tetris/lego/cell/tetrominoCellT.png`,
+        legoTetrominoImg: `img_srcs/game_img/tetris/lego/tetromino/tetrominoT.png`
     },
     Z: {
         shape :[
@@ -108,7 +130,11 @@ export const TETROMINOS ={
         doodleCellImg : `img_srcs/game_img/tetris/doodle/cell/tetrominoCell.png`,
         doodleTetrominoImg: `img_srcs/game_img/tetris/doodle/tetromino/tetrominoZ.png`,
         jellyCellImg : `img_srcs/game_img/tetris/jelly/cell/tetrominoCellZ.png`,
-        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoZ.png`
+        jellyTetrominoImg: `img_srcs/game_img/tetris/jelly/tetromino/tetrominoZ.png`,
+        retroCellImg : `img_srcs/game_img/tetris/retro/cell/tetrominoCellZ.png`,
+        retroTetrominoImg: `img_srcs/game_img/tetris/retro/tetromino/tetrominoZ.png`,
+        legoCellImg : `img_srcs/game_img/tetris/lego/cell/tetrominoCellZ.png`,
+        legoTetrominoImg: `img_srcs/game_img/tetris/lego/tetromino/tetrominoZ.png`
     }
 }
 

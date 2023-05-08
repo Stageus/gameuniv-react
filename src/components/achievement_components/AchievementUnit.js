@@ -91,25 +91,33 @@ const AchievementUnit = (props) =>{
             <Mobile>
                 <ShadowDiv width = "400px" height="150px" background_color="grayscale1" border_radius="10px">
                     <Div width = "85%" justify_content="space-between" >
-                        <Img width="110px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/coinIcon.png`}/>
+                        <Img width="110px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${achievement_data[idx].reward_img}`}/>
                         <Div flex_direction="column">
-                            <H1 font_size="l" color="blue4" font_weight="regular">{11111111}</H1>
-                            <P font_size="xs" color="grayscale7" font_weight="regular" margin="0 0 5px 0">{11111111}</P>
+                            <H1 font_size="xs" color="blue4" font_weight="regular">{achievement_data[idx].achieve_name}</H1>
+                            <P font_size="xxs" color="grayscale7" font_weight="regular" margin="0 0 5px 0">{achievement_data[idx].reward_name}</P>
                             { 
-                                Number(achievement_data[idx].achievement_value) < Number(achievement_data[idx].achievement_target_value)
-                                ?
-                                <React.Fragment>
-                                    <P font_size="xxs" font_weight="regular">게임 플레이 횟수</P>
-                                    <Div width="80px" height="23px" border="3px solid gray" border_radius="20px">
-                                        <P font_size="xxs" font_weight="regular">{achievement_data[idx].achievement_value}/</P>
-                                        <P font_size="xxs" font_weight="regular">{target_achieve[idx]}</P>
-                                    </Div>
-                                </React.Fragment>
-                                :
-                                <Div width="85px" height="30px" border_radius="20px" background_color="green" >
-                                    <P color="grayscale1" font_size="xs" font_weight="regular">달성!</P>
+                            achievement_data[idx].achieve_state
+                            ?
+                            <Div width="80px" height="23px" border_radius="20px" background_color="green">
+                                <P color="grayscale1" font_size="xxs" font_weight="regular">달성!</P>
+                            </Div>
+                            :
+                            <React.Fragment>
+                                <P font_size="xxxs" font_weight="regular">업적 달성도</P>
+                                <Div width="80px" height="23px" border="3px solid gray" border_radius="20px" margin="3px 0 0 0">
+                                    <P font_size="xxxs" font_weight="regular">{achieveDegree==null ? "0" :(idx < 6) && achieveDegree}</P>
+                                    <P font_size="xxxs" font_weight="regular">
+                                        {
+                                            (idx< 6)
+                                            ?
+                                            "/" + target_achieve[idx]
+                                            :
+                                            target_achieve[6]
+                                        }           
+                                    </P>
                                 </Div>
-                            }
+                            </React.Fragment>
+                        }
                         </Div>
                     </Div>
                 </ShadowDiv>

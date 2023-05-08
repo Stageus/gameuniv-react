@@ -116,8 +116,10 @@ const Item = () =>{
                             <H1 font_size="l" color="grayscale7" margin="0 0 10px 0">
                                 아이템
                             </H1>
-                            <ItemContainerMobileDiv width="440px" height="100%" border_radius="10px 10px 10px 10px" background_color="blue2" padding="20px 0 20px 0">
-                                <ItemContainer/>
+                            <ItemContainerMobileDiv width="440px" height="100%" border_radius="10px 10px 10px 10px" background_color="blue2" padding="20px 0 20px 0" align_items="start">
+                                <ItemContainerMobileDiv width="440px" height="auto">
+                                    <ItemContainer/>
+                                </ItemContainerMobileDiv>
                             </ItemContainerMobileDiv>
                             <Div width="440px"  height="62px" justify_content="space-between" margin="25px 0 0 0" onChange={itemTabBtnEvent}>
                                 <TabBtn id="tab1" after_img="/img_srcs/icons/storeBlueIcon.png" before_img="/img_srcs/icons/storeGrayIcon.png" txt="상점" width="31%"/>

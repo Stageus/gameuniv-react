@@ -198,20 +198,29 @@ const ItemUnit = (props) =>{
             </PC>
 
             <Mobile>
-                <ShadowDiv width = "400px" height="150px"  background_color={isClickUnit==idx ? "grayscale3" : "grayscale1" }
-                border_radius="10px" onClick={itemShowDetailEvent}>
+                <ItemUnitDiv width = "400px" height="150px"  background_color={isClickUnit==idx ? "grayscale3" : "grayscale1" }
+                border_radius="10px" onClick={(isUnlock === false) ? null : itemShowDetailEvent}>
+                    {
+                        (isUnlock === false)
+                        &&
+                        <LockDiv width = "400px" height="150px" border_radius="10px" >
+                            <Img width="60px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/lockIcon.png`}/>
+                        </LockDiv>  
+                    }
                     <Div width = "90%" justify_content="space-between" >
                         <Img width="100px" margin="0 0 0 15px" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[idx].preview_img}`}/>
                         <Div align_items="flex-end" flex_direction="column" justify_content={whichItemComponent==="myItem" ? "start" : "space-between"}>
-                            {
-                                whichItemComponent ==="store" &&
-                                    (
-                                        item_data[idx].item_picked_state
-                                        ? <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
-                                        : <Img width="45px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
-                                    )  
-                            }
-                            <H1 font_size="s" margin="0 0 10px 0" color="grayscale7"  font_weight="regular">{item_data[idx].item_name}</H1>
+                            <HeartDiv width="60px" height="80px">
+                                {
+                                    whichItemComponent ==="store" &&
+                                        (
+                                            item_data[idx].item_picked_state
+                                            ? <Img width="40px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartAfterIcon.png`} onClick={dibsOnEvent}/>
+                                            : <Img width="40px" src={`${process.env.PUBLIC_URL}/img_srcs/icons/heartBeforeIcon.png`} onClick={dibsOnEvent}/>
+                                        )  
+                                }
+                            </HeartDiv>
+                            <H1 font_size="s" margin="35px 0 10px 0" color="grayscale7"  font_weight="regular">{item_data[idx].item_name}</H1>
                             {
                                 whichItemComponent ==="myItem" 
                                 ?
@@ -224,9 +233,9 @@ const ItemUnit = (props) =>{
                                     <P color="grayscale7"  font_weight="regular">{item_data[idx].item_price}</P>
                                 </Div>
                             }   
-                            </Div>
                     </Div>
-                </ShadowDiv>
+                    </Div>
+                </ItemUnitDiv>
             </Mobile>
             </React.Fragment>
             }

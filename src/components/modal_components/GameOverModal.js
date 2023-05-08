@@ -220,18 +220,18 @@ const GameOverModal = (props) =>{
                 </NowAchievementContainerDiv>
             </Div>
 
-            <Div width="88%" justify_content="space-evenly" onClick={gameOverBtnEvent}>
-                <Button id="replay_btn" width="32%" height="50px" font_size={isMobile ? "xs":"s"} font_weight="regular">
+            <Div width="70%" justify_content="space-evenly" onClick={gameOverBtnEvent}>
+                <Button id="replay_btn" width="45%" height="50px" font_size={isMobile ? "xs":"s"} font_weight="regular">
                     다시하기
                 </Button>
-                <Button id="home_btn" width="32%" height="50px">
+                <Button id="home_btn" width="45%" height="50px">
                     <NoneEventImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/homeIcon.png`} height={isMobile ? "20px":"25px"}/>
                     <NoneEventP font_size={isMobile ? "xs":"s"} font_weight="regular" color="grayscale1" padding="0 0 0 10px">홈으로 이동</NoneEventP>
                 </Button>
-                <Button id="share_btn" width="32%"  height="50px">
+                {/* <Button id="share_btn" width="32%"  height="50px">
                     <NoneEventImg src={`${process.env.PUBLIC_URL}/img_srcs/icons/shareIcon.png`} height={isMobile ? "20px":"25px"}/>
                     <NoneEventP font_size={isMobile ? "xs":"s"} font_weight="regular" color="grayscale1" padding="0 0 0 10px">공유</NoneEventP>
-                </Button>
+                </Button> */}
             </Div>
         </Div>
     )

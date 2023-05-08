@@ -15,6 +15,10 @@ import { whichItemComponentState} from "../../recoil/ComponentState"
 import { domainAddressState} from "../../recoil/DomainState"
 import { myItemDataState, storeDataState, dibsOnDataState,skin2048State, skinTetrisState } from "../../recoil/DataState"
 
+//  ===== import hook =====
+import { useMobile } from "../../hooks/useMediaComponent"
+
+
 // ===== import style =====
 import { Div } from "../../styles/Div"
 import { Button } from "../../styles/Button"
@@ -23,6 +27,9 @@ import { P, NoneEventP } from "../../styles/P"
 
 //  ===== component =====
 const ItemContainer = () =>{
+
+    //===== hook ======
+    const isMobile = useMobile()
 
     // ===== recoil state =====
     const setModalOpen = useSetRecoilState(isModalOpenState)
@@ -110,12 +117,12 @@ const ItemContainer = () =>{
             {whichItemComponent ==="myItem" && 
                 (
                     <React.Fragment>
-                    <Div width="70%" justify_content="space-around" margin="0 0 0 68px" onClick={equipBasicSkinBtnEvent}>
-                        <Button id="basic_tetris_btn" width="220px" height="50px">
-                            <NoneEventP font_size="s" font_weight="regular" color="grayscale1" >테트리스 기본 스킨 착용</NoneEventP>
+                    <Div width={isMobile ? "90%":"70%"} justify_content="space-around" margin={isMobile ? "none":"0 0 0 68px"} onClick={equipBasicSkinBtnEvent}>
+                        <Button id="basic_tetris_btn" width={isMobile ? "180px":"220px"} height="50px">
+                            <NoneEventP font_size={isMobile ? "xs":"s"} font_weight="regular" color="grayscale1" >테트리스 기본 스킨 착용</NoneEventP>
                         </Button>
-                        <Button id="basic_2048_btn" width="220px" height="50px">
-                            <NoneEventP font_size="s" font_weight="regular" color="grayscale1" >2048 기본 스킨 착용</NoneEventP>
+                        <Button id="basic_2048_btn" width={isMobile ? "180px":"220px"} height="50px">
+                            <NoneEventP font_size={isMobile ? "xs":"s"} font_weight="regular" color="grayscale1" >2048 기본 스킨 착용</NoneEventP>
                         </Button>
                     </Div>
                     {
