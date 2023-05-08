@@ -3,26 +3,15 @@ import React from "react"
 const API_URL = process.env.REACT_APP_API_URL
 
 export const useGet = (url) => {
-    const [data, setData] = React.useState(null)
     
     const get = async() =>{
         const response = await fetch(`${API_URL}${url}`,{
             credentials: "include",
         })
         const result = await response.json()
-        if(!result.success){
-            throw new Error(result.message)
-        }
-        else{
-            setData(result.data)
-        }
     }
 
-    React.useEffect( ()=>{
-        get()
-    }, [])
-    
-    return data
+    return get
 }
 
 export const usePost = (url) =>{
@@ -35,14 +24,27 @@ export const usePost = (url) =>{
         })
 
         const result = await response.json()
-        if( !result.success){
-            throw new Error(result.message)
-        }
-        else{
-            return result.data
-        }
+        return result
     }, [url])
 
     return get
 }
 
+export const useGetData = (url, opt) =>{
+    const [data, setData] = React.useState(null)
+
+    const get = async() =>{
+        const response = await fetch(`${API_URL}${url}`,{
+            credentials: "include",
+        })
+        const result = await response.json()
+        // console.log(result)
+        setData(result.data)
+    }
+
+    React.useEffect( ()=>{
+        get()
+    }, [opt])
+    
+    return data
+}

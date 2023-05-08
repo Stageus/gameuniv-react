@@ -25,7 +25,7 @@ import { Div } from "../../../../styles/Div";
 import { color, fontSize, fontWeight } from "../../../../styles/style";
 import { doodleTheme, jellyTheme, legoTheme, retroTheme } from "../../styles/theme";
 import { isGetState } from "../../recoil/Game2048State";
-
+import { useGet, usePost } from "../../../../hooks/useFetch";
 
 
 // ===== style =====
@@ -232,35 +232,25 @@ const ScoresContainer = (props) =>{
     const [scoreData, setScoreData] = useRecoilState(scoreDataState)
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
-    // const [scoreData, setScoreData] = 
-    // React.useState({
-        // pre_id: "pre_id",
-        // pre_university_name: "pre_univ_name",
-        // pre_max_score: "10",
 
-        // next_id: "next_id",
-        // next_university_name: "next_univ_name",
-        // next_max_scroe: "30",
-
-        // rank: -1
-    // })
     // ===== recoil =====
     const setScore = useSetRecoilState(scoreState)
     const score = useRecoilValue(scoreState)
     const address = useRecoilValue(domainAddressState)
     const userData = useRecoilValue(userDataState)
     
-    // const a = props.userData
-    // console.log(userData, a)
     const setGameResult = useSetRecoilState(game2048ResultState)
     const game2048Result = useRecoilValue(game2048ResultState)
     const setCoin = useSetRecoilState(coinState)
+
     // ===== hooks =====
     const { gameState } = useGameContext()
     const isMobile = useMobile()
     const [isGameOver, setGameOver] = React.useState(false)
     const [timer, setTimer] = React.useState(0)
 
+    const getCoin = useGet('/user/coin')
+    const post = usePost(`/2048/score`)
     // ===== event =====
     useEffect( ()=> {
         dispatch( {type: "change", payload: gameState.tiles})
@@ -318,24 +308,11 @@ const ScoresContainer = (props) =>{
     //게임 오버 시 점수보내기
     const post2048Score = async() =>{
         
-        console.log(state.score)
-        await fetch(`${process.env.REACT_APP_API_URL}/2048/score/rank?score=${state.score}`,{
-            credentials: "include"
+        // console.log(state.score)
+        const result = await post({
+            score: state.score
         })
         
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/2048/score`,{
-            method: "POST",
-            credentials: "include",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                score: state.score,
-            })
-        })
-
-        const result = await response.json()
-
         if(result.message){
             alert(result.message)
         }
@@ -343,17 +320,9 @@ const ScoresContainer = (props) =>{
             // console.log(result.data)
             setGameResult(result.data)
             // console.log(game2048Result)
-            const achieve_list = result.data.achieveList
-            let achieve_coin = 0
+            getCoin()
+            setCoin(prevState => prevState + (result.data.coin) )
 
-            if(achieve_list){
-                achieve_list.forEach( achieve => {
-                    achieve_coin += achieve.reward_coin
-                })
-            }
-            // console.log(achieve_coin)
-            
-            setCoin(prevState => prevState + (result.data.coin + achieve_coin) )
         }
     }
     // 게임오버 시 점수 보내기 //////수정===========

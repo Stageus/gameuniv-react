@@ -48,7 +48,6 @@ import { color } from "../styles/style"
 
 // ===== style =====
 const MainStyle = styled.main`
-    width:100%;
     margin-left: 3%;
     margin-right: 3%;
     z-index:10;
@@ -108,8 +107,6 @@ const Main = () =>{
     }
     
     React.useEffect( ()=>{
-
-
         return setModalOpen(false)
     })
 

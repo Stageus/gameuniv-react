@@ -31,7 +31,6 @@ import {useMobile} from "../hooks/useMediaComponent"
 import {color} from "../styles/style"
 
 
-
 // ===== style =====
 const ItemBtnPcDiv = styled(ShadowDiv)`
     position:relative;
@@ -116,7 +115,6 @@ const Home = () =>{
     // ===== media query =====
     let isMobile=useMobile()
     const mounted = useRef(false);
-
     // ===== recoil state =====
     const address= useRecoilValue(domainAddressState)
     const isLogin = useRecoilValue(isLoginState)
@@ -144,21 +142,7 @@ const Home = () =>{
         }
 
     }
-    function getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i <ca.length; i++) {
-          let c = ca[i];
-          while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-          }
-        }
-        return "";
-      }
+    
     const getUserRankDataEvent = async() =>{
         // console.log(userData.email)
         // console.log(userData)
