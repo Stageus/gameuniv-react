@@ -35,6 +35,10 @@ const Cell =({type})=>{
         skin = TETROMINOS[type].doodleCellImg
     }if(skinTetris===5){
         skin = TETROMINOS[type].jellyCellImg
+    }if(skinTetris===7){
+        skin = TETROMINOS[type].retroCellImg
+    }if(skinTetris===9){
+        skin = TETROMINOS[type].legoCellImg
     }
 
     return( 

@@ -110,9 +110,9 @@ const ItemShowDetail = (props) =>{
             <Mobile>
                 <Overlay id="overlay">
                     <ShadowDiv width="420px" height="600px" background_color="grayscale1" flex_direction="column" justify_content="space-evenly"  border_radius="3px">
-                        <H1 color="grayscale7" font_size="xxl" font_weight="regular">{item_data[itemIndexData].item_name}</H1>
+                        <H1 color="grayscale7" font_size="l" font_weight="regular">{item_data[itemIndexData].item_name}</H1>
                         <Div width="80%" height="70%" background_color="grayscale4" justify_content="space-evenly">
-                            <Img width="60%" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/${item_data[itemIndexData].detail_img}`}/>
+                        <Img width="80%" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/item_imgs/${item_data[itemIndexData].detail_img}`}/>
                         </Div>
                         <Div width="60%" height="100px" justify_content="space-evenly" onClick={itemShowDetailBtnEvent}>
                             {

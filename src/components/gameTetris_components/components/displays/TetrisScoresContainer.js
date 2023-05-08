@@ -20,7 +20,7 @@ import { P } from "../../../../styles/P";
 
 // ===== import style func =====
 import { color, fontSize, fontWeight } from "../../../../styles/style";
-// import { doodleTheme, jellyTheme, legoTheme, retroTheme } from "../../styles/theme";
+import { doodleTheme, jellyTheme, legoTheme, retroTheme } from "../../../../styles/TetrisTheme";
 // import { isGetState } from "../../recoil/Game2048State";
 
 
@@ -33,6 +33,7 @@ const ScoresContainerDiv = styled(Div)`
     border : 7px solid ${props => props.theme.borderColor};
     justify-content: space-evenly;
     flex-direction: column;
+    margin-top:25px;
 `
 
 const MyScore = styled(Div)`
@@ -43,14 +44,18 @@ const MyScore = styled(Div)`
     position: relative;
     right:0;
     background-color : ${props => props.theme.scoreBoxBgColor};
+
 `
 
 const UserId = styled.div`
     font-size: ${fontSize("xs")};
     ${fontWeight("bold")};
+    
+    
 `
 const UserUniv = styled.div`
     font-size: 3px;
+ 
 `
 
 const MyRank = styled(Div)`
@@ -61,6 +66,8 @@ const MyRank = styled(Div)`
     ${fontWeight("bold")};
     margin-right: 20px;
 
+ 
+
 `
 
 const OtherScore = styled(MyScore)`
@@ -70,6 +77,8 @@ const OtherScore = styled(MyScore)`
     background-color : ${props => props.theme.scoreBoxBgColor};
     
     border : 3px solid ${props => props.theme.otherBorderColor};
+
+    
 `
 
 
@@ -186,7 +195,9 @@ const TetrisScoresContainer = (props) =>{
             
         }
     }, [isGameOver]) 
-    
+
+    console.log(tetrisScore)
+    console.log(gameTetrisResult)
 
     return(
         <ScoresContainerDiv>
@@ -197,7 +208,7 @@ const TetrisScoresContainer = (props) =>{
                     <OtherRank>{tetrisScoreData.pre_rank}</OtherRank>
                 }
                 <Div flex_direction="column">
-                    <OtherId>{tetrisScoreData.pre_id}</OtherId>
+                    <OtherId>{tetrisScoreData.pre_user_name}</OtherId>
                     <OtherUniv>{tetrisScoreData.pre_university_name}</OtherUniv>
                 </Div>
                 <ScoreBox score={tetrisScoreData.pre_max_score}/>
@@ -223,7 +234,7 @@ const TetrisScoresContainer = (props) =>{
                 }
                 
                 <Div flex_direction="column">
-                    <OtherId>{tetrisScoreData.next_id}</OtherId>
+                    <OtherId>{tetrisScoreData.next_user_name}</OtherId>
                     <OtherUniv>{tetrisScoreData.next_university_name}</OtherUniv>
                 </Div>
                 <ScoreBox score={tetrisScoreData.next_max_score} />

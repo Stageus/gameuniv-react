@@ -4,21 +4,21 @@ import {useRecoilValue, useSetRecoilState} from "recoil"
 import styled from "styled-components"
 
 //  ===== import recoil =====
-import { useSetModalState } from "../../hooks/useSetModalState"
-import { userDataState } from "../../recoil/UserDataState"
-import { imgDomainState, profilePathState } from "../../recoil/DomainState"
+import { useSetModalState } from "../hooks/useSetModalState"
+import { userDataState } from "../recoil/UserDataState"
+import { imgDomainState, profilePathState } from "../recoil/DomainState"
 
 // ===== import style =====
-import {H1} from "../../styles/H1"
-import {Img} from "../../styles/Img"
-import {Div, ShadowDiv} from "../../styles/Div"
-import {P} from "../../styles/P"
+import {H1} from "../styles/H1"
+import {Img} from "../styles/Img"
+import {Div, ShadowDiv} from "../styles/Div"
+import {P} from "../styles/P"
 
 // ===== import hook =====
-import {PC, Mobile,useMobile} from "../../hooks/useMediaComponent"
+import {PC, Mobile,useMobile} from "../hooks/useMediaComponent"
 
 //  ===== component =====
-import BtnAnimation from "../BtnAnimation"
+import BtnAnimation from "./BtnAnimation"
 
 // ===== style =====
 const ProfileInfoDiv = styled(Div)`
@@ -82,9 +82,10 @@ const Profile = () =>{
                                 margin="0 20px 6px 10px"/>
                         </ProfileChangePcBtn>
                     </PC>
+
                     <Mobile>
                         <ProfileImgMobileDiv width="200px" height="200px" border_radius="50%" background_color="grayscale3">
-                            <Img width="150px" border_radius="50%"/>
+                            <ImgDiv width="160px" height="160px" border_radius="50%" address={img_src} img_address={userData.profileImg}></ImgDiv>
                         </ProfileImgMobileDiv>
                         <ProfileChangeMobileBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
@@ -93,7 +94,6 @@ const Profile = () =>{
                                 after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeAfterBtnImg.png`}
                                 margin="0 20px 6px 10px"/>
 
-                                after_src={`${process.env.PUBLIC_URL}/img_srcs/btns/profileChangeAfterBtnImg.png`}/>
 
                         </ProfileChangeMobileBtn>
                     </Mobile>

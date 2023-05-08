@@ -6,7 +6,7 @@ import styled, {css} from "styled-components"
 import Cell from "./Cell"
 
 // ===== import style =====
-import { basicTheme, jellyTheme, pastelTheme,doodleTheme} from "../../../styles/TetrisTheme"
+import { basicTheme, jellyTheme, pastelTheme,doodleTheme, retroTheme, legoTheme} from "../../../styles/TetrisTheme"
 
 // ===== style =====
 const StageDiv=styled.div`
@@ -28,18 +28,20 @@ const StageDiv=styled.div`
 
     ${props => props.theme === doodleTheme && css`
     border : 7px solid #000000;
-`
+`}   
+
+${props => (props.theme === retroTheme||props.theme ===legoTheme) && css`
+        margin-top :40px;
+        border-radius: 0px;
+        margin-left : 8px;
+    `
 }
 `
 //  ===== component =====
 
 const Stage =({stage})=>{
 
-//     ${props => props.theme === jellyTheme && css`
-//     background-image: url("img_srcs/game_img/tetris/jelly/asset/smallBoardImg.png");
-//     background-size : 360px 610px;
-//     background-repeat : no-repeat;
-// `}
+
     return(
     <StageDiv width={stage[0].length} height={stage.length} > 
         {stage.map(row=>row.map((cell, x) => <Cell key={x} type={cell[0]} />))}

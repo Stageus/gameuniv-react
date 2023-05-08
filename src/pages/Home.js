@@ -5,9 +5,7 @@ import {useRecoilValue, useSetRecoilState, useRecoilState} from "recoil"
 import styled from "styled-components"
 import { Navigate } from "react-router-dom"
 // ===== import component =====
-import Profile from "../components/home_components/Profile"
-import IndividualTetrisRanking from "../components/home_components/IndividualTetrisRanking"
-import Individual2048Ranking from "../components/home_components/Individual2048Ranking"
+import Profile from "../components/Profile"
 
 //  ===== import recoil =====
 import { whichPageState } from "../recoil/PageState"
@@ -255,6 +253,9 @@ const Home = () =>{
                             }
                         </RelativeDiv>
                     </Div>
+
+
+                    
                     <Profile/>
                     <Div width="100%"   height="301px" justify_content="space-between" onClick={utilityBtnEvent}>
     
@@ -293,6 +294,9 @@ const Home = () =>{
                             <AbsoluteImg opacity="40%" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048CropImg.png`}/>
                         </RelativeDiv>
                     </Div>
+
+
+
                     <Profile/>
                     <Div width="440px"  max_width="693px" height="301px" flex_direction="column" justify_content="space-evenly" onClick={utilityBtnEvent}>
   
