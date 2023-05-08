@@ -145,7 +145,7 @@ const MobileRangking = (props) =>{
         const result = await response.json()
 
         if(result.message || result.data.length < 1){
-            alert(result.message)
+            // alert(result.message)
         }
         else{
             set2048( prevState => [...prevState, ...result.data])

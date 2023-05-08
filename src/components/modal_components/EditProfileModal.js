@@ -35,7 +35,6 @@ const Label = styled.label`
 const UploadTotalDiv = styled(Div)`
     ${props => props.isMobile && css`
         position:relative;
-        right: 30px;
     `}
     
 `
@@ -176,8 +175,8 @@ const EditProfileModal = () =>{
     // 프로필 수정
     const profileChangeEvent = async(e) =>{
         e.preventDefault()
-        console.log(profileImg)
-        console.log(defaultImg)
+        // console.log(profileImg)
+        // console.log(defaultImg)
         const form_data = new FormData()
         form_data.append("defaultImg", defaultImg)
         form_data.append("profileImg", profileImg)
