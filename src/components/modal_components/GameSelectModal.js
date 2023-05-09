@@ -11,6 +11,7 @@ import { isModalOpenState, whichModalState } from "../../recoil/ModalState"
 import { whichGameState } from "../../recoil/PageState"
 // ===== import hooks =====
 import { useNavigate } from "react-router"
+import {PC, Mobile} from "../../hooks/useMediaComponent"
 
 // ===== import style =====
 import { ImgBtn } from "../../styles/Img"
@@ -63,19 +64,39 @@ const GameSelectModal = () =>{
 
     }
     return(
-        <Div width="611px" height="450px" flex_direction="column" onClick={gameSelctBtnEvent}>
-            <Div  flex_direction="column"  align_items="flex-start">
-            <H1 font_size="m" color="grayscale7" font_weight="regular" margin="0 0 10px 0">게임 선택</H1>
-            <Div margin="0 0 10px 0">
-                <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/tetrisAfterBtnImg.png`}/>
-                <GameBeforeBtn id="tetris_btn" src={`${process.env.PUBLIC_URL}/img_srcs/btns/tetrisBeforeBtnImg.png`}/>
-            </Div>
-            <Div>
-                <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/2048AfterBtnImg.png`}/>
-                <GameBeforeBtn id="2048_btn" src={`${process.env.PUBLIC_URL}/img_srcs/btns/2048BeforeBtnImg.png`}/>
-            </Div>
-            </Div>
-        </Div>
+        <>
+            <PC>
+                <Div width="611px" height="450px" flex_direction="column" onClick={gameSelctBtnEvent}>
+                    <Div  flex_direction="column"  align_items="flex-start">
+                        <H1 font_size="m" color="grayscale7" font_weight="regular" margin="0 0 10px 0">게임 선택</H1>
+                        <Div margin="0 0 10px 0">
+                            <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/tetrisAfterBtnImg.png`}/>
+                            <GameBeforeBtn id="tetris_btn" src={`${process.env.PUBLIC_URL}/img_srcs/btns/tetrisBeforeBtnImg.png`}/>
+                        </Div>
+                        <Div>
+                            <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/2048AfterBtnImg.png`}/>
+                            <GameBeforeBtn id="2048_btn" src={`${process.env.PUBLIC_URL}/img_srcs/btns/2048BeforeBtnImg.png`}/>
+                        </Div>
+                    </Div>
+                </Div>
+            </PC>
+            <Mobile>
+                <Div width="420px" height="350px" flex_direction="column" onClick={gameSelctBtnEvent}>
+                    <Div  flex_direction="column"  align_items="flex-start">
+                        <H1 font_size="m" color="grayscale7" font_weight="regular" margin="0 0 10px 0">게임 선택</H1>
+                        <Div margin="0 0 10px 0">
+                            <ImgBtn width="400px" src={`${process.env.PUBLIC_URL}/img_srcs/btns/tetrisAfterBtnImg.png`}/>
+                            <GameBeforeBtn width="400px" id="tetris_btn" src={`${process.env.PUBLIC_URL}/img_srcs/btns/tetrisBeforeBtnImg.png`}/>
+                        </Div>
+                        <Div>
+                            <ImgBtn width="400px" src={`${process.env.PUBLIC_URL}/img_srcs/btns/2048AfterBtnImg.png`}/>
+                            <GameBeforeBtn width="400px" id="2048_btn" src={`${process.env.PUBLIC_URL}/img_srcs/btns/2048BeforeBtnImg.png`}/>
+                        </Div>
+                    </Div>
+                </Div>
+            </Mobile>
+        </>
+       
     )
 }
 

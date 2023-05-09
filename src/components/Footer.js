@@ -127,7 +127,7 @@ const Footer = () =>{
                                 ?
                                     <MobileRankingBtn onClick={()=>setMobileRanking(false)}>
                                         <P color="grayscale6" font_weight="regular">
-                                        로그인 페이지로 이동
+                                        {location === "/home" ? "홈으로 이동" : "로그인 페이지로 이동"}
                                         </P>
                                         <Triangle src={`${process.env.PUBLIC_URL}/img_srcs/icons/triangleGrayIcon.png`}
                                         width="20px" margin="5px 0 0 10px"/>

@@ -16,7 +16,7 @@ export const useGameStatus= (rowsCleared) =>{
   
     const calcScore = useCallback(()=>{
         if (rowsCleared > 0){
-            setScore(prev => prev + (10000 * (rowsCleared-(rowsCleared/2))))
+            setScore(prev => prev + (500 * (rowsCleared-(rowsCleared/2))))
             setRows(prev => prev + (rowsCleared-(rowsCleared/2)))
             setTetrisScore(score)
         }
