@@ -276,21 +276,57 @@ const Home = () =>{
                 <Mobile>
                     <Div width="440px"   height="301px" justify_content="space-between">
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
-                            <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
-                                <H1 font_size="m" color="blue4">Tetris</H1>
-                                <P font_size="xxxl" font_weight="bold" color="grayscale7">{11}th</P>
-                                <H1 font_size="m" color="grayscale7">Your Score</H1>
-                                <P font_size="xxs" font_weight="light" color="grayscale7">{11111}</P>
-                            </Div>
+                            { 
+                                (userTetrisRankData.rank === -2)
+                                ?
+                                <Div width="100%" justify_content="center" align_items="center">
+                                    <P font_size="xs" font_weight="bold">이번 달 테트리스 기록이 없습니다</P>
+                                </Div>
+                                :
+                                <React.Fragment>
+                                    <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
+                                        <H1 font_size="m" color="blue4">Tetris</H1>
+                                        <P font_size="xxxl" font_weight="bold" color="grayscale7">
+                                            {((userTetrisRankData.rank === -1) || (userTetrisRankData.rank > 100))
+                                            ?
+                                            "99등 초과"
+                                            :
+                                            userTetrisRankData.rank + "등"
+                                            }               
+                                        </P>
+                                        <H1 font_size="m" color="grayscale7">최고 점수</H1>
+                                        <P font_size="xxs" font_weight="light" color="grayscale7">{userTetrisRankData.max_score}</P>
+                                    </Div>
+                                    <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisCropImg.png`}/>
+                                </React.Fragment>
+                            }   
                             <AbsoluteImg opacity="40%" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/TetrisCropImg.png`}/>
                         </RelativeDiv>
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
-                            <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
-                                <H1 font_size="m" color="blue4">2048</H1>
-                                <P font_size="xxxl" font_weight="bold" color="grayscale7">{11}th</P>
-                                <H1 font_size="m" color="grayscale7">Your Score</H1>
-                                <P font_size="xxs" font_weight="light" color="grayscale7">{11111}</P>
-                            </Div>
+                            {
+                                (user2048RankData.rank === -2)
+                                ?
+                                <Div width="100%" justify_content="center" align_items="center">
+                                    <P font_size="xs" font_weight="bold">이번 달 2048 기록이 없습니다</P>
+                                </Div>
+                                :
+                                <React.Fragment>
+                                    <Div flex_direction="column" align_items="flex-start" margin="0 0 0 20px">
+                                        <H1 font_size="m" color="blue4">2048</H1>
+                                        <P font_size="xxxl" font_weight="bold" color="grayscale7">
+                                            {((user2048RankData.rank === -1) || (user2048RankData.rank > 100))
+                                            ?
+                                            "99등 초과"
+                                            :
+                                            user2048RankData.rank + "등"
+                                            }       
+                                            </P>
+                                        <H1 font_size="m" color="grayscale7">최고 점수</H1>
+                                        <P font_size="xxs" font_weight="light" color="grayscale7">{user2048RankData.max_score}</P>
+                                    </Div>
+                                    <AbsoluteImg src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048CropImg.png`}/>
+                                </React.Fragment>
+                            }
                             <AbsoluteImg opacity="40%" src={`${process.env.PUBLIC_URL}/img_srcs/imgs/2048CropImg.png`}/>
                         </RelativeDiv>
                     </Div>

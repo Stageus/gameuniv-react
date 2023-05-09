@@ -77,7 +77,8 @@ const LoginDiv = styled(Div)`
 
 const GameStartDiv = styled(Div)`
     position: relative;
-    right: 160px;
+    right: ${props=>props.isMobile ?"75px": "160px"};
+    margin : ${props=>props.isMobile ?"0 0 10px 0": "0 0 20px 0"};
 `
 
 //  ===== component =====
@@ -96,6 +97,7 @@ const Main = () =>{
     // const whichPage = useRecoilValue(whichPageState)
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
+
 
     //  ===== router =====
     const location = useLocation().pathname;
@@ -138,9 +140,9 @@ const Main = () =>{
                             <Div width="50%">
                                 <Div width="100%" flex_direction="column" height="100%" margin="0 0 0 20px">
                                     {/* 게임시작 버튼 */}
-                                    { //수정한 부분
+                                    { 
                                         location==="/home" && 
-                                        <GameStartDiv margin="0 0 20px 0" onClick={gameStartBtnEvent}>
+                                        <GameStartDiv onClick={gameStartBtnEvent}>
                                             <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
                                             <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
                                         </GameStartDiv>
@@ -174,8 +176,18 @@ const Main = () =>{
             </PC>
             {/* 모바일 */}
             <Mobile>
-                
-                <Div width="100%" flex_direction="column" height="940px">
+                <Div width="100%" flex_direction="column" height="850px">
+                {/* 게임시작 버튼 */}
+                { 
+                    location==="/home" && 
+                    (
+                        (isMobileRankingClick === false) &&
+                        <GameStartDiv isMobile={isMobile} onClick={gameStartBtnEvent}>
+                            <ImgBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartAfterBtnImg.png`}/>
+                            <GameStartBeforeBtn src={`${process.env.PUBLIC_URL}/img_srcs/btns/gameStartBeforeBtnImg.png`}/>
+                        </GameStartDiv>
+                    )
+                }
                 {
                     isMobileRankingClick
                     ?
