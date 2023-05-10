@@ -1,7 +1,7 @@
 // ===== import base =====
 import React from "react"
 import styled, {css} from "styled-components"
-import { useRecoilValue, useSetRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 
 // ===== import page =====
 import Login from "../pages/Login"
@@ -44,6 +44,8 @@ import { P } from "../styles/P"
 
 // ===== import style func =====
 import { color } from "../styles/style"
+import { userDataState } from "../recoil/UserDataState"
+import { useGet, useGetData } from "../hooks/useFetch"
 
 
 // ===== style =====
@@ -89,15 +91,15 @@ const Main = () =>{
     // ===== state =====
     const [isMouseHover, setMouseHover] = React.useState(false)
     const isMobileRankingClick = useRecoilValue(isMobileRankingClickState)
-
+    const [userData, setUserData] = useRecoilState(userDataState)
     // ===== recoil state =====
     const setRanking = useSetRecoilState(whichRankingState)
 
     // const whichPage = useRecoilValue(whichPageState)
     const setModalState = useSetRecoilState(whichModalState)
     const setModalOpen = useSetRecoilState(isModalOpenState)
-
-
+    // const data = useGetData("/auth/user")
+    // console.log(data)
     //  ===== router =====
     const location = useLocation().pathname;
     const navigate = useNavigate()
@@ -107,10 +109,29 @@ const Main = () =>{
         setModalState("gameSelectModal")
         setModalOpen(true)
     }
+
+    const getUserData = async() =>{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/user`,
+        {
+            credentials: "include",
+        })
+
+        const result = await response.json()
+        
+        if(result.message){
+            // alert(result.message)
+        }
+        else{
+            console.log(1)
+            setUserData(result.data)
+        }
+    }
     
     React.useEffect( ()=>{
+        getUserData()
+        console.log(1)
         return setModalOpen(false)
-    })
+    },[])
 
     // ===== event =====
     return(

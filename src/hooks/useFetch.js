@@ -9,6 +9,8 @@ export const useGet = (url) => {
             credentials: "include",
         })
         const result = await response.json()
+
+        return result
     }
 
     return get

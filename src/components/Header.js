@@ -76,24 +76,7 @@ const Header = () =>{
 
     const data = useGetData('/user/coin', coin)
     
-    // const getCoinData = async() =>{
-    //     const response = await fetch(`${process.env.REACT_APP_API_URL}/user/coin`,{
-    //         credentials: "include"
-    //     })
-
-    //     const result = await response.json()
-
-    //     if(result.message){
-    //         // alert(result.message)
-    //     }
-    //     else{
-    //         setCoin(result.data.coin)
-    //     }
-    // }
-
-    // React.useEffect( ()=>{
-    //     getCoinData()
-    // },[coin])
+    // console.log(data && data)
 
     return(
         <Header_style>
