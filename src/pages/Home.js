@@ -29,6 +29,7 @@ import {useMobile} from "../hooks/useMediaComponent"
 
 // ===== import style func =====
 import {color} from "../styles/style"
+import { useGetData } from "../hooks/useFetch"
 
 
 // ===== style =====
@@ -118,7 +119,8 @@ const Home = () =>{
     // ===== recoil state =====
     const address= useRecoilValue(domainAddressState)
     const isLogin = useRecoilValue(isLoginState)
-    const userData= useRecoilValue(userDataState)
+    // const userData= useRecoilValue(userDataState)
+    const userData= useGetData('/auth/user')
     const setPageState = useSetRecoilState(whichPageState)
     const [userTetrisRankData,setUserTetrisRankData]=useRecoilState(userTetrisRankDataState)
     const [user2048RankData, setUser2048RankDataState]=useRecoilState(user2048RankDataState)
@@ -192,7 +194,7 @@ const Home = () =>{
             navigate('/')
         }
     },[])
-    
+    // console.log(user2048RankData)
 
     return(
         <React.Fragment>

@@ -250,6 +250,7 @@ const ScoresContainer = (props) =>{
     const [timer, setTimer] = React.useState(0)
 
     const getCoin = useGet('/user/coin')
+    const getResult = useGet(`/2048/score/rank?score=${state.score}`)
     const post = usePost(`/2048/score`)
     // ===== event =====
     useEffect( ()=> {
@@ -300,15 +301,11 @@ const ScoresContainer = (props) =>{
         if(gameState.status === "GAME_OVER") setGameOver(true)
     }, [gameState.status])
 
-    // React.useEffect( () =>{
-    //     showRank2048(score)
-    // }, [score > scoreData.pre_max_score])
-
-
     //게임 오버 시 점수보내기
     const post2048Score = async() =>{
         
-        // console.log(state.score)
+        const compare_result = await getResult()
+
         const result = await post({
             score: state.score
         })

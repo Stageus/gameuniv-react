@@ -52,6 +52,8 @@ const Login = () =>{
     // console.log(token)
     // ===== router =====
     const navigate = useNavigate()
+
+    const post = usePost('/auth')
     // ===== event =====
     React.useEffect(()=>{
         const expire = window.sessionStorage.getItem("time")
@@ -70,34 +72,26 @@ const Login = () =>{
     // 자동 로그인
 
     const postLoginData = async(id, pw) =>{
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth`,{
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id: id,
-                pw: pw,
-                autoLogin: true,
-            })
+        const result = await post( {
+            id: id, pw: pw, autoLogin:true
         })
-
-        const result = await response.json()
+        
+        console.log(result)
         if(result.message){
             alert(result.message)
         }
         else{
             // alert("로그인 성공")
-            window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
-            getUserData()
-            getCoinData()
+            // window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
+            // getUserData()
+            // getCoinData()
             setLogin(true)
             navigate("/home")
         }
     }
 
     const loginEvent = (e) =>{
+
         e.preventDefault()
         const id_regex = /^[a-z0-9]{5,20}$/
         const id = document.getElementById("id").value

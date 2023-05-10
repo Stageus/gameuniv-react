@@ -5,7 +5,7 @@ import styled from "styled-components"
 
 //  ===== import recoil =====
 import { useSetModalState } from "../hooks/useSetModalState"
-import { userDataState } from "../recoil/UserDataState"
+import { getUserData, userDataState } from "../recoil/UserDataState"
 import { imgDomainState, profilePathState } from "../recoil/DomainState"
 
 // ===== import style =====
@@ -19,6 +19,7 @@ import {PC, Mobile,useMobile} from "../hooks/useMediaComponent"
 
 //  ===== component =====
 import BtnAnimation from "./BtnAnimation"
+import { useGetData } from "../hooks/useFetch"
 
 // ===== style =====
 const ProfileInfoDiv = styled(Div)`
@@ -59,13 +60,15 @@ const Profile = () =>{
     // ===== media query =====
     let isMobile=useMobile()
     // ===== recoil state =====
-    const userData = useRecoilValue(userDataState)
+    // const userData = useRecoilValue(userDataState)
+    const userData = useGetData('/auth/user')
     const img_domain = useRecoilValue(imgDomainState)
     const profile_path = useRecoilValue(profilePathState)
     const img_src = `${img_domain}/${profile_path}`
 
     return(
         <React.Fragment>
+            
                 <ProfileInfoDiv  width ={isMobile ? "440px" : "100%" }   height="301px" flex_direction="column" align_items="flex-end">
                     <H1 font_size="m" color="blue4" font_weight="regular">
                         나의 프로필
@@ -73,7 +76,7 @@ const Profile = () =>{
 
                     <PC>
                         <ProfileImgPcDiv border_radius="50%" width="250px" height="250px" background_color="grayscale3"  >
-                            <ImgDiv width="180px" height="180px" border_radius="50%" address={img_src} img_address={userData.profileImg}></ImgDiv>
+                            <ImgDiv width="180px" height="180px" border_radius="50%" address={img_src} img_address={ userData && userData.profileImg}></ImgDiv>
                         </ProfileImgPcDiv>
                         <ProfileChangePcBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
@@ -85,7 +88,7 @@ const Profile = () =>{
 
                     <Mobile>
                         <ProfileImgMobileDiv width="200px" height="200px" border_radius="50%" background_color="grayscale3">
-                            <ImgDiv width="160px" height="160px" border_radius="50%" address={img_src} img_address={userData.profileImg}></ImgDiv>
+                            <ImgDiv width="160px" height="160px" border_radius="50%" address={img_src} img_address={userData && userData.profileImg}></ImgDiv>
                         </ProfileImgMobileDiv>
                         <ProfileChangeMobileBtn>
                             <BtnAnimation event={useSetModalState("editProfileModal")}
@@ -101,10 +104,9 @@ const Profile = () =>{
                     <Div width="100%" height="230px" margin="10px 0px 0px 0px" border_radius="3px" background_color="grayscale2" flex_direction="column" align_items="flex-end">
                         <Div margin={isMobile ? "0 20px 0 0" :  "0 100px 0 0"} flex_direction="column">
                             {/* 백엔드 데이터 */}
-                            <H1 font_size={isMobile ? "xl" : "xxl" }color="grayscale7" font_weight="bold">{userData.user_name}</H1>
+                            <H1 font_size={isMobile ? "xl" : "xxl" }color="grayscale7" font_weight="bold">{userData && userData.user_name}</H1>
                             <Div>
-                                <Img width={isMobile ? "20px" : "35px" } margin="0px 5px 0px 0px"  src={`${process.env.PUBLIC_URL}/img_srcs/univ_logos/ajouUniversityLogoImg.png`}/>
-                                <P font_size={isMobile ? "s" : "m" } color="grayscale7" font_weight="light">{userData.universityName}</P>
+                                <P font_size={isMobile ? "s" : "m" } color="grayscale7" font_weight="light">{userData && userData.universityName}</P>
                             </Div> 
                         </Div>
                     </Div>

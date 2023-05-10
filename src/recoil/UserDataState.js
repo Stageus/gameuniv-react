@@ -30,7 +30,7 @@ export const userDataState = atom({
         profileImg: "",
         universityName: ""
     },
-    effects_UNSTABLE: [persistAtom]
+    // effects_UNSTABLE: [persistAtom]
 })
 
 // 스테이트 역할 : 코인데이터 저장
@@ -39,7 +39,7 @@ export const userDataState = atom({
 export const coinState = atom({
     "key" : "coinState",
     "default": 0,
-    effects_UNSTABLE: [persistAtom]
+    // effects_UNSTABLE: [persistAtom]
 })
 
 // 스테이트 역할 : 테트리스 최고 랭킹 점수 정보
