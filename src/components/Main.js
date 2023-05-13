@@ -129,7 +129,7 @@ const Main = () =>{
     
     React.useEffect( ()=>{
         getUserData()
-        console.log(1)
+        // console.log(1)
         return setModalOpen(false)
     },[])
 

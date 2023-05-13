@@ -94,7 +94,7 @@ const SignUp = () =>{
     // 정규식 빈칸 등 체크
     const checkEvent = (e) =>{
         e.preventDefault()
-
+        // console.log(postDataState)   
         // ===== var =====
         if(stepState === 1){
             const name_regex = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/
