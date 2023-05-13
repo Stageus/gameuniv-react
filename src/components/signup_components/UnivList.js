@@ -19,7 +19,7 @@ const UnivList = (props) =>{
     React.useEffect( ()=>{
 
         const getUnivList = async() =>{
-            const response = await fetch("http://gameuniv.site/university/all")
+            const response = await fetch("https://gameuniv.site/university/all")
     
             const result = await response.json()
             const univ_data = result.data
