@@ -40,8 +40,8 @@ const UnivList = (props) =>{
             // console.log(document.getElementById("univ").label)
             const idx = univData.filter( data => {
                 return data.university_name === univ_name
-            })[0].university_idx
-            setPostData( prevState => ({...prevState, universityIdx: idx}))
+            })
+            setPostData( prevState => ({...prevState, universityIdx: idx.length >= 1 && idx[0].university_idx}))
             // console.log(idx, univIdx)
         }, 300)
         setTimer(newTimer)
