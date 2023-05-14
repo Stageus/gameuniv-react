@@ -26,7 +26,6 @@ const Label = styled.label`
 const UploadTotalDiv = styled(Div)`
     ${props => props.isMobile && css`
         position:relative;
-        right: 30px;
     `}
     
 `
