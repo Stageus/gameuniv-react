@@ -157,9 +157,9 @@ const GameProvider = (props) =>{
     React.useEffect( ()=>{
         // state.status = "IN_PROGRESS"
         // state.tiles = generateBoard(2)
-
+        state.status = "IN_PROGRESS" 
         return ()=>{
-            state.status = "IN_PROGRESS" 
+            
             state.tiles = generateBoard(2)
         }
         

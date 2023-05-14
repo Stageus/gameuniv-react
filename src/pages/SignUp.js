@@ -309,7 +309,7 @@ const SignUp = () =>{
                     </Div>
                 </PC>
                 
-                <StepDiv flex_direction="column" width="80%" max_width="320px" height="440px" 
+                <StepDiv flex_direction="column" width="100%" height="440px" 
                 align_items={ stepState !== 4 ? "felx-start" : "center"} 
                 padding="0" justify_content={ stepState !==4 ? "flex_start" : "center"}>
                     { 
@@ -383,28 +383,29 @@ const SignUp = () =>{
                             </InputBoxDiv>
                             <InputBoxDiv >
                                 <P font_size = "xxs" padding="5px 0">인증번호</P>
-                                <Div width="100%">
-                                    <Input width="100%" max_width="289px" height="28px" placeholder="인증번호" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
+                                <Div width="100%" >
+                                    <Input width="250px" height="28px" placeholder="인증번호" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
                                     id="auth_number"/>
                                     {authState && (isConfirm || <Timer/>)}
                                 </Div>
-                                <Div width="100%">
-                                    {/* 인증 진행 관련 */}
-                                    {
-                                        authState
-                                        ?
-                                        <Button margin="10px 0" font_size = "s" max_width="195px" height="46px" width="100%"
-                                        id="confirm_auth" onClick={confirmAuthNumberEvent}>
-                                        인증번호 확인
-                                        </Button>
-                                        :
-                                        <Button margin="10px 0" font_size = "s" max_width="195px" height="46px" width="100%"
-                                        id="get_auth" onClick={sendAuthNumberEvent}>
-                                        인증번호 발송
-                                        </Button>
-                                    }
-                                </Div>
+                                
                             </InputBoxDiv>
+                            <Div width="100%">
+                                {/* 인증 진행 관련 */}
+                                {
+                                    authState
+                                    ?
+                                    <Button margin="10px 0" font_size = "s" height="46px" width="100%"
+                                    id="confirm_auth" onClick={confirmAuthNumberEvent}>
+                                    인증번호 확인
+                                    </Button>
+                                    :
+                                    <Button margin="10px 0" font_size = "s" height="46px" width="100%"
+                                    id="get_auth" onClick={sendAuthNumberEvent}>
+                                    인증번호 발송
+                                    </Button>
+                                }
+                            </Div>
                         </Div> 
                     }
                     {/* step4 */}
