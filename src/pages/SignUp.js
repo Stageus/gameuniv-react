@@ -374,12 +374,12 @@ const SignUp = () =>{
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">학교 이메일</P>
                                 <SignUpInput placeholder="예시 : 00000@inha.ac.kr" id="email" value={postDataState.email} 
-                                postDataState={postDataState} setPostData={setPostData}/>
+                                postDataState={postDataState} setPostData={setPostData} readonly={authState}/>
                             </InputBoxDiv>
                             
                             <InputBoxDiv>
                                 <P font_size = "xxs" padding="5px 0">대학교</P>
-                                <UnivList setPostData={setPostData} postDataState={postDataState}/>
+                                <UnivList setPostData={setPostData} postDataState={postDataState} readonly={authState}/>
                             </InputBoxDiv>
                             <InputBoxDiv >
                                 <P font_size = "xxs" padding="5px 0">인증번호</P>

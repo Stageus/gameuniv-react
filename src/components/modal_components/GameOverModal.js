@@ -104,10 +104,10 @@ const GameOverModal = (props) =>{
                 
                 break
             case "home_btn":
+                setModalOpen(false)
                 if(location === "/2048"){
                     props.onRestart()
                 }
-                setModalOpen(false)
                 navigate("/home")
                 resetTetrisScoreData()
                 resetModalState()

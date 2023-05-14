@@ -41,7 +41,7 @@ const SignUpInput = (props) =>{
         <React.Fragment>
                 <Input width="100%" max_width="289px" height="28px" placeholder={props.placeholder} font_size="xxs" padding="0 10px" margin="0 10px 0 0"
                 id={props.id} maxLength={props.max_length} value={data} onChange={inputChangeEvent}
-                type = {type_check ? "password": "text"}/>
+                type = {type_check ? "password": "text"} readOnly={props.readonly ? props.readonly : false}/>
         </React.Fragment>
     )
 }
