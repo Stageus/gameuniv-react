@@ -4,31 +4,19 @@ import styled from "styled-components"
 
 // ===== import style =====
 import { Input } from "../../styles/Input"
+import { useGetData } from "../../hooks/useFetch"
 
 
 
 // ===== component =====
 const UnivList = (props) =>{
     // ===== state =====
-    const [univData, setUniv] = React.useState([])
+    const univData = useGetData('/university/all')
     const [timer, setTimer] = React.useState(0)
     const univIdx = props.univIdx
     const setUnivIdx = props.setUnivIdx
     const setPostData = props.setPostData
     // 대학정보 불러오기 get
-    React.useEffect( ()=>{
-
-        const getUnivList = async() =>{
-            const response = await fetch("https://gameuniv.site/university/all")
-    
-            const result = await response.json()
-            const univ_data = result.data
-            setUniv([...univ_data])
-            return univ_data
-        }
-        getUnivList()
-    },[])
-    
     // console.log(univData)
 
     const changeEvent = () =>{
@@ -47,14 +35,13 @@ const UnivList = (props) =>{
         setTimer(newTimer)
     }
 
-
     return(
         <React.Fragment>
             <Input width="100%" max_width="289px" height="28px" placeholder="대학교" font_size="xxs" padding="0 10px" margin="0 10px 0 0"
-            list="univ_list" id="univ" onChange={changeEvent}/>
+            list="univ_list" id="univ" onChange={changeEvent} readOnly={props.readonly}/>
             <datalist id="univ_list">
                 {
-                    univData.map( data =>{
+                    univData && univData.map( data =>{
                         return <option  value={data.university_name}></option>
                     })
                 }

@@ -128,11 +128,14 @@ const Main = () =>{
     }
     
     React.useEffect( ()=>{
-        getUserData()
+        if(location !== '/'){
+            getUserData()
+        }
+        
         // console.log(1)
         return setModalOpen(false)
-    },[])
-
+    },[location])
+    // console.log(userData)
     // ===== event =====
     return(
         <MainStyle>
