@@ -57,11 +57,10 @@ const calcFactor = () =>{
     if(window.innerWidth <= ScreenSizeBreakpoint.XS){
         return TilesScreenTransformFactor.XS
     }
-    // if(window.innerWidth <= ScreenSizeBreakpoint.S){
-        // return TilesScreenTransformFactor.S
-    // }
-
-    return TilesScreenTransformFactor.M
+    else{
+        return TilesScreenTransformFactor.M
+    }
+    
 }
 
 export default TileContainer

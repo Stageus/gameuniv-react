@@ -104,10 +104,10 @@ const GameOverModal = (props) =>{
                 
                 break
             case "home_btn":
-                setModalOpen(false)
                 if(location === "/2048"){
                     props.onRestart()
                 }
+                setModalOpen(false)
                 navigate("/home")
                 resetTetrisScoreData()
                 resetModalState()
@@ -131,7 +131,7 @@ const GameOverModal = (props) =>{
     // console.log(gameTetrisResult.rank)
     
     return(
-        <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "450px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
+        <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "500px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">
             <H1 color="grayscale7" font_size="l" font_weight="regular">
                 게임 오버
             </H1>

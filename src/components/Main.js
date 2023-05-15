@@ -139,7 +139,12 @@ const Main = () =>{
     // ===== event =====
     return(
         <MainStyle>
-            <Modal></Modal>
+            {
+                location !== "/2048"
+                &&
+                <Modal></Modal>
+            }
+            
             {/* PC */}
             <PC>
                 <Div width="90%" min_width="1533px" height="calc(100vh - 155px);">

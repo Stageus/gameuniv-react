@@ -52,7 +52,6 @@ const TileOuter = styled.div`
 
     transform: translate( ${ props => props.x}px, ${ props => props.y}px );
 
-    // media query
     ${props => {
         if(props.isMobile){
             if(props.theme === doodleTheme){
@@ -73,23 +72,6 @@ const TileOuter = styled.div`
         }
     }
     }
-
-    // type에 따라 애니메이션 다르게
-    ${props => {
-        const type = props.type
-        switch(type){
-            case "new":
-                return css`
-                    // animation: ${appear} 200ms ease 100ms;
-                    // animation-fill-mode: backwards;
-                `
-            case "merged":
-                return css`
-                    // animation: ${grow} 200ms ease 100ms;
-                    // animation-fill-mode: backwards;
-                `
-        }
-    }}
 
     ${props => props.theme === doodleTheme && css`
         border: 2px solid black;

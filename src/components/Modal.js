@@ -32,7 +32,7 @@ import { useLocation, useNavigate } from "react-router"
 
 // ===== style =====
 const Overlay = styled(Div)`
-    position:fixed;
+    position:absolute;
     z-index:99;
     background-color: rgba(0,0,0,0.3);
     top:0;
@@ -59,7 +59,7 @@ const Modal = (props) =>{
     // const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
     const [isModalOpen, setModalOpen] = useRecoilState(isModalOpenState)
     const whichModal = useRecoilValue(whichModalState)
-    const location = useLocation()
+    const location = useLocation().pathname
     // ===== event =====
     const modalEvent = (e)=>{
         const target = e.target.id

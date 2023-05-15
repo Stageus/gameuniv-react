@@ -86,7 +86,9 @@ const Result = (props) =>{
             {
                 props.whichModal === "retryGameModal" || props.whichModal === "quitGameModal"
                 ?
-                <Modal onRestart={onRestart}/>
+                <Overlay>
+                    <Modal onRestart={onRestart}/>
+                </Overlay>
                 :
                 <GameOverModal onRestart={onRestart} score2048={score2048}/>
             }
