@@ -152,20 +152,51 @@ const GameProvider = (props) =>{
     const [state, dispatch] = useGameLocalStorage("game", initState(), gameReducer)
     const isModalOpen = useRecoilValue(isModalOpenState)
     const isGet = useRecoilValue(isGetState)
-   
-
+    
     React.useEffect( ()=>{
-        // state.status = "IN_PROGRESS"
-        // state.tiles = generateBoard(2)
-        state.status = "IN_PROGRESS" 
+        state.status = "IN_PROGRESS"
+        state.tiles = generateBoard(2)
         return ()=>{
+            // state.status = "IN_PROGRESS"     
             
-            state.tiles = generateBoard(2)
         }
         
     }, [])
     
     const [timer, setTimer] = React.useState(0)
+
+    let initialX = null
+    let initialY = null
+
+    const initTouch = (e) =>{
+        initialX = `${e.touches ? e.touches[0].clientX : e.clientX}`
+        initialY = `${e.touches ? e.touches[0].clientY : e.clientY}`
+    }
+
+    const swipeDirection = (e) => {
+        if (initialX !== null && initialY !== null) {
+            const currentX = `${e.touches ? e.touches[0].clientX : e.clientX}`
+            const currentY = `${e.touches ? e.touches[0].clientY : e.clientY}`;
+        
+            let diffX = initialX - currentX
+            let diffY = initialY - currentY;
+        
+            Math.abs(diffX) > Math.abs(diffY)
+            ? (
+                0 < diffX
+                ? dispatch({type : "move", payload: "left"})
+                : dispatch({type : "move", payload: "right"})
+            )
+            : (
+                0 < diffY
+                ? dispatch({type : "move", payload: "up"})
+                : dispatch({type : "move", payload: "down"})
+            )
+        
+            initialX = null;
+            initialY = null;
+        }
+    }
 
     const handleKeyPress = (e) =>{
         if(isModalOpen){
@@ -183,9 +214,13 @@ const GameProvider = (props) =>{
     }
     // ===== event =====
     useEffect( ()=>{
+        window.addEventListener("touchstart", initTouch);
+        window.addEventListener("touchmove", swipeDirection);
         document.addEventListener("keydown", handleKeyPress)
         return () =>{
             document.removeEventListener("keydown", handleKeyPress)
+            window.addEventListener("touchstart", initTouch);
+            window.addEventListener("touchmove", swipeDirection);
         }
     }, [isModalOpen] )
 

@@ -188,32 +188,11 @@ const SettingModal = () =>{
 
 
     return(
-        
         <Div width="330px" height="200px">
             <Div width="80%" height="100%">
                 <Div flex_direction="column" align_items="flex-start" justify_content="space-evenly"
                 width="100%" height="100%">
                     <H1 font_size="m" color="grayscale7">설정</H1>
-                    {/* 사운드 관련 */}
-                    {/* <Div width="100%" flex_direction="column" align_items="flex-start">
-                        <Div width="103%" justify_content="space-between">
-                        <P font_weight="regular" font_size="xs" margin="0 0 5px 0">사운드</P>
-                        <P font_weight="regular" font_size="xxs" margin="0 0 5px 0">켜기 / 끄기</P>
-                        </Div>
-                        
-                        <VolumeBox>
-                            <Div margin="0 0 5px 0" width="100%" justify_content="space-around">
-                                <P font_size="xxs" font_weight="regular" color="grayscale6">배경음</P>
-                                <Range type="range" id="back_volume_control" value={bgmRange} onChange={backControlEvent}></Range>
-                                <CheckBox type="checkbox" checked={bgmOn} id="check_btn" onChange={backMuteEvent}></CheckBox>    
-                            </Div>
-                            <Div margin="0 0 5px 0" width="100%" justify_content="space-around">
-                                <P font_size="xxs" font_weight="regular" color="grayscale6">효과음</P>
-                                <Range type="range" value={effectRange} onChange={effectControlEvent}></Range>
-                                <CheckBox type="checkbox" checked={effectOn} id="check_btn" onChange={effectMuteEvent}></CheckBox>    
-                            </Div>
-                        </VolumeBox>
-                    </Div> */}
                     {/* 버튼 */}
                     <Div flex_direction="column" width="100%">
                         <Div justify_content={which_page ? "center" : "space-around"} 
@@ -235,7 +214,6 @@ const SettingModal = () =>{
                                 <P font_size="m" font_weight="regular" color="grayscale1" padding="0 0 0 10px">로그아웃</P>
                             </Button> }
                     </Div>
-                {/* <Button>로그아웃</Button> */}
                 </Div>
             </Div>
         </Div>

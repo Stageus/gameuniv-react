@@ -74,7 +74,7 @@ const Header = () =>{
         setModalOpen(true)
     }
 
-    const data = useGetData('/user/coin', coin)
+    const data = useGetData('/user/coin', location)
     
     // console.log(data && data)
 
@@ -98,8 +98,6 @@ const Header = () =>{
                         margin="0 20px 6px 10px"/>
                     </React.Fragment>
                 }
-                
-                
             </Div>
         </Header_style>        
     )
