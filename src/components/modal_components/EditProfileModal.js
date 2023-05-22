@@ -116,7 +116,7 @@ const EditProfileModal = () =>{
             return compressedFile
             
         } catch(error){
-            console.log(error)
+            // console.log(error)
         }
     }
 
@@ -228,7 +228,7 @@ const EditProfileModal = () =>{
         }
         else{
             setUserData(result.data)
-            console.log(userData)
+            // console.log(userData)
         }
     }
 

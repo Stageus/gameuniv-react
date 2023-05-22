@@ -173,7 +173,7 @@ const SignUp = () =>{
                 setPostData( (prevState) => ({
                     ...prevState, email: email
                 }))
-                console.log(postDataState)
+                // console.log(postDataState)
                 postSignUpDataEvent(e)
                 
                 // universityIdx설정하기
@@ -272,7 +272,7 @@ const SignUp = () =>{
         form_data.append("defaultImg", defaultImg)
         form_data.append("profileImg", profileImg)
 
-        console.log(postDataState)
+        // console.log(postDataState)
         const response = await fetch(`${process.env.REACT_APP_API_URL}/user`,{
             method: "POST",
             body: form_data
@@ -293,10 +293,10 @@ const SignUp = () =>{
         }
     }
 
-    console.log(postDataState)
+    // console.log(postDataState)
     return(
         <React.Fragment>
-            <Div width="100%">
+            <Div width="100%" max_width="400px">
                 <PC>
                     <Div onClick={()=>setStep(stepState-1)} width="48px">
                         {

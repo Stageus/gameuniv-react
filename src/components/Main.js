@@ -122,7 +122,7 @@ const Main = () =>{
             // alert(result.message)
         }
         else{
-            console.log(1)
+            // console.log(1)
             setUserData(result.data)
         }
     }

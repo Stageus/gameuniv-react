@@ -31,7 +31,7 @@ const Timer = () =>{
     // 시간 초과시
     React.useEffect( ()=>{
         if(time.current <=0){
-            console.log("시간초과")
+            // console.log("시간초과")
             clearInterval(timerId.current)
         }
     }, [sec])

@@ -44,8 +44,9 @@ const TileContainer = (props) => {
 
         return () => window.removeEventListener("resize", handleResize)
     }, [])
-
     const sortedTiles = props.tiles.sort( (t1,t2) => t1.id - t2.id)
+    // console.log(factor)
+
     return(
         <TileContainerStyle>
             <TileList tiles={sortedTiles} factor={factor} />
@@ -56,9 +57,6 @@ const TileContainer = (props) => {
 const calcFactor = () =>{
     if(window.innerWidth <= ScreenSizeBreakpoint.XS){
         return TilesScreenTransformFactor.XS
-    }
-    else{
-        return TilesScreenTransformFactor.M
     }
     
 }
