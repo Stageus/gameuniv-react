@@ -1,11 +1,9 @@
 export const ScreenSizeBreakpoint = {
     XS: 479,
-    S: 520,
 }
 
 export const TilesScreenTransformFactor = {
     XS:73,
-    S: 97,
     M: 121,
 }
 
