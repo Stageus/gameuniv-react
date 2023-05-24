@@ -23,8 +23,8 @@ const TileList = (props) =>{
                     key={x.id}
                     value = {x.value}
                     type = {x.type}
-                    x = {x.positionY* props.factor}
-                    y = {x.positionX * props.factor}
+                    x = {x.positionY*  (props.factor ? props.factor : 121)}
+                    y = {x.positionX * (props.factor ? props.factor : 121)}
                     />
                 ))
             }
