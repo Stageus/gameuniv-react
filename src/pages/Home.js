@@ -202,7 +202,7 @@ const Home = () =>{
                     <Div width="100%"   height="301px" justify_content="space-between">
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
                             { 
-                                (userTetrisRankData.rank === -2)
+                                (userTetrisRankData && userTetrisRankData.rank === -2)
                                 ?
                                 <Div width="100%" justify_content="center" align_items="center">
                                     <P font_size="s" font_weight="bold">이번 달 테트리스 기록이 없습니다</P>
@@ -228,7 +228,7 @@ const Home = () =>{
                         </RelativeDiv>
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
                             {
-                                (user2048RankData.rank === -2)
+                                (user2048RankData && user2048RankData.rank === -2)
                                 ?
                                 <Div width="100%" justify_content="center" align_items="center">
                                     <P font_size="s" font_weight="bold">이번 달 2048 기록이 없습니다</P>
@@ -277,7 +277,7 @@ const Home = () =>{
                     <Div width="440px"   height="301px" justify_content="space-between">
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
                             { 
-                                (userTetrisRankData.rank === -2)
+                                (userTetrisRankData && userTetrisRankData.rank === -2)
                                 ?
                                 <Div width="100%" justify_content="center" align_items="center">
                                     <P font_size="xs" font_weight="bold">이번 달 테트리스 기록이 없습니다</P>
@@ -304,7 +304,7 @@ const Home = () =>{
                         </RelativeDiv>
                         <RelativeDiv width="49%" height="204px" border_radius="3px" background_color="blue2" justify_content="space-between">
                             {
-                                (user2048RankData.rank === -2)
+                                (user2048RankData && user2048RankData.rank === -2)
                                 ?
                                 <Div width="100%" justify_content="center" align_items="center">
                                     <P font_size="xs" font_weight="bold">이번 달 2048 기록이 없습니다</P>
