@@ -128,7 +128,7 @@ const GameOverModal = (props) =>{
         setGameState("2048")
     }
 
-    // console.log(gameTetrisResult.rank)
+    console.log(gameTetrisResult)
     
     return(
         <Div width= {isMobile ? "416px": "560px"} height={isMobile ? "500px":"550px"} flex_direction="column" justify_content="space-between" padding="20px 0 40px 0">

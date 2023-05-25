@@ -191,8 +191,7 @@ const TetrisScoresContainer = (props) =>{
             setTimeout(()=>{
                 setModalOpen(true)
                 setModalState("gameOverModal")
-            }, 500)
-            
+            }, 1500)
         }
     }, [isGameOver]) 
 
