@@ -234,6 +234,7 @@ const Main = () =>{
                                 <Route path="/item" element = {<Item/>}/>
                                 <Route path="/achievement" element = {<Achievement/>}/>
                                 <Route path="/2048" element = {<Game2048/>}/>
+                                <Route path="/tetris" element = {<Tetris/>}/>
                                 {/* 나머지 부분 추가해주시면 될듯 합니다 */}
                             </Routes>
                         </LoginDiv>
