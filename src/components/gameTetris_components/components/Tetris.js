@@ -8,6 +8,7 @@ import {useInterval} from "../hooks/useInterval"
 import {usePlayer} from "../hooks/usePlayer"
 import {useStage} from "../hooks/useStage"
 import {useGameStatus} from "../hooks/useGameStatus"
+import {PC, Mobile, useMobile } from "../../../hooks/useMediaComponent"
 
 // ===== import utils =====
 import { TETROMINOS,randomTetromino} from "../tetrominos"
@@ -30,8 +31,9 @@ import { basicTheme, jellyTheme, pastelTheme,doodleTheme,retroTheme,legoTheme } 
 
 // ===== style =====
 const TetrisDiv=styled(Div)`
-    width: 734px;
-    height: 760px;
+    width: ${props => props.isMobile ? "430px": "734px"}; 
+    height: ${props => props.isMobile ? "860px": "760px"}; 
+    flex-direction :  ${props => props.isMobile ? "column": "row"}; 
     background-color : ${props => props.theme.totalBoxColor};
     ${props => props.theme != (retroTheme||legoTheme) && css`border-radius : 15px;`}
 
@@ -41,28 +43,29 @@ const TetrisDiv=styled(Div)`
     }
 
     ${props => props.theme === jellyTheme && css`
-        width: 734px;
-        height: 760px;
-        background-image: url("img_srcs/game_img/tetris/jelly/asset/bigBoardImg.png");
-        background-size : 734px 760px;
+        width: ${props => props.isMobile ? "450px": "735px"}; 
+        height: ${props => props.isMobile ? "920px": "768px"}; 
+        background-image: ${props => props.isMobile ? `url("img_srcs/game_img/tetris/jelly/asset/boardImgMobile.png");`: `url("img_srcs/game_img/tetris/jelly/asset/bigBoardImg.png")`}; 
+        background-size : ${props => props.isMobile ? "450px 920px": "734px 760px"}; 
         background-repeat : no-repeat;
     `}
 
     ${props => props.theme === retroTheme && css`
-        width: 705px;
-        height: 768px;
-        background-image: url("img_srcs/game_img/tetris/retro/asset/boardImg.png");
+        width: ${props => props.isMobile ? "430px": "705px"}; 
+        height: ${props => props.isMobile ? "920px": "768px"}; 
+        background-image: ${props => props.isMobile ? `url("img_srcs/game_img/tetris/retro/asset/boardImgMobile.png");`: `url("img_srcs/game_img/tetris/retro/asset/boardImg.png")`}; 
         background-size : cover;
         background-repeat : no-repeat;
 
     `}
 
     ${props => props.theme === legoTheme && css`
-    width: 705px;
-    height: 768px;
-        background-image: url("img_srcs/game_img/tetris/lego/asset/boardImg.png");
+    width: ${props => props.isMobile ? "420px": "705px"}; 
+        height: ${props => props.isMobile ? "870px": "768px"}; 
+        background-image: ${props => props.isMobile ? `url("img_srcs/game_img/tetris/lego/asset/boardImgMobile.png")`: `url("img_srcs/game_img/tetris/lego/asset/boardImg.png")`}; 
         background-size : cover;
         background-repeat : no-repeat;
+        padding-top :${props => props.isMobile ? "18px": "0"}; 
     `}
 
    
@@ -110,6 +113,8 @@ const BtnDiv=styled(Div)`
     border-radius : 10px;
     border : 6px solid ${props => props.theme.borderColor || "none"};
 
+    margin : 20px 0 0 0;
+
     ${props => props.theme === retroTheme && css`
     border : none;
     margin-top :38px;`}
@@ -127,11 +132,14 @@ const BtnP=styled(P)`
 `
 const LevelP=styled(P)`
     color :  ${props => props.theme.textColor};
-    margin-top :  ${props => (props.theme === retroTheme||props.theme ===legoTheme) ? " 35px": "20px"}
+    
+    margin-top :  ${props => (props.theme === retroTheme||props.theme ===legoTheme) ? " 10px": "20px"}
     // -webkit-text-stroke: 2px #FFEC3D;
 `
 //  ===== component =====
 const Tetris =()=>{
+
+    const isMobile = useMobile()
 
     let skin
     let preview_img 
@@ -259,33 +267,59 @@ const Tetris =()=>{
 
     return(
         <ThemeProvider theme = {skin}> 
-            <TetrisDiv align_items="center" justify_content="center" margin="50px 0 0 0"
-            role="button" tabIndex="0" onKeyDown={e => move(e)} onKeyUp={keyUp}>
+            <TetrisDiv margin="50px 0 0 0" isMobile={isMobile}
+            role="button" tabIndex="0" flex_direction="column" onKeyDown={e => move(e)} onKeyUp={keyUp}>
                 <Stage stage={stage}/>
-                <Div height="90%" width={skin==legoTheme ? "248px" : "auto"} padding={(skin==retroTheme||skin==legoTheme )&& "35px 0 0 0"} margin={(skin==retroTheme||skin==legoTheme )? "5px 0 0 35px" : "0 0 20px 20px"} flex_direction="column">
-                    <Img height={(skin==retroTheme||skin==legoTheme )? "30px":"60px"} src={`img_srcs/game_img/tetris/${skin.themeName}/asset/tetrisLogoImg.png`}/>
-                    <Div height="90%" justify_content="space-around" flex_direction="column">    
-                        <LevelP font_size={(skin==retroTheme||skin==legoTheme )? "s":"l"} font_weight="bold">LEVEL : {level}</LevelP>
-                        <TetrisScoresContainer score={score} rowsCleared={rowsCleared}/> 
-                        <TetrominoPriviewDiv>
-                            <ImgDiv img_address={preview_img}></ImgDiv>
-                        </TetrominoPriviewDiv>
-                        {
-                            isGameStart
-                            ?
-                            <BtnDiv onClick={replayGame}>
-                                <BtnP font_size="s" font_weight="bold">다시 하기</BtnP>
-                            </BtnDiv>
-                            :
-                            <BtnDiv  width="150px" height="40px" border_radius="10px" border="6px solid #FFE973"  onClick={startGame}>
-                                <BtnP font_size="s" font_weight="bold">게임 시작</BtnP>
-                            </BtnDiv>
-                        }
-                        <Div margin={(skin==retroTheme||skin==legoTheme )&& "20px 0px 40px 0px"}>
-                            <Img height={(skin==retroTheme||skin==legoTheme )&& "50px"} src={`img_srcs/game_img/tetris/${skin.themeName}/asset/controllerImg.png`}/>
+                    <PC>
+                        <Div height="90%" width={skin==legoTheme ? "248px" : "auto"}  margin={(skin==retroTheme||skin==legoTheme )? "0 0 0 35px" : "0 0 0 30px"} flex_direction="column">
+                            <Div height="90%" justify_content="space-around" flex_direction="column">   
+                                <Img height={(skin==retroTheme||skin==legoTheme )? "30px":"60px"} src={`img_srcs/game_img/tetris/${skin.themeName}/asset/tetrisLogoImg.png`}/> 
+                                <LevelP font_size={(skin==retroTheme||skin==legoTheme )? "s":"l"} font_weight="bold">LEVEL : {level}</LevelP>
+                                <TetrisScoresContainer score={score} rowsCleared={rowsCleared}/> 
+                                <TetrominoPriviewDiv>
+                                    <ImgDiv  img_address={preview_img}></ImgDiv>
+                                </TetrominoPriviewDiv>
+                                {
+                                    isGameStart
+                                    ?
+                                    <BtnDiv  onClick={replayGame}>
+                                        <BtnP font_size="s"  font_weight="bold" >다시 하기</BtnP>
+                                    </BtnDiv>
+                                    :
+                                    <BtnDiv  width="150px" height="40px" border_radius="10px" border="6px solid #FFE973"  onClick={startGame}>
+                                        <BtnP font_size="s" font_weight="bold">게임 시작</BtnP>
+                                    </BtnDiv>
+                                }
+                                <Div margin={(skin==retroTheme||skin==legoTheme )&& "20px 0px 0px 0px"}>
+                                    <Img height={(skin==retroTheme||skin==legoTheme )&& "50px"} src={`img_srcs/game_img/tetris/${skin.themeName}/asset/controllerImg.png`}/>
+                                </Div>
+                            </Div>
                         </Div>
-                    </Div>
-                </Div>
+                    </PC>
+                    <Mobile>
+                        <Div width={skin==legoTheme ? "auto" : "auto"}  flex_direction="column" padding={(skin==retroTheme||skin==legoTheme )? "0 0 67px 0":"0 0 0 0"} >
+                                <Div>
+                                    <LevelP margin="0 10px 0 0" font_size={(skin==retroTheme||skin==legoTheme )? "s":"m"} font_weight="bold">LEVEL : {level}</LevelP>
+                                    {
+                                        isGameStart
+                                        ?
+                                        <BtnDiv onClick={replayGame}  isMobile={isMobile}>
+                                            <BtnP font_size="s" font_weight="bold">다시 하기</BtnP>
+                                        </BtnDiv>
+                                        :
+                                        <BtnDiv  width="150px" height="40px" border_radius="10px" border="6px solid #FFE973"  onClick={startGame}  isMobile={isMobile}>
+                                            <BtnP font_size="s" font_weight="bold">게임 시작</BtnP>
+                                        </BtnDiv>
+                                    }
+                                </Div>
+                                <Div>
+                                    <TetrominoPriviewDiv margin="20px 10px 0 0">
+                                        <ImgDiv img_address={preview_img}></ImgDiv>
+                                    </TetrominoPriviewDiv>
+                                    <TetrisScoresContainer score={score} rowsCleared={rowsCleared}/> 
+                                </Div> 
+                        </Div>
+                    </Mobile>
             </TetrisDiv>
         </ThemeProvider>
         ) 
