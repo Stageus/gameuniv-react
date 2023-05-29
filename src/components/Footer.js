@@ -43,7 +43,7 @@ import { color } from "../styles/style"
 
 // ===== style =====
 const BackDiv = styled(Div)`
-    margin: 0 0 20px 20px;
+    margin: 60px 0 20px 20px;
 `
 
 const MobileRankingBtn = styled.button`
