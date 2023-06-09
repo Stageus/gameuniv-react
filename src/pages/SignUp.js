@@ -184,13 +184,17 @@ const SignUp = () =>{
     // id duplication check 아이디 중복 확인
     const idDoubleCheckEvent = async(e) =>{
         e.preventDefault()
+        const id_regex = /^[a-z0-9]{5,20}$/
         const id = document.getElementById("id").value
-
+        const id_check = id_regex.test(id)
+        console.log(id_check)
         const response = await fetch(`${process.env.REACT_APP_API_URL}/user/id/duplication?id=${id}`)
         
         const result = await response.json()
-
-        if(result.message){
+        if(!id_check){
+            alert("아이디 형식이 올바르지 않습니다")
+        }
+        else if(result.message){
             alert("이미 가입된 아이디입니다")
         }
         else{
