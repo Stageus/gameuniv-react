@@ -131,7 +131,7 @@ const shift = (line, getColumn, setColumn, direction) =>{
     let i= result.length -1
 
     while( i>=1){
-        if(result[i].value === result[i-1].value && result[i].value !== 2048){
+        if(result[i].value === result[i-1].value){
             for( let j=0; j<= i-1; j++){
                 const shift = direction === "right" ? 1 : -1
                 setColumn( result[j], getColumn(result[j]) + shift)
@@ -173,6 +173,7 @@ export const createRandomTile = (tiles) =>{
     }
 
     const value = Math.random() <= 0.2 ? 4 : 2
+    // const value = 2048
 
     return{
         id: getNextId(tiles),
