@@ -55,7 +55,7 @@ const TileContainer = (props) => {
 }
 
 const calcFactor = () =>{
-    if(window.innerWidth <= ScreenSizeBreakpoint.XS){
+    if(window.screen.width <= ScreenSizeBreakpoint.XS){
         return TilesScreenTransformFactor.XS
     }
     
