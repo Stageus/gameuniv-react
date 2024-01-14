@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# GameUniv
+2048과 테트리스 점수로 대학생들의 경쟁을 유도하는 웹 플랫폼입니다.
+- [배포 사이트(현재 서비스 중지)](https://gameuniv.site)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 기간
+- 2023.02.06 ~ 2023.04.06
 
-## Available Scripts
+## 팀원
+- 한승재 : Frontend & PM
+- 장승훈 : Frontend
+- 민경찬 : Backend
 
-In the project directory, you can run:
+### 로그인
+![image](https://github.com/Stageus/gameuniv-react/assets/62943439/394b3daa-e7a4-442b-9e80-608e65cdcc90)
 
-### `npm start`
+### 메인
+![image](https://github.com/Stageus/gameuniv-react/assets/62943439/7e73da1e-33b7-4789-8d78-d2b09d473caf)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 상점
+![image](https://github.com/Stageus/gameuniv-react/assets/62943439/5467de93-eb34-428f-9cb4-50d5cb66b565)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 업적
+![image](https://github.com/Stageus/gameuniv-react/assets/62943439/acd8746f-c565-4e5a-8b72-c8feab8e3632)
 
-### `npm test`
+### 테트리스
+![image](https://github.com/Stageus/gameuniv-react/assets/62943439/0c2f009a-e9f4-489f-9660-a3dfafc76300)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 2048
+![image](https://github.com/Stageus/gameuniv-react/assets/62943439/ea125fb4-2a4c-4062-9301-7933469154ff)
