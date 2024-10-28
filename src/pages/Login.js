@@ -1,194 +1,211 @@
 // ===== import base =====
-import React from "react"
-import {useRecoilValue, useSetRecoilState} from "recoil"
-import styled from "styled-components"
-import { useCookies } from "react-cookie"
+import React from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
+import { useCookies } from 'react-cookie';
 
 //  ===== import recoil =====
-import { domainAddressState, isLoginState } from "../recoil/DomainState"
-import { coinState, userDataState } from "../recoil/UserDataState"
-import { Navigate, useLocation } from "react-router-dom"
+import { domainAddressState, isLoginState } from '../recoil/DomainState';
+import { coinState, userDataState } from '../recoil/UserDataState';
+import { Navigate, useLocation } from 'react-router-dom';
 
 // ===== import hooks =====
-import { useGet, usePost } from "../hooks/useFetch"
+import { useGet, usePost } from '../hooks/useFetch';
 
 // ===== import react router =====
-import {Route, Link, useNavigate} from "react-router-dom"
+import { Route, Link, useNavigate } from 'react-router-dom';
 
 // ===== import style =====
-import {Img} from "../styles/Img"
+import { Img } from '../styles/Img';
 
-import {Div} from "../styles/Div"
-import {Input} from "../styles/Input"
-import {Button} from "../styles/Button"
-import {P, LinkP} from "../styles/P"
-import { H1 } from "../styles/H1"
-
+import { Div } from '../styles/Div';
+import { Input } from '../styles/Input';
+import { Button } from '../styles/Button';
+import { P, LinkP } from '../styles/P';
+import { H1 } from '../styles/H1';
 
 // ===== style =====
 const Logo = styled(Img)`
-    position:relative;
+    position: relative;
     width: 100%;
     max-width: 379px;
     margin: 0 0 20px 0;
     left: -20px;
-`
-
+`;
 
 //  ===== component =====
 
-const Login = () =>{
-    
-    const [token] = useCookies(['token'])
+const Login = () => {
+    const [token] = useCookies(['token']);
     // ===== recoil state =====
-    const address = useRecoilValue(domainAddressState)
-    const userData = useRecoilValue(userDataState)
-    const setUserData = useSetRecoilState(userDataState)
-    const setLogin = useSetRecoilState(isLoginState)
-    const isLogin = useRecoilValue(isLoginState)
-    const setCoin = useSetRecoilState(coinState)
-    const location = useLocation()
+    const address = useRecoilValue(domainAddressState);
+    const userData = useRecoilValue(userDataState);
+    const setUserData = useSetRecoilState(userDataState);
+    const setLogin = useSetRecoilState(isLoginState);
+    const isLogin = useRecoilValue(isLoginState);
+    const setCoin = useSetRecoilState(coinState);
+    const location = useLocation();
 
     // console.log(token)
     // ===== router =====
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const post = usePost('/auth')
+    const post = usePost('/auth');
     // ===== event =====
-    React.useEffect(()=>{
-        const expire = window.sessionStorage.getItem("time")
+    React.useEffect(() => {
+        const expire = window.sessionStorage.getItem('time');
         // console.log(expire > Date.now())
         // console.log(isLogin)
-        if(( expire > Date.now() && isLogin) ){
-            getUserData()
-            window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
-            navigate("/home")
+        if (expire > Date.now() && isLogin) {
+            getUserData();
+            window.sessionStorage.setItem('time', Date.now() + 1000 * 60 * 60 * 24);
+            navigate('/home');
+        } else {
+            setUserData({});
         }
-        else{
-            setUserData({})
-        }
-    }, [])
-    
+    }, []);
+
     // 자동 로그인
 
-    const postLoginData = async(id, pw) =>{
-        const result = await post( {
-            id: id, pw: pw, autoLogin:true
-        })
-        
-        console.log(result)
-        if(result.message){
-            alert(result.message)
-        }
-        else{
+    const postLoginData = async (id, pw) => {
+        const result = await post({
+            id: id,
+            pw: pw,
+            autoLogin: true,
+        });
+
+        console.log(result);
+        if (result.message) {
+            alert(result.message);
+        } else {
             // alert("로그인 성공")
             // window.sessionStorage.setItem("time", Date.now() + 1000*60*60*24)
             // getUserData()
             // getCoinData()
-            setLogin(true)
-            navigate("/home")
+            setLogin(true);
+            navigate('/home');
         }
-    }
+    };
 
-    const loginEvent = (e) =>{
+    const loginEvent = (e) => {
+        e.preventDefault();
+        const id_regex = /^[a-z0-9]{5,20}$/;
+        const id = document.getElementById('id').value;
+        const id_check = id_regex.test(id);
 
-        e.preventDefault()
-        const id_regex = /^[a-z0-9]{5,20}$/
-        const id = document.getElementById("id").value
-        const id_check = id_regex.test(id)
-        
-        const pw_regex = /^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/
-        const pw = document.getElementById("pw").value
-        const pw_check = pw_regex.test(pw)
-        if(id === "" || pw === ""){
-            alert("빈 칸을 입력해 주십시오")
+        const pw_regex = /^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/;
+        const pw = document.getElementById('pw').value;
+        const pw_check = pw_regex.test(pw);
+        if (id === '' || pw === '') {
+            alert('빈 칸을 입력해 주십시오');
+        } else if (!id_check) {
+            alert('아이디 형식이 올바르지 않습니다(6~20자 영문, 숫자)');
+        } else if (!pw_check) {
+            alert('비밀번호 형식이 올바르지 않습니다(8~20자, 하나 이상의 숫자, 문자, 특수문자');
+        } else {
+            postLoginData(id, pw);
         }
-        else if(!id_check){
-            alert("아이디 형식이 올바르지 않습니다(6~20자 영문, 숫자)")
-        }
-        else if(!pw_check){
-            alert("비밀번호 형식이 올바르지 않습니다(8~20자, 하나 이상의 숫자, 문자, 특수문자")
-        }
-        else{
-            postLoginData(id, pw)
-        }
-    }
+    };
 
-    // 
-    const getUserData = async() =>{
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/user`,
-        {
-            credentials: "include",
-        })
+    //
+    const getUserData = async () => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/user`, {
+            credentials: 'include',
+        });
 
-        const result = await response.json()
-        
-        if(result.message){
+        const result = await response.json();
+
+        if (result.message) {
             // alert(result.message)
-        }
-        else{
+        } else {
             // console.log(result.data)
-            setUserData(result.data)
+            setUserData(result.data);
         }
-    }
-    
-    const getCoinData = async() =>{
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/coin`,{
-            credentials: "include"
-        })
+    };
 
-        const result = await response.json()
+    const getCoinData = async () => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/coin`, {
+            credentials: 'include',
+        });
 
-        if(result.message){
-            alert(result.message)
+        const result = await response.json();
+
+        if (result.message) {
+            alert(result.message);
+        } else {
+            setCoin(result.data.coin);
         }
-        else{
-            setCoin(result.data.coin)
-        }
-    }
+    };
 
-    return(
+    return (
         <React.Fragment>
             {/* 로고 */}
             <Div flex_direction="column" width="100%">
-                <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`}/>
+                <Logo src={`${process.env.PUBLIC_URL}/img_srcs/icons/logoIcon.png`} />
                 {/* 로그인 폼 */}
-                <Div width = "50%" max_width="341px" flex_direction="column">
-                    <P>Game Univ에 오신걸 환영합니다.
-                        <br/><br/>
-                        저희 GameUniv는 간단한 게임을 통한 대학생 경쟁 어플리케이션 입니다.
-                        게임에 참여해 전국에 있는 대학생들과 경쟁해보세요!
+                <Div width="50%" max_width="341px" flex_direction="column">
+                    <P>
+                        Game Univ에 오신걸 환영합니다.
+                        <br />
+                        <br />
+                        저희 GameUniv는 간단한 게임을 통한 대학생 경쟁 어플리케이션 입니다. 게임에 참여해 전국에 있는 대학생들과 경쟁해보세요!
                     </P>
                     <form id="login_form">
                         <Div flex_direction="column" width="100%">
-                            <Input placeholder="아이디" minLength="6" maxLength="20" 
-                            width="100%" max_width="311px" height="28px" margin="20px 0 5px 0" padding="8px 15px" id="id"/>
-                            <Input type="password" placeholder="비밀번호" 
-                            width="100%" max_width="311px" height="28px" margin="5px 0 10px 0" padding="8px 15px" id="pw"/>
+                            <Input
+                                placeholder="아이디"
+                                minLength="6"
+                                maxLength="20"
+                                value={'guest1122'}
+                                width="100%"
+                                max_width="311px"
+                                height="28px"
+                                margin="20px 0 5px 0"
+                                padding="8px 15px"
+                                id="id"
+                            />
+                            <Input
+                                type="password"
+                                placeholder="비밀번호"
+                                value={'aa12341234**'}
+                                width="100%"
+                                max_width="311px"
+                                height="28px"
+                                margin="5px 0 10px 0"
+                                padding="8px 15px"
+                                id="pw"
+                            />
                         </Div>
 
                         <Div flex_direction="column">
                             <Div margin="0 0 10px 0">
-                                <Link to={"/idfind"} which_find="idfind">
-                                    <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">아이디 찾기</LinkP>
+                                <Link to={'/idfind'} which_find="idfind">
+                                    <LinkP font_size="xxs" border_right="1px solid black" padding="0 10px" id="idfind_btn">
+                                        아이디 찾기
+                                    </LinkP>
                                 </Link>
-                                
-                                <Link to={"/pwfind"}>
-                                    <LinkP font_size ="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">비밀번호 찾기</LinkP>
+
+                                <Link to={'/pwfind'}>
+                                    <LinkP font_size="xxs" border_right="1px solid black" padding="0 10px" id="pwfind_btn">
+                                        비밀번호 찾기
+                                    </LinkP>
                                 </Link>
-                                
-                                <Link to={"/signup"}>
-                                    <LinkP font_size ="xxs" padding="0 10px" id="signup_btn">회원가입</LinkP>
+
+                                <Link to={'/signup'}>
+                                    <LinkP font_size="xxs" padding="0 10px" id="signup_btn">
+                                        회원가입
+                                    </LinkP>
                                 </Link>
                             </Div>
-                            <Button width="341px" height="56px" id="login_btn" onClick={loginEvent}>로그인</Button>
+                            <Button width="341px" height="56px" id="login_btn" onClick={loginEvent}>
+                                로그인
+                            </Button>
                         </Div>
                     </form>
-                    
                 </Div>
             </Div>
         </React.Fragment>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
