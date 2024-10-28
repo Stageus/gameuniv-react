@@ -156,7 +156,7 @@ const Login = () => {
                                 placeholder="아이디"
                                 minLength="6"
                                 maxLength="20"
-                                value={'guest1122'}
+                                defaultValue={'guest1122'}
                                 width="100%"
                                 max_width="311px"
                                 height="28px"
@@ -167,7 +167,7 @@ const Login = () => {
                             <Input
                                 type="password"
                                 placeholder="비밀번호"
-                                value={'aa12341234**'}
+                                defaultValue={'aa12341234**'}
                                 width="100%"
                                 max_width="311px"
                                 height="28px"
